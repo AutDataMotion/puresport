@@ -1,3 +1,2 @@
-# ThaiRiceRS
 
-## use git
+# puresport
