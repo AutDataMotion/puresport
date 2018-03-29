@@ -44,23 +44,21 @@ public abstract class GenerateBase {
 	 */
 	
 	public static String[][] tableArr = {
-		{null, "T1_Usr_Bsc_Inf_Tbl", null, "T1UsrBscInfTbl","用户基本信息表"},
-		{null, "T2_ADiv_Inf_Tbl", null, "T2ADivInfTbl","行政区划信息表"},
-		{null, "T3_ADiv_Rel_Tbl", null, "T3ADivRelTbl","行政区划关系表"},
-		{null, "r4message_send", null, "R4message_send","消息发送"},
-		{null, "t5parameter_type", null, "T5parameter_type","参数类型"},
-		{null, "t6org_data", null, "T6org_data","原始数据信息"},
-		{null, "t7pdt_data", null, "T7pdt_data","产品数据信息"},
-		{null, "t8message", null, "T8message","消息"},
-		{null, "t9sample_info", null, "T9sample_info","样本数据信息"},
-		{null, "t10pdt_report", null, "T10pdt_report","产品报告"},
-		{null, "t11zone", null, "T11zone","行政区"},
-		{null, "tkvalue", null, "Tkvalue","键值"}
+		{null, "t1_usr_bsc", null, "T1usrBsc","用户基本信息表"},
+		{null, "t2_adiv", null, "T2Adiv","行政区划信息表"},
+		{null, "t3_stat", null, "T3Statl","统计信息"},
+		{null, "t4_assc", null, "R4Assc","协会信息表"},
+		{null, "t5_crcl_stdy", null, "T5CrclStdy","课程学习信息表"},
+		{null, "t6_mgr_ahr", null, "T6MgrAhr","管理员权限信息表"},
+		{null, "t7_crcl", null, "T7Crcl","课程信息表"},
+		{null, "t8_exam", null, "T8Exam","考试信息"},
+		{null, "t9_tstlib", null, "T9Tstlib","试题库"},
+		{null, "t10_exam_grd", null, "T10ExamGrd","考试成绩信息表"}
 	};
 	
 	//String prjName = "targrecog";
-	protected static final String schema = "thairice";
-	public static String  prjName = "thairice";
+	protected static final String schema = "puresport";
+	public static String  prjName = "puresport";
 	/**
 	 * 生成的包和类所在的源码根目录，比如src或者是weiXin
 	 */
