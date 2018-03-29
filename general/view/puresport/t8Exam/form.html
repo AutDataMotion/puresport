@@ -1,0 +1,82 @@
+
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">考试id</label>
+	<div class="col-sm-7">
+		<input type="text" name="t8Exam.examid" value="${t8Exam.examid!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">考试简介</label>
+	<div class="col-sm-7">
+		<input type="text" name="t8Exam.exam_brf" value="${escapeXml(t8Exam.exam_brf!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">行政区划代码</label>
+	<div class="col-sm-7">
+		<input type="text" name="t8Exam.adiv_cd" value="${t8Exam.adiv_cd!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">考试名称</label>
+	<div class="col-sm-7">
+		<input type="text" name="t8Exam.exam_nm" value="${escapeXml(t8Exam.exam_nm!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">考试属性（是否必考）</label>
+	<div class="col-sm-7">
+		<input type="text" name="t8Exam.exam_attr" value="${escapeXml(t8Exam.exam_attr!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">学分</label>
+	<div class="col-sm-7">
+		<input type="text" name="t8Exam.ty_grd" value="${t8Exam.ty_grd!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">试题id列表</label>
+	<div class="col-sm-7">
+		<input type="text" name="t8Exam.prblmid_list" value="${escapeXml(t8Exam.prblmid_list!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">维护时间</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="t8Exam.tms" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t8Exam.tms!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>

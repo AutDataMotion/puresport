@@ -1,0 +1,52 @@
+
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">协会id</label>
+	<div class="col-sm-7">
+		<input type="text" name="r4Assc.asscid" value="${escapeXml(r4Assc.asscid!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">协会名称</label>
+	<div class="col-sm-7">
+		<input type="text" name="r4Assc.assc_nm" value="${escapeXml(r4Assc.assc_nm!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">上一级协会id</label>
+	<div class="col-sm-7">
+		<input type="text" name="r4Assc.plvl_asscid" value="${escapeXml(r4Assc.plvl_asscid!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">协会层级</label>
+	<div class="col-sm-7">
+		<input type="text" name="r4Assc.assc_hier" value="${escapeXml(r4Assc.assc_hier!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">维护时间</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="r4Assc.tms" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${r4Assc.tms!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>

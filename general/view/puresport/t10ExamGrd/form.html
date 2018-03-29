@@ -1,0 +1,82 @@
+
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">用户id</label>
+	<div class="col-sm-7">
+		<input type="text" name="t10ExamGrd.usrid" value="${t10ExamGrd.usrid!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">考试id</label>
+	<div class="col-sm-7">
+		<input type="text" name="t10ExamGrd.examid" value="${t10ExamGrd.examid!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">考试成绩</label>
+	<div class="col-sm-7">
+		<input type="text" name="t10ExamGrd.exam_grd" value="${t10ExamGrd.exam_grd!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">考试状态</label>
+	<div class="col-sm-7">
+		<input type="text" name="t10ExamGrd.exam_st" value="${escapeXml(t10ExamGrd.exam_st!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">试题id</label>
+	<div class="col-sm-7">
+		<input type="text" name="t10ExamGrd.prblmid" value="${t10ExamGrd.prblmid!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">用户答案</label>
+	<div class="col-sm-7">
+		<input type="text" name="t10ExamGrd.usr_aswr" value="${escapeXml(t10ExamGrd.usr_aswr!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">试题答案</label>
+	<div class="col-sm-7">
+		<input type="text" name="t10ExamGrd.prblm_aswr" value="${escapeXml(t10ExamGrd.prblm_aswr!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">维护时间</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="t10ExamGrd.tms" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t10ExamGrd.tms!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>

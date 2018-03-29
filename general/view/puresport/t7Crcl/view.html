@@ -1,0 +1,84 @@
+
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a href="#" onclick="common_ajax.ajaxMainPanel('/puresport/index');">${i18nMap["admin.common.mainPage"]}</a></li>
+			<li><a href="#" onclick="common_ajax.ajaxMainPanel('${pthc}');">课程信息表管理</a></li>
+			<li class="active">查看</li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<!-- start: BORDERED TABLE PANEL -->
+		<div class="panel panel-white">
+			
+			<div class="panel-heading">
+				<h4 class="panel-title"><span class="text-bold">查看</span></h4>
+				<div class="panel-tools">										
+					<% include("/common/panel-tools.html"){} %>
+				</div>
+			</div>
+			<div class="panel-body">	
+				<form role="form" class="form-horizontal">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">课程id </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t7Crcl.crclid!}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">课程简介 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t7Crcl.crcl_brf!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">行政区划代码 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t7Crcl.adiv!}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">课程名称 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t7Crcl.crcl_nm!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">课程文件路径 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t7Crcl.crcl_file_rte!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">课程属性（是否必修） </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t7Crcl.crcl_attr!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">学分 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t7Crcl.ty_grd!}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">课程类别 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t7Crcl.crcl_cgy!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">维护时间 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t7Crcl.tms!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+							</div>
+						</div>
+				</form>
+			</div>
+		
+		</div>
+	</div>
+</div>	
