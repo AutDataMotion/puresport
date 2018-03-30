@@ -26,8 +26,8 @@ hs_err_pid*
 .idea
 .settings
 /target/
-.project
-.classpath
+#.project
+#.classpath
 # Generated files
 /bin/
 /gen/

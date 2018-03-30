@@ -41,7 +41,7 @@ public class GenerateMySQL extends GenerateBase {
 
 	/**
 	 * 循环生成文件
-	 * 
+	 * wor
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws IOException {
