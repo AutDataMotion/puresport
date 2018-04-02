@@ -1,0 +1,52 @@
+
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">行政区划代码</label>
+	<div class="col-sm-7">
+		<input type="text" name="t2Adiv.adiv_cd" value="${t2Adiv.adiv_cd!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">单位名称</label>
+	<div class="col-sm-7">
+		<input type="text" name="t2Adiv.unit_nm" value="${escapeXml(t2Adiv.unit_nm!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">上一级行政区划代码</label>
+	<div class="col-sm-7">
+		<input type="text" name="t2Adiv.plvl_adiv_cd" value="${escapeXml(t2Adiv.plvl_adiv_cd!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">行政区划层级</label>
+	<div class="col-sm-7">
+		<input type="text" name="t2Adiv.adiv_hier" value="${escapeXml(t2Adiv.adiv_hier!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">维护时间</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="t2Adiv.tms" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t2Adiv.tms!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>
