@@ -166,6 +166,10 @@
 										'mainPanel', 'splitPage', 'bloodtp')">
 									血型	${orderBy("bloodtp")}
 								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'ethnct')">
+									民族	${orderBy("ethnct")}
+								</th>
 								<th class="hidden-xs">
 									${i18nMap["admin.common.operation"]}
 								</th>
@@ -304,6 +308,13 @@
 								<td>
 
 								${escapeXml(item["bloodtp"]!)}
+
+								</td>
+							
+								
+								<td>
+
+								${escapeXml(item["ethnct"]!)}
 
 								</td>
 							

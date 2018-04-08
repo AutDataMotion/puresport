@@ -1,7 +1,7 @@
 /**  
  * Date:	 - -  : :   
  * project:	   
- * fileName:	T2Adiv.h  
+ * fileName:	T4Assc.h  
  * description:	
  * author:	zhongweng.hao@qq.com
  * Modification History:   
@@ -14,11 +14,11 @@
 #include "AbsDAL.h"
 using namespace std;
 
-class T2Adiv :public AbsDAL {
+class T4Assc :public AbsDAL {
 
 public:
-	T2Adiv():AbsDAL(&TableName){}
-	~T2Adiv(){}
+	T4Assc():AbsDAL(&TableName){}
+	~T4Assc(){}
 	
 private:
 	static const string TableName;
@@ -28,25 +28,25 @@ private:
 	 */
 	long id;
 	/**
-	 * 字段描述：行政区划代码 
-	 * 字段类型：int  长度：null
-	 */
-	int adiv_cd;
-	/**
-	 * 字段描述：单位名称 
-	 * 字段类型：varchar  长度：512
-	 */
-	string unit_nm;
-	/**
-	 * 字段描述：上一级行政区划代码 
+	 * 字段描述：协会id 
 	 * 字段类型：char  长度：6
 	 */
-	string plvl_adiv_cd;
+	string asscid;
 	/**
-	 * 字段描述：行政区划层级 
+	 * 字段描述：协会名称 
+	 * 字段类型：varchar  长度：512
+	 */
+	string assc_nm;
+	/**
+	 * 字段描述：上一级协会id 
+	 * 字段类型：char  长度：6
+	 */
+	string plvl_asscid;
+	/**
+	 * 字段描述：协会层级 
 	 * 字段类型：char  长度：1
 	 */
-	string adiv_hier;
+	string assc_hier;
 	/**
 	 * 字段描述：维护时间 
 	 * 字段类型：timestamp  长度：null
@@ -55,7 +55,7 @@ private:
 public:
 	
 	
-	T2Adiv& setId(long aid){
+	T4Assc& setId(long aid){
 		id = aid;
 		mapSQLTokens["id"] = to_string(id);
 		return *this;
@@ -65,50 +65,51 @@ public:
 	}
 	
 	
-	T2Adiv& setAdiv_cd(int aadiv_cd){
-		adiv_cd = aadiv_cd;
-		mapSQLTokens["adiv_cd"] = to_string(adiv_cd);
-		return *this;
-	}
-	int getAdiv_cd() {
-		return adiv_cd;
-	}
-	
-	
-	T2Adiv& setUnit_nm(string aunit_nm){
-		unit_nm = aunit_nm;
+	T4Assc& setAsscid(string aasscid){
+		asscid = aasscid;
 		
-		mapSQLTokens["unit_nm"] = "'"+unit_nm+"'";
+		mapSQLTokens["asscid"] = "'"+asscid+"'";
 		return *this;
 	}
-	string getUnit_nm() {
-		return unit_nm;
+	string getAsscid() {
+		return asscid;
 	}
 	
 	
-	T2Adiv& setPlvl_adiv_cd(string aplvl_adiv_cd){
-		plvl_adiv_cd = aplvl_adiv_cd;
+	T4Assc& setAssc_nm(string aassc_nm){
+		assc_nm = aassc_nm;
 		
-		mapSQLTokens["plvl_adiv_cd"] = "'"+plvl_adiv_cd+"'";
+		mapSQLTokens["assc_nm"] = "'"+assc_nm+"'";
 		return *this;
 	}
-	string getPlvl_adiv_cd() {
-		return plvl_adiv_cd;
+	string getAssc_nm() {
+		return assc_nm;
 	}
 	
 	
-	T2Adiv& setAdiv_hier(string aadiv_hier){
-		adiv_hier = aadiv_hier;
+	T4Assc& setPlvl_asscid(string aplvl_asscid){
+		plvl_asscid = aplvl_asscid;
 		
-		mapSQLTokens["adiv_hier"] = "'"+adiv_hier+"'";
+		mapSQLTokens["plvl_asscid"] = "'"+plvl_asscid+"'";
 		return *this;
 	}
-	string getAdiv_hier() {
-		return adiv_hier;
+	string getPlvl_asscid() {
+		return plvl_asscid;
 	}
 	
 	
-	T2Adiv& setTms(string atms){
+	T4Assc& setAssc_hier(string aassc_hier){
+		assc_hier = aassc_hier;
+		
+		mapSQLTokens["assc_hier"] = "'"+assc_hier+"'";
+		return *this;
+	}
+	string getAssc_hier() {
+		return assc_hier;
+	}
+	
+	
+	T4Assc& setTms(string atms){
 		tms = atms;
 		
 		mapSQLTokens["tms"] = "'"+tms+"'";
@@ -119,4 +120,4 @@ public:
 	}
 	
 };
-const string T2Adiv::TableName = "t2adiv";
+const string T4Assc::TableName = "t4assc";

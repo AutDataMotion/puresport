@@ -9,7 +9,7 @@ package puresport.config;
 import puresport.mvc.t1_usr_bsc.T1usrBscController;
 import puresport.mvc.t2_adiv.T2AdivController;
 import puresport.mvc.t3_stat.T3StatlController;
-import puresport.mvc.t4_assc.R4AsscController;
+import puresport.mvc.t4_assc.T4AsscController;
 import puresport.mvc.t5_crcl_stdy.T5CrclStdyController;
 import puresport.mvc.t6_mgr_ahr.T6MgrAhrController;
 import puresport.mvc.t7_crcl.T7CrclController;
@@ -42,7 +42,7 @@ public class RoutePlugins extends Routes {
 		add("/jf/puresport/t1_usr_bsc", T1usrBscController.class);
 		add("/jf/puresport/t2_adiv", T2AdivController.class);
 		add("/jf/puresport/t3_stat", T3StatlController.class);
-		add("/jf/puresport/t4_assc", R4AsscController.class);
+		add("/jf/puresport/t4_assc", T4AsscController.class);
 		add("/jf/puresport/t5_crcl_stdy", T5CrclStdyController.class);
 		add("/jf/puresport/t6_mgr_ahr", T6MgrAhrController.class);
 		add("/jf/puresport/t7_crcl", T7CrclController.class);

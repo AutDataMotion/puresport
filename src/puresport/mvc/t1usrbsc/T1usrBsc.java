@@ -136,6 +136,12 @@ public class T1usrBsc extends BaseModel<T1usrBsc> {
 	 */
 	public static final String column_bloodtp = "bloodtp";
 	
+	/**
+	 * 字段描述：民族 
+	 * 字段类型：varchar  长度：512
+	 */
+	public static final String column_ethnct = "ethnct";
+	
 	
 	/**
 	 * sqlId : puresport.t1usrBsc.splitPageFrom
@@ -162,6 +168,7 @@ public class T1usrBsc extends BaseModel<T1usrBsc> {
 	private Integer assc_mgrid;
 	private String email;
 	private String bloodtp;
+	private String ethnct;
 
 	public void setUsrid(Long usrid){
 		set(column_usrid, usrid);
@@ -276,6 +283,12 @@ public class T1usrBsc extends BaseModel<T1usrBsc> {
 	}
 	public <T> T getBloodtp() {
 		return get(column_bloodtp);
+	}
+	public void setEthnct(String ethnct){
+		set(column_ethnct, ethnct);
+	}
+	public <T> T getEthnct() {
+		return get(column_ethnct);
 	}
 	
 }

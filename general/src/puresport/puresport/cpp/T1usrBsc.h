@@ -117,6 +117,11 @@ private:
 	 * 字段类型：char  长度：1
 	 */
 	string bloodtp;
+	/**
+	 * 字段描述：民族 
+	 * 字段类型：varchar  长度：512
+	 */
+	string ethnct;
 public:
 	
 	
@@ -322,6 +327,17 @@ public:
 	}
 	string getBloodtp() {
 		return bloodtp;
+	}
+	
+	
+	T1usrBsc& setEthnct(string aethnct){
+		ethnct = aethnct;
+		
+		mapSQLTokens["ethnct"] = "'"+ethnct+"'";
+		return *this;
+	}
+	string getEthnct() {
+		return ethnct;
 	}
 	
 };

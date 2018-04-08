@@ -1,4 +1,4 @@
-package puresport.mvc.r4assc;
+package puresport.mvc.t4assc;
 
 import com.platform.annotation.Table;
 import com.platform.constant.ConstantInit;
@@ -14,13 +14,13 @@ import org.apache.log4j.Logger;
  */
 @SuppressWarnings("unused")
 //@Table(tableName = "t4_assc")
-public class R4Assc extends BaseModel<R4Assc> {
+public class T4Assc extends BaseModel<T4Assc> {
 
 	private static final long serialVersionUID = 6761767368352810428L;
 
-	private static Logger log = Logger.getLogger(R4Assc.class);
+	private static Logger log = Logger.getLogger(T4Assc.class);
 	
-	public static final R4Assc dao = new R4Assc();
+	public static final T4Assc dao = new T4Assc();
 	
 	/**
 	 * 字段描述：id 
@@ -60,10 +60,10 @@ public class R4Assc extends BaseModel<R4Assc> {
 	
 	
 	/**
-	 * sqlId : puresport.r4Assc.splitPageFrom
+	 * sqlId : puresport.t4Assc.splitPageFrom
 	 * 描述：分页from
 	 */
-	public static final String sqlId_splitPage_from = "puresport.r4Assc.splitPageFrom";
+	public static final String sqlId_splitPage_from = "puresport.t4Assc.splitPageFrom";
 
 	private Long id;
 	private String asscid;

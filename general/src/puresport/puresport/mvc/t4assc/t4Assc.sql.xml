@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<sql-statement namespace="puresport.r4Assc">
+<sql-statement namespace="puresport.t4Assc">
 	
 	<!-- 分页查询：from -->
 	<sql id="splitPageFrom">
