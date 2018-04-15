@@ -70,6 +70,13 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-pool2-2.4.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/cron4j-2.2.5.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/beetl-2.2.6.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/excelpoi/poi-3.17.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/excelpoi/poi-excelant-3.17.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/excelpoi/poi-ooxml-3.17.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/excelpoi/poi-ooxml-schemas-3.17.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/excelpoi/poi-scratchpad-3.17.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/excelpoi/commons-collections4-4.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-collections4-4.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/UtilZW"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DUCRPC"/>
