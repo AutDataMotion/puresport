@@ -67,6 +67,11 @@ private:
 	 * 字段类型：timestamp  长度：null
 	 */
 	string tms;
+	/**
+	 * 字段描述：正确|错误 
+	 * 字段类型：varchar  长度：16
+	 */
+	string result;
 public:
 	
 	
@@ -161,6 +166,17 @@ public:
 	}
 	string getTms() {
 		return tms;
+	}
+	
+	
+	T10ExamGrd& setResult(string aresult){
+		result = aresult;
+		
+		mapSQLTokens["result"] = "'"+result+"'";
+		return *this;
+	}
+	string getResult() {
+		return result;
 	}
 	
 };

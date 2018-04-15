@@ -48,6 +48,36 @@ INSERT INTO `dt_area` VALUES (110000,'北京','Beijing',NULL,NULL,NULL,0,'2017-0
 UNLOCK TABLES;
 
 --
+-- Table structure for table `t10_exam_grd`
+--
+
+DROP TABLE IF EXISTS `t10_exam_grd`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `t10_exam_grd` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `usrid` int(10) NOT NULL COMMENT '用户id',
+  `examid` int(10) NOT NULL COMMENT '考试id',
+  `exam_grd` int(10) DEFAULT NULL COMMENT '考试成绩',
+  `exam_st` char(1) DEFAULT NULL COMMENT '考试状态',
+  `prblmid` int(10) NOT NULL COMMENT '试题id',
+  `usr_aswr` char(1) DEFAULT NULL COMMENT '用户答案',
+  `prblm_aswr` char(1) DEFAULT NULL COMMENT '试题答案',
+  `tms` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '维护时间',
+  PRIMARY KEY (`id`,`usrid`,`examid`,`prblmid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='考试成绩信息表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t10_exam_grd`
+--
+
+LOCK TABLES `t10_exam_grd` WRITE;
+/*!40000 ALTER TABLE `t10_exam_grd` DISABLE KEYS */;
+/*!40000 ALTER TABLE `t10_exam_grd` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `t1_usr_bsc`
 --
 
@@ -80,6 +110,8 @@ CREATE TABLE `t1_usr_bsc` (
   `province` varchar(128) DEFAULT NULL COMMENT '省份名称',
   `city` varchar(128) DEFAULT NULL COMMENT '城市名称',
   `institute` varchar(512) DEFAULT NULL COMMENT '协会名称',
+  `department` varchar(256) DEFAULT NULL COMMENT '工作单位',
+  `post` varchar(128) DEFAULT NULL COMMENT '职务',
   PRIMARY KEY (`usrid`),
   UNIQUE KEY `usr_nm` (`usr_nm`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户基本信息表';
@@ -92,6 +124,34 @@ CREATE TABLE `t1_usr_bsc` (
 LOCK TABLES `t1_usr_bsc` WRITE;
 /*!40000 ALTER TABLE `t1_usr_bsc` DISABLE KEYS */;
 /*!40000 ALTER TABLE `t1_usr_bsc` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t2_adiv`
+--
+
+DROP TABLE IF EXISTS `t2_adiv`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `t2_adiv` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `adiv_cd` int(10) NOT NULL COMMENT '行政区划代码',
+  `unit_nm` varchar(512) DEFAULT NULL COMMENT '单位名称',
+  `plvl_adiv_cd` char(6) DEFAULT NULL COMMENT '上一级行政区划代码',
+  `adiv_hier` char(1) DEFAULT NULL COMMENT '行政区划层级',
+  `tms` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '维护时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `adiv_cd` (`adiv_cd`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='行政区划信息表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t2_adiv`
+--
+
+LOCK TABLES `t2_adiv` WRITE;
+/*!40000 ALTER TABLE `t2_adiv` DISABLE KEYS */;
+/*!40000 ALTER TABLE `t2_adiv` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -121,6 +181,61 @@ CREATE TABLE `t3_stat` (
 LOCK TABLES `t3_stat` WRITE;
 /*!40000 ALTER TABLE `t3_stat` DISABLE KEYS */;
 /*!40000 ALTER TABLE `t3_stat` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t4_assc`
+--
+
+DROP TABLE IF EXISTS `t4_assc`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `t4_assc` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `asscid` char(6) NOT NULL COMMENT '协会id',
+  `assc_nm` varchar(512) NOT NULL COMMENT '协会名称',
+  `plvl_asscid` char(6) DEFAULT NULL COMMENT '上一级协会id',
+  `assc_hier` char(1) DEFAULT NULL COMMENT '协会层级',
+  `tms` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '维护时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `asscid` (`asscid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='协会信息表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t4_assc`
+--
+
+LOCK TABLES `t4_assc` WRITE;
+/*!40000 ALTER TABLE `t4_assc` DISABLE KEYS */;
+/*!40000 ALTER TABLE `t4_assc` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t5_crcl_stdy`
+--
+
+DROP TABLE IF EXISTS `t5_crcl_stdy`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `t5_crcl_stdy` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
+  `usrid` int(10) NOT NULL COMMENT '用户id',
+  `crclid` int(10) NOT NULL COMMENT '课程id',
+  `stdy_st` char(1) DEFAULT NULL COMMENT '学习状态',
+  `ty_grd` float DEFAULT NULL COMMENT '学分',
+  `tms` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '维护时间',
+  PRIMARY KEY (`id`,`usrid`,`crclid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='课程学习信息表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t5_crcl_stdy`
+--
+
+LOCK TABLES `t5_crcl_stdy` WRITE;
+/*!40000 ALTER TABLE `t5_crcl_stdy` DISABLE KEYS */;
+/*!40000 ALTER TABLE `t5_crcl_stdy` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -167,6 +282,94 @@ LOCK TABLES `t6_mgr_ahr` WRITE;
 /*!40000 ALTER TABLE `t6_mgr_ahr` DISABLE KEYS */;
 /*!40000 ALTER TABLE `t6_mgr_ahr` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `t7_crcl`
+--
+
+DROP TABLE IF EXISTS `t7_crcl`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `t7_crcl` (
+  `crclid` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '课程id',
+  `crcl_brf` varchar(512) DEFAULT NULL COMMENT '课程简介',
+  `adiv` int(10) DEFAULT NULL COMMENT '行政区划代码',
+  `crcl_nm` varchar(512) DEFAULT NULL COMMENT '课程名称',
+  `crcl_file_rte` varchar(512) DEFAULT NULL COMMENT '课程文件路径',
+  `crcl_attr` char(1) DEFAULT NULL COMMENT '课程属性（是否必修）',
+  `ty_grd` int(10) DEFAULT NULL COMMENT '学分',
+  `crcl_cgy` char(2) DEFAULT NULL COMMENT '课程类别',
+  `tms` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '维护时间',
+  PRIMARY KEY (`crclid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='课程信息表';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t7_crcl`
+--
+
+LOCK TABLES `t7_crcl` WRITE;
+/*!40000 ALTER TABLE `t7_crcl` DISABLE KEYS */;
+/*!40000 ALTER TABLE `t7_crcl` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t8_exam`
+--
+
+DROP TABLE IF EXISTS `t8_exam`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `t8_exam` (
+  `examid` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '考试id',
+  `exam_brf` varchar(2048) DEFAULT NULL COMMENT '考试简介',
+  `adiv_cd` int(10) DEFAULT NULL COMMENT '行政区划代码',
+  `exam_nm` varchar(512) DEFAULT NULL COMMENT '考试名称',
+  `exam_attr` char(1) DEFAULT NULL COMMENT '考试属性（是否必考）',
+  `ty_grd` int(10) DEFAULT NULL COMMENT '学分',
+  `prblmid_list` varchar(2048) DEFAULT NULL COMMENT '试题id列表',
+  `tms` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '维护时间',
+  PRIMARY KEY (`examid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='考试信息';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t8_exam`
+--
+
+LOCK TABLES `t8_exam` WRITE;
+/*!40000 ALTER TABLE `t8_exam` DISABLE KEYS */;
+/*!40000 ALTER TABLE `t8_exam` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `t9_tstlib`
+--
+
+DROP TABLE IF EXISTS `t9_tstlib`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `t9_tstlib` (
+  `prblmid` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '试题id',
+  `prblm_ppl` varchar(512) DEFAULT NULL COMMENT '出题者',
+  `prblm_tp` char(2) DEFAULT NULL COMMENT '试题类型',
+  `opt` varchar(512) DEFAULT NULL COMMENT '选项',
+  `ttl` varchar(512) DEFAULT NULL COMMENT '题目',
+  `prblm_aswr` char(1) DEFAULT NULL COMMENT '试题答案',
+  `scor` int(10) DEFAULT NULL COMMENT '分数',
+  `tms` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '维护时间',
+  PRIMARY KEY (`prblmid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='试题库';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `t9_tstlib`
+--
+
+LOCK TABLES `t9_tstlib` WRITE;
+/*!40000 ALTER TABLE `t9_tstlib` DISABLE KEYS */;
+/*!40000 ALTER TABLE `t9_tstlib` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -177,4 +380,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-04-15 17:50:52
+-- Dump completed on 2018-04-15 22:20:12

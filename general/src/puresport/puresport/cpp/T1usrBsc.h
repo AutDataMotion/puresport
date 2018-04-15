@@ -94,9 +94,9 @@ private:
 	string tms;
 	/**
 	 * 字段描述：国家省市管理员id 
-	 * 字段类型：int  长度：null
+	 * 字段类型：bigint  长度：null
 	 */
-	int cty_prov_city_mgrid;
+	long cty_prov_city_mgrid;
 	/**
 	 * 字段描述：备注 
 	 * 字段类型：varchar  长度：2048
@@ -122,6 +122,41 @@ private:
 	 * 字段类型：varchar  长度：512
 	 */
 	string ethnct;
+	/**
+	 * 字段描述：备注 
+	 * 字段类型：varchar  长度：512
+	 */
+	string remark;
+	/**
+	 * 字段描述：类型级别 
+	 * 字段类型：varchar  长度：8
+	 */
+	string typelevel;
+	/**
+	 * 字段描述：省份名称 
+	 * 字段类型：varchar  长度：128
+	 */
+	string province;
+	/**
+	 * 字段描述：城市名称 
+	 * 字段类型：varchar  长度：128
+	 */
+	string city;
+	/**
+	 * 字段描述：协会名称 
+	 * 字段类型：varchar  长度：512
+	 */
+	string institute;
+	/**
+	 * 字段描述：工作单位 
+	 * 字段类型：varchar  长度：256
+	 */
+	string department;
+	/**
+	 * 字段描述：职务 
+	 * 字段类型：varchar  长度：128
+	 */
+	string post;
 public:
 	
 	
@@ -277,12 +312,12 @@ public:
 	}
 	
 	
-	T1usrBsc& setCty_prov_city_mgrid(int acty_prov_city_mgrid){
+	T1usrBsc& setCty_prov_city_mgrid(long acty_prov_city_mgrid){
 		cty_prov_city_mgrid = acty_prov_city_mgrid;
 		mapSQLTokens["cty_prov_city_mgrid"] = to_string(cty_prov_city_mgrid);
 		return *this;
 	}
-	int getCty_prov_city_mgrid() {
+	long getCty_prov_city_mgrid() {
 		return cty_prov_city_mgrid;
 	}
 	
@@ -338,6 +373,83 @@ public:
 	}
 	string getEthnct() {
 		return ethnct;
+	}
+	
+	
+	T1usrBsc& setRemark(string aremark){
+		remark = aremark;
+		
+		mapSQLTokens["remark"] = "'"+remark+"'";
+		return *this;
+	}
+	string getRemark() {
+		return remark;
+	}
+	
+	
+	T1usrBsc& setTypelevel(string atypelevel){
+		typelevel = atypelevel;
+		
+		mapSQLTokens["typelevel"] = "'"+typelevel+"'";
+		return *this;
+	}
+	string getTypelevel() {
+		return typelevel;
+	}
+	
+	
+	T1usrBsc& setProvince(string aprovince){
+		province = aprovince;
+		
+		mapSQLTokens["province"] = "'"+province+"'";
+		return *this;
+	}
+	string getProvince() {
+		return province;
+	}
+	
+	
+	T1usrBsc& setCity(string acity){
+		city = acity;
+		
+		mapSQLTokens["city"] = "'"+city+"'";
+		return *this;
+	}
+	string getCity() {
+		return city;
+	}
+	
+	
+	T1usrBsc& setInstitute(string ainstitute){
+		institute = ainstitute;
+		
+		mapSQLTokens["institute"] = "'"+institute+"'";
+		return *this;
+	}
+	string getInstitute() {
+		return institute;
+	}
+	
+	
+	T1usrBsc& setDepartment(string adepartment){
+		department = adepartment;
+		
+		mapSQLTokens["department"] = "'"+department+"'";
+		return *this;
+	}
+	string getDepartment() {
+		return department;
+	}
+	
+	
+	T1usrBsc& setPost(string apost){
+		post = apost;
+		
+		mapSQLTokens["post"] = "'"+post+"'";
+		return *this;
+	}
+	string getPost() {
+		return post;
 	}
 	
 };

@@ -108,7 +108,7 @@ public class T1usrBsc extends BaseModel<T1usrBsc> {
 	
 	/**
 	 * 字段描述：国家省市管理员id 
-	 * 字段类型：int  长度：null
+	 * 字段类型：bigint  长度：null
 	 */
 	public static final String column_cty_prov_city_mgrid = "cty_prov_city_mgrid";
 	
@@ -142,6 +142,48 @@ public class T1usrBsc extends BaseModel<T1usrBsc> {
 	 */
 	public static final String column_ethnct = "ethnct";
 	
+	/**
+	 * 字段描述：备注 
+	 * 字段类型：varchar  长度：512
+	 */
+	public static final String column_remark = "remark";
+	
+	/**
+	 * 字段描述：类型级别 
+	 * 字段类型：varchar  长度：8
+	 */
+	public static final String column_typelevel = "typelevel";
+	
+	/**
+	 * 字段描述：省份名称 
+	 * 字段类型：varchar  长度：128
+	 */
+	public static final String column_province = "province";
+	
+	/**
+	 * 字段描述：城市名称 
+	 * 字段类型：varchar  长度：128
+	 */
+	public static final String column_city = "city";
+	
+	/**
+	 * 字段描述：协会名称 
+	 * 字段类型：varchar  长度：512
+	 */
+	public static final String column_institute = "institute";
+	
+	/**
+	 * 字段描述：工作单位 
+	 * 字段类型：varchar  长度：256
+	 */
+	public static final String column_department = "department";
+	
+	/**
+	 * 字段描述：职务 
+	 * 字段类型：varchar  长度：128
+	 */
+	public static final String column_post = "post";
+	
 	
 	/**
 	 * sqlId : puresport.t1usrBsc.splitPageFrom
@@ -163,12 +205,19 @@ public class T1usrBsc extends BaseModel<T1usrBsc> {
 	private String asscid;
 	private String mblph_no;
 	private Timestamp tms;
-	private Integer cty_prov_city_mgrid;
+	private Long cty_prov_city_mgrid;
 	private String rmrk;
 	private Integer assc_mgrid;
 	private String email;
 	private String bloodtp;
 	private String ethnct;
+	private String remark;
+	private String typelevel;
+	private String province;
+	private String city;
+	private String institute;
+	private String department;
+	private String post;
 
 	public void setUsrid(Long usrid){
 		set(column_usrid, usrid);
@@ -254,7 +303,7 @@ public class T1usrBsc extends BaseModel<T1usrBsc> {
 	public <T> T getTms() {
 		return get(column_tms);
 	}
-	public void setCty_prov_city_mgrid(Integer cty_prov_city_mgrid){
+	public void setCty_prov_city_mgrid(Long cty_prov_city_mgrid){
 		set(column_cty_prov_city_mgrid, cty_prov_city_mgrid);
 	}
 	public <T> T getCty_prov_city_mgrid() {
@@ -289,6 +338,48 @@ public class T1usrBsc extends BaseModel<T1usrBsc> {
 	}
 	public <T> T getEthnct() {
 		return get(column_ethnct);
+	}
+	public void setRemark(String remark){
+		set(column_remark, remark);
+	}
+	public <T> T getRemark() {
+		return get(column_remark);
+	}
+	public void setTypelevel(String typelevel){
+		set(column_typelevel, typelevel);
+	}
+	public <T> T getTypelevel() {
+		return get(column_typelevel);
+	}
+	public void setProvince(String province){
+		set(column_province, province);
+	}
+	public <T> T getProvince() {
+		return get(column_province);
+	}
+	public void setCity(String city){
+		set(column_city, city);
+	}
+	public <T> T getCity() {
+		return get(column_city);
+	}
+	public void setInstitute(String institute){
+		set(column_institute, institute);
+	}
+	public <T> T getInstitute() {
+		return get(column_institute);
+	}
+	public void setDepartment(String department){
+		set(column_department, department);
+	}
+	public <T> T getDepartment() {
+		return get(column_department);
+	}
+	public void setPost(String post){
+		set(column_post, post);
+	}
+	public <T> T getPost() {
+		return get(column_post);
 	}
 	
 }

@@ -37,6 +37,31 @@ private:
 	 * 字段类型：timestamp  长度：null
 	 */
 	string tms;
+	/**
+	 * 字段描述： 
+	 * 字段类型：varchar  长度：32
+	 */
+	string typecnt;
+	/**
+	 * 字段描述： 
+	 * 字段类型：int  长度：null
+	 */
+	long cnt_online;
+	/**
+	 * 字段描述： 
+	 * 字段类型：int  长度：null
+	 */
+	long cnt_2;
+	/**
+	 * 字段描述： 
+	 * 字段类型：int  长度：null
+	 */
+	long cnt_3;
+	/**
+	 * 字段描述： 
+	 * 字段类型：varchar  长度：32
+	 */
+	string remark;
 public:
 	
 	
@@ -68,6 +93,58 @@ public:
 	}
 	string getTms() {
 		return tms;
+	}
+	
+	
+	T3Statl& setTypecnt(string atypecnt){
+		typecnt = atypecnt;
+		
+		mapSQLTokens["typecnt"] = "'"+typecnt+"'";
+		return *this;
+	}
+	string getTypecnt() {
+		return typecnt;
+	}
+	
+	
+	T3Statl& setCnt_online(long acnt_online){
+		cnt_online = acnt_online;
+		mapSQLTokens["cnt_online"] = to_string(cnt_online);
+		return *this;
+	}
+	long getCnt_online() {
+		return cnt_online;
+	}
+	
+	
+	T3Statl& setCnt_2(long acnt_2){
+		cnt_2 = acnt_2;
+		mapSQLTokens["cnt_2"] = to_string(cnt_2);
+		return *this;
+	}
+	long getCnt_2() {
+		return cnt_2;
+	}
+	
+	
+	T3Statl& setCnt_3(long acnt_3){
+		cnt_3 = acnt_3;
+		mapSQLTokens["cnt_3"] = to_string(cnt_3);
+		return *this;
+	}
+	long getCnt_3() {
+		return cnt_3;
+	}
+	
+	
+	T3Statl& setRemark(string aremark){
+		remark = aremark;
+		
+		mapSQLTokens["remark"] = "'"+remark+"'";
+		return *this;
+	}
+	string getRemark() {
+		return remark;
 	}
 	
 };

@@ -3,7 +3,7 @@
 	<div class="col-md-12">
 		<ol class="breadcrumb">
 			<li><a href="#" onclick="common_ajax.ajaxMainPanel('/puresport/index');">${i18nMap["admin.common.mainPage"]}</a></li>
-			<li class="active">统计信息管理</li>
+			<li class="active">全国省市表管理</li>
 		</ol>
 	</div>
 </div>
@@ -92,35 +92,19 @@
 								</th>
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
 										'mainPanel', 'splitPage', 'id')">
-									id	${orderBy("id")}
+									区域主键	${orderBy("id")}
 								</th>
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
-										'mainPanel', 'splitPage', 'login_cnt')">
-									已登陆次数	${orderBy("login_cnt")}
+										'mainPanel', 'splitPage', 'name')">
+									区域名称	${orderBy("name")}
 								</th>
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
-										'mainPanel', 'splitPage', 'tms')">
-									维护时间	${orderBy("tms")}
+										'mainPanel', 'splitPage', 'code')">
+									区域代码	${orderBy("code")}
 								</th>
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
-										'mainPanel', 'splitPage', 'typecnt')">
-										${orderBy("typecnt")}
-								</th>
-								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
-										'mainPanel', 'splitPage', 'cnt_online')">
-										${orderBy("cnt_online")}
-								</th>
-								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
-										'mainPanel', 'splitPage', 'cnt_2')">
-										${orderBy("cnt_2")}
-								</th>
-								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
-										'mainPanel', 'splitPage', 'cnt_3')">
-										${orderBy("cnt_3")}
-								</th>
-								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
-										'mainPanel', 'splitPage', 'remark')">
-										${orderBy("remark")}
+										'mainPanel', 'splitPage', 'parent_id')">
+									上级主键	${orderBy("parent_id")}
 								</th>
 								<th class="hidden-xs">
 									${i18nMap["admin.common.operation"]}
@@ -144,47 +128,23 @@
 								
 								<td>
 
-							${item["login_cnt"]!}
-
-								</td>
-								
-								<td>
-
-							${item["tms"]!, dateFormat="yyyy-MM-dd HH:mm:ss"}
-
-								</td>
-								
-								<td>
-
-								${escapeXml(item["typecnt"]!)}
+								${escapeXml(item["name"]!)}
 
 								</td>
 							
 								
 								<td>
 
-							${item["cnt_online"]!}
-
-								</td>
-								
-								<td>
-
-							${item["cnt_2"]!}
-
-								</td>
-								
-								<td>
-
-							${item["cnt_3"]!}
-
-								</td>
-								
-								<td>
-
-								${escapeXml(item["remark"]!)}
+								${escapeXml(item["code"]!)}
 
 								</td>
 							
+								
+								<td>
+
+							${item["parent_id"]!}
+
+								</td>
 								
 								
 
