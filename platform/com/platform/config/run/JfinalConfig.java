@@ -31,6 +31,9 @@ import com.platform.plugin.SqlXmlPlugin;
 import com.platform.tools.ToolCache;
 import com.platform.tools.ToolString;
 
+import puresport.config.DBMappingMy;
+import puresport.constant.PropertiesInitMy;
+
 /**
  * Jfinal API 引导式配置
  */
@@ -49,11 +52,11 @@ public class JfinalConfig extends JFinalConfig {
 						new PropertiesPlugin(
 								loadPropertyFile("init.properties"), true));
 		com.platform.config.run.ConfMain.getInstance().initProperties();
-
+//
 		// 子系统配置初始化
-//		 thairice.config.ConfMain.getInstance().setPropertyes(new
-//		 PropertiesInitMy(loadPropertyFile("init_rice.properties"), false));
-//		 thairice.config.ConfMain.getInstance().initProperties();
+		 puresport.config.ConfMain.getInstance().setPropertyes(new
+		 PropertiesInitMy(loadPropertyFile("init_sport.properties"), false));
+		 puresport.config.ConfMain.getInstance().initProperties();
 
 		log.info("configConstant 设置字符集");
 		constants.setEncoding(ToolString.encoding);
@@ -85,7 +88,7 @@ public class JfinalConfig extends JFinalConfig {
 		routes.add(new PlatformRoutes());
 		
 		//子系统路由
-//		 routes.add(new thairice.config.RoutePlugins());
+		 routes.add(new puresport.config.RoutePlugins());
 	}
 
 	/**
@@ -99,8 +102,8 @@ public class JfinalConfig extends JFinalConfig {
 		com.platform.config.run.ConfMain.getInstance().initDBMapping(plugins);
 		
 		// 数据库层设置初始化 ---子系统
-//		thairice.config.ConfMain.getInstance().setDBMapping(new DBMappingMy());
-//		thairice.config.ConfMain.getInstance().initDBMapping(plugins);
+		puresport.config.ConfMain.getInstance().setDBMapping(new DBMappingMy());
+		puresport.config.ConfMain.getInstance().initDBMapping(plugins);
 		
 		
 		log.info("I18NPlugin 国际化键值对加载");

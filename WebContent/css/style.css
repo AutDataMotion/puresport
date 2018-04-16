@@ -1,4 +1,4 @@
-@import url(http://fonts.useso.com/css?family=Open+Sans:400,300,600,700,800);
+/*@import url(http://fonts.useso.com/css?family=Open+Sans:400,300,600,700,800);*/
 
 
 html, body{
@@ -20,10 +20,16 @@ body a{
 	background: url(../images/nav_bar_icon02.png) no-repeat center center !important;
 }
 
-.form-forgetpwdbox{
+.form-forgetpwdbox_user{
 	display:none;
 }
-.form-loginbox{
+.form-loginbox_user{
+	display:block;
+}
+.form-forgetpwdbox_admin{
+	display:none;
+}
+.form-loginbox_admin{
 	display:block;
 }
 .header_bg{

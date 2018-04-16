@@ -92,6 +92,7 @@ public abstract class Model<M extends Model> implements Serializable {
 	}
 	
 	private Config getConfig() {
+		//configName = "t1_usr_bsc";
 		if (configName != null)
 			return DbKit.getConfig(configName);
 		return DbKit.getConfig(getUsefulClass());

@@ -5,7 +5,11 @@ import com.platform.mvc.base.BaseController;
 import com.platform.mvc.base.BaseModel;
 
 import org.apache.log4j.Logger;
+
+import com.alibaba.fastjson.JSONObject;
 import com.jfinal.aop.Before;
+import com.jfinal.aop.Clear;
+import com.jfinal.plugin.activerecord.Db;
 
 import puresport.constant.ConstantInitMy;
 
@@ -35,6 +39,82 @@ public class T1usrBscController extends BaseController {
 	/**
 	 * 列表
 	 */
+	@Clear
+	public void login()
+	{
+		boolean flag = false;  
+        String msg = "";  
+        int userType = 0;
+        JSONObject json = new JSONObject();  
+        
+        String mblph_no = getPara("account");//获取表单数据，这里的参数就是页面表单中的name属性值  
+        String password = getPara("pwd");  
+        T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where mblph_no=?", mblph_no);//根据用户名查询数据库中的用户  
+        if(item != null) {  
+            if(password.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
+                flag = true; 
+                userType = item.getUsr_tp();
+                getSession().setAttribute("usrid", item.getUsrid());//设置session，保存登录用户的昵称  
+            }  
+            else {  
+                msg = "密码不正确";  
+            }  
+        }  
+        else {  
+            msg = "帐号不存在";  
+        }  
+        json.put("flag", flag); 
+        json.put("userType", userType); 
+        json.put("msg", msg); 
+        json.put("url", getCxt()+"/jf/puresport/pagesController/selfcenter"); 
+        renderJson(json);  
+	}
+	@Clear
+	public void ImproveUserInfo()
+	{
+		boolean flag = false;  
+        String msg = "";  
+//        String userType = "";
+        JSONObject json = new JSONObject();  
+        
+        Long userID = (Long) getSession().getAttribute("usrid");
+        T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", userID);//根据用户名查询数据库中的用户  
+        if(item!=null)
+        {
+//        	userType = getPara("userType");
+            if((int)item.getUsr_tp()==0)//运动员
+            {
+
+            	String code = getPara("code");//获取表单数据，这里的参数就是页面表单中的name属性值  
+                String competetion = getPara("competetion");
+                String competetionitem = getPara("competetionitem");
+//                item.setAdiv_cd(code);
+//                item.setSpt_prj(competetionitem);
+                int res = Db.update("update puresport.t1_usr_bsc set adiv_cd=?,spt_prj=? where usrid=?",code,competetionitem,userID);
+                if(res>0)
+                {
+                	flag = true; 
+                }
+            }
+            else {//辅助人员
+            	String company = getPara("company");//获取表单数据，这里的参数就是页面表单中的name属性值  
+                String position = getPara("position");
+                int res = Db.update("update puresport.t1_usr_bsc set wrk_unit=?,post=? where usrid=?",company,position,userID);
+                if(res>0)
+                {
+                	flag = true; 
+                }
+            }
+        }
+        else {  
+            msg = "更新失败";  
+        }  
+        json.put("flag", flag); 
+        json.put("msg", msg); 
+        json.put("url", getCxt()+"/jf/puresport/pagesController/selfcenter"); 
+        renderJson(json);  
+        
+	}
 	public void index() {
 		paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T1usrBsc.sqlId_splitPage_from);
 		renderWithPath(pthv+"list.html");

@@ -52,7 +52,7 @@ skins available:
 	height:302px;
 	overflow:hidden;
 	cursor: pointer;
-	background:url(skins/charming/empty.gif) repeat;
+	/*background:url(skins/charming/empty.gif) repeat;*/
 }
 
 
@@ -74,7 +74,7 @@ skins available:
 	position:absolute;
 	width:73px;
 	height:73px;
-	background:url(skins/charming/play_overOFF.png) 0 0 no-repeat;
+	/*background:url(skins/charming/play_overOFF.png) 0 0 no-repeat;*/
 	display:none;
 	z-index:200;
 	cursor: pointer;
@@ -100,7 +100,7 @@ skins available:
 	left:5px;
 	width:47px;
 	height:47px;
-	background:url(skins/charming/leftNavOFF.png) 0 0 no-repeat;
+	/*background:url(skins/charming/leftNavOFF.png) 0 0 no-repeat;*/
 	cursor: pointer;
 }
 .allinone_carousel.charming .leftNav:hover {
@@ -111,7 +111,7 @@ skins available:
 	right:5px;
 	width:47px;
 	height:47px;
-	background:url(skins/charming/rightNavOFF.png) 0 0 no-repeat;
+	/*background:url(skins/charming/rightNavOFF.png) 0 0 no-repeat;*/
 	cursor: pointer;
 }
 .allinone_carousel.charming .rightNav:hover {
@@ -129,7 +129,7 @@ skins available:
 	display:block;
 	width:19px;
 	height:19px;
-	background:url(skins/charming/bottomNavOFF.png) 0 0 no-repeat;
+	/*background:url(skins/charming/bottomNavOFF.png) 0 0 no-repeat;*/
 	padding-left:9px;
 	cursor: pointer;
 }
@@ -207,7 +207,7 @@ skins available:
 }
 
 .allinone_carousel.sweet .playOver:hover {
-	background:url(skins/sweet/play_overOFF.png) 0 0 no-repeat;
+	/*background:url(skins/sweet/play_overOFF.png) 0 0 no-repeat;*/
 	display:none;
 	z-index:200;
 	cursor: pointer;
@@ -237,7 +237,7 @@ skins available:
 	right:-5px;
 	width:110px;
 	height:157px;
-	background:url(skins/sweet/rightNavOFF.png) 0 0 no-repeat;
+	/*background:url(skins/sweet/rightNavOFF.png) 0 0 no-repeat;*/
 	cursor: pointer;
 }
 .allinone_carousel.sweet .rightNav:hover {
@@ -367,7 +367,7 @@ skins available:
 	left:-23px;
 	width:110px;
 	height:157px;
-	background:url(skins/powerful/leftNavOFF.png) 0 0 no-repeat;
+	/*background:url(skins/powerful/leftNavOFF.png) 0 0 no-repeat;*/
 	cursor: pointer;
 }
 .allinone_carousel.powerful .leftNav:hover {
