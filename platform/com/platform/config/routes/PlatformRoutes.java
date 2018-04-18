@@ -21,6 +21,8 @@ import com.platform.mvc.ueditor.UeditorController;
 import com.platform.mvc.upload.UploadController;
 import com.platform.mvc.user.UserController;
 
+
+
 /**
  * 平台路由
  */
@@ -28,6 +30,7 @@ public class PlatformRoutes extends Routes {
 
 	@Override
 	public void config() {
+		//add("/jf/puresport/pagesController", pagesController.class);
 		add("/jf/platform/login", LoginController.class);
 
 		add("/jf/platform/", IndexController.class);

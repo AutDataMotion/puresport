@@ -8,6 +8,7 @@
 package puresport.config;
 
 import com.jfinal.config.Routes;
+
 /**
  * 创建时间：2016年1月28日 下午2:15:23
  * 项目名称：DUCPlatFromWeb
@@ -21,6 +22,10 @@ import com.jfinal.config.Routes;
  *2016年1月28日		Zhongweng	1.0			1.0Version
  */
 
+
+import puresport.mvc.pages.pagesController;
+
+
 import puresport.mvc.t10examgrd.T10ExamGrdController;
 import puresport.mvc.t1usrbsc.T1usrBscController;
 import puresport.mvc.t2adiv.T2AdivController;
@@ -31,6 +36,7 @@ import puresport.mvc.t6mgrahr.T6MgrAhrController;
 import puresport.mvc.t7crcl.T7CrclController;
 import puresport.mvc.t8exam.T8ExamController;
 import puresport.mvc.t9tstlib.T9TstlibController;
+
 
 /**
  * <p>
@@ -44,6 +50,7 @@ import puresport.mvc.t9tstlib.T9TstlibController;
 public class RoutePlugins extends Routes {
 	@Override
 	public void config() {
+		add("/jf/puresport/pagesController", pagesController.class);
 		add("/jf/puresport/t1_usr_bsc", T1usrBscController.class);
 		add("/jf/puresport/t2_adiv", T2AdivController.class);
 		add("/jf/puresport/t3_stat", T3StatlController.class);

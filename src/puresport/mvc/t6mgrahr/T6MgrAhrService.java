@@ -45,7 +45,7 @@ public class T6MgrAhrService extends BaseService {
 		if (CollectionUtils.isEmpty(fieldRows)) {
 			return true;
 		}
-		outFailedMdl.set(fieldRows);
+//		outFailedMdl.set(fieldRows);
 		return false;
 	}
 

@@ -50,11 +50,13 @@ public class JfinalConfig extends JFinalConfig {
 		com.platform.config.run.ConfMain.getInstance()
 				.setPropertyes(new PropertiesPlugin(loadPropertyFile("init.properties"), true));
 		com.platform.config.run.ConfMain.getInstance().initProperties();
-
+//
 		// 子系统配置初始化
-		puresport.config.ConfMain.getInstance()
-				.setPropertyes(new PropertiesInitMy(loadPropertyFile("init_sport.properties"), false));
-		puresport.config.ConfMain.getInstance().initProperties();
+
+		 puresport.config.ConfMain.getInstance().setPropertyes(new
+		 PropertiesInitMy(loadPropertyFile("init_sport.properties"), false));
+		 puresport.config.ConfMain.getInstance().initProperties();
+
 
 		log.info("configConstant 设置字符集");
 		constants.setEncoding(ToolString.encoding);
@@ -84,8 +86,10 @@ public class JfinalConfig extends JFinalConfig {
 		log.info("configRoute 手动注册路由");
 		routes.add(new PlatformRoutes());
 
-		// 子系统路由
-		routes.add(new puresport.config.RoutePlugins());
+		
+		//子系统路由
+		 routes.add(new puresport.config.RoutePlugins());
+
 	}
 
 	/**
