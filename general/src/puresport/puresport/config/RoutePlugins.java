@@ -6,16 +6,7 @@
  * @version 1.0
  */
 package puresport.config;
-import puresport.mvc.t1_usr_bsc.T1usrBscController;
-import puresport.mvc.t2_adiv.T2AdivController;
-import puresport.mvc.t3_stat.T3StatlController;
-import puresport.mvc.t4_assc.R4AsscController;
-import puresport.mvc.t5_crcl_stdy.T5CrclStdyController;
-import puresport.mvc.t6_mgr_ahr.T6MgrAhrController;
-import puresport.mvc.t7_crcl.T7CrclController;
-import puresport.mvc.t8_exam.T8ExamController;
-import puresport.mvc.t9_tstlib.T9TstlibController;
-import puresport.mvc.t10_exam_grd.T10ExamGrdController;
+import puresport.mvc.dt_area.AreaController;
 import com.jfinal.config.Routes;
 /**
  * 创建时间：2016年1月28日 下午2:15:23
@@ -39,15 +30,6 @@ import com.jfinal.config.Routes;
 public class RoutePlugins extends Routes {
 	@Override
 	public void config() {
-		add("/jf/puresport/t1_usr_bsc", T1usrBscController.class);
-		add("/jf/puresport/t2_adiv", T2AdivController.class);
-		add("/jf/puresport/t3_stat", T3StatlController.class);
-		add("/jf/puresport/t4_assc", R4AsscController.class);
-		add("/jf/puresport/t5_crcl_stdy", T5CrclStdyController.class);
-		add("/jf/puresport/t6_mgr_ahr", T6MgrAhrController.class);
-		add("/jf/puresport/t7_crcl", T7CrclController.class);
-		add("/jf/puresport/t8_exam", T8ExamController.class);
-		add("/jf/puresport/t9_tstlib", T9TstlibController.class);
-		add("/jf/puresport/t10_exam_grd", T10ExamGrdController.class);
+		add("/jf/puresport/dt_area", AreaController.class);
 	}
 }

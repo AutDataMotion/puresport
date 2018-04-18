@@ -30,7 +30,7 @@ public class T6MgrAhr extends BaseModel<T6MgrAhr> {
 	
 	/**
 	 * 字段描述：用户类型 
-	 * 字段类型：char  长度：2
+	 * 字段类型：varchar  长度：32
 	 */
 	public static final String column_usr_tp = "usr_tp";
 	
@@ -48,19 +48,19 @@ public class T6MgrAhr extends BaseModel<T6MgrAhr> {
 	
 	/**
 	 * 字段描述：证件类型 
-	 * 字段类型：char  长度：2
+	 * 字段类型：varchar  长度：16
 	 */
 	public static final String column_crdt_tp = "crdt_tp";
 	
 	/**
 	 * 字段描述：证件号 
-	 * 字段类型：varchar  长度：512
+	 * 字段类型：varchar  长度：64
 	 */
 	public static final String column_crdt_no = "crdt_no";
 	
 	/**
 	 * 字段描述：性别 
-	 * 字段类型：char  长度：1
+	 * 字段类型：char  长度：2
 	 */
 	public static final String column_gnd = "gnd";
 	
@@ -72,19 +72,19 @@ public class T6MgrAhr extends BaseModel<T6MgrAhr> {
 	
 	/**
 	 * 字段描述：密码 
-	 * 字段类型：varchar  长度：512
+	 * 字段类型：varchar  长度：64
 	 */
 	public static final String column_pswd = "pswd";
 	
 	/**
 	 * 字段描述：职务 
-	 * 字段类型：varchar  长度：512
+	 * 字段类型：varchar  长度：128
 	 */
 	public static final String column_post = "post";
 	
 	/**
 	 * 字段描述：出生日期 
-	 * 字段类型：char  长度：8
+	 * 字段类型：varchar  长度：16
 	 */
 	public static final String column_brth_dt = "brth_dt";
 	
@@ -102,7 +102,7 @@ public class T6MgrAhr extends BaseModel<T6MgrAhr> {
 	
 	/**
 	 * 字段描述：手机号 
-	 * 字段类型：varchar  长度：256
+	 * 字段类型：varchar  长度：32
 	 */
 	public static final String column_mblph_no = "mblph_no";
 	
@@ -126,15 +126,39 @@ public class T6MgrAhr extends BaseModel<T6MgrAhr> {
 	
 	/**
 	 * 字段描述：邮箱 
-	 * 字段类型：varchar  长度：512
+	 * 字段类型：varchar  长度：64
 	 */
 	public static final String column_email = "email";
 	
 	/**
 	 * 字段描述：备注 
-	 * 字段类型：varchar  长度：2048
+	 * 字段类型：varchar  长度：512
 	 */
 	public static final String column_rmrk = "rmrk";
+	
+	/**
+	 * 字段描述：级别类型 
+	 * 字段类型：char  长度：8
+	 */
+	public static final String column_typeleve = "typeleve";
+	
+	/**
+	 * 字段描述：省 
+	 * 字段类型：varchar  长度：128
+	 */
+	public static final String column_province = "province";
+	
+	/**
+	 * 字段描述：城市 
+	 * 字段类型：varchar  长度：128
+	 */
+	public static final String column_city = "city";
+	
+	/**
+	 * 字段描述：协会 
+	 * 字段类型：varchar  长度：512
+	 */
+	public static final String column_institute = "institute";
 	
 	
 	/**
@@ -162,6 +186,10 @@ public class T6MgrAhr extends BaseModel<T6MgrAhr> {
 	private Integer assc_mgrid;
 	private String email;
 	private String rmrk;
+	private String typeleve;
+	private String province;
+	private String city;
+	private String institute;
 
 	public void setUsrid(Long usrid){
 		set(column_usrid, usrid);
@@ -276,6 +304,30 @@ public class T6MgrAhr extends BaseModel<T6MgrAhr> {
 	}
 	public <T> T getRmrk() {
 		return get(column_rmrk);
+	}
+	public void setTypeleve(String typeleve){
+		set(column_typeleve, typeleve);
+	}
+	public <T> T getTypeleve() {
+		return get(column_typeleve);
+	}
+	public void setProvince(String province){
+		set(column_province, province);
+	}
+	public <T> T getProvince() {
+		return get(column_province);
+	}
+	public void setCity(String city){
+		set(column_city, city);
+	}
+	public <T> T getCity() {
+		return get(column_city);
+	}
+	public void setInstitute(String institute){
+		set(column_institute, institute);
+	}
+	public <T> T getInstitute() {
+		return get(column_institute);
 	}
 	
 }

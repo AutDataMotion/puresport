@@ -40,6 +40,36 @@ public class T3Statl extends BaseModel<T3Statl> {
 	 */
 	public static final String column_tms = "tms";
 	
+	/**
+	 * 字段描述： 
+	 * 字段类型：varchar  长度：32
+	 */
+	public static final String column_typecnt = "typecnt";
+	
+	/**
+	 * 字段描述： 
+	 * 字段类型：int  长度：null
+	 */
+	public static final String column_cnt_online = "cnt_online";
+	
+	/**
+	 * 字段描述： 
+	 * 字段类型：int  长度：null
+	 */
+	public static final String column_cnt_2 = "cnt_2";
+	
+	/**
+	 * 字段描述： 
+	 * 字段类型：int  长度：null
+	 */
+	public static final String column_cnt_3 = "cnt_3";
+	
+	/**
+	 * 字段描述： 
+	 * 字段类型：varchar  长度：32
+	 */
+	public static final String column_remark = "remark";
+	
 	
 	/**
 	 * sqlId : puresport.t3Statl.splitPageFrom
@@ -50,6 +80,11 @@ public class T3Statl extends BaseModel<T3Statl> {
 	private Long id;
 	private Integer login_cnt;
 	private Timestamp tms;
+	private String typecnt;
+	private Long cnt_online;
+	private Long cnt_2;
+	private Long cnt_3;
+	private String remark;
 
 	public void setId(Long id){
 		set(column_id, id);
@@ -68,6 +103,36 @@ public class T3Statl extends BaseModel<T3Statl> {
 	}
 	public <T> T getTms() {
 		return get(column_tms);
+	}
+	public void setTypecnt(String typecnt){
+		set(column_typecnt, typecnt);
+	}
+	public <T> T getTypecnt() {
+		return get(column_typecnt);
+	}
+	public void setCnt_online(Long cnt_online){
+		set(column_cnt_online, cnt_online);
+	}
+	public <T> T getCnt_online() {
+		return get(column_cnt_online);
+	}
+	public void setCnt_2(Long cnt_2){
+		set(column_cnt_2, cnt_2);
+	}
+	public <T> T getCnt_2() {
+		return get(column_cnt_2);
+	}
+	public void setCnt_3(Long cnt_3){
+		set(column_cnt_3, cnt_3);
+	}
+	public <T> T getCnt_3() {
+		return get(column_cnt_3);
+	}
+	public void setRemark(String remark){
+		set(column_remark, remark);
+	}
+	public <T> T getRemark() {
+		return get(column_remark);
 	}
 	
 }

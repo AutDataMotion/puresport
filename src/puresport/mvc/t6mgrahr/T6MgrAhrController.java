@@ -1,10 +1,10 @@
 package puresport.mvc.t6mgrahr;
 
-import com.platform.constant.ConstantRender;
-import com.platform.mvc.base.BaseController;
-import com.platform.mvc.base.BaseModel;
+import java.io.IOException;
+import java.util.List;
 
 import org.apache.log4j.Logger;
+
 
 import com.alibaba.fastjson.JSONObject;
 import com.jfinal.aop.Before;
@@ -15,20 +15,25 @@ import puresport.constant.ConstantInitMy;
 import puresport.mvc.t1usrbsc.T1usrBsc;
 
 
+
+import com.platform.constant.ConstantRender;
+import com.platform.mvc.base.BaseController;
+
+
+import csuduc.platform.util.ComOutMdl;
+import puresport.applicat.ExcelParseTool;
+import puresport.applicat.MdlExcelRow;
+
 /**
- * XXX 管理	
- * 描述：
+ * XXX 管理 描述：
  * 
- * /jf/puresport/t6MgrAhr
- * /jf/puresport/t6MgrAhr/save
- * /jf/puresport/t6MgrAhr/edit
- * /jf/puresport/t6MgrAhr/update
- * /jf/puresport/t6MgrAhr/view
- * /jf/puresport/t6MgrAhr/delete
+ * /jf/puresport/t6MgrAhr /jf/puresport/t6MgrAhr/save
+ * /jf/puresport/t6MgrAhr/edit /jf/puresport/t6MgrAhr/update
+ * /jf/puresport/t6MgrAhr/view /jf/puresport/t6MgrAhr/delete
  * /puresport/t6MgrAhr/add.html
  * 
  */
-//@Controller(controllerKey = "/jf/puresport/t6MgrAhr")
+// @Controller(controllerKey = "/jf/puresport/t6MgrAhr")
 public class T6MgrAhrController extends BaseController {
 
 	@SuppressWarnings("unused")
@@ -103,34 +108,62 @@ public class T6MgrAhrController extends BaseController {
         
 	}
 	public void index() {
-		paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T6MgrAhr.sqlId_splitPage_from);
-		renderWithPath(pthv+"list.html");
+		renderText("text index");
+		// paging(ConstantInitMy.db_dataSource_main, splitPage,
+		// BaseModel.sqlId_splitPage_select,
+		// T6MgrAhr.sqlId_splitPage_from);
+		// renderWithPath(pthv + "list.html");
 	}
-	
+
+	@Clear
+	public void inload() {
+		// 获取上传的excel文件
+
+		// 解析excel
+		String pathExcel = "/home/zw/Downloads/user_admin.xls";
+		List<MdlExcelRow> table = null;
+		try {
+			table = ExcelParseTool.getWorkBookTable(pathExcel);
+		} catch (IllegalArgumentException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// 存入数据库
+//		ComOutMdl<List<MdlExcelRow>> outFailedMdl = new ComOutMdl<>();
+//		if (T6MgrAhrService.service.insertAdmin(table, outFailedMdl)) {
+//
+//		} else {
+//
+//		}
+		renderText("ok");
+	}
+
 	/**
 	 * 保存
 	 */
 	@Before(T6MgrAhrValidator.class)
 	public void save() {
 		T6MgrAhr t6MgrAhr = getModel(T6MgrAhr.class);
-		//other set 
-		
-		//t6MgrAhr.save();		//guiid
-		t6MgrAhr.saveGenIntId();	//serial int id
-		renderWithPath(pthv+"add.html");
+		// other set
+
+		// t6MgrAhr.save(); //guiid
+		t6MgrAhr.saveGenIntId(); // serial int id
+		renderWithPath(pthv + "add.html");
 	}
-	
+
 	/**
 	 * 准备更新
 	 */
 	public void edit() {
-		//T6MgrAhr t6MgrAhr = T6MgrAhr.dao.findById(getPara());	//guuid
-		T6MgrAhr t6MgrAhr = T6MgrAhrService.service.SelectById(getParaToInt());		//serial int id
+		// T6MgrAhr t6MgrAhr = T6MgrAhr.dao.findById(getPara()); //guuid
+		T6MgrAhr t6MgrAhr = T6MgrAhrService.service.SelectById(getParaToInt()); // serial
+																				// int
+																				// id
 		setAttr("t6MgrAhr", t6MgrAhr);
-		renderWithPath(pthv+"update.html");
+		renderWithPath(pthv + "update.html");
 
 	}
-	
+
 	/**
 	 * 更新
 	 */
@@ -144,24 +177,29 @@ public class T6MgrAhrController extends BaseController {
 	 * 查看
 	 */
 	public void view() {
-		//T6MgrAhr t6MgrAhr = T6MgrAhr.dao.findById(getPara());	//guuid
-		T6MgrAhr t6MgrAhr = T6MgrAhrService.service.SelectById(getParaToInt());		//serial int id
+		// T6MgrAhr t6MgrAhr = T6MgrAhr.dao.findById(getPara()); //guuid
+		T6MgrAhr t6MgrAhr = T6MgrAhrService.service.SelectById(getParaToInt()); // serial
+																				// int
+																				// id
 		setAttr("t6MgrAhr", t6MgrAhr);
-		renderWithPath(pthv+"view.html");
+		renderWithPath(pthv + "view.html");
 	}
-	
+
 	/**
 	 * 删除
 	 */
 	public void delete() {
-		//T6MgrAhrService.service.delete("t6_mgr_ahr", getPara() == null ? ids : getPara());	//guuid
-		T6MgrAhrService.service.deleteById("t6_mgr_ahr", getPara() == null ? ids : getPara());	//serial int id
+		// T6MgrAhrService.service.delete("t6_mgr_ahr", getPara() == null ? ids
+		// : getPara()); //guuid
+		T6MgrAhrService.service.deleteById("t6_mgr_ahr", getPara() == null ? ids : getPara()); // serial
+																								// int
+																								// id
 		redirect(pthc);
 	}
-	
-	public void setViewPath(){
+
+	public void setViewPath() {
 		setAttr(ConstantRender.PATH_CTL_NAME, pthc);
 		setAttr(ConstantRender.PATH_VIEW_NAME, pthv);
 	}
-	
+
 }

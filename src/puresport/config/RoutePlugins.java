@@ -22,12 +22,15 @@ import com.jfinal.config.Routes;
  *2016年1月28日		Zhongweng	1.0			1.0Version
  */
 
+
 import puresport.mvc.pages.pagesController;
-import puresport.mvc.r4assc.R4AsscController;
+
+
 import puresport.mvc.t10examgrd.T10ExamGrdController;
 import puresport.mvc.t1usrbsc.T1usrBscController;
 import puresport.mvc.t2adiv.T2AdivController;
 import puresport.mvc.t3statl.T3StatlController;
+import puresport.mvc.t4assc.T4AsscController;
 import puresport.mvc.t5crclstdy.T5CrclStdyController;
 import puresport.mvc.t6mgrahr.T6MgrAhrController;
 import puresport.mvc.t7crcl.T7CrclController;
@@ -36,8 +39,11 @@ import puresport.mvc.t9tstlib.T9TstlibController;
 
 
 /**
- * <p>Title: RoutePlugins<／p>
- * <p>Description: <／p>
+ * <p>
+ * Title: RoutePlugins<／p>
+ * <p>
+ * Description: <／p>
+ * 
  * @author ZhongwengHao
  * @date 2016年1月28日
  */
@@ -48,7 +54,7 @@ public class RoutePlugins extends Routes {
 		add("/jf/puresport/t1_usr_bsc", T1usrBscController.class);
 		add("/jf/puresport/t2_adiv", T2AdivController.class);
 		add("/jf/puresport/t3_stat", T3StatlController.class);
-		add("/jf/puresport/t4_assc", R4AsscController.class);
+		add("/jf/puresport/t4_assc", T4AsscController.class);
 		add("/jf/puresport/t5_crcl_stdy", T5CrclStdyController.class);
 		add("/jf/puresport/t6_mgr_ahr", T6MgrAhrController.class);
 		add("/jf/puresport/t7_crcl", T7CrclController.class);

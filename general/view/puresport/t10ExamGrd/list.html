@@ -126,6 +126,10 @@
 										'mainPanel', 'splitPage', 'tms')">
 									维护时间	${orderBy("tms")}
 								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'result')">
+									正确|错误	${orderBy("result")}
+								</th>
 								<th class="hidden-xs">
 									${i18nMap["admin.common.operation"]}
 								</th>
@@ -196,6 +200,13 @@
 							${item["tms"]!, dateFormat="yyyy-MM-dd HH:mm:ss"}
 
 								</td>
+								
+								<td>
+
+								${escapeXml(item["result"]!)}
+
+								</td>
+							
 								
 								
 

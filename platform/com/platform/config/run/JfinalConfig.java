@@ -48,22 +48,21 @@ public class JfinalConfig extends JFinalConfig {
 		log.info("----------configConstant 缓存 properties");
 		// 平台
 		com.platform.config.run.ConfMain.getInstance()
-				.setPropertyes(
-						new PropertiesPlugin(
-								loadPropertyFile("init.properties"), true));
+				.setPropertyes(new PropertiesPlugin(loadPropertyFile("init.properties"), true));
 		com.platform.config.run.ConfMain.getInstance().initProperties();
 //
 		// 子系统配置初始化
+
 		 puresport.config.ConfMain.getInstance().setPropertyes(new
 		 PropertiesInitMy(loadPropertyFile("init_sport.properties"), false));
 		 puresport.config.ConfMain.getInstance().initProperties();
+
 
 		log.info("configConstant 设置字符集");
 		constants.setEncoding(ToolString.encoding);
 
 		log.info("configConstant 设置是否开发模式");
-		constants.setDevMode(getPropertyToBoolean(ConstantInit.config_devMode,
-				true));
+		constants.setDevMode(getPropertyToBoolean(ConstantInit.config_devMode, true));
 
 		log.info("configConstant 视图Beetl设置");
 		constants.setMainRenderFactory(new MyBeetlRenderFactory());
@@ -86,9 +85,11 @@ public class JfinalConfig extends JFinalConfig {
 
 		log.info("configRoute 手动注册路由");
 		routes.add(new PlatformRoutes());
+
 		
 		//子系统路由
 		 routes.add(new puresport.config.RoutePlugins());
+
 	}
 
 	/**
@@ -97,15 +98,13 @@ public class JfinalConfig extends JFinalConfig {
 	public void configPlugin(Plugins plugins) {
 		log.info("注册paltform ActiveRecordPlugin");
 		// 数据库层设置初始化 ---平台
-		com.platform.config.run.ConfMain.getInstance().setDBMapping(
-				new PlatformMapping());
+		com.platform.config.run.ConfMain.getInstance().setDBMapping(new PlatformMapping());
 		com.platform.config.run.ConfMain.getInstance().initDBMapping(plugins);
-		
+
 		// 数据库层设置初始化 ---子系统
 		puresport.config.ConfMain.getInstance().setDBMapping(new DBMappingMy());
 		puresport.config.ConfMain.getInstance().initDBMapping(plugins);
-		
-		
+
 		log.info("I18NPlugin 国际化键值对加载");
 		plugins.add(new I18NPlugin());
 
@@ -113,15 +112,11 @@ public class JfinalConfig extends JFinalConfig {
 			log.info("EhCachePlugin EhCache缓存");
 			plugins.add(new EhCachePlugin());
 
-		} else if (ToolCache.getCacheType().equals(
-				ConstantCache.cache_type_redis)) {
+		} else if (ToolCache.getCacheType().equals(ConstantCache.cache_type_redis)) {
 			log.info("RedisPlugin Redis缓存");
-			String redisIp = (String) PropertiesPlugin
-					.getParamMapValue(ConstantInit.config_redis_ip);
-			Integer redisPort = (Integer) PropertiesPlugin
-					.getParamMapValue(ConstantInit.config_redis_port);
-			RedisPlugin systemRedis = new RedisPlugin(
-					ConstantCache.cache_name_redis_system, redisIp, redisPort);
+			String redisIp = (String) PropertiesPlugin.getParamMapValue(ConstantInit.config_redis_ip);
+			Integer redisPort = (Integer) PropertiesPlugin.getParamMapValue(ConstantInit.config_redis_port);
+			RedisPlugin systemRedis = new RedisPlugin(ConstantCache.cache_name_redis_system, redisIp, redisPort);
 			plugins.add(systemRedis);
 		}
 
@@ -170,26 +165,26 @@ public class JfinalConfig extends JFinalConfig {
 	 */
 	public void afterJFinalStart() {
 
-		System.out.println("afterJFinalStart");	
+		System.out.println("afterJFinalStart");
 		// 加载子系统
-//		 thairice.mvc.MainConf.GetInstance().init();
-//		 thairice.mvc.MainConf.GetInstance().start();
+		// puresport.mvc.MainConf.GetInstance().init();
+		// puresport.mvc.MainConf.GetInstance().start();
 
 		// Zeroc Ice Util 初始化
-		//IceClientUtil.init(60);
+		// IceClientUtil.init(60);
 		// 初始化ftp地址
-		//com.platform.config.run.ConfMain.getInstance().initFtp();
+		// com.platform.config.run.ConfMain.getInstance().initFtp();
 		// targrecog.config.ConfMain.getInstance().initFtp();
 
-//		log.info("afterJFinalStart 启动操作日志入库线程");
-//		ThreadSysLog.startSaveDBThread();
-//
-//		log.info("afterJFinalStart 系统负载");
-//		TimerResources.start();
-//
-//		log.info("afterJFinalStart 数据清理");
-//		DataClear.start();
-//		FtpUtils.initScanFtp();
+		// log.info("afterJFinalStart 启动操作日志入库线程");
+		// ThreadSysLog.startSaveDBThread();
+		//
+		// log.info("afterJFinalStart 系统负载");
+		// TimerResources.start();
+		//
+		// log.info("afterJFinalStart 数据清理");
+		// DataClear.start();
+		// FtpUtils.initScanFtp();
 
 	}
 
@@ -199,19 +194,19 @@ public class JfinalConfig extends JFinalConfig {
 	public void beforeJFinalStop() {
 
 		// Zeroc Ice Util 销毁
-//		IceClientUtil.closeCommunicator(true);
+		// IceClientUtil.closeCommunicator(true);
 
 		// cms 释放资源
-//		thairice.mvc.cms.MainConf.GetInstance().stop();
+		// thairice.mvc.cms.MainConf.GetInstance().stop();
 
-//		log.info("beforeJFinalStop 释放日志入库线程");
-//		ThreadSysLog.setThreadRun(false);
-//
-//		log.info("beforeJFinalStop 释放系统负载抓取线程");
-//		TimerResources.stop();
-//
-//		log.info("beforeJFinalStop 数据清理");
-//		DataClear.stop();
+		// log.info("beforeJFinalStop 释放日志入库线程");
+		// ThreadSysLog.setThreadRun(false);
+		//
+		// log.info("beforeJFinalStop 释放系统负载抓取线程");
+		// TimerResources.stop();
+		//
+		// log.info("beforeJFinalStop 数据清理");
+		// DataClear.stop();
 	}
 
 	/**

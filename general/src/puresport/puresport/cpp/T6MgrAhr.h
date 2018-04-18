@@ -29,7 +29,7 @@ private:
 	long usrid;
 	/**
 	 * 字段描述：用户类型 
-	 * 字段类型：char  长度：2
+	 * 字段类型：varchar  长度：32
 	 */
 	string usr_tp;
 	/**
@@ -44,17 +44,17 @@ private:
 	string nm;
 	/**
 	 * 字段描述：证件类型 
-	 * 字段类型：char  长度：2
+	 * 字段类型：varchar  长度：16
 	 */
 	string crdt_tp;
 	/**
 	 * 字段描述：证件号 
-	 * 字段类型：varchar  长度：512
+	 * 字段类型：varchar  长度：64
 	 */
 	string crdt_no;
 	/**
 	 * 字段描述：性别 
-	 * 字段类型：char  长度：1
+	 * 字段类型：char  长度：2
 	 */
 	string gnd;
 	/**
@@ -64,17 +64,17 @@ private:
 	string wrk_unit;
 	/**
 	 * 字段描述：密码 
-	 * 字段类型：varchar  长度：512
+	 * 字段类型：varchar  长度：64
 	 */
 	string pswd;
 	/**
 	 * 字段描述：职务 
-	 * 字段类型：varchar  长度：512
+	 * 字段类型：varchar  长度：128
 	 */
 	string post;
 	/**
 	 * 字段描述：出生日期 
-	 * 字段类型：char  长度：8
+	 * 字段类型：varchar  长度：16
 	 */
 	string brth_dt;
 	/**
@@ -89,7 +89,7 @@ private:
 	string asscid;
 	/**
 	 * 字段描述：手机号 
-	 * 字段类型：varchar  长度：256
+	 * 字段类型：varchar  长度：32
 	 */
 	string mblph_no;
 	/**
@@ -109,14 +109,34 @@ private:
 	int assc_mgrid;
 	/**
 	 * 字段描述：邮箱 
-	 * 字段类型：varchar  长度：512
+	 * 字段类型：varchar  长度：64
 	 */
 	string email;
 	/**
 	 * 字段描述：备注 
-	 * 字段类型：varchar  长度：2048
+	 * 字段类型：varchar  长度：512
 	 */
 	string rmrk;
+	/**
+	 * 字段描述：级别类型 
+	 * 字段类型：char  长度：8
+	 */
+	string typeleve;
+	/**
+	 * 字段描述：省 
+	 * 字段类型：varchar  长度：128
+	 */
+	string province;
+	/**
+	 * 字段描述：城市 
+	 * 字段类型：varchar  长度：128
+	 */
+	string city;
+	/**
+	 * 字段描述：协会 
+	 * 字段类型：varchar  长度：512
+	 */
+	string institute;
 public:
 	
 	
@@ -323,6 +343,50 @@ public:
 	}
 	string getRmrk() {
 		return rmrk;
+	}
+	
+	
+	T6MgrAhr& setTypeleve(string atypeleve){
+		typeleve = atypeleve;
+		
+		mapSQLTokens["typeleve"] = "'"+typeleve+"'";
+		return *this;
+	}
+	string getTypeleve() {
+		return typeleve;
+	}
+	
+	
+	T6MgrAhr& setProvince(string aprovince){
+		province = aprovince;
+		
+		mapSQLTokens["province"] = "'"+province+"'";
+		return *this;
+	}
+	string getProvince() {
+		return province;
+	}
+	
+	
+	T6MgrAhr& setCity(string acity){
+		city = acity;
+		
+		mapSQLTokens["city"] = "'"+city+"'";
+		return *this;
+	}
+	string getCity() {
+		return city;
+	}
+	
+	
+	T6MgrAhr& setInstitute(string ainstitute){
+		institute = ainstitute;
+		
+		mapSQLTokens["institute"] = "'"+institute+"'";
+		return *this;
+	}
+	string getInstitute() {
+		return institute;
 	}
 	
 };

@@ -102,6 +102,26 @@
 										'mainPanel', 'splitPage', 'tms')">
 									维护时间	${orderBy("tms")}
 								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'typecnt')">
+										${orderBy("typecnt")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'cnt_online')">
+										${orderBy("cnt_online")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'cnt_2')">
+										${orderBy("cnt_2")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'cnt_3')">
+										${orderBy("cnt_3")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'remark')">
+										${orderBy("remark")}
+								</th>
 								<th class="hidden-xs">
 									${i18nMap["admin.common.operation"]}
 								</th>
@@ -133,6 +153,38 @@
 							${item["tms"]!, dateFormat="yyyy-MM-dd HH:mm:ss"}
 
 								</td>
+								
+								<td>
+
+								${escapeXml(item["typecnt"]!)}
+
+								</td>
+							
+								
+								<td>
+
+							${item["cnt_online"]!}
+
+								</td>
+								
+								<td>
+
+							${item["cnt_2"]!}
+
+								</td>
+								
+								<td>
+
+							${item["cnt_3"]!}
+
+								</td>
+								
+								<td>
+
+								${escapeXml(item["remark"]!)}
+
+								</td>
+							
 								
 								
 
