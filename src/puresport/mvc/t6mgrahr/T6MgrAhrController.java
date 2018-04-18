@@ -54,6 +54,8 @@ public class T6MgrAhrController extends BaseController {
             if(password.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
                 flag = true;  
                 getSession().setAttribute("usrid", item.getUsrid());//设置session，保存登录用户的昵称  
+                getSession().setAttribute("phoneNum", item.getMblph_no());//设置session，保存登录用户的昵称  
+                getSession().setAttribute("pwd", item.getPswd());//设置session，保存登录用户的昵称  
             }  
             else {  
                 msg = "密码不正确";  

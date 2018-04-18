@@ -95,7 +95,9 @@ function user_login()
 	    		}
             }  
             else {  
-                alert(data.msg);  
+//                alert(data.msg);  
+                $('#myModallyf_content').text(data.msg);
+	    		$('#myModallyf').modal('show');
             }  
 	    },
 	    error:function(xhr,textStatus){
@@ -139,7 +141,9 @@ function admin_login()
 	    		
             }  
             else {  
-                alert(data.msg);  
+//                alert(data.msg);  
+                $('#myModallyf_content').text(data.msg);
+	    		$('#myModallyf').modal('show');
             }  
 	    },
 	    error:function(xhr,textStatus){
@@ -158,6 +162,7 @@ function Improve_user_info()
 {
 	if(app.userType==0)//运动员
 	{
+//		alert(app.userType);
 		var group1=false;var code = "";
 		var group2=false;
 //		$().distpicker('getDistricts'); // 中国
@@ -187,7 +192,9 @@ function Improve_user_info()
 		else
 		{
 			group1=false;
-			alert("请选择代表单位");
+//			alert("请选择代表单位");
+			$('#myModallyf_content').text("请选择代表单位");
+	    	$('#myModallyf').modal('show');
 			return;
 			
 		}
@@ -197,7 +204,9 @@ function Improve_user_info()
 		if(Competetion=="请选择赛事"||CompetetionItem=="请选择项目")
 		{
 			group2=false;
-			alert("请选择运动项目");
+//			alert("请选择运动项目");
+			$('#myModallyf_content').text("请选择运动项目");
+	    	$('#myModallyf').modal('show');
 			return;
 		}
 		else{
@@ -232,7 +241,9 @@ function Improve_user_info()
 			    		
 		            }  
 		            else {  
-		                alert(data.msg);  
+//		                alert(data.msg);  
+		                $('#myModallyf_content').text(data.msg);
+		    	    	$('#myModallyf').modal('show');
 		            }  
 			    },
 			    error:function(xhr,textStatus){
@@ -275,7 +286,9 @@ function Improve_user_info()
 		                window.location=data.url;  
 			    	}  
 		            else {  
-		                alert(data.msg);  
+//		                alert(data.msg); 
+		                $('#myModallyf_content').text(data.msg);
+		    	    	$('#myModallyf').modal('show');
 		            }  
 			    },
 			    error:function(xhr,textStatus){
@@ -289,11 +302,19 @@ function Improve_user_info()
 			})
 		}
 		else{
-			alert("请完善个人信息！");
+//			alert("请完善个人信息！");
+			$('#myModallyf_content').text("请完善个人信息！");
+	    	$('#myModallyf').modal('show');
 		}
 	}
 	
 	
+}
+function Improve_user_info_selfcenter(usr_tp)
+{
+//	alert(usr_tp);
+	app.userType = usr_tp;
+	Improve_user_info();
 }
 //function Improve_user_Assist_info()
 //{
@@ -335,7 +356,9 @@ function Improve_admin_info()
 		    		
 	            }  
 	            else {  
-	                alert(data.msg);  
+//	                alert(data.msg);  
+	                $('#myModallyf_content').text(data.msg);
+	    	    	$('#myModallyf').modal('show');
 	            }  
 		    },
 		    error:function(xhr,textStatus){
@@ -349,6 +372,232 @@ function Improve_admin_info()
 		})
 	}
 	else{
-		alert("请完善个人信息！");
+//		alert("请完善个人信息！");
+		 $('#myModallyf_content').text("请完善个人信息！");
+		 $('#myModallyf').modal('show');
 	}
 }
+function get_email_confirmcode(userOradmin)
+{
+	
+	//form-email_user_forPwdBack
+	//form-email_user_confirmCode
+	if(userOradmin=='01')
+	{
+		var email = $("#form-email_user_forPwdBack").val();
+		//alert(email);
+		if(email)
+		{
+			sendConfirmcode2Email(email,userOradmin);
+		}
+		else{
+//			alert("请先输入邮箱！");
+			$('#myModallyf_content').text("请先输入邮箱！");
+			$('#myModallyf').modal('show');
+		}
+	}
+	else
+	{
+		var email = $("#form-email_admin_forpwdback").val();
+		if(email)
+		{
+			sendConfirmcode2Email(email,userOradmin);                                                                                                                                                                                                                                                                                                                                                                                                                
+		}
+		else{
+//			alert("请先输入邮箱！");
+			$('#myModallyf_content').text("请先输入邮箱！");
+			$('#myModallyf').modal('show');
+		}
+	}
+	
+}
+
+function sendConfirmcode2Email(email,userOradmin)
+{
+	$.ajax({
+	    url:'/jf/puresport/pagesController/ForgetPwd_getConfirmcodeByEmail',
+	    type:'POST', //GET
+	    async:true,    //或false,是否异步
+	    data:{
+//	    	userType:app.userType,
+	    	email:email,
+	    	userOradmin:userOradmin
+	    },
+	    timeout:5000,    //超时时间
+	    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+	    beforeSend:function(xhr){
+	        //console.log(xhr)
+	        console.log('发送前')
+	    },
+	    success:function(data,textStatus,jqXHR){
+	    	//console.log(data);
+	    	//window.location.href=data.reportUrl;
+	    	//alert(data.reportUrl);
+	    	//window.open(data.reportUrl,"_blank");
+	    	if(data.flag) {  
+                //window.location=data.url;  
+	    		//alert("验证码已发送邮箱！");
+	    		$('#myModallyf_content').text("验证码已发送邮箱!");
+	    		$('#myModallyf').modal('show');
+            }  
+            else {  
+//                alert(data.msg); 
+                $('#myModallyf_content').text(data.msg);
+	    		$('#myModallyf').modal('show');
+            }  
+	    },
+	    error:function(xhr,textStatus){
+	        console.log('错误')
+	        console.log(xhr)
+	        console.log(textStatus)
+	    },
+	    complete:function(){
+	        console.log('结束')
+	    }
+	})
+}
+function forgetpwd_getpwdByEmail(userOradmin)
+{
+	//alert(userOradmin);
+	var email = '';
+	var confrimcode = '';
+	var newPwd='';
+	var newPwd_confirm = '';
+	if(userOradmin=='01')//运动及辅助人员
+	{
+		email = $("#form-email_user_forPwdBack").val();
+		confrimcode = $('#form-email_user_confirmCode').val();
+		newPwd = $('#form_user_newPwd_forPwdBack').val();
+		newPwd_confirm = $('#form_user_newPwd_confirm_forPwdBack').val();
+	}
+	else{//管理员
+		email = $("#form-email_admin_forpwdback").val();
+		confrimcode = $('#form-email_admin_confirmcode_forpwaback').val();
+		newPwd = $('#form-admin_newpwd_forpwdback').val();
+		newPwd_confirm = $('#form-admin_confirmcode_forpwdback').val();
+	}
+	if(newPwd&&newPwd_confirm&&email&&confrimcode)
+	{
+		if(newPwd==newPwd_confirm)
+		{
+			//alert(newPwd);
+			$.ajax({
+			    url:'/jf/puresport/pagesController/ForgetPwd_setPwdByEmail',
+			    type:'POST', //GET
+			    async:true,    //或false,是否异步
+			    data:{
+//			    	userType:app.userType,
+			    	email:email,
+			    	confrimcode:confrimcode,
+			    	newPwd:newPwd,
+			    	userOradmin:userOradmin
+			    },
+			    timeout:5000,    //超时时间
+			    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+			    beforeSend:function(xhr){
+			        //console.log(xhr)
+			        console.log('发送前')
+			    },
+			    success:function(data,textStatus,jqXHR){
+			    	if(data.flag) {  
+		                //window.location=data.url;  
+			    		//alert("密码重置成功！请重新登录！");
+			    		
+			    		$('#myModallyf_content').text("密码重置成功！请重新登录！");
+			    		$('#myModallyf').modal('show');
+			    		$("#myModallyf_btn").click(function(){
+			    			window.location=data.url;
+			    		  });
+		            }  
+		            else {  
+		            	$('#myModallyf_content').text(data.msg);
+			    		$('#myModallyf').modal('show');
+		                //alert(data.msg);  
+		            }  
+			    },
+			    error:function(xhr,textStatus){
+			        console.log('错误')
+			        console.log(xhr)
+			        console.log(textStatus)
+			    },
+			    complete:function(){
+			        console.log('结束')
+			    }
+			})
+		}
+		else{
+//			alert("两次输入密码不一致！！");
+			$('#myModallyf_content').text("两次输入密码不一致！！");
+    		$('#myModallyf').modal('show');
+		}
+	}	
+	else{
+//		alert("信息缺失！！");
+		$('#myModallyf_content').text("信息缺失！！");
+	    $('#myModallyf').modal('show');
+	}
+}
+function resetPwd(userOradmin)
+{
+	var oldPwd = $("#resetPwd_oldPwd").val();
+	var newPwd = $("#resetPwd_newPwd").val();
+	var newPwd_confrim = $("#resetPwd_newPwd_confirm").val();
+	if(oldPwd&&newPwd&&newPwd_confrim)
+	{
+		if(newPwd!=newPwd_confrim)
+		{
+			$('#passwordModal_hint').text("密码不一致！！");
+		}
+		else{
+			$.ajax({
+			    url:'/jf/puresport/pagesController/ResetPwd',
+			    type:'POST', //GET
+			    async:true,    //或false,是否异步
+			    data:{
+//			    	userType:app.userType,
+			    	oldPwd:oldPwd,
+			    	newPwd:newPwd,
+			    	userOradmin:userOradmin
+			    },
+			    timeout:5000,    //超时时间
+			    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+			    beforeSend:function(xhr){
+			        //console.log(xhr)
+			        console.log('发送前')
+			    },
+			    success:function(data,textStatus,jqXHR){
+			    	if(data.flag) {  
+		                //window.location=data.url;  
+			    		//alert("密码重置成功！请重新登录！");
+			    		
+			    		$('#passwordModal_hint').text("密码重置成功！请重新登录！");
+			    		//$('#passwordModal').modal('hide');
+			    		
+		            }  
+		            else {  
+		            	$('#passwordModal_hint').text(data.msg);
+//			    		$('#systemModal').modal('show');
+		                //alert(data.msg);  
+		            }  
+			    },
+			    error:function(xhr,textStatus){
+			        console.log('错误')
+			        console.log(xhr)
+			        console.log(textStatus)
+			    },
+			    complete:function(){
+			        console.log('结束')
+			    }
+			})
+		}
+	}
+	else
+	{
+		$('#passwordModal_hint').text("信息缺失！！");
+	    //$('#systemModal').modal('show');
+	}
+}
+//function test()
+//{
+//	alert("ooo");
+//}

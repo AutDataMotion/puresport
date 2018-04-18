@@ -16,6 +16,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link rel="stylesheet" type="text/css" href="${cxt!}/ui/DataTables/datatables.min.css"/>
 <!----font-Awesome----->
 <!-- start plugins -->
+<script type="text/javascript" src="${cxt!}/js/puresport.js"></script>
 <script type="text/javascript" src="${cxt!}/js/jquery-1.11.1.min.js"></script>
 <script src="${cxt!}/ui/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script src="${cxt!}/jsFile/echarts/echarts.min.js"></script>
@@ -172,7 +173,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</a>
 				<ul class="dropdown-menu">
 					<li><a href="${cxt!}/jf/puresport/pagesController/admin">个人中心</a></li>
-					<li><a href="${cxt!}/jf/puresport/pagesController/login">注销</a></li>
+					<li><a href="${cxt!}/jf/puresport/pagesController/loginout">注销</a></li>
 					
 				</ul>
 			</li>
@@ -212,12 +213,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                          </div>
                       </dt>
                       <dd class="self_dd">
-                        <p class="name">Jone</p>
-                        <p>928078226</p>
+                        <p class="name">${username}</p>
+                        
                       </dd>
                   </dl>
                   <button type="button" class="btn btn-primary btn-lg btn-block reset_btn" data-toggle="modal" data-target="#passwordModal">重置密码</button>
-                  <a href="loginadmin.html" type="button" class="btn btn-primary btn-lg btn-block logout_btn" role="button">注销</a>
+                  <a href="${cxt!}/jf/puresport/pagesController/loginout" type="button" class="btn btn-primary btn-lg btn-block logout_btn" role="button">注销</a>
                 </div>
 			</div>
 			<div class="col-sm-9 col-md-9">
@@ -750,10 +751,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	</div>
 
 
-<% include("/f/footer.html"){} %>
+
 
 <!--system message modal-->
-<div class="modal fade" id="systemModal" tabindex="-1" role="dialog" aria-labelledby="systemModalLabel" aria-hidden="true">
+<!-- div class="modal fade" id="systemModal" tabindex="-1" role="dialog" aria-labelledby="systemModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -766,7 +767,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     </div>
   </div>
 </div>
-</div>
+</div-->
 <!--password modify modal-->
 <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -777,34 +778,33 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       </div>
       <div class="modal-body">
       	<form class="form-horizontal">
+      		<div class="col-sm-12" style="text-align: center;color: #e41818;">
+              <h5 id="passwordModal_hint"></h5>
+            </div>
+      		
           <div class="form-group">
             <label class="col-sm-3 control-label">旧密码</label>
             <div class="col-sm-9">
-              <input type="password" class="form-control" placeholder="旧密码">
+              <input type="password" id="resetPwd_oldPwd" class="form-control" placeholder="旧密码">
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-3 control-label">新密码</label>
             <div class="col-sm-9">
-              <input type="password" class="form-control" placeholder="新密码">
+              <input type="password" id="resetPwd_newPwd" class="form-control" placeholder="新密码">
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-3 control-label">E-mail</label>
+            <label class="col-sm-3 control-label">确认新密码</label>
             <div class="col-sm-9">
-              <input type="email" class="form-control" placeholder="Email">
+              <input type="password" id="resetPwd_newPwd_confirm" class="form-control" placeholder="确认新密码">
             </div>
           </div>
-          <div class="form-group">
-            <label class="col-sm-3 control-label">验证码</label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control" placeholder="验证码">
-            </div>
-          </div>
+          
         </form>
       </div>
       <div class="modal-footer">
-        <button class="btn btn-primary system_btn" type="button" data-dismiss="modal" data-toggle="modal" data-target="#systemModal">重置</button>
+        <button class="btn btn-primary system_btn" id="resetPwd_btn" onclick="resetPwd('02')" type="button" data-toggle="modal" >重置</button>
         <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
       </div>
   </div>

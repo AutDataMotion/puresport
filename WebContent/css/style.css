@@ -1,6 +1,19 @@
 /*@import url(http://fonts.useso.com/css?family=Open+Sans:400,300,600,700,800);*/
-
-
+.get_email_confirmcode {
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    width: 80px;
+    height: 36px;
+    display: block;
+    background: url(../images/get_code_bg.png) no-repeat;
+    color: #fff;
+    text-align: center;
+    line-height: 36px;
+    cursor: pointer;}
+    
+    .improveinfo_select{height: 30px;
+    margin-bottom: 20px;}
 html, body{
 	font-family: 'Open Sans', sans-serif;
 	background:#F6F6F6;

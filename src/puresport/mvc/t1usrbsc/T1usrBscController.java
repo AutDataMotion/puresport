@@ -55,6 +55,9 @@ public class T1usrBscController extends BaseController {
                 flag = true; 
                 userType = item.getUsr_tp();
                 getSession().setAttribute("usrid", item.getUsrid());//设置session，保存登录用户的昵称  
+                getSession().setAttribute("phoneNum", item.getMblph_no());//设置session，保存登录用户的昵称  
+                getSession().setAttribute("pwd", item.getPswd());//设置session，保存登录用户的昵称  
+                getSession().setAttribute("usr_tp", item.getUsr_tp());//设置session，保存登录用户的昵称  
             }  
             else {  
                 msg = "密码不正确";  
