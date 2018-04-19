@@ -107,7 +107,7 @@ public class ExcelParseTool {
 			return String.valueOf(cell.getBooleanCellValue());
 		}
 		if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-			return String.valueOf(cell.getNumericCellValue());
+			return String.valueOf((int)cell.getNumericCellValue());
 		}
 		return cell.getStringCellValue();
 

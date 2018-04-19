@@ -23,6 +23,7 @@ import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
  *2016年3月12日		Zhongweng	1.0			1.0Version
  */
 
+import puresport.mvc.area.Area;
 import puresport.mvc.t10examgrd.T10ExamGrd;
 import puresport.mvc.t1usrbsc.T1usrBsc;
 import puresport.mvc.t2adiv.T2Adiv;
@@ -49,6 +50,7 @@ public class MappingTable {
 
 	public static void mapping(ActiveRecordPlugin arp) {
 		log.info("puresport MappingTable 表手工注册-----begin");
+		arp.addMapping("dt_area", "id", Area.class);
 		arp.addMapping("t1_usr_bsc", "id", T1usrBsc.class);
 		arp.addMapping("t2_adiv", "id", T2Adiv.class);
 		arp.addMapping("t3_stat", "id", T3Statl.class);

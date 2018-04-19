@@ -43,17 +43,17 @@ public abstract class GenerateBase {
 	 */
 
 	public static String[][] tableArr = {
-			{ null, "dt_area", null, "Area", "全国省市表" }
-//			{ null, "t1_usr_bsc", null, "T1usrBsc", "用户基本信息表" },
-//			{ null, "t2_adiv", null, "T2Adiv", "行政区划信息表" },
-//			{ null, "t3_stat", null, "T3Statl", "统计信息" }, 
-//			{ null, "t4_assc", null, "T4Assc", "协会信息表" },
-//			{ null, "t5_crcl_stdy", null, "T5CrclStdy", "课程学习信息表" },
-//			{ null, "t6_mgr_ahr", null, "T6MgrAhr", "管理员权限信息表" }, 
-//			{ null, "t7_crcl", null, "T7Crcl", "课程信息表" },
-//			{ null, "t8_exam", null, "T8Exam", "考试信息" }, 
-//			{ null, "t9_tstlib", null, "T9Tstlib", "试题库" },
-//			{ null, "t10_exam_grd", null, "T10ExamGrd", "考试成绩信息表" } 
+			{ null, "dt_area", null, "Area", "全国省市表" },
+			{ null, "t1_usr_bsc", null, "T1usrBsc", "用户基本信息表" },
+			{ null, "t2_adiv", null, "T2Adiv", "行政区划信息表" },
+			{ null, "t3_stat", null, "T3Statl", "统计信息" }, 
+			{ null, "t4_assc", null, "T4Assc", "协会信息表" },
+			{ null, "t5_crcl_stdy", null, "T5CrclStdy", "课程学习信息表" },
+			{ null, "t6_mgr_ahr", null, "T6MgrAhr", "管理员权限信息表" }, 
+			{ null, "t7_crcl", null, "T7Crcl", "课程信息表" },
+			{ null, "t8_exam", null, "T8Exam", "考试信息" }, 
+			{ null, "t9_tstlib", null, "T9Tstlib", "试题库" },
+			{ null, "t10_exam_grd", null, "T10ExamGrd", "考试成绩信息表" } 
 			};
 
 	// String prjName = "targrecog";

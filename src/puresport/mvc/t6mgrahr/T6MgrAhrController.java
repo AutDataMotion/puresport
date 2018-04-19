@@ -5,13 +5,14 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 
-
+import com.alibaba.druid.support.json.JSONUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
 import com.jfinal.plugin.activerecord.Db;
 
 import puresport.constant.ConstantInitMy;
+import puresport.constant.EnumStatus;
 import puresport.mvc.t1usrbsc.T1usrBsc;
 
 
@@ -131,11 +132,12 @@ public class T6MgrAhrController extends BaseController {
 		// 存入数据库
 		ComOutMdl<List<MdlExcelRow>> outFailedMdl = new ComOutMdl<>();
 		if (T6MgrAhrService.service.insertAdmin(table, outFailedMdl)) {
-
+			renderText(String.valueOf(EnumStatus.Success.getId()));
 		} else {
-
+			log.error(outFailedMdl.get());
+			renderJson(outFailedMdl.get());
 		}
-		renderText("ok");
+		return ;
 	}
 
 	/**

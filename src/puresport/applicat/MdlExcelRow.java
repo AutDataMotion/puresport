@@ -5,6 +5,7 @@
  */
 package puresport.applicat;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,10 +13,12 @@ import java.util.Objects;
  * @author zw
  *
  */
-public class MdlExcelRow {
+public class MdlExcelRow implements Serializable {
 
 	private List<String> listStrColums;
 
+	public MdlExcelRow(){}
+	
 	public MdlExcelRow(List<String> list) {
 		listStrColums = list;
 	}
@@ -29,6 +32,21 @@ public class MdlExcelRow {
 		} else {
 			throw new IllegalArgumentException("index is null");
 		}
+	}
+
+	
+	/**
+	 * @return the listStrColums
+	 */
+	public List<String> getListStrColums() {
+		return listStrColums;
+	}
+
+	/**
+	 * @param listStrColums the listStrColums to set
+	 */
+	public void setListStrColums(List<String> listStrColums) {
+		this.listStrColums = listStrColums;
 	}
 
 	/*

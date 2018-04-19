@@ -9,6 +9,8 @@ package puresport.config;
 
 import com.jfinal.config.Routes;
 
+import puresport.mvc.area.AreaController;
+
 /**
  * 创建时间：2016年1月28日 下午2:15:23
  * 项目名称：DUCPlatFromWeb
@@ -24,8 +26,6 @@ import com.jfinal.config.Routes;
 
 
 import puresport.mvc.pages.pagesController;
-
-
 import puresport.mvc.t10examgrd.T10ExamGrdController;
 import puresport.mvc.t1usrbsc.T1usrBscController;
 import puresport.mvc.t2adiv.T2AdivController;
@@ -51,15 +51,16 @@ public class RoutePlugins extends Routes {
 	@Override
 	public void config() {
 		add("/jf/puresport/pagesController", pagesController.class);
-		add("/jf/puresport/t1_usr_bsc", T1usrBscController.class);
-		add("/jf/puresport/t2_adiv", T2AdivController.class);
-		add("/jf/puresport/t3_stat", T3StatlController.class);
-		add("/jf/puresport/t4_assc", T4AsscController.class);
-		add("/jf/puresport/t5_crcl_stdy", T5CrclStdyController.class);
-		add("/jf/puresport/t6_mgr_ahr", T6MgrAhrController.class);
-		add("/jf/puresport/t7_crcl", T7CrclController.class);
-		add("/jf/puresport/t8_exam", T8ExamController.class);
-		add("/jf/puresport/t9_tstlib", T9TstlibController.class);
-		add("/jf/puresport/t10_exam_grd", T10ExamGrdController.class);
+		add("/jf/puresport/area", AreaController.class);
+		add("/jf/puresport/t1usrBsc", T1usrBscController.class);
+		add("/jf/puresport/t2Adiv", T2AdivController.class);
+		add("/jf/puresport/t3Statl", T3StatlController.class);
+		add("/jf/puresport/t4Assc", T4AsscController.class);
+		add("/jf/puresport/t5CrclStdy", T5CrclStdyController.class);
+		add("/jf/puresport/t6MgrAhr", T6MgrAhrController.class);
+		add("/jf/puresport/t7Crcl", T7CrclController.class);
+		add("/jf/puresport/t8Exam", T8ExamController.class);
+		add("/jf/puresport/t9Tstlib", T9TstlibController.class);
+		add("/jf/puresport/t10ExamGrd", T10ExamGrdController.class);
 	}
 }
