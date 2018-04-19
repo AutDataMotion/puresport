@@ -65,7 +65,6 @@ public class UploadController extends BaseController {
 		}
 		
 		List<UploadFile> files = getFiles(path, ((Integer) PropertiesPlugin.getParamMapValue(ConstantInit.config_maxPostSize_key)).intValue(), ToolString.encoding);
-		
 		List<Map<String, String>> list = UploadService.service.upload(pathType, files);
 		renderJson(list);
 	}

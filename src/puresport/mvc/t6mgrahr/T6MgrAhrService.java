@@ -1,6 +1,7 @@
 package puresport.mvc.t6mgrahr;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -41,17 +42,18 @@ public class T6MgrAhrService extends BaseService {
 			return false;
 		}
 		// 根据手机号匹配，没有插入、已有更新
-		List<MdlExcelRow> fieldRows = excelRows.stream().filter(e -> insertAdminToDb(e)).collect(Collectors.toList());
-		if (CollectionUtils.isEmpty(fieldRows)) {
+		List<MdlExcelRow> failedRows = excelRows.stream().filter(e -> insertAdminToDb(e)).collect(Collectors.toList());
+		
+		if (CollectionUtils.isEmpty(failedRows)) {
 			return true;
 		}
-//		outFailedMdl.set(fieldRows);
+		outFailedMdl.set(failedRows);
 		return false;
 	}
 
 	private boolean insertAdminToDb(MdlExcelRow excelRow) {
 		// 根据手机号匹配，没有插入、已有更新
-
+		System.out.println(excelRow);
 		Record admin = new Record().set(T6MgrAhr.column_nm, excelRow.getByIndex(0))
 				.set(T6MgrAhr.column_crdt_tp, excelRow.getByIndex(1))
 				.set(T6MgrAhr.column_crdt_no, excelRow.getByIndex(2)).set(T6MgrAhr.column_gnd, excelRow.getByIndex(3))

@@ -129,12 +129,12 @@ public class T6MgrAhrController extends BaseController {
 			e.printStackTrace();
 		}
 		// 存入数据库
-//		ComOutMdl<List<MdlExcelRow>> outFailedMdl = new ComOutMdl<>();
-//		if (T6MgrAhrService.service.insertAdmin(table, outFailedMdl)) {
-//
-//		} else {
-//
-//		}
+		ComOutMdl<List<MdlExcelRow>> outFailedMdl = new ComOutMdl<>();
+		if (T6MgrAhrService.service.insertAdmin(table, outFailedMdl)) {
+
+		} else {
+
+		}
 		renderText("ok");
 	}
 
