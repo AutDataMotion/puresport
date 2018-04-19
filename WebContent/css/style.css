@@ -1,4 +1,7 @@
 /*@import url(http://fonts.useso.com/css?family=Open+Sans:400,300,600,700,800);*/
+.self_info{
+	 margin-bottom: 10px;
+}
 .get_email_confirmcode {
     position: absolute;
     right: 0px;

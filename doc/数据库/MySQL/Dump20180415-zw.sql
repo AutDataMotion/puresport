@@ -110,7 +110,7 @@ CREATE TABLE `t1_usr_bsc` (
   `province` varchar(128) DEFAULT NULL COMMENT '省份名称',
   `city` varchar(128) DEFAULT NULL COMMENT '城市名称',
   `institute` varchar(512) DEFAULT NULL COMMENT '协会名称',
-  `department` varchar(256) DEFAULT NULL COMMENT '工作单位',
+  `wrk_unit` varchar(256) DEFAULT NULL COMMENT '工作单位',
   `post` varchar(128) DEFAULT NULL COMMENT '职务',
   PRIMARY KEY (`usrid`),
   UNIQUE KEY `usr_nm` (`usr_nm`)

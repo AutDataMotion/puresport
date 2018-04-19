@@ -597,6 +597,75 @@ function resetPwd(userOradmin)
 	    //$('#systemModal').modal('show');
 	}
 }
+function initScoreTable(userID)
+{
+//	alert(userID);
+	if(userID)
+	{
+		$.ajax({
+		    url:'/jf/puresport/t10_exam_grd/get_exam_grd',
+		    type:'POST', //GET
+		    async:true,    //或false,是否异步
+		    data:{
+		    	userID:userID
+		    },
+		    timeout:5000,    //超时时间
+		    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+		    beforeSend:function(xhr){
+		        //console.log(xhr)
+		        console.log('发送前')
+		    },
+		    success:function(data,textStatus,jqXHR){
+		    	if(data.flag) {  
+//	                console.log(data.itemlist[0].exam_grd);
+		    		var dataSet = [];
+		    		for(var i =0;i<data.itemlist.length;i++)
+		    		{
+		    			var score = [];
+		    			score.push(data.itemlist[i].exam_grd);
+		    			score.push(data.itemlist[i].tms);
+		    			dataSet.push(score);
+		    		}
+		    		$('#score_excel').DataTable({
+	    		        data: dataSet,
+	    		        language: {
+	    		            url: "/ui/DataTables/Chinese.json"
+	    		        },
+//	    		        "filter": false,
+//	    		        "destroy": true,
+	    		        columns: [
+	    		            { title: "成绩" },
+	    		            { title: "时间" }
+	    		        ]
+	    		    });
+	            }  
+	            else { 
+	            	var dataSet = [];
+	            	$('#score_excel').DataTable({
+	    		        data: dataSet,
+	    		        language: {
+	    		            url: "/ui/DataTables/Chinese.json"
+	    		        },
+//	    		        "filter": false,
+//	    		        "destroy": true,
+	    		        columns: [
+	    		            { title: "成绩" },
+	    		            { title: "时间" }
+	    		        ]
+	    		    });
+	            }  
+		    },
+		    error:function(xhr,textStatus){
+		        console.log('错误')
+		        console.log(xhr)
+		        console.log(textStatus)
+		    },
+		    complete:function(){
+		        console.log('结束')
+		    }
+		})
+	}
+}
 //function test()
 //{
 //	alert("ooo");

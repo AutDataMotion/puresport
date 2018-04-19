@@ -57,7 +57,7 @@ public class T6MgrAhrService extends BaseService {
 				.set(T6MgrAhr.column_crdt_no, excelRow.getByIndex(2)).set(T6MgrAhr.column_gnd, excelRow.getByIndex(3))
 				.set(T6MgrAhr.column_brth_dt, excelRow.getByIndex(4))
 				.set(T6MgrAhr.column_wrk_unit, excelRow.getByIndex(5)).set(T6MgrAhr.column_post, excelRow.getByIndex(6))
-				.set(T6MgrAhr.column_typeleve, excelRow.getByIndex(7)).set("province", excelRow.getByIndex(8))
+//				.set(T6MgrAhr.column_typeleve, excelRow.getByIndex(7)).set("province", excelRow.getByIndex(8))
 				.set("city", excelRow.getByIndex(9)).set("institute", excelRow.getByIndex(10))
 				.set(T6MgrAhr.column_mblph_no, excelRow.getByIndex(11))
 				.set(T6MgrAhr.column_email, excelRow.getByIndex(12));
