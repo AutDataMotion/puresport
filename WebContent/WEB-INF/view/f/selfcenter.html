@@ -10,12 +10,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- Bootstrap -->
 <link type="text/css" rel="stylesheet" href="${cxt!}/ui/bootstrap-3.3.7-dist/css/bootstrap.min.css">
 <link href="${cxt!}/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link type="text/css" rel="stylesheet" href="${cxt!}/ui/DataTables/datatables.min.css">
 <!----font-Awesome----->
 <link rel="stylesheet" href="${cxt!}/fonts/css/font-awesome.min.css">
 <!----font-Awesome----->
 <!-- start plugins -->
 <script type="text/javascript" src="${cxt!}/js/puresport.js"></script>
 <script type="text/javascript" src="${cxt!}/js/jquery-1.11.1.min.js"></script>
+<script src="${cxt!}/ui/DataTables/datatables.min.js"></script>
 <script src="${cxt!}/ui/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/distpicker/distpicker.js"></script>
 <script src="${cxt!}/jsFile/echarts/echarts.min.js"></script>
@@ -126,7 +128,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 </div>
 			</div>
 			<div class="col-sm-7 col-md-7">
-				<div id="scoreChart" style="width: 600px;height:300px;"></div>
+				<p class="self_title text-center">成绩</p>
+				<div class="row">
+                     <div class="col-sm-10 col-md-10" style="width:100%;background:#70c570;">
+                     	<table id="score_excel" class="display" width="100%;"></table>
+			              <script>
+			              	initScoreTable('${session["usrid"]}');
+			              </script>
+                     </div>
+			
+                 </div>
+				
+				<!-- div id="scoreChart" style="width: 600px;height:300px;"></div>
 				<script type="text/javascript">
 				// 基于准备好的dom，初始化echarts实例
 				var myChart = echarts.init(document.getElementById('scoreChart'));
@@ -189,7 +202,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				// 使用刚指定的配置项和数据显示图表。
 				myChart.setOption(option);
 			</script>
-			</div>
+			</div-->
 		</div>
 	
 	

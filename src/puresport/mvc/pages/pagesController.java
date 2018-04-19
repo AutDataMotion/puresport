@@ -13,6 +13,7 @@ import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
 
 import csuduc.platform.util.lyf.EmailUtils;
+import csuduc.platform.util.lyf.WebsiteSta;
 import puresport.mvc.t1usrbsc.T1usrBsc;
 import puresport.mvc.t6mgrahr.T6MgrAhr;
 
@@ -29,7 +30,10 @@ public class pagesController extends BaseController {
 		//renderWithPath(pthv+"list.html");
 		//getSession().setAttribute("userid", "100");
 //		setSessionAttr("userID","10");
+		long count = WebsiteSta.countPeople();
+		log.debug(count);
 		renderWithPath(pthv+"index.html");
+		
 	}
 	@Clear
 	public void study() {

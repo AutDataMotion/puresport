@@ -4,10 +4,17 @@ import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
 import com.platform.mvc.base.BaseModel;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.jfinal.aop.Before;
+import com.jfinal.aop.Clear;
 
 import puresport.constant.ConstantInitMy;
+import puresport.mvc.t1usrbsc.T1usrBsc;
 
 
 /**
@@ -95,6 +102,37 @@ public class T10ExamGrdController extends BaseController {
 	public void setViewPath(){
 		setAttr(ConstantRender.PATH_CTL_NAME, pthc);
 		setAttr(ConstantRender.PATH_VIEW_NAME, pthv);
+	}
+	@Clear
+	public void get_exam_grd()
+	{
+		boolean flag = false;  
+          
+        String userID = getPara("userID");//获取表单数据，这里的参数就是页面表单中的name属性值  
+        List<T10ExamGrd> itemlist = T10ExamGrd.dao.find("select * from t10_exam_grd where usrid=?", userID);
+        if(itemlist!=null)
+        {
+        	flag = true;
+        	JSONObject resjson = new JSONObject();
+        	resjson.put("flag", flag);
+//        	json.put("itemlist", itemlist);
+//        	renderJson(json);
+        	JSONArray jsonArray = new JSONArray();
+        	for(T10ExamGrd item:itemlist)
+        	{
+        		JSONObject json = new JSONObject();
+        		json.put("exam_grd", item.getExam_grd());
+        		json.put("tms", item.getTms());
+        		jsonArray.add(json);
+        	}
+        	resjson.put("itemlist", jsonArray);
+        	renderJson(resjson);
+        }
+        else {
+        	JSONObject json = new JSONObject();
+        	json.put("flag", flag);
+        	renderJson(json);
+        }
 	}
 	
 }
