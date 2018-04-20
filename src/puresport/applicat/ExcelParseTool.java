@@ -33,15 +33,19 @@ public class ExcelParseTool {
 	@SuppressWarnings("resource")
 	public static List<MdlExcelRow> getWorkBookTable(String filePath) throws IOException, IllegalArgumentException {
 		File file = new File(filePath);
+		return getWorkBookTable(file);
+	}
+	@SuppressWarnings("resource")
+	public static List<MdlExcelRow> getWorkBookTable(File file) throws IOException, IllegalArgumentException {
 		InputStream is = new FileInputStream(file);
 		Workbook workbook = null;
 		// 根据后缀，得到不同的Workbook子类，即HSSFWorkbook或XSSFWorkbook
-		if (filePath.endsWith(SUFFIX_2003)) {
+		if (file.getName().endsWith(SUFFIX_2003)) {
 			workbook = new HSSFWorkbook(is);
-		} else if (filePath.endsWith(SUFFIX_2007)) {
+		} else if (file.getName().endsWith(SUFFIX_2007)) {
 			workbook = new XSSFWorkbook(is);
 		} else {
-			throw new IllegalArgumentException("不是excel文件:" + filePath);
+			throw new IllegalArgumentException("不是excel文件:" + file.getName());
 		}
 		return parseWorkbook(workbook);
 	}

@@ -20,6 +20,9 @@ public enum EnumStatus {
 		name = aname;
 	}
 
+	public String getIdText(){
+		return String.valueOf(id);
+	}
 	/**
 	 * @return the id
 	 */
