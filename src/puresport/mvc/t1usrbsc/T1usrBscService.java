@@ -1,10 +1,12 @@
 package puresport.mvc.t1usrbsc;
 
 import java.util.List;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.log4j.Logger;
+import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 
 import com.jfinal.aop.Enhancer;
 import com.jfinal.plugin.activerecord.Db;
@@ -37,7 +39,34 @@ public class T1usrBscService extends BaseService {
 		return T1usrBsc.dao.find(String.format("select * from %s where %s  limit ?,?", tableName, "1=1"),
 				paramMdl.getPageIndex(), paramMdl.getPageSize());
 	}
+	
+	public List<ResUserScore> selectScoreByPage(ParamComm paramMdl) {
+		List<T1usrBsc> userInfos =  T1usrBsc.dao.find(String.format("select * from %s where %s  limit ?,?", tableName, "1=1"),
+				paramMdl.getPageIndex(), paramMdl.getPageSize());
+		
+		return userInfos.stream().map(e->getUserScore(e)).collect(Collectors.toList());
+	}
 
+	public  ResUserScore getUserScore(T1usrBsc user){
+		ResUserScore userScore = new ResUserScore();
+		userScore.setUsr_tp(user.getUsr_tp());
+		userScore.setUsr_nm(user.getUsr_nm());
+		userScore.setNm(user.getNm());
+		userScore.setCrdt_tp(user.getCrdt_tp());
+		userScore.setCrdt_no(user.getCrdt_no());
+		userScore.setSpt_prj(user.getSpt_prj());
+		userScore.setGnd(user.getGnd());
+		userScore.setBrth_dt(user.getBrth_dt());
+		userScore.setMblph_no(user.getMblph_no());
+		userScore.setEmail(user.getEmail());
+		userScore.setProvince(user.getProvince());
+		userScore.setCity(user.getCity());
+		userScore.setInstitute(user.getInstitute());
+		userScore.setCourse("田径100米");
+		userScore.setScore(90);
+		userScore.setPassed("合格");
+		return userScore;
+	}
 	/**
 	 * 将excel数据导入数据库
 	 * 

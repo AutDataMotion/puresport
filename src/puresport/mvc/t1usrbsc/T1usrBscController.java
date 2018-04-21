@@ -53,30 +53,14 @@ public class T1usrBscController extends BaseController {
 
 	@Clear
 	public void getData() {
-		// 获取检索条件
-		String strvalue = getPara("v");
-		if (null == strvalue || strvalue.isEmpty()) {
-			renderText("-1");
-			return;
-		}
-		log.debug(strvalue);
-		// 转化为Model
-		ParamComm paramMdl = null;
-		try {
-			paramMdl = JsonUtils.deserialize(strvalue, ParamComm.class);
-			if (null == paramMdl) {
-				renderText(EnumStatus.Failed.getIdText());// 错误
-				return;
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			renderText(EnumStatus.Failed.getIdText());// 错误
-			return;
-		}
-		renderJson(T1usrBscService.service.selectByPage(paramMdl));
+		renderJson(T1usrBscService.service.selectByPage(getParamComm()));
 	}
 
+	@Clear
+	public void getDataScore(){
+		renderJson(T1usrBscService.service.selectScoreByPage(getParamComm()));
+	}
+	
 	@Clear
 	public void inload() {
 		// 获取上传的excel文件
