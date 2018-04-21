@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
-import org.apache.poi.ss.formula.functions.T;
 
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Record;
@@ -23,6 +22,10 @@ import com.platform.mvc.user.User;
 import com.platform.plugin.PropertiesPlugin;
 import com.platform.tools.ToolModelInjector;
 import com.platform.tools.ToolWeb;
+
+import csuduc.platform.util.JsonUtils;
+import puresport.constant.EnumStatus;
+import puresport.mvc.t6mgrahr.ParamComm;
 
 /**
  * 公共Controller
@@ -422,6 +425,29 @@ public abstract class BaseController extends Controller {
 		this.splitPage = splitPage;
 	}
 	
+	public ParamComm getParamComm(){
+		String strvalue = getPara("v");
+		if (null == strvalue || strvalue.isEmpty()) {
+			renderText("-1");
+			return null;
+		}
+		log.debug(strvalue);
+		// 转化为Model
+		ParamComm paramMdl = null;
+		try {
+			paramMdl = JsonUtils.deserialize(strvalue, ParamComm.class);
+			if (null == paramMdl) {
+				renderText(EnumStatus.Failed.getIdText());// 错误
+				return null;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			renderText(EnumStatus.Failed.getIdText());// 错误
+			return null;
+		}
+		return paramMdl;
+	}
 	
 
 }

@@ -1,8 +1,7 @@
 package puresport.mvc.t1usrbsc;
 
-import com.platform.constant.ConstantRender;
-import com.platform.mvc.base.BaseController;
-import com.platform.mvc.base.BaseModel;
+import java.io.IOException;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 
@@ -10,8 +9,17 @@ import com.alibaba.fastjson.JSONObject;
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
 import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.upload.UploadFile;
+import com.platform.constant.ConstantRender;
+import com.platform.mvc.base.BaseController;
 
-import puresport.constant.ConstantInitMy;
+import csuduc.platform.util.ComOutMdl;
+import csuduc.platform.util.JsonUtils;
+import puresport.applicat.ExcelParseTool;
+import puresport.applicat.MdlExcelRow;
+import puresport.constant.EnumStatus;
+import puresport.mvc.t6mgrahr.ParamComm;
+import puresport.mvc.t6mgrahr.T6MgrAhrService;
 
 
 /**
@@ -34,8 +42,64 @@ public class T1usrBscController extends BaseController {
 	private static Logger log = Logger.getLogger(T1usrBscController.class);
 
 	public static final String pthc = "/jf/puresport/t1usrBsc/";
-	public static final String pthv = "/puresport/t1usrBsc/";
+	public static final String pthv = "/f/";
 
+
+	@Clear
+	public void index() {
+		setAttr("username", "test");
+		renderWithPath(pthv + "admin.html");
+	}
+
+	@Clear
+	public void getData() {
+		renderJson(T1usrBscService.service.selectByPage(getParamComm()));
+	}
+
+	@Clear
+	public void getDataScore(){
+		renderJson(T1usrBscService.service.selectScoreByPage(getParamComm()));
+	}
+	
+	@Clear
+	public void inload() {
+		// 获取上传的excel文件
+		String path = "files/upload/".trim();
+		String base = this.getRequest().getContextPath().trim();// 应用路径
+		UploadFile picFile = getFile("fileexcel");// 得到 文件对象
+		String fileName = picFile.getFileName();
+		String mimeType = picFile.getContentType();// 得到 上传文件的MIME类型:audio/mpeg
+		System.out.println(mimeType);
+		// if(!"image/gif".equals(mimeType) && !"image/jpeg".equals(mimeType)
+		// &&!"image/x-png".equals(mimeType) &&!"image/png".equals(mimeType)){
+		// setAttr("message","上传文件类型错误！！！");
+		// renderJson();
+		// return ;
+		// }
+		// String realpath = getSession().getServletContext().getRealPath(path);
+		// String lastName = fileName.substring(fileName.lastIndexOf(".")); //
+		// 获取文件的后缀
+		// String newName= "2018"+lastName;
+
+		List<MdlExcelRow> table = null;
+		try {
+			table = ExcelParseTool.getWorkBookTable(picFile.getFile());
+		} catch (IllegalArgumentException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// 存入数据库
+		ComOutMdl<List<MdlExcelRow>> outFailedMdl = new ComOutMdl<>();
+		if (T1usrBscService.service.insertFromExcel(table, outFailedMdl)) {
+			renderText(String.valueOf(EnumStatus.Success.getId()));
+		} else {
+			log.error(outFailedMdl.get());
+			renderJson(outFailedMdl.get());
+		}
+		return;
+	}
+
+	
 	/**
 	 * 列表
 	 */
@@ -117,10 +181,6 @@ public class T1usrBscController extends BaseController {
         json.put("url", getCxt()+"/jf/puresport/pagesController/selfcenter"); 
         renderJson(json);  
         
-	}
-	public void index() {
-		paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T1usrBsc.sqlId_splitPage_from);
-		renderWithPath(pthv+"list.html");
 	}
 	
 	/**

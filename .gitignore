@@ -1,5 +1,7 @@
 # Compiled class file
 *.class
+init.properties
+init_sport.properties
 
 # Log file
 *.log

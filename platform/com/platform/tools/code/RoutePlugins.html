@@ -33,7 +33,7 @@ public class RoutePlugins extends Routes {
 	@Override
 	public void config() {
 		<% for(table in listTableMap){ %>
-		add("/jf/${basePath}/${table.tablename}", ${table.mdlname}Controller.class);
+		add("/jf/${basePath}/${table.mdlname}", ${table.mdlname}Controller.class);
 		<%}%>
 	}
 }

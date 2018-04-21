@@ -72,14 +72,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				// Run the show!
 				filterList.init();
 				*/
-				//$("#menu_zhunru").addClass("activate");
-				
+
 				$("#owl-demo").owlCarousel({
 					//autoPlay : 3000,
 					
 					stopOnHover : true,
 					navigation:true,
-					navigationText:["上一页","下一页"],
+					navigationText:["上一题","下一题"],
 					paginationSpeed : 1000,
 					//goToFirstSpeed : 2000,
 					pagination:true,
@@ -92,13 +91,128 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			});
 		</script>
 <!-- start light_box -->
-<link rel="stylesheet" type="text/css" href="${cxt!}/css/jquery.fancybox.css" media="screen" />
-<script type="text/javascript" src="${cxt!}/js/jquery.fancybox-1.2.1.js"></script>
+<!-- <link rel="stylesheet" type="text/css" href="/css/jquery.fancybox.css" media="screen" /> -->
+<script type="text/javascript" src="/js/jquery.fancybox-1.2.1.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$("div.fancyDemo a").fancybox();
+			
+			$(".to-labelauty").labelauty({ minimum_width: "155px" });
+			$(".to-labelauty-icon").labelauty({ label: false });
 		});
+
+/* 		$(":radio[checked]").each(function(radio){
+			alert($(this).val());
+		} */
+		
+		function	test(){
+			  var dataSet=new Array();
+		     for(var j = 1; j <= 14; j ++ ){
+			     var item = null;
+			     var obj = document.getElementsByName(j)  
+			     for (var i = 0; i < obj.length; i++) { //遍历Radio   
+				     if (obj[i].checked) {  
+				     	item = obj[i].value;  
+				     }  
+			     } 
+			     dataSet.push(item);
+		     }
+		     
+		     for(var k = 0; k < dataSet.length; k ++){
+		    	 alert(dataSet[k]);
+		     }
+		}
 	</script>
+	
+<script type="text/javascript">	
+	//批量删除
+function batchDelete(flag)
+{
+	if(!checkBoxCheckMore(flag))
+		return;
+	if(!del())
+		return;
+	  var dataSet=new Array();
+	  var userIdArray = null;
+	  if(flag == 1){
+			userIdArray = document.getElementsByName("orgDataId");
+	  } else if(flag == 2){
+			userIdArray = document.getElementsByName("pdtDataId");
+	  }
+	  
+	  var selectedNum = 0;
+	  for(var i = 0; i < userIdArray.length; i++)
+	  {
+	      if(userIdArray[i].checked)
+		  {		   
+			   dataSet.push(userIdArray[i].value);
+			   selectedNum = selectedNum + 1;
+		   }
+	  }
+	  var url;
+	  if(flag == 1){
+		  url = '/jf/thairice/t6org_data/batchDelete';
+	  } else if(flag == 2){
+		  url = '/jf/thairice/t7pdt_data/batchDelete';
+	  }
+	  
+	$.ajax({
+		  type: 'POST',
+		  url: url,
+	      dataType: "json",
+	      traditional: true,
+		  data: {dataSet:dataSet},
+		  success: function(res){
+			if(res.code == "0000"){
+				alert(res.desc);	
+				dataQuery(flag);
+			} else {
+				alert(res.desc);
+			}
+		  },
+		  dataType: "json"
+		});
+}
+	
+$(function(){
+
+	$("input:radio[name:dotest]").change(function(){
+
+	var v = $(this).val();
+
+	alert(v);
+
+	});
+
+
+	          });
+	          
+	          
+function fun(){ 
+
+    obj = document.getElementsByName("dotest"); 
+
+    check_val = []; 
+
+    for(k in obj){ 
+
+        if(obj[k].checked) 
+
+            check_val.push(obj[k].value); 
+        	alert(obj[k].value); 
+        	alert(obj[k].id); 
+        
+
+    } 
+
+    alert(check_val); 
+
+}
+</script>
+
+
+
+
 </head>
 <body>
 <style>
@@ -115,13 +229,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     }
     
 </style>
+
 <% include("/f/header.html"){} %>
 <div class="main_bg"><!-- start main -->
 <div class="container">
 	<div class="main_grid1">
 		<h3 class="style pull-left">考试</h3>
 		<ol class="breadcrumb pull-right">
-		  <li><a href="${cxt!}/jf/puresport/pagesController">首页</a></li>
+		  <li><a href="index.html">首页</a></li>
 		  <li class="active">考试</li>
 		</ol>
 		<div class="clearfix"></div>
@@ -132,17 +247,35 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <div class="container">
 	<!--  start cursual  -->
 	<div id="owl-demo" class="owl-carousel">
-	  <div><img src="${cxt!}/images/s3.jpg"></div>
-	  <div><img src="http://placehold.it/1170x400/42bdc2/FFFFFF"></div>
-	  <div><img src="http://placehold.it/1170x500/42bdc2/FFFFFF"></div>
-	  <div><img src="http://placehold.it/1170x200/42bdc2/FFFFFF"></div>
-	  <div><img src="http://placehold.it/1170x500/42bdc2/FFFFFF"></div>
-	  <div><img src="http://placehold.it/1170x250/42bdc2/FFFFFF"></div>
-	  <div><img src="http://placehold.it/1170x350/42bdc2/FFFFFF"></div>
-	  <div><img src="http://placehold.it/1170x300/42bdc2/FFFFFF"></div>
-	  <div><img src="http://placehold.it/1170x100/42bdc2/FFFFFF"></div>
-	  <div><img src="http://placehold.it/1170x500/42bdc2/FFFFFF"></div>
-	</div>
+								<%for(x in examSelectList){ %>
+								<div>
+								【单项选择题】 第${x.questionNum}题：
+								${x.ttl!}</br></br></br>
+								<input type="checkbox" name=dotest value="A" id=${x.prblmid!}A> ${x.optA!}</br></br>
+								<input type="checkbox" name=dotest value="B" id=${x.prblmid!}B> ${x.optB!}</br></br>
+								<input type="checkbox" name=dotest value="C" id=${x.prblmid!}C> ${x.optC!}</br></br>
+								<input type="checkbox" name=dotest value="D" id=${x.prblmid!}D> ${x.optD!}</br></br>	
+<!-- 				<li>
+					<input class="to-labelauty-icon" type="radio" name="rd2" checked />
+					<input class="to-labelauty-icon" type="radio" name="rd2" />
+					<input class="to-labelauty-icon" type="radio" name="rd2" />
+					<input class="to-labelauty-icon" type="radio" name="rd2" />
+				</li>	 -->						   
+								</div>
+							<%}%>
+							
+							<%for(y in examSelectList){ %>
+								<div>
+								【判断题】 第${y.questionNum}题：
+								${y.ttl!}</br></br></br>
+								<input type="radio" name=${y.prblmid!} value="A" id=${x.prblmid!}A> 正确</br></br>
+								<input type="radio" name=${y.prblmid!} value="B" id=${x.prblmid!}B> 错误</br></br>							   
+								</div>
+							<%}%>
+							<div>
+							<input name="button" type="button"  onclick="fun()" value="查询">
+							</div>
+							
 	<!--div class="cursual">
 		<h4>our happy clients<span class="line"></span></h4>
 	</div-->

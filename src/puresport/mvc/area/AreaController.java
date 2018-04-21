@@ -1,13 +1,20 @@
 package puresport.mvc.area;
 
+import java.util.Optional;
+
+import org.apache.log4j.Logger;
+
+import com.jfinal.aop.Before;
+import com.jfinal.aop.Clear;
 import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
 import com.platform.mvc.base.BaseModel;
 
-import org.apache.log4j.Logger;
-import com.jfinal.aop.Before;
-
+import csuduc.platform.util.JsonUtils;
+import oracle.net.aso.e;
 import puresport.constant.ConstantInitMy;
+import puresport.constant.EnumStatus;
+import puresport.mvc.t6mgrahr.ParamComm;
 
 
 /**
@@ -32,6 +39,21 @@ public class AreaController extends BaseController {
 	public static final String pthc = "/jf/puresport/area/";
 	public static final String pthv = "/puresport/area/";
 
+	@Clear
+	public void getProvince(){
+		renderJson(AreaService.service.getProvince());
+	}
+	
+	@Clear
+	public void getCityByProvinceId(){
+		// 获取检索条件
+	 	renderJson(AreaService.service.getCityByProvince(getParamComm()));
+	}
+	
+	@Clear
+	public void getInstitute(){
+		renderJson(AreaService.service.getInstitute(getParamComm()));
+	}
 	/**
 	 * 列表
 	 */

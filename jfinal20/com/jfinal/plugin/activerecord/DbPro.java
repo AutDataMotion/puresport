@@ -25,6 +25,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.function.Supplier;
+
+import org.apache.commons.collections4.ListUtils;
+
 import com.jfinal.plugin.activerecord.cache.ICache;
 import static com.jfinal.plugin.activerecord.DbKit.NULL_PARA_ARRAY;
 
@@ -288,6 +293,33 @@ public class DbPro {
 	 */
 	public int update(String sql) {
 		return update(sql, NULL_PARA_ARRAY);
+	}
+	
+
+	/**
+	 * 不存在则save、存在则update
+	 * 
+	 * @return
+	 */
+	public  boolean saveOtherwiseUpdate(String tableName, String primaryKey, Record record) {
+		// 是否存在
+		Optional<String[]> keyOp = Optional.ofNullable(primaryKey.split(","));
+		Object[] keyValues = keyOp.map(keys -> {
+			Object[] values = new Object[keys.length];
+			for (int i = 0; i < keys.length; i++) {
+				values[i] = record.get(keys[i]);	
+			}
+			return values;
+		}).orElseThrow(()->new IllegalArgumentException("primary key number must equals id value number") );
+		
+		Record existRecord = findById(tableName, primaryKey, keyValues);
+		if (null == existRecord) {
+			// 插入
+			return save(tableName, primaryKey, record);
+		} else {
+			// 更新
+			return update(tableName, primaryKey, record);
+		}
 	}
 	
 	List<Record> find(Config config, Connection conn, String sql, Object... paras) throws SQLException {
