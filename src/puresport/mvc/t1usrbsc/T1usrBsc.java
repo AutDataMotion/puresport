@@ -192,7 +192,7 @@ public class T1usrBsc extends BaseModel<T1usrBsc> {
 	public static final String sqlId_splitPage_from = "puresport.t1usrBsc.splitPageFrom";
 
 	private Long usrid;
-	private Integer usr_tp;
+	private String usr_tp;
 	private String usr_nm;
 	private String nm;
 	private String crdt_tp;
@@ -225,7 +225,7 @@ public class T1usrBsc extends BaseModel<T1usrBsc> {
 	public <T> T getUsrid() {
 		return get(column_usrid);
 	}
-	public void setUsr_tp(Integer usr_tp){
+	public void setUsr_tp(String usr_tp){
 		set(column_usr_tp, usr_tp);
 	}
 	public <T> T getUsr_tp() {

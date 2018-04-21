@@ -14,7 +14,7 @@ $(document).ready(function() {
 		}, {
 			data : "spt_prj"
 		}, {
-			data : "typeleve"
+			data : "typelevel"
 		}, {
 			data : "province"
 		}, {
@@ -67,7 +67,7 @@ $(document).ready(function() {
 //	$('#btnSearch').click();
 	
 	//------------------上传   start     
-	function checktext(type) {
+	function checktext(f) {
 		
 		if (f == "") {
 			alert("请上传excel");
@@ -79,15 +79,20 @@ $(document).ready(function() {
 			return true;
 		}
 	}
-	function uploadtext_sporter(file) {
+
+	$("#inputfilesporter").on('change keyup', function () {
+		console.log(" inputfilesporter change");
 		var f = document.getElementById("inputfilesporter").value;//获取input type="file"的值  
-		if (!checktext(f)) {
+		console.log(f);
+		var docObj = document.getElementById("inputfilesporter");
+		uploadtext(f, docObj);
+	});
+	function uploadtext(file,docObj) {
+		if (!checktext(file)) {
 			return;
 		}
-		// var prevDiv = document.getElementById('preview');
-		var docObj = document.getElementById("inputfilesporter");
 		var fileObj = docObj.files[0]; // 获取文件对象  
-		var FileController = "${cxt!}/jf/puresport/t1usrBsc/inload/";// 接收上传文件的后台地址   
+		var FileController = cxt +"/jf/puresport/t1usrBsc/inload/";// 接收上传文件的后台地址   
 		var form = new FormData();//form 对象  
 		form.append("fileexcel", fileObj);// 文件对象  
 		$.ajax({
@@ -108,6 +113,5 @@ $(document).ready(function() {
 		});
 	}
 	//------------------上传 end
-	
 	search("","","");
 });

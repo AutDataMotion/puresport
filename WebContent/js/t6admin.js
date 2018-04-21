@@ -69,7 +69,7 @@ $(document).ready(function() {
 //	$('#btnSearch').click();
 	
 	//------------------上传   start     
-	function checktext(type) {
+	function checktext(f) {
 	
 		if (f == "") {
 			alert("请上传excel");
@@ -81,14 +81,19 @@ $(document).ready(function() {
 			return true;
 		}
 	}
-	function uploadtext_adm(file) {
+	
+	$("#inputfileadmin").on('change keyup', function () {
 		var f = document.getElementById("inputfileadmin").value;//获取input type="file"的值  
-		if (!checktext(f)) {
+		var docObj = document.getElementById("inputfileadmin");
+		uploadtext(f, docObj);
+	});
+	
+	function uploadtext(file,docObj) {
+		if (!checktext(file)) {
 			return;
 		}
-		var docObj = document.getElementById("inputfileadmin");
 		var fileObj = docObj.files[0]; // 获取文件对象  
-		var FileController = "${cxt!}/jf/puresport/t6MgrAhr/inload/";// 接收上传文件的后台地址   
+		var FileController = cxt +"/jf/puresport/t6MgrAhr/inload/";// 接收上传文件的后台地址   
 		var form = new FormData();//form 对象  
 		form.append("fileexcel", fileObj);// 文件对象  
 		$.ajax({
