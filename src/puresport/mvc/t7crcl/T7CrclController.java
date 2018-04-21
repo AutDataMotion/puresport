@@ -1,22 +1,15 @@
 package puresport.mvc.t7crcl;
 
-import com.platform.annotation.Controller;
-import com.platform.constant.ConstantRender;
-import com.platform.mvc.base.BaseController;
-import com.platform.mvc.base.BaseModel;
-
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.log4j.Logger;
-import org.eclipse.jetty.util.LazyList;
 
 import com.jfinal.aop.Before;
-import com.jfinal.plugin.activerecord.Page;
+import com.platform.annotation.Controller;
+import com.platform.constant.ConstantRender;
+import com.platform.mvc.base.BaseController;
 
-import puresport.constant.ConstantInitMy;
 import puresport.entity.ExamEntity;
 import puresport.mvc.t9tstlib.T9Tstlib;
 

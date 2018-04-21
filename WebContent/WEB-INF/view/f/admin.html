@@ -237,7 +237,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										</div>
 										<a type="submit"
 											onclick="$('input[id=inputfileadmin]').click();"
-											class="btn col-sm-2 btn-default">上传文件</a>
+											class="btn col-sm-2 btn-default">上传EXCEL文件</a>
 
 									</div>
 									<table id="example1" class="display" >
@@ -263,60 +263,31 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<div class="tab-pane fade" id="myTabs_1_1">
 									<div class="form-group">
 										<div class="col-sm-10">
-											<input type="file" id="inputfile">
+											<input type="file" id="inputfilesporter" style="opacity: 0;width:0px"
+												onchange="uploadtext_sporter(this)">
 										</div>
-										<button type="submit" class="btn col-sm-2 btn-default">提交</button>
+										<a type="submit" 
+											onclick="$('input[id=inputfilesporter]').click();"
+											class="btn col-sm-2 btn-default">上传EXCEL文件</a>
 
 									</div>
 									<table id="example2" class="display" style="width: 100%">
 										<thead>
 											<tr>
-												<th>Name</th>
-												<th>Position</th>
-												<th>Office</th>
-												<th>Age</th>
-												<th>Start date</th>
-												<th>Salary</th>
-												<th>编辑</th>
+												<th>姓名</th>
+												<th>证件类型</th>
+												<th>证件号</th>
+												<th>性别</th>
+												<th>出生日期</th>
+												<th>运动项目</th>
+												<th>级别</th>
+												<th>所属省（自治区）</th>
+												<th>所属市</th>
+												<th>所属协会</th>
+												<th>手机号</th>
+												<th>邮箱</th>
 											</tr>
 										</thead>
-										<tbody>
-											<tr>
-												<td>Tiger Nixon</td>
-												<td>System Architect</td>
-												<td>Edinburgh</td>
-												<td>61</td>
-												<td>2011/04/25</td>
-												<td>$320,800</td>
-												<td>
-													<button>编辑</button>
-													<button>删除</button>
-												</td>
-											</tr>
-											<tr>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td></td>
-												<td>
-													<button>编辑</button>
-													<button>删除</button>
-												</td>
-											</tr>
-										</tbody>
-										<tfoot>
-											<tr>
-												<th>Name</th>
-												<th>Position</th>
-												<th>Office</th>
-												<th>Age</th>
-												<th>Start date</th>
-												<th>Salary</th>
-												<th>编辑</th>
-											</tr>
-										</tfoot>
 									</table>
 								</div>
 							</div>

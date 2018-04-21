@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	var myTable = $('#example1').DataTable({
+	var myTable = $('#example2').DataTable({
 		buttons : [ 'excel', 'pdf' ],
 		columns : [  {
 			data : "nm"
@@ -12,9 +12,7 @@ $(document).ready(function() {
 		}, {
 			data : "brth_dt"
 		}, {
-			data : "wrk_unit"
-		}, {
-			data : "post"
+			data : "spt_prj"
 		}, {
 			data : "typeleve"
 		}, {
@@ -52,7 +50,7 @@ $(document).ready(function() {
 		// 发送查询请求
 		$.ajax({
 			type : "get",
-			url : encodeURI(encodeURI(cxt + "/jf/puresport/t6MgrAhr/getData")),
+			url : encodeURI(encodeURI(cxt + "/jf/puresport/t1usrBsc/getData")),
 			data : {
 				v : JSON.stringify(datasrch)
 			},
@@ -70,7 +68,7 @@ $(document).ready(function() {
 	
 	//------------------上传   start     
 	function checktext(type) {
-	
+		
 		if (f == "") {
 			alert("请上传excel");
 			return false;
@@ -81,14 +79,15 @@ $(document).ready(function() {
 			return true;
 		}
 	}
-	function uploadtext_adm(file) {
-		var f = document.getElementById("inputfileadmin").value;//获取input type="file"的值  
+	function uploadtext_sporter(file) {
+		var f = document.getElementById("inputfilesporter").value;//获取input type="file"的值  
 		if (!checktext(f)) {
 			return;
 		}
-		var docObj = document.getElementById("inputfileadmin");
+		// var prevDiv = document.getElementById('preview');
+		var docObj = document.getElementById("inputfilesporter");
 		var fileObj = docObj.files[0]; // 获取文件对象  
-		var FileController = "${cxt!}/jf/puresport/t6MgrAhr/inload/";// 接收上传文件的后台地址   
+		var FileController = "${cxt!}/jf/puresport/t1usrBsc/inload/";// 接收上传文件的后台地址   
 		var form = new FormData();//form 对象  
 		form.append("fileexcel", fileObj);// 文件对象  
 		$.ajax({

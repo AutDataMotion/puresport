@@ -135,7 +135,7 @@ public class T6MgrAhrController extends BaseController {
 		// 获取上传的excel文件
 		String path = "files/upload/".trim();
 		String base = this.getRequest().getContextPath().trim();// 应用路径
-		UploadFile picFile = getFile("fileadmin");// 得到 文件对象
+		UploadFile picFile = getFile("fileexcel");// 得到 文件对象
 		String fileName = picFile.getFileName();
 		String mimeType = picFile.getContentType();// 得到 上传文件的MIME类型:audio/mpeg
 		System.out.println(mimeType);
