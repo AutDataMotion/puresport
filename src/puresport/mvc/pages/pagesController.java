@@ -36,17 +36,27 @@ public class pagesController extends BaseController {
 		
 	}
 	@Clear
-	public void study() {
+	public void zhunru_index() {
 		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
 		//renderWithPath(pthv+"list.html");
-		renderWithPath(pthv+"study.html");
+		//getSession().setAttribute("userid", "100");
+//		setSessionAttr("userID","10");
+		
+		renderWithPath(pthv+"zhunru_index.html");
+		
+	}
+	@Clear
+	public void zhunru_study() {
+		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
+		//renderWithPath(pthv+"list.html");
+		renderWithPath(pthv+"zhunru_study.html");
 	}
 	@Clear
 	@Before(loginInterceptorlyf.class)  
-	public void dotest() {
+	public void zhunru_dotest() {
 		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
 		//renderWithPath(pthv+"list.html");
-		renderWithPath(pthv+"dotest.html");
+		renderWithPath(pthv+"zhunru_dotest.html");
 	}
 	@Clear
 	public void about() {
