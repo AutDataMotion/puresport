@@ -60,7 +60,7 @@ function user_login()
 {
 
 	$.ajax({
-	    url:'/jf/puresport/t1_usr_bsc/login',
+	    url:'/jf/puresport/t1usrBsc/login',
 	    type:'POST', //GET
 	    async:true,    //或false,是否异步
 	    data:{
@@ -116,7 +116,7 @@ function admin_login()
 {
 
 	$.ajax({
-	    url:'/jf/puresport/t6_mgr_ahr/login',
+	    url:'/jf/puresport/t6MgrAhr/login',
 	    type:'POST', //GET
 	    async:true,    //或false,是否异步
 	    data:{
@@ -216,7 +216,7 @@ function Improve_user_info()
 		{
 			//alert(code+","+Competetion+","+CompetetionItem);
 			$.ajax({
-			    url:'/jf/puresport/t1_usr_bsc/ImproveUserInfo',
+			    url:'/jf/puresport/t1usrBsc/ImproveUserInfo',
 			    type:'POST', //GET
 			    async:true,    //或false,是否异步
 			    data:{
@@ -263,7 +263,7 @@ function Improve_user_info()
 		if(company&&position)
 		{
 			$.ajax({
-			    url:'/jf/puresport/t1_usr_bsc/ImproveUserInfo',
+			    url:'/jf/puresport/t1usrBsc/ImproveUserInfo',
 			    type:'POST', //GET
 			    async:true,    //或false,是否异步
 			    data:{
@@ -332,7 +332,7 @@ function Improve_admin_info()
 	if(company&&position)
 	{
 		$.ajax({
-		    url:'/jf/puresport/t6_mgr_ahr/ImproveAdminInfo',
+		    url:'/jf/puresport/t6MgrAhr/ImproveAdminInfo',
 		    type:'POST', //GET
 		    async:true,    //或false,是否异步
 		    data:{
@@ -603,7 +603,7 @@ function initScoreTable(userID)
 	if(userID)
 	{
 		$.ajax({
-		    url:'/jf/puresport/t10_exam_grd/get_exam_grd',
+		    url:'/jf/puresport/t10ExamGrd/get_exam_grd',
 		    type:'POST', //GET
 		    async:true,    //或false,是否异步
 		    data:{
