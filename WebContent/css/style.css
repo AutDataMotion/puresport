@@ -34,6 +34,7 @@ body a{
 }
 .selfcenterbtn{
 	background: url(../images/nav_bar_icon02.png) no-repeat center center !important;
+	/*float:right;*/
 }
 
 .form-forgetpwdbox_user{
@@ -50,6 +51,34 @@ body a{
 }
 .header_bg{
 	background: #70c570;
+}
+.header_bg1{
+	background: #70c570;
+}
+.header_bg2{
+	    background: #318731;
+}
+.header_bg2_ul_li_a{
+	    color: #fff !important;
+}
+.nav>li>a:focus, .nav>li>a:hover {
+    text-decoration: none !important;
+    background-color: #e36b2c !important;
+}
+#competition_list{
+	background-color:#f3f3f3;
+	width:100%
+}
+.header_bg2 ul{
+	 margin-top: 10px;
+    margin-bottom: 10px;
+}
+.header_bg3{
+	background: #70c570;
+}
+.header_bg3 ul{
+	 margin-top: 10px;
+    margin-bottom: 10px;
 }
 .header{
 	padding:0em 0 1em;
@@ -77,9 +106,13 @@ body a{
 }
 .copyrights{text-indent:-9999px;height:0;line-height:0;font-size:0;overflow:hidden;}
 /* start h_menu */
+.h_menu_main{
+	/*float: left;*/
+	/*margin-top: 24px;*/
+}
 .h_menu{
-	float: right;
-	margin-top: 24px;
+	/*float: right;*/
+	/*margin-top: 24px;*/
 }
 nav{
 	display:block;
