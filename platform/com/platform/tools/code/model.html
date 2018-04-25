@@ -24,6 +24,8 @@ public class ${className} extends BaseModel<${className}> {
 	
 	public static final ${className} dao = new ${className}();
 	
+	public static final String  tableName = "${tableName}";
+	
 	<% for(colunm in colunmList){ %>
 	/**
 	 * 字段描述：${colunm.column_desc} 

@@ -11,6 +11,7 @@ import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 import com.jfinal.aop.Enhancer;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
+import com.platform.config.run.ConfMain;
 import com.platform.mvc.base.BaseService;
 
 import csuduc.platform.util.ComOutMdl;
@@ -66,6 +67,49 @@ public class T1usrBscService extends BaseService {
 		userScore.setScore(90);
 		userScore.setPassed("合格");
 		return userScore;
+	}
+	/**
+	 * 统计-项目合格率
+	 * @param paramMdl
+	 * @return
+	 */
+	public List<ResPrjStatis> selectPassedPercent(ParamComm paramMdl) {
+		List<Record> prjStatistics =  Db.use(ConstantInitMy.db_dataSource_main).find(String.format("select spt_prj,province,city, institute  from %s group by spt_prj,province,city, institute  limit ?,?", tableName, "1=1"),
+				paramMdl.getPageIndex(), paramMdl.getPageSize());
+		
+		return prjStatistics.stream().map(e->getPrjStatisMdl(e)).collect(Collectors.toList());
+	}
+	public ResPrjStatis getPrjStatisMdl(Record record){
+		ResPrjStatis prjStatis =  new ResPrjStatis();
+		prjStatis.setSpt_prj(record.getStr("spt_prj"));
+		prjStatis.setProvince(record.getStr("province"));
+		prjStatis.setCity(record.getStr("city"));
+		prjStatis.setInstitute(record.getStr("institute"));
+		prjStatis.setAnswered("100%(30/30)");
+		prjStatis.setPassed("80%(40/50)");
+		return prjStatis;
+	}
+	
+	/**
+	 * 统计-试题错误率
+	 * @param paramMdl
+	 * @return
+	 */
+	public List<ResExamQuestion> selectExamQuestion(ParamComm paramMdl) {
+		List<Record> examQuestions =  Db.use(ConstantInitMy.db_dataSource_main).find("select prblm_tp, ttl,  opt, prblm_aswr, scor  from t9_tstlib   limit ?,?",
+				paramMdl.getPageIndex(), paramMdl.getPageSize());
+		
+		return examQuestions.stream().map(e->getExamQuestionMdl(e)).collect(Collectors.toList());
+	}
+	public ResExamQuestion getExamQuestionMdl(Record record){
+		ResExamQuestion item =  new ResExamQuestion();
+		item.setType(record.getStr("prblm_tp"));
+		item.setTitle(record.getStr("ttl"));
+		item.setContent(record.getStr("opt"));
+		item.setAnswer(record.getStr("prblm_aswr"));
+		item.setScore(record.getInt("scor"));
+		item.setErrorPercent("10%(10/100)");
+		return item;
 	}
 	/**
 	 * 将excel数据导入数据库
