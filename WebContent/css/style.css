@@ -114,6 +114,10 @@ body a{
 	/*float: right;*/
 	/*margin-top: 24px;*/
 }
+.h_menu_admin{
+	float: right;
+	/*margin-top: 24px;*/
+}
 nav{
 	display:block;
 }
@@ -576,7 +580,7 @@ nav{margin:0;background:none;}.menu li{display:block;margin:0;}.menu li a{backgr
 }
 /* start about */
 .main_grid1{
-	padding: 2% 0;
+	/*padding: 2% 0;*/
 }
 h3.style{
 	text-transform: uppercase;

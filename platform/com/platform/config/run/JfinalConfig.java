@@ -33,6 +33,7 @@ import com.platform.tools.ToolString;
 
 import puresport.config.DBMappingMy;
 import puresport.constant.PropertiesInitMy;
+import puresport.mvc.pages.loginInterceptorlyf;
 
 /**
  * Jfinal API 引导式配置
@@ -138,10 +139,11 @@ public class JfinalConfig extends JFinalConfig {
 		// me.add(new SessionInViewInterceptor());
 
 		log.info("configInterceptor 权限认证拦截器");
-		interceptors.add(new AuthInterceptor());
-
+//		interceptors.add(new AuthInterceptor());
+		interceptors.add(new loginInterceptorlyf());
+		
 		log.info("configInterceptor 参数封装拦截器");
-		interceptors.add(new ParamPkgInterceptor());
+//		interceptors.add(new ParamPkgInterceptor());
 
 		log.info("configInterceptor 配置开启事物规则");
 		interceptors.add(new TxByMethods("save", "update", "delete"));
