@@ -62,6 +62,16 @@ public class T1usrBscController extends BaseController {
 	}
 	
 	@Clear
+	public void getDataPrjStatis(){
+		renderJson(T1usrBscService.service.selectPassedPercent(getParamComm()));
+	}
+	
+	@Clear
+	public void getDataExamQues(){
+		renderJson(T1usrBscService.service.selectExamQuestion(getParamComm()));
+	}
+	
+	@Clear
 	public void inload() {
 		// 获取上传的excel文件
 		String path = "files/upload/".trim();
