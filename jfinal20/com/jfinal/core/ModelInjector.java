@@ -19,12 +19,20 @@ package com.jfinal.core;
 import java.lang.reflect.Method;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.function.Function;
+
 import javax.servlet.http.HttpServletRequest;
+
+import org.apache.xmlbeans.impl.xb.xmlconfig.Extensionconfig.Interface;
+
 import com.jfinal.kit.StrKit;
 import com.jfinal.plugin.activerecord.ActiveRecordException;
 import com.jfinal.plugin.activerecord.Model;
 import com.jfinal.plugin.activerecord.Table;
 import com.jfinal.plugin.activerecord.TableMapping;
+
+import csuduc.platform.util.tuple.Tuple2;
+import csuduc.platform.util.tuple.TupleUtil;
 
 /**
  * ModelInjector
@@ -100,6 +108,56 @@ public final class ModelInjector {
 				} catch (Exception ex) {
 					if (skipConvertError == false)
 						throw new RuntimeException("Can not convert parameter: " + modelNameAndDot + paraName, ex);
+				}
+			}
+		}
+	}
+	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static final <T> T injectForTable(Class<?> modelClass, String modelName, HttpServletRequest request) {
+		Object model = null;
+		try {
+			model = modelClass.newInstance();
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		// data[0][nm]:添加运动1
+		// data[0][crdt_tp]:身份证
+		if (model instanceof Model)
+			injectRecordModelForTable((Model)model, modelName, request,false
+					, (tuple2) ->  tuple2.first.startsWith(tuple2.second)
+					, (nameKey)-> nameKey.substring(modelName.length()+1, nameKey.length()-1)
+					);
+		else
+			injectCommonModel(model, modelName, request, modelClass, false);
+		
+		return (T)model;
+	}
+	@SuppressWarnings({ "rawtypes", "unused" })
+	private static final void injectRecordModelForTable(Model<?> model
+			, String modelName
+			, HttpServletRequest request
+			, boolean skipConvertError
+			, Function<Tuple2<String, String>, Boolean> isSameParam
+			, Function<String, String> getParamName) {
+		
+		Table table = TableMapping.me().getTable(model.getClass());
+		Map<String, String[]> parasMap = request.getParameterMap();
+		for (Entry<String, String[]> e : parasMap.entrySet()) {
+			String paraKey = e.getKey();
+			if (isSameParam.apply(TupleUtil.tuple(paraKey, modelName))) {
+				String paraName = getParamName.apply(paraKey);
+				Class colType = table.getColumnType(paraName);
+				if (colType == null)
+					throw new ActiveRecordException("The model attribute " + paraKey + " is not exists.");
+				String[] paraValue = e.getValue();
+				try {
+					// Object value = Converter.convert(colType, paraValue != null ? paraValue[0] : null);
+					Object value = paraValue[0] != null ? TypeConverter.convert(colType, paraValue[0]) : null;
+					model.set(paraName, value);
+				} catch (Exception ex) {
+					if (skipConvertError == false)
+						throw new RuntimeException("Can not convert parameter: " + modelName + paraName, ex);
 				}
 			}
 		}

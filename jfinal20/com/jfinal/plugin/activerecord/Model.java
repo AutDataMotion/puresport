@@ -166,7 +166,7 @@ public abstract class Model<M extends Model> implements Serializable {
 	 * Get attribute of any mysql type
 	 */
 	public <T> T get(String attr) {
-		return (T)(attrs.get(attr));
+		return (T)(String.valueOf(attrs.get(attr)));
 	}
 	
 	/**
@@ -492,8 +492,6 @@ public abstract class Model<M extends Model> implements Serializable {
 			sql.append(" and version < ? ");
 		}
 		// ################  新增代码块   end   #################
-		
-		// --------
 		Connection conn = null;
 		try {
 			conn = config.getConnection();

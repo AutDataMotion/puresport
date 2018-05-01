@@ -2,7 +2,10 @@ package puresport.config;
 
 import org.apache.log4j.Logger;
 
+import com.jfinal.plugin.activerecord.DbPro;
 import com.platform.config.run.BaseConfMain;
+
+import puresport.constant.ConstantInitMy;
 
 /**  
  * 创建时间：2016年1月26日 上午11:13:45  
@@ -22,5 +25,9 @@ public class ConfMain extends BaseConfMain{
 	
 	public static ConfMain getInstance(){
 		return single;
+	}
+	
+	public static DbPro db() {
+		return DbPro.use(ConstantInitMy.db_dataSource_main);
 	}
 }

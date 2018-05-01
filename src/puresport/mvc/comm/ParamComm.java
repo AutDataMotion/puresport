@@ -3,7 +3,7 @@
  * create by zw at 2018年3月17日
  * version: v1.0
  */
-package puresport.mvc.t6mgrahr;
+package puresport.mvc.comm;
 
 import java.io.Serializable;
 import java.util.Map;
@@ -20,10 +20,32 @@ public class ParamComm implements Serializable{
 	private String name2;
 	private String name3;
 	
+	private Integer draw;
 	private Integer pageIndex;
 	private Integer pageSize;
+	private Long total;
 	
 	ParamComm(){}
+
+	
+	
+	/**
+	 * @return the total
+	 */
+	public Long getTotal() {
+		return total;
+	}
+
+
+
+	/**
+	 * @param total the total to set
+	 */
+	public void setTotal(Long total) {
+		this.total = total;
+	}
+
+
 
 	/**
 	 * @return the id
@@ -108,7 +130,19 @@ public class ParamComm implements Serializable{
 	public void setPageSize(Integer pageSize) {
 		this.pageSize = pageSize;
 	}
-	
-	
+
+	/**
+	 * @return the draw
+	 */
+	public Integer getDraw() {
+		return draw;
+	}
+
+	/**
+	 * @param draw the draw to set
+	 */
+	public void setDraw(Integer draw) {
+		this.draw = draw;
+	}
 	
 }

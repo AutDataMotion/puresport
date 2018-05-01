@@ -51,15 +51,15 @@ public class MappingTable {
 	public static void mapping(ActiveRecordPlugin arp) {
 		log.info("puresport MappingTable 表手工注册-----begin");
 		arp.addMapping("dt_area", "id", Area.class);
-		arp.addMapping("t1_usr_bsc", "id", T1usrBsc.class);
+		arp.addMapping("t1_usr_bsc", "usrid", T1usrBsc.class);
 		arp.addMapping("t2_adiv", "id", T2Adiv.class);
 		arp.addMapping("t3_stat", "id", T3Statl.class);
 		arp.addMapping("t4_assc", "id", T4Assc.class);
 		arp.addMapping("t5_crcl_stdy", "id", T5CrclStdy.class);
-		arp.addMapping("t6_mgr_ahr", "id", T6MgrAhr.class);
-		arp.addMapping("t7_crcl", "id", T7Crcl.class);
-		arp.addMapping("t8_exam", "id", T8Exam.class);
-		arp.addMapping("t9_tstlib", "id", T9Tstlib.class);
+		arp.addMapping("t6_mgr_ahr", "usrid", T6MgrAhr.class);
+		arp.addMapping("t7_crcl", "crclid", T7Crcl.class);
+		arp.addMapping("t8_exam", "examid", T8Exam.class);
+		arp.addMapping("t9_tstlib", "prblmid", T9Tstlib.class);
 		arp.addMapping("t10_exam_grd", "id", T10ExamGrd.class);
 		log.info("puresport MappingTable 表手工注册-----end");
 

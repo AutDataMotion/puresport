@@ -2,6 +2,7 @@ package puresport.mvc.t1usrbsc;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 
@@ -14,12 +15,10 @@ import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
 
 import csuduc.platform.util.ComOutMdl;
-import csuduc.platform.util.JsonUtils;
 import puresport.applicat.ExcelParseTool;
 import puresport.applicat.MdlExcelRow;
 import puresport.constant.EnumStatus;
-import puresport.mvc.t6mgrahr.ParamComm;
-import puresport.mvc.t6mgrahr.T6MgrAhrService;
+import puresport.mvc.comm.ResErrorTips;
 
 
 /**
@@ -53,9 +52,50 @@ public class T1usrBscController extends BaseController {
 
 	@Clear
 	public void getData() {
-		renderJson(T1usrBscService.service.selectByPage(getParamComm()));
+		renderJsonForTable(T1usrBscService.service.selectByPage(getParamWithServerPage()));
+	}
+	@Clear
+	public void addSporter(){
+		T1usrBsc mdl = getModelForTable(T1usrBsc.class);
+	    // 检查手机号的用户是否存在
+		if (T1usrBscService.service.isExist(mdl)) {
+			ResErrorTips errorTips = new ResErrorTips()
+					.addErroFiled(T1usrBsc.column_mblph_no, "该手机号的运动员已存在");
+			renderJson(errorTips);
+			return ;
+		}
+		// 不存在则添加
+		// 用户名设置为手机号
+		mdl.set(T1usrBsc.column_usr_nm, mdl.get(T1usrBsc.column_mblph_no));
+		mdl.saveGenIntId();
+		renderJsonForRow(mdl);
 	}
 
+	@Clear
+	public void editSporter(){
+		T1usrBsc mdl = getModelForTable(T1usrBsc.class);
+	    // 检查手机号的用户是否存在
+		if (!T1usrBscService.service.isExist(mdl)) {
+			// 不存在则不可以更新
+			ResErrorTips errorTips = new ResErrorTips()
+					.addErroFiled(T1usrBsc.column_mblph_no, "该手机号的运动员不存在");
+			renderJson(errorTips);
+			return ;
+		}
+		// 用户名设置为手机号
+		mdl.set(T1usrBsc.column_usr_nm, mdl.get(T1usrBsc.column_mblph_no));
+		mdl.update();
+		renderJsonForRow(mdl);
+	}
+	
+	@Clear
+	public void delSporter(){
+		Map<String, String[]> paramMap = getParaMap();
+		paramMap.entrySet().stream().forEach(e->{
+			System.out.println(e.getKey()+"--"+e.getValue());
+		});
+	}
+	
 	@Clear
 	public void getDataScore(){
 		renderJson(T1usrBscService.service.selectScoreByPage(getParamComm()));

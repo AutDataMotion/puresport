@@ -47,8 +47,8 @@ public class CaseInsensitiveContainerFactory implements IContainerFactory {
 	}
 	
 	private static Object convertCase(Object key) {
-		if (key instanceof String)
-			return toLowerCase ? ((String)key).toLowerCase() : ((String)key).toUpperCase();
+//		if (key instanceof String)
+//			return toLowerCase ? ((String)key).toLowerCase() : ((String)key).toUpperCase();
 		return key;
 	}
 	

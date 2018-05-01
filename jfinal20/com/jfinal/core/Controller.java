@@ -654,6 +654,26 @@ public abstract class Controller {
 		return (T)ModelInjector.inject(modelClass, modelName, request, false);
 	}
 	
+	
+	public <T> T getModelForTable(Class<T> modelClass) {
+		Enumeration<String> enumNames = request.getParameterNames();
+		String modelPreStr = "";
+		while(enumNames.hasMoreElements()){
+			String name = enumNames.nextElement();
+			if (name.startsWith("data[") ) {
+				// 可以获得主键、但没做
+				int rightFlag = name.indexOf(']');
+				modelPreStr = name.substring(0, rightFlag+1);
+				break;
+			}
+		}
+		return (T)ModelInjector.injectForTable(modelClass, modelPreStr, request);
+	}
+	
+	public <T> T getModelForTable(Class<T> modelClass, String modelName) {
+		return (T)ModelInjector.injectForTable(modelClass, modelName, request);
+	}
+	
 	// TODO public <T> List<T> getModels(Class<T> modelClass, String modelName) {}
 	
 	// --------

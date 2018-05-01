@@ -80,6 +80,31 @@ public abstract class BaseModel<M extends Model<M>> extends Model<M> {
 	 */
 	public static final String sqlId_splitPage_select = "platform.baseModel.splitPageSelect";
 	
+	public static final String column_dt_rowId = "DT_RowId";
+	/**
+	 * view table中的row的唯一键
+	 */
+	protected String DT_RowId;
+	
+	/**
+	 * @return the dT_RowId
+	 */
+	public String getDT_RowId() {
+		return DT_RowId;
+	}
+
+	/**
+	 * @param dT_RowId the dT_RowId to set
+	 */
+	public void setDT_RowId(String dT_RowId) {
+		DT_RowId = dT_RowId;
+	}
+
+	public void generateDtRowId(){
+		DT_RowId = getPKValue();
+		put(column_dt_rowId, DT_RowId);
+		
+	}
 	/**
      * 获取SQL，固定SQL
      * @param sqlId
@@ -211,13 +236,20 @@ public abstract class BaseModel<M extends Model<M>> extends Model<M> {
 	 */
 	public String getPKValue(){
 		String[] pkNameArr = getTable().getPrimaryKey();
+		String key  = "";
+		String value = "";
 		if(pkNameArr.length == 1){
+			key = pkNameArr[0];
+			value = this.getStr(pkNameArr[0]);
 			return this.getStr(pkNameArr[0]);
 		}else{
 			String pk = "";
 			for (String pkName : pkNameArr) {
+				key += pkName+",";
 				pk += this.get(pkName) + ",";
 			}
+			value = pk;
+			System.out.println(String.format("pk key[%s] value[%s]", key, value));
 			return pk;
 		}
 	}

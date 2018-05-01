@@ -1,7 +1,26 @@
 $(document).ready(function() {
 	var myTable = $('#example5').DataTable({
-		buttons : [ 'excel', 'pdf' ],
+		dom: 'Bfrtip',
+		select: {
+            style:    'os',
+            selector: 'td:first-child'
+        },
+        buttons: [
+             {
+                 extend: 'collection',
+                 text: '导出',
+                 buttons: [
+                     'excel',
+                     'print'
+                 ]
+             }
+        ],
 		columns : [  {
+            data: null,
+            defaultContent: '',
+            className: 'select-checkbox',
+            orderable: false
+        },{
 			data : "type"
 		}, {
 			data : "title"

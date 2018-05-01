@@ -14,7 +14,7 @@ import csuduc.platform.util.JsonUtils;
 import oracle.net.aso.e;
 import puresport.constant.ConstantInitMy;
 import puresport.constant.EnumStatus;
-import puresport.mvc.t6mgrahr.ParamComm;
+import puresport.mvc.comm.ParamComm;
 
 
 /**

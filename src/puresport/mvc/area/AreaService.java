@@ -10,7 +10,7 @@ import com.jfinal.plugin.activerecord.Record;
 import com.platform.mvc.base.BaseService;
 
 import puresport.constant.ConstantInitMy;
-import puresport.mvc.t6mgrahr.ParamComm;
+import puresport.mvc.comm.ParamComm;
 
 public class AreaService extends BaseService {
 

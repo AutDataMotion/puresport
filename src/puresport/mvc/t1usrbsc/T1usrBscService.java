@@ -1,29 +1,29 @@
 package puresport.mvc.t1usrbsc;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.log4j.Logger;
-import org.apache.xmlbeans.impl.xb.xsdschema.Public;
 
 import com.jfinal.aop.Enhancer;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
-import com.platform.config.run.ConfMain;
 import com.platform.mvc.base.BaseService;
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 import csuduc.platform.util.ComOutMdl;
 import puresport.applicat.MdlExcelRow;
+import puresport.config.ConfMain;
 import puresport.constant.ConstantInitMy;
 import puresport.constant.EnumRoleType;
-import puresport.mvc.t6mgrahr.ParamComm;
-import puresport.mvc.t6mgrahr.T6MgrAhr;
+import puresport.mvc.comm.ParamComm;
 
 public class T1usrBscService extends BaseService {
 	private final static String tableName = "t1_usr_bsc";
 	private final static String tableKey = "usr_nm";
+	
 
 	@SuppressWarnings("unused")
 	private static Logger log = Logger.getLogger(T1usrBscService.class);
@@ -36,9 +36,24 @@ public class T1usrBscService extends BaseService {
 		return mdl;
 	}
 
+	public boolean isExist(T1usrBsc mdl){
+		Record sporter = ConfMain.db().findById(tableName, T1usrBsc.column_mblph_no, (String)mdl.get(T1usrBsc.column_mblph_no));
+		if (null == sporter) {
+			return false;
+		}
+		mdl.set(T1usrBsc.column_usrid, sporter.get(T1usrBsc.column_usrid));
+		return true ;
+	 }
+	
 	public List<T1usrBsc> selectByPage(ParamComm paramMdl) {
-		return T1usrBsc.dao.find(String.format("select * from %s where %s  limit ?,?", tableName, "1=1"),
-				paramMdl.getPageIndex(), paramMdl.getPageSize());
+		Long countTotal = ConfMain.db().queryLong(String.format("select count(1) from %s ", tableName));
+		paramMdl.setTotal(countTotal);
+		List<T1usrBsc> resList =new ArrayList<>();
+		if (countTotal > 0) {
+			resList  =  T1usrBsc.dao.find(String.format("select * from %s where %s  limit ?,?", tableName, "1=1"),
+					paramMdl.getPageIndex(), paramMdl.getPageSize());
+		}
+		return resList;
 	}
 	
 	public List<ResUserScore> selectScoreByPage(ParamComm paramMdl) {
