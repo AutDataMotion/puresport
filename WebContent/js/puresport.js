@@ -25,19 +25,25 @@ function initlogin()
 	var CompetetionItem = document.getElementById("getSportItem_user_CompetetionItem");
 	
 	//循环将数组中的数据写入<option>标记中
-	for(var i=0;i<app.arr_Competetion.length;i++){
-		var op = new Option(app.arr_Competetion[i],app.arr_Competetion[i]);  
-		 Competetion.options.add(op);  
-	}
-	 
+//	for(var i=0;i<app.arr_Competetion.length;i++){
+//		var op = new Option(app.arr_Competetion[i],app.arr_Competetion[i]);  
+//		 Competetion.options.add(op);  
+//	}
+	var op = new Option(app.arr_Competetion[1],app.arr_Competetion[1]);  
+	Competetion.options.add(op);  
 	//修改省份列表的默认选择项
 	var index = 0;
 	Competetion.selectedIndex = index;
 	
 	//循环将数组中的数据写入<option>标记中
-	for (var j = 0; j<app.arr_CompetetionItem[index].length;j++) {
+//	for (var j = 0; j<app.arr_CompetetionItem[index].length;j++) {
 //		
-		var op = new Option(app.arr_CompetetionItem[index][j],app.arr_CompetetionItem[index][j]);  
+//		var op = new Option(app.arr_CompetetionItem[index][j],app.arr_CompetetionItem[index][j]);  
+//		CompetetionItem.options.add(op);
+//	}
+	for (var j = 0; j<app.arr_CompetetionItem[1].length;j++) {
+		
+		var op = new Option(app.arr_CompetetionItem[1][j],app.arr_CompetetionItem[1][j]);  
 		CompetetionItem.options.add(op);
 	}
 }

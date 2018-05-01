@@ -45,14 +45,14 @@ public class pagesController extends BaseController {
 		renderWithPath(pthv+"zhunru_index.html");
 		
 	}
-	@Clear
+//	@Clear
 	public void zhunru_study() {
 		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
 		//renderWithPath(pthv+"list.html");
 		renderWithPath(pthv+"zhunru_study.html");
 	}
-	@Clear
-	@Before(loginInterceptorlyf.class)  
+//	@Clear
+//	@Before(loginInterceptorlyf.class)  
 	public void zhunru_dotest() {
 		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
 		//renderWithPath(pthv+"list.html");
@@ -83,8 +83,8 @@ public class pagesController extends BaseController {
 
 		renderWithPath(pthv+"login.html");
 	}
-	@Clear
-	@Before(loginInterceptorlyf.class)  
+//	@Clear
+//	@Before(loginInterceptorlyf.class)  
 	public void selfcenter() {
 		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
 		//renderWithPath(pthv+"list.html");
@@ -106,8 +106,8 @@ public class pagesController extends BaseController {
         }
 		
 	}
-	@Clear
-	@Before(loginInterceptorlyf.class)  
+//	@Clear
+//	@Before(loginInterceptorlyf.class)  
 	public void admin() {
 		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
 		//renderWithPath(pthv+"list.html");
