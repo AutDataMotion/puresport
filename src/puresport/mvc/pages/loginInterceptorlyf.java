@@ -16,9 +16,9 @@ public class loginInterceptorlyf implements Interceptor{
 			inv.getController().redirect(pthc+"login");
 		}
 		else {
-			Long userID = (Long) session.getAttribute("usrid");
+//			String userID_str = (String)session.getAttribute("usrid");
 			//String userID = (String)session.getAttribute("usrid");
-			if(userID!=null)
+			if(session.getAttribute("usrid")!=null)
 			{
 				inv.invoke();
 			}

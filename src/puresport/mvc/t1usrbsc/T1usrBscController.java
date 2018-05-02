@@ -158,7 +158,7 @@ public class T1usrBscController extends BaseController {
 	{
 		boolean flag = false;  
         String msg = "";  
-        int userType = 0;
+        String userType = "";
         JSONObject json = new JSONObject();  
         
         String mblph_no = getPara("account");//获取表单数据，这里的参数就是页面表单中的name属性值  
@@ -194,12 +194,12 @@ public class T1usrBscController extends BaseController {
 //        String userType = "";
         JSONObject json = new JSONObject();  
         
-        Long userID = (Long) getSession().getAttribute("usrid");
+        Long userID = Long.valueOf((String)getSession().getAttribute("usrid"));
         T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", userID);//根据用户名查询数据库中的用户  
         if(item!=null)
         {
 //        	userType = getPara("userType");
-            if((int)item.getUsr_tp()==0)//运动员
+            if(((String)item.getUsr_tp()).equals("运动员"))//运动员
             {
 
             	String code = getPara("code");//获取表单数据，这里的参数就是页面表单中的name属性值  
@@ -216,7 +216,7 @@ public class T1usrBscController extends BaseController {
             else {//辅助人员
             	String company = getPara("company");//获取表单数据，这里的参数就是页面表单中的name属性值  
                 String position = getPara("position");
-                int res = Db.update("update puresport.t1_usr_bsc set wrk_unit=?,post=? where usrid=?",company,position,userID);
+                int res = Db.update("update puresport.t1_usr_bsc set department=?,post=? where usrid=?",company,position,userID);
                 if(res>0)
                 {
                 	flag = true; 

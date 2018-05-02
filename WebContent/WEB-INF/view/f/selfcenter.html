@@ -237,7 +237,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       <div class="modal-body">
       	<form class="form-horizontal">
       		<div class="col-sm-12" style="text-align: center;color: #e41818;">
-              <h5 id="passwordModal_hint"></h5>
+              <h5 id="passwordModal_hint" style="text-align:center;color:red;display:none;"></h5>
             </div>
       		
           <div class="form-group">
@@ -279,7 +279,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
       <div class="modal-body">
       	<form class="form-horizontal">
       		<div class="col-sm-12" style="text-align: center;color: #e41818;">
-              <h5 id="passwordModal_hint"></h5>
+              <h5 id="myModallyf_content_user" style="text-align:center;color:red;display:none;"></h5>
             </div>
       		<div id="user_Athlete" style="display:none">
 	          <div class="form-group">
@@ -317,7 +317,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </form>
       </div>
       <div class="modal-footer">
-        <button class="btn  system_btn" type="button" onclick="Improve_user_info_selfcenter(${session['usr_tp']})" data-toggle="modal">重置</button>
+        <button class="btn  system_btn" type="button" onclick="Improve_user_info_selfcenter('${session['usr_tp']}')" data-toggle="modal">重置</button>
         <button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
       </div>
   </div>
@@ -349,7 +349,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				var usrid ='${session["usr_tp"]}';
 				//alert(usrid);
 				
-				if(usrid==0)//运动员
+				if(usrid=="运动员")//运动员
 				{
 					initlogin();
 					document.getElementById("user_Athlete").style.display = "block";
