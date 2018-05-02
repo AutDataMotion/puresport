@@ -76,7 +76,7 @@ div.DTE div.DTE_Form_Buttons button {
   /* IE10 */
   background-image: -o-linear-gradient(top, #ffffff 0%, #dcdcdc 100%);
   /* Opera 11.10+ */
-  background-image: linear-gradient(to bottom, #ffffff 0%, #dcdcdc 100%);
+  background-image: linear-gradient(to bottom, #444444 0%, #3a3a3a100%);
   filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0,StartColorStr='#ffffff', EndColorStr='#dcdcdc');
 }
 div.DTE button.btn:hover,
