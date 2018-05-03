@@ -41,9 +41,10 @@ public class T5CrclStdyController extends BaseController {
 	/**
 	 * 列表
 	 */
+	@Clear
 	public void index() {
-		paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T5CrclStdy.sqlId_splitPage_from);
-		renderWithPath(pthv+"list.html");
+//		paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T5CrclStdy.sqlId_splitPage_from);
+		renderWithPath("/f/study.html");
 	}
 	
 	/**
@@ -100,7 +101,7 @@ public class T5CrclStdyController extends BaseController {
 			t5.saveGenIntId();
 		}
 	}
-	
+		
 	/**
 	 * 查询课程学习记录，判断是否具备考试资格
 	 */	
