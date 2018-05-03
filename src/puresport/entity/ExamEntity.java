@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 import puresport.mvc.t9tstlib.T9Tstlib;
 
 public class ExamEntity {
-	private Long prblmid;
+	private Integer prblmid;
 	private String prblm_ppl;
 	private String prblm_tp;
 	private String opt;
@@ -48,10 +48,10 @@ public class ExamEntity {
 	public void setPrblmno(Integer prblmno) {
 		this.prblmno = prblmno;
 	}
-	public Long getPrblmid() {
+	public Integer getPrblmid() {
 		return prblmid;
 	}
-	public void setPrblmid(Long prblmid) {
+	public void setPrblmid(Integer prblmid) {
 		this.prblmid = prblmid;
 	}
 	public String getPrblm_ppl() {

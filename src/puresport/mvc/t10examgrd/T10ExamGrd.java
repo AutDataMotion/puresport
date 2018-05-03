@@ -103,7 +103,7 @@ public class T10ExamGrd extends BaseModel<T10ExamGrd> {
 	private Integer examid;
 	private Integer exam_grd;
 	private String exam_st;
-	private Long prblmid;
+	private Integer prblmid;
 	private String usr_aswr;
 	private String prblm_aswr;
 	private Timestamp tms;
@@ -163,7 +163,7 @@ public class T10ExamGrd extends BaseModel<T10ExamGrd> {
 	public <T> T getExam_st() {
 		return get(column_exam_st);
 	}
-	public void setPrblmid(Long prblmid){
+	public void setPrblmid(Integer prblmid){
 		set(column_prblmid, prblmid);
 	}
 	public <T> T getPrblmid() {

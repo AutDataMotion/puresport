@@ -4,10 +4,16 @@ import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
 import com.platform.mvc.base.BaseModel;
 
+import java.sql.Timestamp;
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import com.jfinal.aop.Before;
+import com.jfinal.aop.Clear;
 
 import puresport.constant.ConstantInitMy;
+import puresport.entity.ResultEntity;
+import puresport.mvc.t9tstlib.T9Tstlib;
 
 
 /**
@@ -65,14 +71,91 @@ public class T5CrclStdyController extends BaseController {
 	}
 	
 	/**
-	 * 更新
+	 * 更新课程学习记录
 	 */
-	@Before(T5CrclStdyValidator.class)
-	public void update() {
-		getModel(T5CrclStdy.class).update();
-		redirect(pthc);
+/*	@Before(T5CrclStdyValidator.class)*/
+	@Clear
+	public void update() {		
+/*		getModel(T5CrclStdy.class).update();
+		redirect(pthc);*/
+		String usrid = getPara("usrid");
+		String crclid = getPara("crclid");
+		T5CrclStdy t5 =  new T5CrclStdy();
+		String sql = "select * from t5_crcl_stdy t where t.usrid ='" + usrid + "' and t.crclid = '" + crclid + "'";
+		List<T5CrclStdy> t5List = T5CrclStdy.dao.find(sql);
+		if((t5List != null) && (t5List.size() > 0)) {
+			// 更新;
+			t5 = t5List.get(0);
+			t5.setUsrid(Integer.parseInt(usrid));
+			t5.setCrclid(Integer.parseInt(crclid));
+			t5.setStdy_st("1");
+			t5.setTms(new Timestamp(System.currentTimeMillis()));
+			t5.update();
+		} else {
+			// 插入
+			t5.setUsrid(Integer.parseInt(usrid));
+			t5.setCrclid(Integer.parseInt(crclid));
+			t5.setStdy_st("1");
+			t5.setTms(new Timestamp(System.currentTimeMillis()));
+			t5.saveGenIntId();
+		}
 	}
-
+	
+	/**
+	 * 查询课程学习记录，判断是否具备考试资格
+	 */	
+	@Clear
+	public void isCanTest() {		
+/*		getModel(T5CrclStdy.class).update();
+		redirect(pthc);*/
+		/*String usrid = getPara("usrid");*/
+		String usrid = "333";
+		ResultEntity res = null;
+		StringBuilder desc = new StringBuilder("");
+		boolean isCorse1Fnsh = false;
+		boolean isCorse2Fnsh = false;
+		boolean isCorse3Fnsh = false;
+		// 必修课程1
+		String crclid = "1";
+		String sql = "select * from t5_crcl_stdy t where t.usrid ='" + usrid + "' and t.crclid = '" + crclid + "' and t.stdy_st='1'";
+		List<T5CrclStdy> t5List = T5CrclStdy.dao.find(sql);
+		if((t5List != null) && (t5List.size() > 0)) {
+			// 课程已修;	
+			isCorse1Fnsh = true;
+		} 		
+		// 必修课程2
+		crclid = "'21', '22', '23', '24','25', '26', '27'";
+		sql = "select * from t5_crcl_stdy t where t.usrid ='" + usrid + "' and t.crclid in(" + crclid
+				+ ") and t.stdy_st='1'";
+		t5List = T5CrclStdy.dao.find(sql);
+		if ((t5List != null) && (t5List.size() > 0)) {
+			// 课程已修;
+			isCorse2Fnsh = true;
+		}
+		// 必修课程3
+		crclid = "'31', '32', '33', '34','35', '36', '37'";
+		sql = "select * from t5_crcl_stdy t where t.usrid ='" + usrid + "' and t.crclid in(" + crclid
+				+ ") and t.stdy_st='1'";
+		t5List = T5CrclStdy.dao.find(sql);
+		if ((t5List != null) && (t5List.size() > 0)) {
+			// 课程已修;
+			isCorse3Fnsh = true;
+		}
+		if(isCorse1Fnsh && isCorse2Fnsh && isCorse3Fnsh) {
+			res = new ResultEntity("0000", "课程学习完毕，可以参加考试!");
+		} else {
+			if(!isCorse1Fnsh)
+				desc.append("‘必修课程1’");
+			if(!isCorse2Fnsh)
+				desc.append("‘必修课程2’");
+			if(!isCorse3Fnsh)
+				desc.append("‘必修课程3’");
+			desc.append("没有完成学习，请完成后再参加考试！");
+			res = new ResultEntity("0001", desc.toString());
+		}
+		renderJson(res);
+	}
+	
 	/**
 	 * 查看
 	 */

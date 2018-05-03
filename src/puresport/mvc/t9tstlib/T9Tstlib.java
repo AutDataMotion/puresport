@@ -77,7 +77,7 @@ public class T9Tstlib extends BaseModel<T9Tstlib> {
 	 */
 	public static final String sqlId_splitPage_from = "puresport.t9Tstlib.splitPageFrom";
 
-	private Long prblmid;
+	private Integer prblmid;
 	private String prblm_ppl;
 	private String prblm_tp;
 	private String opt;
@@ -86,7 +86,7 @@ public class T9Tstlib extends BaseModel<T9Tstlib> {
 	private Integer scor;
 	private Timestamp tms;
 
-	public void setPrblmid(Long prblmid){
+	public void setPrblmid(Integer prblmid){
 		set(column_prblmid, prblmid);
 	}
 	public <T> T getPrblmid() {

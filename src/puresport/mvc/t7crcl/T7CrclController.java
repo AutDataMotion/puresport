@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.jfinal.aop.Before;
+import com.jfinal.aop.Clear;
 import com.platform.annotation.Controller;
 import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
@@ -61,6 +62,7 @@ public class T7CrclController extends BaseController {
 	
 	// 从30道选择题中随机取10道，从30道判断题中随机取10道构成试卷。并保存到成绩记录表中。	
 	// zhuchaobin
+	@Clear
 		public void generteTest() {
 			// 选择题
 			String sql = "select * from t9_tstlib t where t.prblm_tp ='01' order by rand() limit 3";
@@ -70,7 +72,7 @@ public class T7CrclController extends BaseController {
 			for(T9Tstlib t9Tstlib : t9List) {
 					ExamEntity examEntity = new ExamEntity();
 					examEntity.setTtl((String) t9Tstlib.getTtl());
-					examEntity.setPrblmid((Long) t9Tstlib.getPrblmid());
+					examEntity.setPrblmid(Integer.parseInt(t9Tstlib.getPrblmid()));
 					examEntity.setOpt((String) t9Tstlib.getOpt());
 					String option = examEntity.getOpt();
 					String[] optionList = option.split("\\|");
@@ -99,7 +101,7 @@ public class T7CrclController extends BaseController {
 			for(T9Tstlib t9Tstlib : t9List) {
 					ExamEntity examEntity = new ExamEntity();
 					examEntity.setTtl((String) t9Tstlib.getTtl());
-					examEntity.setPrblmid((Long)t9Tstlib.getPrblmid());
+					examEntity.setPrblmid(Integer.parseInt(t9Tstlib.getPrblmid()));
 					// 答案
 					examEntity.setPrblm_aswr((String) t9Tstlib.getPrblm_aswr());
 					// 题号
@@ -119,7 +121,7 @@ public class T7CrclController extends BaseController {
 			} else {
 				LOG.debug("用户非首次考试，考试ID取上次考试ID + 1");
 				T10ExamGrd t10 = t10List.get(0);
-				examid = (Integer) t10List.get(0).getExamid() + 1;
+				examid = Integer.parseInt(t10List.get(0).getExamid()) + 1;
 			}
 
 			for(ExamEntity examEntity : examEntityList) {
@@ -158,11 +160,12 @@ public class T7CrclController extends BaseController {
 			setAttr("examid", examid);
 			setAttr("examSelectList", examEntityList);
 			setAttr("examDeducList", examEntityList2);
-			renderWithPath("/dotest.html");
+			renderWithPath("/f/dotest.html");
 		}
 		
 		// 提交考试，判定对错，记录题目记录，考试成绩
 		// zhuchaobin
+	@Clear
 			public void submitExam() {
 //				// 处理结果
 //				ResultEntity res = null;
@@ -223,7 +226,8 @@ public class T7CrclController extends BaseController {
 						}
 					}	
 //					float fscore = (float) (score * 100.0 / 6.0); 
-					ResultEntity res = new ResultEntity("0000", "恭喜您：您已完成测试，您的成绩为：" + score + "分！");
+					ResultEntity res = new ResultEntity("0000", "恭喜您！您已完成测试，您的成绩为：" + score*5 + "分！");
+					renderWithPath("/f/study.html");
 					renderJson(res);
 			}
 	
