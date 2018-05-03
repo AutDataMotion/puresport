@@ -1,5 +1,6 @@
 package puresport.mvc.t6mgrahr;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -13,6 +14,7 @@ import com.platform.mvc.base.BaseService;
 
 import csuduc.platform.util.ComOutMdl;
 import puresport.applicat.MdlExcelRow;
+import puresport.config.ConfMain;
 import puresport.constant.ConstantInitMy;
 import puresport.constant.EnumRoleType;
 import puresport.mvc.comm.ParamComm;
@@ -31,9 +33,25 @@ public class T6MgrAhrService extends BaseService {
 		T6MgrAhr mdl = T6MgrAhr.dao.findFirst("select * from t6MgrAhr where id=?", id);
 		return mdl;
 	}
+	
+	public boolean isExist(T6MgrAhr mdl){
+		Record user = ConfMain.db().findById(tableName, T6MgrAhr.column_mblph_no, (String)mdl.get(T6MgrAhr.column_mblph_no));
+		if (null == user) {
+			return false;
+		}
+		mdl.set(T6MgrAhr.column_usrid, user.get(T6MgrAhr.column_usrid));
+		return true ;
+	 }
 
 	public List<T6MgrAhr> selectByPage(ParamComm paramMdl){
-		return T6MgrAhr.dao.find(String.format("select * from %s where %s  limit ?,?", tableName, "1=1"), paramMdl.getPageIndex(), paramMdl.getPageSize());
+		Long countTotal = ConfMain.db().queryLong(String.format("select count(1) from %s ", tableName));
+		paramMdl.setTotal(countTotal);
+		List<T6MgrAhr> resList =new ArrayList<>();
+		if (countTotal > 0) {
+			resList  =  T6MgrAhr.dao.find(String.format("select usrid,nm,crdt_tp, crdt_no, gnd,brth_dt,wrk_unit, post,typeleve, province, city,institute, mblph_no, email  from %s where %s  limit ?,?", tableName, "1=1"),
+					paramMdl.getPageIndex(), paramMdl.getPageSize());
+		}
+		return resList;
 	}
 	/**
 	 * 将excel数据导入数据库
