@@ -76,6 +76,12 @@ public class T7Crcl extends BaseModel<T7Crcl> {
 	 */
 	public static final String column_tms = "tms";
 	
+	/**
+	 * 字段描述：缩略图文件路径 
+	 * 字段类型：varchar  长度：512
+	 */
+	public static final String column_thumbnail_rte = "thumbnail_rte";
+	
 	
 	/**
 	 * sqlId : puresport.t7Crcl.splitPageFrom
@@ -92,6 +98,21 @@ public class T7Crcl extends BaseModel<T7Crcl> {
 	private Integer ty_grd;
 	private String crcl_cgy;
 	private Timestamp tms;
+	private String thumbnail_rte;
+	private String stdy_st;
+
+	public String getStdy_st() {
+		return stdy_st;
+	}
+	public void setStdy_st(String stdy_st) {
+		this.stdy_st = stdy_st;
+	}
+	public <T> T getThumbnail_rte() {
+		return get(column_thumbnail_rte);
+	}
+	public void setThumbnail_rte(String thumbnail_rte) {
+		set(column_thumbnail_rte, thumbnail_rte);
+	}
 
 	public void setCrclid(Long crclid){
 		set(column_crclid, crclid);

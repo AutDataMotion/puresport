@@ -22,30 +22,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<link href="/css/owl.carousel.css" rel="stylesheet">
 		<link href="/css/owl.theme.css" rel="stylesheet">
 <script src="/js/owl.carousel.js"></script>
-		<script type="text/javascript">
-			$(function() {
-				
-				$("#owl-demo").owlCarousel({
-					//autoPlay : 3000,
-					
-					stopOnHover : true,
-					navigation:true,
-					navigationText:["上一页","下一页"],
-					paginationSpeed : 1000,
-					//goToFirstSpeed : 2000,
-					pagination:true,
-					paginationNumbers:true,
-					singleItem : true,
-					autoHeight : true,
-					transitionStyle:"fade"
-				  
-				});
-				
-				
-			});
-
-</script>
-
 	<script type="text/javascript">
 		function show2(){
 		document.getElementById("doTestDiv").style.display="";
@@ -57,7 +33,50 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			$("tachu").show();
 		}
 	</script>
+
+<!-- 自定义样式 -->	
+<!-- <link href="/css_zhuchaobin/font_.css" rel='stylesheet' type='text/css' /> -->
 	
+	<script>
+$(document).ready(function(){
+	// 0.4代表遮罩的透明度
+	$('.banner div').css('opacity',0.2);
+
+	$('.banner').hover(function(){
+	
+		var el = $(this);
+		
+		// 先淡出阴影，后淡入文字
+		el.find('div').stop().animate({width:200,height:200},'slow',function(){
+
+			el.find('p').fadeIn('fast');
+		});
+
+	},function(){
+
+		var el = $(this);
+		
+		// 隐藏文字
+		el.find('p').stop(true,true).hide();
+		
+		// 去掉遮罩
+		el.find('div').stop().animate({width:60,height:60},'fast');
+
+	}).click(function(){
+		
+		// 点击图片时打开链接
+		
+		window.open($(this).find('a').attr('href'));
+		
+	});
+});
+</script>
+
+<link rel="stylesheet" type="text/css" href="/css_zhuchaobin/lrtk.css" media="all">
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+
+<!-- 代码 结束 -->
+
 </head>
 <body>
 <style>
@@ -90,10 +109,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 }
 
 .title{
-/*        padding-top:5px;
-       padding-right:5px;
-       padding-bottom:5px;
-       padding-left:5px;*/
+        padding-top:20px;
+/* /*        padding-right:5px;  */
+       padding-bottom:10px; 
+   /*     padding-left:5px; */
+       text-indent:2em;  /* 段首缩进2个字符  */ 
+       font-family:"微软雅黑","黑体","宋体";
+       font-size:18px;
+/*        height:800px； */
+/*        word-spacing:50px; */
+/*        background:pink; */
+}
+
+.paragh{
+        padding-top:5px;
+/*        padding-right:5px; */
+       padding-bottom:15px;
+/*        padding-left:5px; */
        text-indent:2em;  /* 段首缩进2个字符  */ 
        font-family:"微软雅黑","黑体","宋体";
        font-size:18px;
@@ -137,8 +169,12 @@ body {
 		<nav>
 		<ul class="menu list-unstyled">
 			<li><a href="index.html">首页</a></li>
-			<li class="activate"><a href="study.html">课程学习</a></li>
-			<li><a href="dotest.html">考试</a></li>
+								<li>
+								<a onclick="window.location.href='/jf/puresport/t7Crcl/queryCrcl'">课程学习</a>
+							</li>
+							<li class="activate">
+								<a onclick="window.location.href='/jf/puresport/t7Crcl/generteTest'">考试</a>
+							</li>
 			<li><a href="about.html">关于</a></li>
 			<li class="dropdown selfcenterbtn">
 				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -169,12 +205,14 @@ body {
 		<h3 class="style pull-left">课程学习</h3>
 		<ol class="breadcrumb pull-right">
 		  <li><a href="index.html">首页</a></li>
-		  <li class="active">课程学习6</li>
+		  <li class="active">课程学习</li>
 		</ol>
 		<div class="clearfix"></div>
 	</div>
 </div>
 </div>
+
+
 
 <!-- start main_btm -->
 <div class="main_btm1"><!-- start main_btm -->
@@ -186,205 +224,126 @@ body {
 	<!----start-img-cursual----> 
 
 	<!-- 课程学习说明 -->
+	
+	<div class="paragh">
 	<div class="title">
 		课程学习说明
 		临时调升，申请原因和额度增加上限关联关系通过参数设置。额度增加上限是在授信额度的基础上增加。如客户调额前额度是1萭，调额原因是友邦保费费用，最高增加额度为现有额度50%，即是最高额度是1.5萭，可增加5千额度。临时调升，申请原因和额度增加上限关联关系通过参数设置。额度增加上限是在授信额度的基础上增加。如客户调额前额度是1萭，调额原因是友邦保费费用，最高增加额度为现有额度50%，即是最高额度是1.5萭，可增加5千额度。
 	</div>
+	</div>
 	<p>
 
-	<!-- 视频播放区域start -->
-<!--     <div class="m">
-	      <video id="my-video" class="video-js" controls preload="auto" width="740" height="400"
-			  poster="m.png" data-setup="{}">
-	        <source src="mainfinal.mp4" type="video/mp4">
-	        <p class="vjs-no-js"> To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a> </p>
-	      </video>
-	      <script src="/js/video.min.js"></script> 
-	      <script src="http://vjs.zencdn.net/5.19/lang/zh-CN.js"></script>
-	</div>	 -->
-	<!-- 视频播放区域end -->
-	<div>
-	<!-- 必修视频课程一 -->
-	必修视频课程一 
-				<div class="videoView">
-					<div >
-						<a href="video_play.html" target="blank"><img src="/images/wada_logo.png" alt="" class="img-responsive"/></a>
-					</div>
-					<div >
-						<a href="video_play.html" target="blank"><p>WADA教育</p></a>					
-					</div>
-				</div>
-	</div> 
-	<div> 
-	<!-- 必修视频课程二：七选一 -->
-	必修视频课程二：七选一
-	<table>
-		<tr>
-			<td width="25">
-				<div class="videoView">
-					<div >
-						<a href="https://www.wada-ama.org/"><img src="/images/wada_logo.png" alt="" class="img-responsive"/></a>
-					</div>
-					<div >
-						<a href="https://www.wada-ama.org/"><p>WADA教育</p></a>					
-					</div>
-				</div>
-			</td>
-			<td width="25">
-				<div class="videoView">
-					<div>
-						<a href="https://www.wada-ama.org/"><img src="/images/wada_logo.png" alt="" class="img-responsive"/></a>
-					</div>
-					<div >
-						<a href="https://www.wada-ama.org/"><p>WADA教育</p></a>					
-					</div>
-				</div>
-			</td>
-			<td width="25">
-				<div class="videoView">
-					<div >
-						<a href="https://www.wada-ama.org/"><img src="/images/wada_logo.png" alt="" class="img-responsive"/></a>
-					</div>
-					<div >
-						<a href="https://www.wada-ama.org/"><p>WADA教育</p></a>					
-					</div>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td width="25">
-					<div class="videoView">
-						<a href="https://www.wada-ama.org/"><img src="/images/wada_logo.png" alt="" class="img-responsive"/></a>
-					</div>
-					<div >
-						<a href="https://www.wada-ama.org/"><p>WADA教育</p></a>					
-					</div>
-			</td>
-			<td width="25">
-				<div class="videoView">
-					<div >
-						<a href="https://www.wada-ama.org/"><img src="/images/wada_logo.png" alt="" class="img-responsive"/></a>
-					</div>
-					<div >
-						<a href="https://www.wada-ama.org/"><p>WADA教育</p></a>					
-					</div>
-				</div>
-			</td>
-			<td width="25">
-				<div class="videoView">
-					<div >
-						<a href="https://www.wada-ama.org/"><img src="/images/wada_logo.png" alt="" class="img-responsive"/></a>
-					</div>
-					<div>
-						<a href="https://www.wada-ama.org/"><p>WADA教育</p></a>					
-					</div>
-				</div>
-			</td>
-			</tr>
-			<tr>
-			<td width="25">
-				<div class="videoView">
-					<div >
-						<a href="https://www.wada-ama.org/"><img src="/images/wada_logo.png" alt="" class="img-responsive"/></a>
-					</div>
-					<div >
-						<a href="https://www.wada-ama.org/"><p>WADA教育</p></a>					
-					</div>
-				</div>
-			</td>
-		</tr>
-	</table>
-	</div> 
-	<div> 
-	<!-- 必修视频课程三：七选一 -->
-	必修视频课程三：七选一
-		<table>
-		<tr>
-			<td width="25">
-				<div >
-					<div >
-						<a href="https://www.wada-ama.org/"><img src="/images/wada_logo.png" alt="" class="img-responsive"/></a>
-					</div>
-					<div >
-						<a href="https://www.wada-ama.org/"><p>WADA教育</p></a>					
-					</div>
-				</div>
-			</td>
-			<td width="25">
-				<div >
-					<div>
-						<a href="https://www.wada-ama.org/"><img src="/images/wada_logo.png" alt="" class="img-responsive"/></a>
-					</div>
-					<div >
-						<a href="https://www.wada-ama.org/"><p>WADA教育</p></a>					
-					</div>
-				</div>
-			</td>
-			<td width="25">
-				<div >
-					<div >
-						<a href="https://www.wada-ama.org/"><img src="/images/wada_logo.png" alt="" class="img-responsive"/></a>
-					</div>
-					<div >
-						<a href="https://www.wada-ama.org/"><p>WADA教育</p></a>					
-					</div>
-				</div>
-			</td>
-		</tr>
-		<tr>
-			<td width="25">
-					<div >
-						<a href="https://www.wada-ama.org/"><img src="/images/wada_logo.png" alt="" class="img-responsive"/></a>
-					</div>
-					<div >
-						<a href="https://www.wada-ama.org/"><p>WADA教育</p></a>					
-					</div>
-			</td>
-			<td width="25">
-				<div >
-					<div >
-						<a href="https://www.wada-ama.org/"><img src="/images/wada_logo.png" alt="" class="img-responsive"/></a>
-					</div>
-					<div >
-						<a href="https://www.wada-ama.org/"><p>WADA教育</p></a>					
-					</div>
-				</div>
-			</td>
-			<td width="25">
-				<div >
-					<div >
-						<a href="https://www.wada-ama.org/"><img src="/images/wada_logo.png" alt="" class="img-responsive"/></a>
-					</div>
-					<div>
-						<a href="https://www.wada-ama.org/"><p>WADA教育</p></a>					
-					</div>
-				</div>
-			</td>
-			</tr>
-			<tr>
-			<td width="25">
-				<div>
-					<div >
-						<a href="https://www.wada-ama.org/"><img src="/images/wada_logo.png" alt="" class="img-responsive"/></a>
-					</div>
-					<div >
-						<a href="https://www.wada-ama.org/"><p>WADA教育</p></a>					
-					</div>
-				</div>
-			</td>
-		</tr>
-	</table>
-	</div> 
-	<div> 
-	<!-- 其他选修资料下载 -->
-	其他选修资料下载
-	<a href="https://www.wada-ama.org/"><p>资料下载1</p></a>	
-	<a href="https://www.wada-ama.org/"><p>资料下载2</p></a>	
-	<a href="https://www.wada-ama.org/"><p>资料下载3</p></a>	
-	<a href="https://www.wada-ama.org/"><p>资料下载4</p></a>	
-	<a href="https://www.wada-ama.org/"><p>资料下载5</p></a>	
-	<a href="https://www.wada-ama.org/"><p>资料下载6</p></a>	
-	</div> 
+
+<!-- 必修视频课程一 -->
+<div class="title">必修视频课程一：1选1 </div>
+<!-- 代码 开始 -->
+<!-- STAR_CONTAINER -->
+<div id="container">
+	<div id="wrap-container" class="clearfix">
+        <div class="examples_body">       
+		    <ul class="bannerHolder">	    
+		    	<%for(x in t7List1){ %>	    	
+			    	<li>
+			            <div class="banner">
+			                <a href="/jf/puresport/t7Crcl/video_play" target="_blank">
+			                    <img height="125" width="125" alt="The Best Designs" src="/images/thumbnail_rte/${x.thumbnail_rte!'course_default.jpg'}" />
+			                </a>
+			                <p class="companyInfo">${x.crcl_nm!''}</p>
+			                <div class="cornerTL"></div>
+			                <div class="cornerTR"></div>
+			                <div class="cornerBL"></div>
+			                <div class="cornerBR"></div>
+			            </div>
+		            </li>
+	 			<%}%> 
+	        </ul>
+       	<!-- Examples body -->
+        </div>
+	</div>
+	<!-- /COPYRIGHT -->
+</div>
+<!-- END_CONTAINER -->
+
+
+<!-- 必修视频课程一 -->
+<div class="title">必修视频课程二：7选1 </div>
+<!-- 代码 开始 -->
+<!-- STAR_CONTAINER -->
+<div id="container">
+	<div id="wrap-container" class="clearfix">
+        <div class="examples_body">       
+		    <ul class="bannerHolder">	    
+		    	<%for(x in t7List2){ %>	    	
+			    	<li>
+			            <div class="banner">
+			                <a href="/jf/puresport/t7Crcl/video_play" target="_blank">
+			                    <img height="125" width="125" alt="The Best Designs" src="/images/thumbnail_rte/${x.thumbnail_rte!'course_default.jpg'}" />
+			                </a>
+			                <p class="companyInfo">${x.crcl_nm!''}</p>
+			                <div class="cornerTL"></div>
+			                <div class="cornerTR"></div>
+			                <div class="cornerBL"></div>
+			                <div class="cornerBR"></div>
+			            </div>
+		            </li>
+	 			<%}%> 
+	        </ul>
+       	<!-- Examples body -->
+        </div>
+	</div>
+	<!-- /COPYRIGHT -->
+</div>
+<!-- END_CONTAINER -->	
+	
+<!-- 必修视频课程一 -->
+<div class="title">必修视频课程三：7选1 </div>
+<!-- 代码 开始 -->
+<!-- STAR_CONTAINER -->
+<div id="container">
+	<div id="wrap-container" class="clearfix">
+        <div class="examples_body">       
+		    <ul class="bannerHolder">	    
+		    	<%for(x in t7List3){ %>	    	
+			    	<li>
+			            <div class="banner">
+			                <a href="/jf/puresport/t7Crcl/video_play" target="_blank">
+			                    <img height="125" width="125" alt="The Best Designs" src="/images/thumbnail_rte/${x.thumbnail_rte!'course_default.jpg'}" />
+			                </a>
+			                <p class="companyInfo">${x.crcl_nm!''}</p>
+			                <div class="cornerTL"></div>
+			                <div class="cornerTR"></div>
+			                <div class="cornerBL"></div>
+			                <div class="cornerBR"></div>
+			            </div>
+		            </li>
+	 			<%}%> 
+	        </ul>
+       	<!-- Examples body -->
+        </div>
+	</div>
+	<!-- /COPYRIGHT -->
+</div>
+<!-- END_CONTAINER -->	
+
+<!-- 必修视频课程一 -->
+<div class="title">其他学习资料下载：选修</div>
+<!-- 代码 开始 -->
+<!-- STAR_CONTAINER -->
+<div id="container">
+	<div id="wrap-container" class="clearfix">
+        <div class="examples_body">       
+		    <ul class="bannerHolder">	    
+		    	<%for(x in t7List4){ %>	
+		    		<a href="/materials/download/${x.crcl_file_rte!''}"><p>${x.crcl_nm!''}</p></a>	    	
+	 			<%}%> 
+	        </ul>
+       	<!-- Examples body -->
+        </div>
+	</div>
+	<!-- /COPYRIGHT -->
+</div>
+<!-- END_CONTAINER -->
+
 	
 	</div>
 </div>

@@ -180,7 +180,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					},
 					success : function(res) {
 						if (res.code == "0000") {
-							hidden();
 							showDiv(4);
 							var t2 = document.getElementById('scoreDesc');
 							t2.innerText = res.desc;
@@ -269,10 +268,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<a href="index.html">首页</a>
 							</li>
 							<li>
-								<a href="study.html">课程学习</a>
+								<a onclick="window.location.href='/jf/puresport/t7Crcl/queryCrcl'">课程学习</a>
 							</li>
 							<li class="activate">
-								<a href="/dotest.html">考试</a>
+								<a onclick="window.location.href='/jf/puresport/t7Crcl/generteTest'">考试</a>
 							</li>
 							<li>
 								<a href="about.html">关于</a>
@@ -351,7 +350,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<p id="cantTestDesc"></p>
 				<table height="60">
 				</table>
-				<button onclick="submitExam()" class="btn">跳转到课程学习</button>
+				<button onclick="window.location.href='/jf/puresport/t7Crcl/queryCrcl'" class="btn">跳转到课程学习</button>
 			</div>
 		</div>
 		
@@ -379,33 +378,35 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<label for=${x.prblmid!}A class="prblSelect" >
 						<input type="checkbox" name=${x.prblmno!} value=A
 							id=${x.prblmid!}A>
-						${x.prblmid!} ${x.optA!}
+						<!-- ${x.prblmid!} --> ${x.optA!}
 					</label>
 					</br>
 					</br>
 					<label for=${x.prblmid!}B class="prblSelect">
 						<input type="checkbox" name=${x.prblmno!} value=B
 							id=${x.prblmid!}B>
-						${x.prblmid!} ${x.optB!}
+						<!-- ${x.prblmid!} --> ${x.optB!}
 					</label>
 					</br>
 					</br>
 					<label for=${x.prblmid!}C class="prblSelect">
 						<input type="checkbox" name=${x.prblmno!} value=C
 							id=${x.prblmid!}C>
-						${x.prblmid!} ${x.optC!}
+						<!-- ${x.prblmid!} --> ${x.optC!}
 					</label>
 					</br>
 					</br>
 					<label for=${x.prblmid!}D class="prblSelect">
 						<input type="checkbox" name=${x.prblmno!} value=D
 							id=${x.prblmid!}D>
-						${x.prblmid!} ${x.optD!}
+						<!-- ${x.prblmid!} --> ${x.optD!}
 					</label>
 					</br>
 					</br>
 				</div>
-				<%}%> <%for(y in examDeducList){ %>
+				<%}%> 
+				
+				<%for(y in examDeducList){ %>
 				<div>
 					【判断题】 第${y.prblmno}题： ${y.ttl!}
 					</br>
@@ -413,13 +414,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</br>
 					<label for=${y.prblmid!}A class="prblSelect">
 						<input type="radio" name=${y.prblmno!} value=A id=${y.prblmid!}A>
-						正确${y.prblmid!}
+						正  确<!-- ${y.prblmid!} -->
 					</label>
 					</br>
 					</br>
 					<label for=${y.prblmid!}B class="prblSelect">
 						<input type="radio" name=${y.prblmno!} value=B id=${y.prblmid!}B>
-						错误${y.prblmid!}
+						错  误<!-- ${y.prblmid!} -->
 					</label>
 					</br>
 					</br>

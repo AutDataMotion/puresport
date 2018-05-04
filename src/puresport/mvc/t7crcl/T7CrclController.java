@@ -16,6 +16,7 @@ import com.platform.mvc.base.BaseController;
 import puresport.entity.ExamEntity;
 import puresport.entity.ResultEntity;
 import puresport.mvc.t10examgrd.T10ExamGrd;
+import puresport.mvc.t5crclstdy.T5CrclStdy;
 //import puresport.entity.ExamEntity;
 import puresport.mvc.t9tstlib.T9Tstlib;
 
@@ -59,6 +60,52 @@ public class T7CrclController extends BaseController {
 		renderWithPath("/f/study.html");
 	}
 	
+	@Clear
+	public void video_play() {
+		renderWithPath("/f/video_play.html");
+	}
+	/**
+	 * 查询课程信息，包括学习状态
+	 * zhuchaobin， 20180504
+	 */
+	@Clear
+	public void queryCrcl() {
+		String usrid = "333";
+		ResultEntity res = null;
+		StringBuilder desc = new StringBuilder("");
+		boolean isCorse1Fnsh = false;
+		boolean isCorse2Fnsh = false;
+		boolean isCorse3Fnsh = false;
+		List<T7Crcl> t7List1 = new ArrayList<T7Crcl>();
+		List<T7Crcl> t7List2 = new ArrayList<T7Crcl>();
+		List<T7Crcl> t7List3 = new ArrayList<T7Crcl>();
+		List<T7Crcl> t7List4 = new ArrayList<T7Crcl>();
+		// 必修课程1
+		String sql = "select t.*, s.stdy_st from t7_crcl t LEFT JOIN t5_crcl_stdy s "
+				+ "on t.crclid=s.crclid and s.usrid='"+ usrid +"' order by t.crclid, t.crcl_attr";
+		List<T7Crcl> t7List = T7Crcl.dao.find(sql);
+		if((t7List != null) && (t7List.size() > 0)) {
+			for(T7Crcl t7 : t7List) {
+				if("1".equals(t7.getCrcl_attr())){//必修1
+					t7List1.add(t7);
+				} else if("2".equals(t7.getCrcl_attr())){//必修2
+					t7List2.add(t7);
+				} else if("3".equals(t7.getCrcl_attr())){//必修3
+					t7List3.add(t7);
+				} else if("4".equals(t7.getCrcl_attr())){//下载资料
+					t7List4.add(t7);
+				}
+			}
+			setAttr("t7List1", t7List1);
+			setAttr("t7List2", t7List2);
+			setAttr("t7List3", t7List3);
+			setAttr("t7List4", t7List4);
+			LOG.debug("查询课程信息成功结束.");
+		} else {
+			LOG.error("查询课程信息失败！");
+		}
+		renderWithPath("/f/study.html");
+	}
 	
 	// 从30道选择题中随机取10道，从30道判断题中随机取10道构成试卷。并保存到成绩记录表中。	
 	// zhuchaobin
