@@ -376,27 +376,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div id="owl-demo" class="owl-carousel">
 				<%for(x in examSelectList){ %>
 				<div>
-					【单项选择题】 第${x.prblmno}题： ${x.ttl!} </br> </br> </br> <label for=${x.prblmid!}A
-						class="prblSelect"> <input type="checkbox"
+				<label>【单项选择题】 第${x.prblmno}题： ${x.ttl!} </label></br> </br> </br> <label for=${x.prblmid!}A
+						class="prblSelect"  style="font-weight:lighter"> <input type="checkbox"
 						name=${x.prblmno!} value=A id=${x.prblmid!}A> <!-- ${x.prblmid!} -->
 						${x.optA!}
-					</label> </br> </br> <label for=${x.prblmid!}B class="prblSelect"> <input
+					</label> </br> <label for=${x.prblmid!}B class="prblSelect" style="font-weight:lighter"> <input
 						type="checkbox" name=${x.prblmno!} value=B id=${x.prblmid!}B>
 						<!-- ${x.prblmid!} --> ${x.optB!}
-					</label> </br> </br> <label for=${x.prblmid!}C class="prblSelect"> <input
+					</label> </br> <label for=${x.prblmid!}C class="prblSelect"  style="font-weight:lighter"> <input
 						type="checkbox" name=${x.prblmno!} value=C id=${x.prblmid!}C>
 						<!-- ${x.prblmid!} --> ${x.optC!}
-					</label> </br> </br> <label for=${x.prblmid!}D class="prblSelect"> <input
+					</label> </br> <label for=${x.prblmid!}D class="prblSelect"  style="font-weight:lighter"> <input
 						type="checkbox" name=${x.prblmno!} value=D id=${x.prblmid!}D>
 						<!-- ${x.prblmid!} --> ${x.optD!}
-					</label> </br> </br>
+					</label> </br> 
 				</div>
 				<%}%> <%for(y in examDeducList){ %>
 				<div>
-					【判断题】 第${y.prblmno}题： ${y.ttl!} </br> </br> </br> <label for=${y.prblmid!}A
-						class="prblSelect"> <input type="radio" name=${y.prblmno!}
+				<label>	【判断题】 第${y.prblmno}题： ${y.ttl!} </label></br> </br> </br> <label for=${y.prblmid!}A
+						class="prblSelect"  style="font-weight:lighter"> <input type="radio" name=${y.prblmno!}
 						value=A id=${y.prblmid!}A> 正 确<!-- ${y.prblmid!} -->
-					</label> </br> </br> <label for=${y.prblmid!}B class="prblSelect"> <input
+					</label> </br> </br> <label for=${y.prblmid!}B class="prblSelect"  style="font-weight:lighter"> <input
 						type="radio" name=${y.prblmno!} value=B id=${y.prblmid!}B>
 						错 误<!-- ${y.prblmid!} -->
 					</label> </br> </br>
@@ -405,25 +405,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 				<!-- 最后一页：考试提交说明 -->
 				<div id="mannulDiv" class="demo">
-					<div align="center" class="title">考 试 提 交 说 明</div>
-					<div align="center" class="title">考 试 说 明</div>
-					<p>1. 点击“开始”按钮开始进入考试；
-					<p>2. 考试过程中请注意保持浏览器客户端在线状态，不要强制刷新或者断开网络，否则考试将终止；
-					<p>3. 所有试题完成后，并确认提交，系统才保存记录成绩；
-					<p>4. 试题题型包含不定项选择题和判断题各10道，每道题5分，共100分；
-					<p>5. 考试成绩60分及以上视为及格；
-					<p>6. 可以进行多次考试，每次考试试题随机。多次参加考试的，视最后一次提交的成绩为最终成绩；
-					<p>7. 如有考试相关的其他疑问请联系管理员；
-					<p>8. 请遵守考试规定，按时完成测试。
+					<div align="center" class="title"><lable>考 试 提 交 说 明</lable></div>
+					<p>1. 请确认试题已经全部做完，然后在本页选择“同意”，同意后可点击提交试卷；
+					<p>2. 可以进行多次考试，每次考试试题随机。多次参加考试的，视最后一次提交的成绩为最终成绩；
+					<p>3. “提交”前可以返回修改试题答案，但是“提交”后将实时计算成绩且不能再进行修改；
+					<p>4. 提交失败或有其他疑问请联系管理员处理；
+					<p>5. 点击“同意”后，才能提交考试成绩。
 					<p>
 					
 					<div align="center">
-						<label>
-							<input type="radio" name="agreeSubmit" value="1">同意
+						<label style="font-weight:lighter">
+							<input type="radio" name="agreeSubmit" value="1"> 同意
 						</label>	
 						&nbsp &nbsp
-						<label>
-							<input type="radio" name="agreeSubmit" value="0">拒绝
+						<label style="font-weight:lighter">
+							<input type="radio" name="agreeSubmit" value="0"> 拒绝
 						</label>	
 					</div>
 					<div align="center">
