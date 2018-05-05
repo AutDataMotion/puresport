@@ -1,6 +1,10 @@
 $(document).ready(function() {
 	var myTable = $('#example4').DataTable({
-		buttons : [ 'excel', 'pdf' ],
+		buttons : [ {
+			extend : 'collection',
+			text : '导出',
+			buttons : [ 'excel', 'print' ]
+		}  ],
 		columns : [  {
 			data : "spt_prj"
 		}, {

@@ -9,10 +9,7 @@ $(document).ready(function() {
              {
                  extend: 'collection',
                  text: '导出',
-                 buttons: [
-                     'excel',
-                     'print'
-                 ]
+                 buttons: ['excel',  'print']
              }
         ],
 		columns : [  {
