@@ -1,6 +1,113 @@
 $(document).ready(function() {
+	var editor = new $.fn.dataTable.Editor({
+		ajax : {
+			create : {
+				type : 'POST',
+				url :encodeURI(encodeURI(cxt + "/jf/puresport/t6MgrAhr/addTable"))
+			},
+			edit : {
+				type : 'POST',
+				url : encodeURI(encodeURI(cxt + "/jf/puresport/t6MgrAhr/editTable"))
+			}
+		},
+		table : "#example1",
+		idSrc:  'usrid',
+		fields : [ {
+			label : "姓名:",
+			name : "nm"
+		}, {
+			label : "证件类型:",
+			name : "crdt_tp",
+			type:  "select",
+            options: [
+                { label: "身份证", value: '身份证' },
+                { label: "军官证",  value: '军官证' }
+            ],
+            def: 0
+		}, {
+			label : "证件号:",
+			name : "crdt_no"
+		}, {
+			label : "性别:",
+			name : "gnd",
+			type:  "select",
+            options: [
+                { label: "男", value: '男' },
+                { label: "女",  value: '女' }
+            ],
+            def: 0
+		}, {
+			label : "出生日期:",
+			name : "brth_dt",
+			type: "date"
+			
+		}, {
+			label : "工作单位:",
+			name : "wrk_unit",
+		}, {
+			label : "职务:",
+			name : "post",
+		}, {
+			label : "级别:",
+			name : "typeleve",
+		}, {
+			label : "所属省（自治区）:",
+			name : "province",
+		}, {
+			label : "所属市:",
+			name : "city",
+		}, {
+			label : "所属协会:",
+			name : "institute",
+		}, {
+			label : "手机号:",
+			name : "mblph_no",
+		}, {
+			label : "邮箱:",
+			name : "email",
+		} ],
+		formOptions : {
+			bubble : {
+				title : '编辑',
+				buttons : false
+			}
+		}
+	});
+	// 获取查询参数
+	var datasrch = {
+		id : '',
+		name1 : '',
+		name2 : '',
+		name3 : '',
+		pageIndex : '',
+		pageSize : ''
+	};
 	var myTable = $('#example1').DataTable({
-		buttons : [ 'excel', 'pdf' ],
+		dom : 'Bfrtip',
+		select : true,
+		serverSide : true,
+		ajax : {
+			type : "POST",
+			url : encodeURI(encodeURI(cxt + "/jf/puresport/t6MgrAhr/getData")),
+			data : function ( d ) {
+				d.columns=null;
+				d.v = JSON.stringify(datasrch);
+            }
+		},
+		buttons : [ {
+			extend : 'create',
+			text : '添加',
+			editor : editor
+		}, {
+			extend : 'edit',
+			text : '编辑',
+			editor : editor
+		}, {
+			extend : 'collection',
+			text : '导出',
+			buttons : [ 'excel', 'print' ]
+		} ],
+		
 		columns : [  {
 			data : "nm"
 		}, {
@@ -29,19 +136,11 @@ $(document).ready(function() {
 			data : "email"
 		} ],
 		"bProcessing" : true, // DataTables载入数据时，是否显示‘进度’提示
-		"sProcessing" : "loading...",
+		"sProcessing" : "加载中...",
 		"scrollX" : true
 	});
 
-	// 获取查询参数
-	var datasrch = {
-		id : '',
-		name1 : '',
-		name2 : '',
-		name3 : '',
-		pageIndex : '',
-		pageSize : ''
-	};
+	
 	function search(data, callback, settings) {
 		console.log("search");
 //		datasrch.userId = $('#userId').val();
@@ -114,6 +213,5 @@ $(document).ready(function() {
 		});
 	}
 	//------------------上传 end
-	
-	search("","","");
+	//search("","","");
 });
