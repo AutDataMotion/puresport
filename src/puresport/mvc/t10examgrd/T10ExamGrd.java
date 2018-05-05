@@ -77,11 +77,20 @@ public class T10ExamGrd extends BaseModel<T10ExamGrd> {
 	public static final String column_tms = "tms";
 	
 	/**
-	 * 字段描述：正确|错误 
-	 * 字段类型：varchar  长度：16
+	 * 字段描述：试题编号 
+	 * 字段类型：timestamp  长度：null
 	 */
-	public static final String column_result = "result";
-	
+	public static final String column_prblmno = "prblmno";
+	/**
+	 * 字段描述：答题开始时间 
+	 * 字段类型：timestamp  长度：null
+	 */
+	public static final String column_exam_st_tm = "exam_st_tm";
+	/**
+	 * 字段描述：答题结束时间 
+	 * 字段类型：timestamp  长度：null
+	 */
+	public static final String column_exam_end_tm = "exam_end_tm";
 	
 	/**
 	 * sqlId : puresport.t10ExamGrd.splitPageFrom
@@ -98,7 +107,31 @@ public class T10ExamGrd extends BaseModel<T10ExamGrd> {
 	private String usr_aswr;
 	private String prblm_aswr;
 	private Timestamp tms;
-	private String result;
+	// 答题开始时间
+	private Timestamp exam_st_tm;
+	// 答题结束时间
+	private Timestamp exam_end_tm;
+	// 题号
+	private Integer prblmno;
+	
+	public void setPrblmno(Integer prblmno){
+		set(column_prblmno, prblmno);
+	}
+	public <T> T getPrblmno() {
+		return get(column_prblmno);
+	}
+	public void setExamStTm(Timestamp exam_st_tm){
+		set(column_exam_st_tm, exam_st_tm);
+	}
+	public <T> T getExamStTm() {
+		return get(column_exam_st_tm);
+	}
+	public void setExamEndTm(Timestamp exam_end_tm){
+		set(column_exam_end_tm, exam_end_tm);
+	}
+	public <T> T getExamEndTm() {
+		return get(column_exam_end_tm);
+	}
 
 	public void setId(Long id){
 		set(column_id, id);
@@ -153,12 +186,6 @@ public class T10ExamGrd extends BaseModel<T10ExamGrd> {
 	}
 	public <T> T getTms() {
 		return get(column_tms);
-	}
-	public void setResult(String result){
-		set(column_result, result);
-	}
-	public <T> T getResult() {
-		return get(column_result);
 	}
 	
 }

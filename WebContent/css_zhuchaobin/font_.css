@@ -1,0 +1,34 @@
+/* 正文字体 */
+	.demo {
+		padding-top: 15px;
+		padding-right: 280px;
+		padding-bottom: 30px;
+		padding-left: 280px;
+		/*        text-indent:2em; */ /* 段首缩进2个字符 */
+		font-family: "微软雅黑", "黑体", "宋体";
+		font-size: 18px;
+		height: 800px； /*        word-spacing:50px; */ 
+			/*        background:pink; */
+	}
+	.title {
+		padding-top: 15px;
+		padding-right: 250px;
+		padding-bottom: 15px;
+		padding-left: 250px;
+		/*        text-indent:2em; */ /* 段首缩进2个字符 */
+		font-family: "微软雅黑", "黑体", "宋体";
+		font-size: 25px;
+		/*        height:800px； */
+		/*        word-spacing:50px; */
+		/*        background:pink; */
+	}
+	.score {
+		padding-top: 130px;
+		padding-right: 250px;
+		padding-bottom: 160px;
+		padding-left: 250px;
+		/*        text-indent:2em; */ /* 段首缩进2个字符 */
+		font-family: "微软雅黑", "黑体", "宋体";
+		font-size: 25px;
+		height: 800px；
+	}
