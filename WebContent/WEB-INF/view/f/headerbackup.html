@@ -68,9 +68,9 @@
 					
 						<ul class="nav navbar-nav">
 				            <li id = "menu_index"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController">首页</a></li>
-							<li id = "menu_zhunru"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/zhunru_index">准入</a></li>
-							<li id = "menu_tuozhan"><a class="header_bg2_ul_li_a" href="#">拓展</a></li>
-							<li id = "menu_jiangzuo"><a class="header_bg2_ul_li_a" href="#">讲座</a></li>
+							<li id = "menu_zhunru"><a class="header_bg2_ul_li_a" href="#list_zhunru" data-toggle="tab">准入</a></li>
+							<li id = "menu_tuozhan"><a class="header_bg2_ul_li_a" href="#list_tuozhan" data-toggle="tab">拓展</a></li>
+							<li id = "menu_jiangzuo"><a class="header_bg2_ul_li_a" href="#" data-toggle="tab">讲座</a></li>
 				            <li class="dropdown selfcenterbtn">
 				            
 								<a class="dropdown-toggle" data-toggle="dropdown">
@@ -105,7 +105,49 @@
 		    
 		</div>
 	</div>
-	
+	<div class="header_bg_list tab-content">
+		<div class="header_bg3 tab-pane fade" id="list_zhunru">
+			<div class="container">
+				<div class="row">
+					<div class="navbar-header">
+				        <button type="button" class="navbar-toggle" data-toggle="collapse"
+				                data-target="#zhunru_menu">
+				            	菜单
+				        </button>
+				        
+				    </div>
+			    	<div class="h_menu" id="zhunru_menu">
+						<a id="touch-menu" class="mobile-menu" href="#">准入</a>
+						<ul class="nav navbar-nav">
+								<li id = "menu_zhunru_index"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/zhunru_index">首页</a></li>
+								<li id = "menu_zhunru_study"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/zhunru_study">课程学习</a></li>
+								<li id = "menu_zhunru_dotest"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/zhunru_dotest">考试</a></li>
+								
+						</ul>
+						
+						
+					</div>
+			    </div>
+			</div>
+		</div>
+		<div class="header_bg3 tab-pane fade" id="list_tuozhan">
+			<div class="container">
+				<div class="row">
+			    	<div class="h_menu">
+						<a id="touch-menu" class="mobile-menu" href="#">Menu</a>
+						<nav>
+							<ul class="menu list-unstyled">
+								<li id = "menu_tuozhan_index"><a href="#">首页</a></li>
+								<li id = "menu_tuozhan_study"><a href="#">拓展学习</a></li>
+								
+							</ul>
+						</nav>
+						
+					</div>
+			    </div>
+			</div>
+		</div>
+	</div>
 	
 </div>
 <script>

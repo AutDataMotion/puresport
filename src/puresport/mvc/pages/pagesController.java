@@ -54,11 +54,11 @@ public class pagesController extends BaseController {
 	}
 //	@Clear
 //	@Before(loginInterceptorlyf.class)  
-	public void zhunru_dotest() {
-		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
-		//renderWithPath(pthv+"list.html");
-		renderWithPath(pthv+"zhunru_dotest.html");
-	}
+//	public void zhunru_dotest() {
+//		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
+//		//renderWithPath(pthv+"list.html");
+//		renderWithPath(pthv+"zhunru_dotest.html");
+//	}
 	@Clear
 	public void about() {
 		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
