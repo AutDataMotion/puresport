@@ -65,6 +65,7 @@ function  changeSelect_user_Competetion(index){
 function user_login()
 {
 
+//	alert(hex_md5($("#form-pwd_user").val()));
 	$.ajax({
 	    url:'/jf/puresport/t1usrBsc/login',
 	    type:'POST', //GET
