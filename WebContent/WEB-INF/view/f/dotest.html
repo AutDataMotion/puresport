@@ -10,7 +10,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script type="application/x-javascript">
 	
 	
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
 
 
 </script>
@@ -41,61 +43,63 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	src="http://code.jquery.com/jquery-latest.min.js"></script>
 
 <style>
-	#owl-demo .owl-item div {
-		padding: 5px;
-		padding-left: 150px;
-		padding-top: 15px;
-		padding-right: 150px;
-		padding-bottom: 15px;
-		/*        text-indent:2em; /* 段首缩进2个字符 */ */
-		font-family: "微软雅黑", "黑体", "宋体";
-		font-size: 18px;
-	}
-	
-	#owl-demo .owl-item img {
-		display: block;
-		width: 100%;
-		height: auto;
-		-webkit-border-radius: 3px;
-		-moz-border-radius: 3px;
-		border-radius: 3px;
-	}
+#owl-demo .owl-item div {
+	padding: 5px;
+	padding-left: 150px;
+	padding-top: 15px;
+	padding-right: 150px;
+	padding-bottom: 15px;
+	/*        text-indent:2em; /* 段首缩进2个字符 */ */
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-size: 18px;
+}
+
+#owl-demo .owl-item img {
+	display: block;
+	width: 100%;
+	height: auto;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
 </style>
 
 <style type="text/css">
-	.demo {
-		padding-top: 15px;
-		padding-right: 280px;
-		padding-bottom: 30px;
-		padding-left: 280px;
-		/*        text-indent:2em; */ /* 段首缩进2个字符 */
-		font-family: "微软雅黑", "黑体", "宋体";
-		font-size: 18px;
-		height: 800px； /*        word-spacing:50px; */ 
-			/*        background:pink; */
-	}
-	.title {
-		padding-top: 15px;
-		padding-right: 250px;
-		padding-bottom: 15px;
-		padding-left: 250px;
-		/*        text-indent:2em; */ /* 段首缩进2个字符 */
-		font-family: "微软雅黑", "黑体", "宋体";
-		font-size: 25px;
-		/*        height:800px； */
-		/*        word-spacing:50px; */
+.demo {
+	padding-top: 15px;
+	padding-right: 280px;
+	padding-bottom: 30px;
+	padding-left: 280px;
+	/*        text-indent:2em; */ /* 段首缩进2个字符 */
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-size: 18px;
+	height: 800px； /*        word-spacing:50px; */ 
 		/*        background:pink; */
-	}
-	.score {
-		padding-top: 130px;
-		padding-right: 250px;
-		padding-bottom: 160px;
-		padding-left: 250px;
-		/*        text-indent:2em; */ /* 段首缩进2个字符 */
-		font-family: "微软雅黑", "黑体", "宋体";
-		font-size: 25px;
-		height: 800px；
-	}
+}
+
+.title {
+	padding-top: 15px;
+	padding-right: 250px;
+	padding-bottom: 15px;
+	padding-left: 250px;
+	/*        text-indent:2em; */ /* 段首缩进2个字符 */
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-size: 25px;
+	/*        height:800px； */
+	/*        word-spacing:50px; */
+	/*        background:pink; */
+}
+
+.score {
+	padding-top: 130px;
+	padding-right: 250px;
+	padding-bottom: 160px;
+	padding-left: 250px;
+	/*        text-indent:2em; */ /* 段首缩进2个字符 */
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-size: 25px;
+	height: 800px；
+}
 </style>
 
 <script src="/js/owl.carousel.js"></script>
@@ -126,7 +130,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		// 判断是否可以进行考试
 		isCanTest(1);
 	});
-	
 </script>
 
 <script type="text/javascript">
@@ -142,18 +145,33 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 	//提交考试
 	function submitExam() {
+
+		var obj1 = document.getElementsByName("agreeSubmit")
+		var isAgreeSubmit = false;
+		for (var i = 0; i < obj1.length; i++) { //遍历Radio   
+			if (obj1[i].checked) {
+				if (obj1[i].value == 1) {
+					isAgreeSubmit = true;
+				}
+			}
+		}
+		if (!isAgreeSubmit) {
+			alert("对不起，同意后才能提交试卷！");
+			return;
+		}
+
 		/* 	if(!checkBoxCheckMore(flag))
 		 return;*/
-		/* 			if(isSubmit()){
-		 if(isSubmit()){
-		 if(isSubmit()){
-		 //提交试卷
-		 } else
-		 return;
-		 } else
-		 return;
-		 } else
-		 return;  */
+		if (isSubmit()) {
+			if (isSubmit()) {
+				if (isSubmit()) {
+					//提交试卷
+				} else
+					return;
+			} else
+				return;
+		} else
+			return;
 		var dataSet = new Array();
 
 		for (var j = 1; j < 7; j++) {
@@ -169,90 +187,88 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		/* 			alert(dataSet); */
 		var url;
 		url = '/jf/puresport/t7Crcl/submitExam';
-		$
-				.ajax({
-					type : 'POST',
-					url : url,
-					dataType : "json",
-					traditional : true,
-					data : {
-						dataSet : dataSet
-					},
-					success : function(res) {
-						if (res.code == "0000") {
-							showDiv(4);
-							var t2 = document.getElementById('scoreDesc');
-							t2.innerText = res.desc;
-						} else {
-							alert(res.desc);
-						}
-					},
-					dataType : "json"
-				});
+		$.ajax({
+			type : 'POST',
+			url : url,
+			dataType : "json",
+			traditional : true,
+			data : {
+				dataSet : dataSet
+			},
+			success : function(res) {
+				if (res.code == "0000") {
+					showDiv(4);
+					var t2 = document.getElementById('scoreDesc');
+					t2.innerText = res.desc;
+				} else {
+					alert(res.desc);
+				}
+			},
+			dataType : "json"
+		});
 	}
 </script>
 
 <script type="text/javascript">
 	function showDiv(flag) {
-		if(flag == 1){
+		if (flag == 1) {
 			document.getElementById("mannulDiv").style.display = "none";
 			document.getElementById("cantTestDiv").style.display = "";
 			document.getElementById("showScoreDiv").style.display = "none";
 			document.getElementById("doTestDiv").style.display = "none";
-		} else if(flag == 2){
+		} else if (flag == 2) {
 			document.getElementById("mannulDiv").style.display = "";
 			document.getElementById("cantTestDiv").style.display = "none";
 			document.getElementById("showScoreDiv").style.display = "none";
 			document.getElementById("doTestDiv").style.display = "none";
-		} else if(flag == 3){
+		} else if (flag == 3) {
 			document.getElementById("mannulDiv").style.display = "none";
 			document.getElementById("cantTestDiv").style.display = "none";
 			document.getElementById("showScoreDiv").style.display = "none";
 			document.getElementById("doTestDiv").style.display = "";
-		} else if(flag == 4){
+		} else if (flag == 4) {
 			document.getElementById("mannulDiv").style.display = "none";
 			document.getElementById("cantTestDiv").style.display = "none";
 			document.getElementById("showScoreDiv").style.display = "";
 			document.getElementById("doTestDiv").style.display = "none";
-		} 
+		}
 	}
 
 	// 判定用户是否有资格参加考试
-	function isCanTest(flag){
+	function isCanTest(flag) {
 		var userid = "333";
 		var url;
 		url = '/jf/puresport/t5CrclStdy/isCanTest';
-		$
-				.ajax({
-					type : 'POST',
-					url : url,
-					dataType : "json",
-					traditional : true,
-					data : {
-						userid : userid
-					},
-					success : function(res) {
-						if (res.code == "0000") {
-							if(flag == 2){
-								showDiv(3);
-							} else if(flag == 1){
-								showDiv(2);
-							}
-						} else {
-/* 							alert(res.desc); */
-							showDiv(1);
-							var t2 = document.getElementById('cantTestDesc');
-							t2.innerText = res.desc;
-						}
-					},
-					dataType : "json"
-				});		
+		$.ajax({
+			type : 'POST',
+			url : url,
+			dataType : "json",
+			traditional : true,
+			data : {
+				userid : userid
+			},
+			success : function(res) {
+				if (res.code == "0000") {
+					if (flag == 2) {
+						showDiv(3);
+					} else if (flag == 1) {
+						showDiv(2);
+					}
+				} else {
+					/* 							alert(res.desc); */
+					showDiv(1);
+					var t2 = document.getElementById('cantTestDesc');
+					t2.innerText = res.desc;
+				}
+			},
+			dataType : "json"
+		});
 	}
 </script>
 </head>
 <body>
-
-	<div class="header_bg">
+<% include("/f/header.html"){} %>
+<!-- 	<div class="header_bg">
 		<div class="container">
 			<div class="header">
 				<div class="logo">
@@ -264,35 +280,25 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<a id="touch-menu" class="mobile-menu" href="#">Menu</a>
 					<nav>
 						<ul class="menu list-unstyled">
-							<li>
-								<a href="index.html">首页</a>
+							<li><a href="index.html">首页</a></li>
+							<li><a
+								onclick="window.location.href='/jf/puresport/t7Crcl/queryCrcl'">课程学习</a>
 							</li>
-							<li>
-								<a onclick="window.location.href='/jf/puresport/t7Crcl/queryCrcl'">课程学习</a>
+							<li class="activate"><a
+								onclick="window.location.href='/jf/puresport/t7Crcl/generteTest'">考试</a>
 							</li>
-							<li class="activate">
-								<a onclick="window.location.href='/jf/puresport/t7Crcl/generteTest'">考试</a>
-							</li>
-							<li>
-								<a href="about.html">关于</a>
-							</li>
-							<li class="dropdown selfcenterbtn">
-								<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-
-									<span class="caret"></span>
-								</a>
+							<li><a href="about.html">关于</a></li>
+							<li class="dropdown selfcenterbtn"><a href="#"
+								class="dropdown-toggle" data-toggle="dropdown"> <span
+									class="caret"></span>
+							</a>
 								<ul class="dropdown-menu">
-									<li>
-										<a href="selfcenter.html">个人中心</a>
-									</li>
-									<li>
-										<a href="login.html">注销</a>
-									</li>
+									<li><a href="selfcenter.html">个人中心</a></li>
+									<li><a href="login.html">注销</a></li>
 
-								</ul>
-							</li>
-							<!--li><a href="blog.html">BLOG</a></li>
-			<li><a href="contact.html">CONTACT</a></li-->
+								</ul></li>
+							li><a href="blog.html">BLOG</a></li>
+			<li><a href="contact.html">CONTACT</a></li
 						</ul>
 					</nav>
 				</div>
@@ -303,16 +309,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					class="c_stripe">
 			</div>
 		</div>
-	</div>
+	</div> -->
 	<div class="main_bg">
 		<!-- start main -->
 		<div class="container">
 			<div class="main_grid1">
 				<h3 class="style pull-left">考试</h3>
 				<ol class="breadcrumb pull-right">
-					<li>
-						<a href="index.html">首页</a>
-					</li>
+					<li><a href="index.html">首页</a></li>
 					<li class="active">考试</li>
 				</ol>
 				<div class="clearfix"></div>
@@ -350,19 +354,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<p id="cantTestDesc"></p>
 				<table height="60">
 				</table>
-				<button onclick="window.location.href='/jf/puresport/t7Crcl/queryCrcl'" class="btn">跳转到课程学习</button>
+				<button
+					onclick="window.location.href='/jf/puresport/t7Crcl/queryCrcl'"
+					class="btn">跳转到课程学习</button>
 			</div>
 		</div>
-		
-		<style type="text/css">
 
-.prblSelect{
+		<style type="text/css">
+.prblSelect {
 	width: 850px;
 }
-.prblSelect:hover{
+
+.prblSelect:hover {
 	background-color: #CCFFCC;
 }
-
 </style>
 
 		<!-- 中间部分：考题 -->
@@ -371,109 +376,85 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div id="owl-demo" class="owl-carousel">
 				<%for(x in examSelectList){ %>
 				<div>
-					【单项选择题】 第${x.prblmno}题： ${x.ttl!}
-					</br>
-					</br>
-					</br>
-					<label for=${x.prblmid!}A class="prblSelect" >
-						<input type="checkbox" name=${x.prblmno!} value=A
-							id=${x.prblmid!}A>
-						<!-- ${x.prblmid!} --> ${x.optA!}
-					</label>
-					</br>
-					</br>
-					<label for=${x.prblmid!}B class="prblSelect">
-						<input type="checkbox" name=${x.prblmno!} value=B
-							id=${x.prblmid!}B>
+				<label>【单项选择题】 第${x.prblmno}题： ${x.ttl!} </label></br> </br> </br> <label for=${x.prblmid!}A
+						class="prblSelect"  style="font-weight:lighter"> <input type="checkbox"
+						name=${x.prblmno!} value=A id=${x.prblmid!}A> <!-- ${x.prblmid!} -->
+						${x.optA!}
+					</label> </br> <label for=${x.prblmid!}B class="prblSelect" style="font-weight:lighter"> <input
+						type="checkbox" name=${x.prblmno!} value=B id=${x.prblmid!}B>
 						<!-- ${x.prblmid!} --> ${x.optB!}
-					</label>
-					</br>
-					</br>
-					<label for=${x.prblmid!}C class="prblSelect">
-						<input type="checkbox" name=${x.prblmno!} value=C
-							id=${x.prblmid!}C>
+					</label> </br> <label for=${x.prblmid!}C class="prblSelect"  style="font-weight:lighter"> <input
+						type="checkbox" name=${x.prblmno!} value=C id=${x.prblmid!}C>
 						<!-- ${x.prblmid!} --> ${x.optC!}
-					</label>
-					</br>
-					</br>
-					<label for=${x.prblmid!}D class="prblSelect">
-						<input type="checkbox" name=${x.prblmno!} value=D
-							id=${x.prblmid!}D>
+					</label> </br> <label for=${x.prblmid!}D class="prblSelect"  style="font-weight:lighter"> <input
+						type="checkbox" name=${x.prblmno!} value=D id=${x.prblmid!}D>
 						<!-- ${x.prblmid!} --> ${x.optD!}
-					</label>
-					</br>
-					</br>
+					</label> </br> 
 				</div>
-				<%}%> 
-				
-				<%for(y in examDeducList){ %>
+				<%}%> <%for(y in examDeducList){ %>
 				<div>
-					【判断题】 第${y.prblmno}题： ${y.ttl!}
-					</br>
-					</br>
-					</br>
-					<label for=${y.prblmid!}A class="prblSelect">
-						<input type="radio" name=${y.prblmno!} value=A id=${y.prblmid!}A>
-						正  确<!-- ${y.prblmid!} -->
-					</label>
-					</br>
-					</br>
-					<label for=${y.prblmid!}B class="prblSelect">
-						<input type="radio" name=${y.prblmno!} value=B id=${y.prblmid!}B>
-						错  误<!-- ${y.prblmid!} -->
-					</label>
-					</br>
-					</br>
+				<label>	【判断题】 第${y.prblmno}题： ${y.ttl!} </label></br> </br> </br> <label for=${y.prblmid!}A
+						class="prblSelect"  style="font-weight:lighter"> <input type="radio" name=${y.prblmno!}
+						value=A id=${y.prblmid!}A> 正 确<!-- ${y.prblmid!} -->
+					</label> </br> </br> <label for=${y.prblmid!}B class="prblSelect"  style="font-weight:lighter"> <input
+						type="radio" name=${y.prblmno!} value=B id=${y.prblmid!}B>
+						错 误<!-- ${y.prblmid!} -->
+					</label> </br> </br>
 				</div>
 				<%}%>
 
 				<!-- 最后一页：考试提交说明 -->
 				<div id="mannulDiv" class="demo">
-					<div align="center" class="title">考 试 提 交 说 明</div>
-					<div align="center" class="title">考 试 说 明</div>
-					<p>1. 点击“开始”按钮开始进入考试；
-					<p>2. 考试过程中请注意保持浏览器客户端在线状态，不要强制刷新或者断开网络，否则考试将终止；
-					<p>3. 所有试题完成后，并确认提交，系统才保存记录成绩；
-					<p>4. 试题题型包含不定项选择题和判断题各10道，每道题5分，共100分；
-					<p>5. 考试成绩60分及以上视为及格；
-					<p>6. 可以进行多次考试，每次考试试题随机。多次参加考试的，视最后一次提交的成绩为最终成绩；
-					<p>7. 如有考试相关的其他疑问请联系管理员；
-					<p>8. 请遵守考试规定，按时完成测试。
+					<div align="center" class="title"><lable>考 试 提 交 说 明</lable></div>
+					<p>1. 请确认试题已经全部做完，然后在本页选择“同意”，同意后可点击提交试卷；
+					<p>2. 可以进行多次考试，每次考试试题随机。多次参加考试的，视最后一次提交的成绩为最终成绩；
+					<p>3. “提交”前可以返回修改试题答案，但是“提交”后将实时计算成绩且不能再进行修改；
+					<p>4. 提交失败或有其他疑问请联系管理员处理；
+					<p>5. 点击“同意”后，才能提交考试成绩。
 					<p>
+					
 					<div align="center">
-						<button onclick="submitExam()" class="btn">点击提交试卷</button>
+						<label style="font-weight:lighter">
+							<input type="radio" name="agreeSubmit" value="1"> 同意
+						</label>	
+						&nbsp &nbsp
+						<label style="font-weight:lighter">
+							<input type="radio" name="agreeSubmit" value="0"> 拒绝
+						</label>	
+					</div>
+					<div align="center">
+						<button onclick="submitExam()" class="btn">提交试卷</button>
 					</div>
 				</div>
 
 			</div>
 		</div>
-		<div class="footer_bg">
-			<!-- start footer -->
+		<!-- start footer -->
+		<% include("/f/footer.html"){} %>
+	<!-- 	<div class="footer_bg">
+			start footer
 			<div class="container">
 				<div class="footer">
 					<div class="col-md-6 footer1_of_3">
 						<div class="f_logo">
-							<a href="index.html">
-								<img style="width: 300px; height: 43px;" src="/images/logo.png"
-									alt="" />
+							<a href="index.html"> <img
+								style="width: 300px; height: 43px;" src="/images/logo.png"
+								alt="" />
 							</a>
 						</div>
 						<p class="f_para">版权所有 © 反兴奋剂中心版权</p>
 						<p>
-							单位地址:&nbsp;
-							<span>北京市朝阳区安定路1号</span>
+							单位地址:&nbsp; <span>北京市朝阳区安定路1号</span>
 						</p>
 						<p>
-							联系电话:&nbsp;
-							<span>86-10-64912131</span>
+							联系电话:&nbsp; <span>86-10-64912131</span>
 						</p>
-						<span class="">
-							Email:&nbsp;
-							<a href="mailto:info@mycompany.com">contact@chinada.cn</a>
+						<span class=""> Email:&nbsp; <a
+							href="mailto:info@mycompany.com">contact@chinada.cn</a>
 						</span>
 					</div>
 
-					<!--div class="col-md-2 footer1_of_3">
+					div class="col-md-2 footer1_of_3">
 			<h4>community</h4>
 			<ul class="list-unstyled f_list">
 				<li><a href="#">Lorem ipsum dolor</a></li>
@@ -484,14 +465,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<li><a href="#">Nullam nec sapien</a></li>
 				<li><a href="#">Curabitur mauris</a></li>
 			</ul>
-		</div-->
+		</div
 					<div class="col-md-6 footer_of_3">
 						<h4>友情链接</h4>
 						<div class="blog_list">
 							<div class="col-xs-3 f_pic">
-								<a href="http://www.chinada.cn/">
-									<img src="/images/fanxin_logo.png" alt=""
-										class="img-responsive" />
+								<a href="http://www.chinada.cn/"> <img
+									src="/images/fanxin_logo.png" alt="" class="img-responsive" />
 								</a>
 							</div>
 							<div class="col-xs-9 f_text">
@@ -504,8 +484,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 						<div class="blog_list">
 							<div class="col-xs-3 f_pic">
-								<a href="https://www.wada-ama.org/">
-									<img src="/images/wada_logo.png" alt="" class="img-responsive" />
+								<a href="https://www.wada-ama.org/"> <img
+									src="/images/wada_logo.png" alt="" class="img-responsive" />
 								</a>
 							</div>
 							<div class="col-xs-9 f_text">
@@ -518,9 +498,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 						<div class="blog_list">
 							<div class="col-xs-3 f_pic">
-								<a href="http://sports.sina.com.cn/">
-									<img src="/images/sinasports_log.jpg" alt=""
-										class="img-responsive" />
+								<a href="http://sports.sina.com.cn/"> <img
+									src="/images/sinasports_log.jpg" alt="" class="img-responsive" />
 								</a>
 							</div>
 							<div class="col-xs-9 f_text">
@@ -535,7 +514,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="clearfix"></div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 		<!-- start footer1 -->
 		<!--div class="footer1_bg">
 <div class="container">
