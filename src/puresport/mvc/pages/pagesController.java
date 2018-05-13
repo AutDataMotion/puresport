@@ -46,12 +46,25 @@ public class pagesController extends BaseController {
 		renderWithPath(pthv+"zhunru_index.html");
 		
 	}
+	@Clear
+	public void tuozhan_index() {
+		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
+		//renderWithPath(pthv+"list.html");
+		renderWithPath(pthv+"tuozhan_index.html");
+	}
+	@Clear
+	public void jiangzuo_index() {
+		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
+		//renderWithPath(pthv+"list.html");
+		renderWithPath(pthv+"jiangzuo_index.html");
+	}
 //	@Clear
 	public void zhunru_study() {
 		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
 		//renderWithPath(pthv+"list.html");
 		renderWithPath(pthv+"zhunru_study.html");
 	}
+	
 //	@Clear
 //	@Before(loginInterceptorlyf.class)  
 //	public void zhunru_dotest() {

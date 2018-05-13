@@ -1,4 +1,13 @@
 /*@import url(http://fonts.useso.com/css?family=Open+Sans:400,300,600,700,800);*/
+.headroom--pinned {
+    display: block;
+}
+.headroom--top{
+	display: none;
+}
+.headroom--unpinned {
+    display: none;
+}
 .self_info{
 	 margin-bottom: 10px;
 }
@@ -51,12 +60,25 @@ body a{
 }
 .header_bg{
 	background: #70c570;
+	/*position:fixed;
+	left:0;
+	right:0;
+	top:0;
+	z-index:100;*/
 }
 .header_bg1{
 	background: #70c570;
 }
 .header_bg2{
 	    background: #318731;
+}
+.float_header_bg2{
+	
+	z-index:2000;
+	position:fixed;
+	top:0;
+	left:0;
+	right:0;
 }
 .header_bg2_ul_li_a{
 	    color: #fff !important;
@@ -121,8 +143,13 @@ body a{
 nav{
 	display:block;
 }
-.menu{
+.menu_left{
 	display:block;
+	float:left;
+}
+.menu_right{
+	display:block;
+	float:right;
 }
 .menu li{
 	display:inline-block;
