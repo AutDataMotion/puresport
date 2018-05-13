@@ -75,7 +75,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 			// 视频学习完成或者已经学习本课程的学习
 			if(x || ("1" == stdy_st)){
-					recordCourse(1);// 记录课程学习记录
+					if(x){
+						recordCourse(1);// 记录课程学习记录
+					}
 					window.location.href='${action!}';// 进行下一步学习
 				} else {
 /* 				$('#tip1Modal').modal('show'); */
