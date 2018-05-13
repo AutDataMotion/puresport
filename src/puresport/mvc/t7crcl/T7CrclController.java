@@ -211,7 +211,7 @@ public class T7CrclController extends BaseController {
 	public void generteTest() {
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		// 选择题
-		String sql = "select * from t9_tstlib t where t.prblm_tp ='01' order by rand() limit 3";
+		String sql = "select * from t9_tstlib t where t.prblm_tp ='01' order by rand() limit 10";
 		List<T9Tstlib> t9List = T9Tstlib.dao.find(sql);
 		List<ExamEntity> examEntityList = new ArrayList<ExamEntity>();
 		Integer questionNum = 0;
@@ -242,7 +242,7 @@ public class T7CrclController extends BaseController {
 
 		// 判断题
 		List<ExamEntity> examEntityList2 = new ArrayList<ExamEntity>();
-		sql = "select * from t9_tstlib t where t.prblm_tp ='02' order by rand() limit 3";
+		sql = "select * from t9_tstlib t where t.prblm_tp ='02' order by rand() limit 10";
 		t9List = T9Tstlib.dao.find(sql);
 		for (T9Tstlib t9Tstlib : t9List) {
 			ExamEntity examEntity = new ExamEntity();
