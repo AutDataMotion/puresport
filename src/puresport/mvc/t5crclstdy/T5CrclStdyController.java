@@ -71,6 +71,19 @@ public class T5CrclStdyController extends BaseController {
 
 	}
 	
+/*	*//**
+	 * 记录用户学习结果
+	 * zhuchaobin
+	 * 2018-05-13
+	 *//*
+	@Clear
+	public void recordCourse() {
+		//T5CrclStdy t5CrclStdy = T5CrclStdy.dao.findById(getPara());	//guuid
+		ResultEntity res = null;
+		res = new ResultEntity("0000", "ddsdfsdf");
+		renderJson(res);
+	}*/
+	
 	/**
 	 * 更新课程学习记录
 	 */
@@ -79,7 +92,8 @@ public class T5CrclStdyController extends BaseController {
 	public void update() {		
 /*		getModel(T5CrclStdy.class).update();
 		redirect(pthc);*/
-		String usrid = getPara("usrid");
+		ResultEntity res = null;
+		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		String crclid = getPara("crclid");
 		T5CrclStdy t5 =  new T5CrclStdy();
 		String sql = "select * from t5_crcl_stdy t where t.usrid ='" + usrid + "' and t.crclid = '" + crclid + "'";
@@ -87,19 +101,21 @@ public class T5CrclStdyController extends BaseController {
 		if((t5List != null) && (t5List.size() > 0)) {
 			// 更新;
 			t5 = t5List.get(0);
-			t5.setUsrid(Integer.parseInt(usrid));
+			t5.setUsrid(usrid);
 			t5.setCrclid(Integer.parseInt(crclid));
 			t5.setStdy_st("1");
 			t5.setTms(new Timestamp(System.currentTimeMillis()));
 			t5.update();
 		} else {
 			// 插入
-			t5.setUsrid(Integer.parseInt(usrid));
+			t5.setUsrid(usrid);
 			t5.setCrclid(Integer.parseInt(crclid));
 			t5.setStdy_st("1");
 			t5.setTms(new Timestamp(System.currentTimeMillis()));
 			t5.saveGenIntId();
 		}
+		res = new ResultEntity("0000", "课程学习记录成功.");
+		renderJson(res);
 	}
 		
 	/**
@@ -110,7 +126,7 @@ public class T5CrclStdyController extends BaseController {
 /*		getModel(T5CrclStdy.class).update();
 		redirect(pthc);*/
 		/*String usrid = getPara("usrid");*/
-		String usrid = "333";
+		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		ResultEntity res = null;
 		StringBuilder desc = new StringBuilder("");
 		boolean isCorse1Fnsh = false;
