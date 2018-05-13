@@ -70,6 +70,7 @@ $(document).ready(function(){
 		window.open($(this).find('a').attr('href'));		
 	});
 });
+
 </script>
 
 <link rel="stylesheet" type="text/css" href="/css_zhuchaobin/lrtk.css"
@@ -229,19 +230,21 @@ body {
 					<div class="examples_body">
 						<ul class="bannerHolder">
 							<%for(x in t7List){ %>
-							<li>
+							<li>				
 								<div class="banner">
-									<a href="/jf/puresport/t7Crcl/video_play?crcl_attr=${x.crcl_attr!''}&crcl_file_rte=${x.crcl_file_rte!''}" target="_blank">
+									<a href="/jf/puresport/t7Crcl/video_play?crcl_attr=${x.crcl_attr!''}&crcl_file_rte=${x.crcl_file_rte!''}&stdy_st=${x.stdy_st!'0'}&stdy_st_hidden=${stdy_st_hidden!'0'}&crclid=${x.crclid!'0'}" >
 										<img height="125" width="125" alt="The Best Designs"
-										src="/images/thumbnail_rte/${x.thumbnail_rte!'course_default.jpg'}" />
+										src="/images/thumbnail_rte/${x.thumbnail_rte!'fyh.jpg'}" />
 									</a>
-									<p class="companyInfo">${x.crcl_nm!''}-${x.crcl_file_rte!''}</p>
+									<p class="companyInfo">${x.crcl_nm!''}</p>
 									<div class="cornerTL"></div>
 									<div class="cornerTR"></div>
 									<div class="cornerBL"></div>
 									<div class="cornerBR"></div>
 								</div>
-							</li> <%}%>
+							</li> 
+							<input type="hidden" name="stdy_st_hidden" value="${x.stdy_st!'0'}"> </input>
+							<%}%>
 						</ul>
 						<!-- Examples body -->
 					</div>

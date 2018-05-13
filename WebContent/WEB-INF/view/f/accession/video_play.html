@@ -12,6 +12,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link href="/css/style.css" rel="stylesheet" type="text/css" media="all" />
 <!----font-Awesome----->
 <link rel="stylesheet" href="/fonts/css/font-awesome.min.css">
+
+	<!-- 弹出框样式及js -->
+<link type="text/css" rel="stylesheet"
+	href="/ui/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
+<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" 
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" 
+    crossorigin="anonymous"></script>
+<script src="/ui/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <!----font-Awesome----->
 <!-- start plugins -->
 <script type="text/javascript" src="/js/jquery.min.js"></script>
@@ -56,6 +66,59 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		function show(){
 			$("tachu").show();
 		}
+		function do_next(){
+			var x = document.getElementById("my-video").ended;//检测视频是否播放结束true,否则返回false
+			var stdy_st = document.getElementById("stdy_st_hidden").value;
+			alert(stdy_st);
+/* 			document.getElementById("stdy_st_hidden"); */
+/* 			x =true; */
+
+			// 视频学习完成或者已经学习本课程的学习
+			if(x || ("1" == stdy_st)){
+					recordCourse(1);// 记录课程学习记录
+					window.location.href='${action!}';// 进行下一步学习
+				} else {
+/* 				$('#tip1Modal').modal('show'); */
+				alert("对不起！视频播放完毕才能进行下一步学习，请耐心等待！");
+			}
+		}		
+		// 记录用户学习结果
+		function recordCourse(flag) {
+			var userid = "333";
+			var url;
+			url = '/jf/puresport/t5CrclStdy/update';
+			var crclid = document.getElementById("crclid").value;
+			$.ajax({
+				type : 'POST',
+				url : url,
+				dataType : "json",
+				traditional : true,
+				data : {
+					"userid" : ${session["usrid"]},"crclid":crclid
+				},
+				success : function(res) {
+					if (res.code == "0000") {
+/* 						if (flag == 2) {
+							showDiv(3);
+						} else if (flag == 1) {
+							showDiv(2);
+						} */
+						alert(res.code);
+						return true;
+					} else {
+						/* 							alert(res.desc); */
+/* 						showDiv(1);
+						var t2 = document.getElementById('cantTestDesc');
+						t2.innerText = res.desc; */
+						alert(res.code);
+						return false;
+					}
+				},
+				dataType : "json"
+			});
+		}
+		
+		
 	</script>
 	
 </head>
@@ -184,12 +247,38 @@ body {
 </table>  
 <p>
 	    <div align="center">
-				<button onclick="window.location.href='${action!}'" class="btn">下一步</button>
+				<button onclick="do_next()" class="btn">下一步</button>
 			</div>
 	</div>
 </div>
 
+
+	<!-- tip1 Modal-->
+	<div class="modal fade" id="tip1Modal" tabindex="-1" role="dialog"
+		aria-labelledby="tip1ModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header" align="center">
+					<h5 class="modal-title">友情提示</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" align="center">对不起！视频播放完毕才能进行下一步学习，请耐心等待！</div>
+				<div class="modal-footer" align="center">
+					<button type="button" class="btn" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<input type="hidden" id="stdy_st_hidden" value="${stdy_st_hidden!'0'}"> </input>
+	<input type="hidden" id="crclid" value="${crclid!'-1'}"> </input>
+
 <% include("/f/footer.html"){} %>
+
 
 </body>
 </html>

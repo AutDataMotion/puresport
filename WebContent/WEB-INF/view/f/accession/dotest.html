@@ -209,16 +209,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			}
 			dataSet.push(item);
 		}
-		/* 			alert(dataSet); */
+		/* 			alert(dataSet); */				
 		var url;
 		url = '/jf/puresport/t7Crcl/submitExam';
+		var examid = document.getElementById("examid").value;
+		alert(examid);
 		$.ajax({
 			type : 'POST',
 			url : url,
 			dataType : "json",
 			traditional : true,
 			data : {
-				dataSet : dataSet
+				"dataSet":dataSet,"examid":examid
 			},
 			success : function(res) {
 				if (res.code == "0000") {
@@ -460,5 +462,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<!-- start footer -->
 		<% include("/f/footer.html"){} %>
 		<!-- end footer -->
+		<input type="hidden" id="examid" value="${examid!'-1'}"> </input>
 </body>
 </html>
