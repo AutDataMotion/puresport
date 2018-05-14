@@ -23,7 +23,6 @@ import puresport.mvc.t5crclstdy.T5CrclStdy;
 //import puresport.entity.ExamEntity;
 import puresport.mvc.t9tstlib.T9Tstlib;
 
-
 /**
  * XXX 管理 描述：
  * 
@@ -383,7 +382,7 @@ public class T7CrclController extends BaseController {
 		t11.saveGenIntId();
 		// float fscore = (float) (score * 100.0 / 6.0);
 		ResultEntity res = new ResultEntity("0000", "恭喜您！您已完成测试，您的成绩为：" + score * 5 + "分！");
-//		renderWithPath("/f/study.html");
+		// renderWithPath("/f/study.html");
 		renderJson(res);
 	}
 

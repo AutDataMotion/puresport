@@ -7,18 +7,17 @@
 <meta name="keywords"
 	content="Skate Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
-<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<script type="application/x-javascript">
+	
+	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
+</script>
 <!-- Bootstrap -->
 <link href="/css/bootstrap.css" rel='stylesheet' type='text/css' />
-
 <!-- 弹出框样式及js -->
 <link type="text/css" rel="stylesheet"
 	href="/ui/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-<!-- <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script> -->
 <script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
-<!--     <script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" 
-    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" 
-    crossorigin="anonymous"></script> -->
 <script src="/ui/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 
 <link href="/css/style.css" rel="stylesheet" type="text/css" media="all" />
@@ -28,57 +27,59 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- start plugins -->
 <script type="text/javascript" src="/js/jquery.min.js"></script>
 <script src="/js/menu.js" type="text/javascript"></script>
-
 <script type="text/javascript" src="/js/jquery.easing.min.js"></script>
 <script type="text/javascript" src="/js/jquery.mixitup.min.js"></script>
 <link href="/css/owl.carousel.css" rel="stylesheet">
 <link href="/css/owl.theme.css" rel="stylesheet">
 <script src="/js/owl.carousel.js"></script>
 <script type="text/javascript">
-		function show2(){
-		document.getElementById("doTestDiv").style.display="";
-		document.getElementById("mannulDiv").style.display="none";
-		
+	function show2() {
+		document.getElementById("doTestDiv").style.display = "";
+		document.getElementById("mannulDiv").style.display = "none";
+
 		//alert(document.getElementById("div").style.display)
-		}
-		function show(){
-			$("tachu").show();
-		}
-	</script>
+	}
+	function show() {
+		$("tachu").show();
+	}
+</script>
 
 <!-- 自定义样式 -->
 <!-- <link href="/css_zhuchaobin/font_.css" rel='stylesheet' type='text/css' /> -->
 
 <script>
-$(document).ready(function(){
-	// 0.4代表遮罩的透明度
-	$('.banner div').css('opacity',0.2);
-	$('.banner').hover(function(){
-		var el = $(this);		
-		// 先淡出阴影，后淡入文字
-		el.find('div').stop().animate({width:200,height:200},'slow',function(){
-			el.find('p').fadeIn('fast');
+	$(document).ready(function() {
+		// 0.4代表遮罩的透明度
+		$('.banner div').css('opacity', 0.2);
+		$('.banner').hover(function() {
+			var el = $(this);
+			// 先淡出阴影，后淡入文字
+			el.find('div').stop().animate({
+				width : 200,
+				height : 200
+			}, 'slow', function() {
+				el.find('p').fadeIn('fast');
+			});
+		}, function() {
+			var el = $(this);
+			// 隐藏文字
+			el.find('p').stop(true, true).hide();
+			// 去掉遮罩
+			el.find('div').stop().animate({
+				width : 60,
+				height : 60
+			}, 'fast');
+		}).click(function() {
+			// 点击图片时打开链接		
+			window.open($(this).find('a').attr('href'));
 		});
-	},function(){
-		var el = $(this);		
-		// 隐藏文字
-		el.find('p').stop(true,true).hide();		
-		// 去掉遮罩
-		el.find('div').stop().animate({width:60,height:60},'fast');
-	}).click(function(){		
-		// 点击图片时打开链接		
-		window.open($(this).find('a').attr('href'));		
 	});
-});
-
 </script>
 
 <link rel="stylesheet" type="text/css" href="/css_zhuchaobin/lrtk.css"
 	media="all">
 <script type="text/javascript" src="/js/jquery.min.js"></script>
-
 <!-- 代码 结束 -->
-
 </head>
 <body>
 	<style>
@@ -95,7 +96,6 @@ $(document).ready(function(){
 	border-radius: 3px;
 }
 </style>
-
 	<style type="text/css">
 .videoView {
 	padding-top: 5px;
@@ -159,9 +159,7 @@ body {
 	margin-top: 100px;
 }
 </style>
-
 	<% include("/f/header.html"){} %>
-
 	<div class="main_bg">
 		<!-- start main -->
 		<div class="container">
@@ -169,57 +167,24 @@ body {
 				<h3 class="style pull-left">课程学习</h3>
 				<ol class="breadcrumb pull-right">
 					<li><a href="index.html">首页</a></li>
+					<li class="active">准入</li>
 					<li class="active">课程学习</li>
 				</ol>
 				<div class="clearfix"></div>
 			</div>
 		</div>
 	</div>
-
 	<!-- start main_btm -->
 	<div class="main_btm1">
 		<!-- start main_btm -->
 		<div class="container">
-
 			<!-- 课程学习说明 -->
-
 			<div class="paragh">
 				<div class="title">课程学习说明
 					临时调升，申请原因和额度增加上限关联关系通过参数设置。额度增加上限是在授信额度的基础上增加。如客户调额前额度是1萭，调额原因是友邦保费费用，最高增加额度为现有额度50%，即是最高额度是1.5萭，可增加5千额度。临时调升，申请原因和额度增加上限关联关系通过参数设置。额度增加上限是在授信额度的基础上增加。如客户调额前额度是1萭，调额原因是友邦保费费用，最高增加额度为现有额度50%，即是最高额度是1.5萭，可增加5千额度。
 				</div>
 			</div>
 			<p>
-
-<!-- 				必修视频课程一
-			<div class="title">必修视频课程一：1选1</div>
-			代码 开始
-			STAR_CONTAINER
-			<div id="container" >
-				<div id="wrap-container" class="clearfix">
-					<div class="examples_body">
-						<ul class="bannerHolder">
-							<%for(x in t7List1){ %>
-							<li>
-								<div class="banner">
-									<a href="/jf/puresport/t7Crcl/video_play" target="_blank">
-										<img height="125" width="125" alt="The Best Designs"
-										src="/images/thumbnail_rte/${x.thumbnail_rte!'course_default.jpg'}" />
-									</a>
-									<p class="companyInfo">${x.crcl_nm!''}</p>
-									<div class="cornerTL"></div>
-									<div class="cornerTR"></div>
-									<div class="cornerBL"></div>
-									<div class="cornerBR"></div>
-								</div>
-							</li> <%}%>
-						</ul>
-						Examples body
-					</div>
-				</div>
-				/COPYRIGHT
-			</div>
-			END_CONTAINER -->
-
 
 			<!-- 必修视频课程一 -->
 			<div class="title">${course_title!''}</div>
@@ -230,9 +195,10 @@ body {
 					<div class="examples_body">
 						<ul class="bannerHolder">
 							<%for(x in t7List){ %>
-							<li>				
+							<li>
 								<div class="banner">
-									<a href="/jf/puresport/t7Crcl/video_play?crcl_attr=${x.crcl_attr!''}&crcl_file_rte=${x.crcl_file_rte!''}&stdy_st=${x.stdy_st!'0'}&stdy_st_hidden=${stdy_st_hidden!'0'}&crclid=${x.crclid!'0'}" >
+									<a
+										href="/jf/puresport/t7Crcl/video_play?crcl_attr=${x.crcl_attr!''}&crcl_file_rte=${x.crcl_file_rte!''}&stdy_st=${x.stdy_st!'0'}&stdy_st_hidden=${stdy_st_hidden!'0'}&crclid=${x.crclid!'0'}" target="_self">
 										<img height="125" width="125" alt="The Best Designs"
 										src="/images/thumbnail_rte/${x.thumbnail_rte!'fyh.jpg'}" />
 									</a>
@@ -242,64 +208,16 @@ body {
 									<div class="cornerBL"></div>
 									<div class="cornerBR"></div>
 								</div>
-							</li> 
-							<input type="hidden" name="stdy_st_hidden" value="${x.stdy_st!'0'}"> </input>
-							<%}%>
+							</li>
+							<input type="hidden" name="stdy_st_hidden"
+								value="${x.stdy_st!'0'}">
+							</input> <%}%>
 						</ul>
 						<!-- Examples body -->
 					</div>
 				</div>
 				<!-- /COPYRIGHT -->
 			</div>
-			<!-- END_CONTAINER -->
-
-			<!-- 必修视频课程一 -->
-<!-- 			<div class="title">必修视频课程三：7选1</div>
-			代码 开始
-			STAR_CONTAINER
-			<div id="container">
-				<div id="wrap-container" class="clearfix">
-					<div class="examples_body">
-						<ul class="bannerHolder">
-							<%for(x in t7List3){ %>
-							<li>
-								<div class="banner">
-									<a href="/jf/puresport/t7Crcl/video_play" target="_blank">
-										<img height="125" width="125" alt="The Best Designs"
-										src="/images/thumbnail_rte/${x.thumbnail_rte!'course_default.jpg'}" />
-									</a>
-									<p class="companyInfo">${x.crcl_nm!''}</p>
-									<div class="cornerTL"></div>
-									<div class="cornerTR"></div>
-									<div class="cornerBL"></div>
-									<div class="cornerBR"></div>
-								</div>
-							</li> <%}%>
-						</ul>
-						Examples body
-					</div>
-				</div>
-				/COPYRIGHT
-			</div> -->
-			<!-- END_CONTAINER -->
-
-			<!-- 必修视频课程一 -->
-<!-- 			<div class="title">其他学习资料下载：选修</div>
-			代码 开始
-			STAR_CONTAINER
-			<div id="container">
-				<div id="wrap-container" class="clearfix">
-					<div class="examples_body">
-						<ul class="bannerHolder">
-							<%for(x in t7List4){ %>
-							<a href="/materials/download/${x.crcl_file_rte!''}"><p>${x.crcl_nm!''}</p></a>
-							<%}%>
-						</ul>
-						Examples body
-					</div>
-				</div>
-				/COPYRIGHT
-			</div> -->
 			<!-- END_CONTAINER -->
 		</div>
 	</div>
