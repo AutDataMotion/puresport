@@ -218,7 +218,7 @@ public class T7CrclController extends BaseController {
 		for (T9Tstlib t9Tstlib : t9List) {
 			ExamEntity examEntity = new ExamEntity();
 			examEntity.setTtl((String) t9Tstlib.getTtl());
-			examEntity.setPrblmid(Integer.parseInt(t9Tstlib.getPrblmid()));
+			examEntity.setPrblmid(Integer.parseInt((String) t9Tstlib.getPrblmid()));
 			examEntity.setOpt((String) t9Tstlib.getOpt());
 			String option = examEntity.getOpt();
 			String[] optionList = option.split("\\|");
@@ -247,7 +247,7 @@ public class T7CrclController extends BaseController {
 		for (T9Tstlib t9Tstlib : t9List) {
 			ExamEntity examEntity = new ExamEntity();
 			examEntity.setTtl((String) t9Tstlib.getTtl());
-			examEntity.setPrblmid(Integer.parseInt(t9Tstlib.getPrblmid()));
+			examEntity.setPrblmid(Integer.parseInt((String) t9Tstlib.getPrblmid()));
 			// 答案
 			examEntity.setPrblm_aswr((String) t9Tstlib.getPrblm_aswr());
 			// 题号
@@ -266,7 +266,7 @@ public class T7CrclController extends BaseController {
 		} else {
 			LOG.debug("用户非首次考试，考试ID取上次考试ID + 1");
 			T10ExamGrd t10 = t10List.get(0);
-			examid = Integer.parseInt(t10List.get(0).getExamid()) + 1;
+			examid = Integer.parseInt((String) t10List.get(0).getExamid()) + 1;
 		}
 
 		for (ExamEntity examEntity : examEntityList) {
