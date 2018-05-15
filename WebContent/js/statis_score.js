@@ -1,10 +1,13 @@
 $(document).ready(function() {
 	var myTable = $('#example3').DataTable({
+		dom: 'Bfrtip',
 		buttons : [{
 			extend : 'collection',
 			text : '导出',
 			buttons : [ 'excel', 'print' ]
 		}  ],
+		scrollY: 500,
+        scrollX: true,
 		columns : [  {
 			data : "usr_tp"
 		}, {

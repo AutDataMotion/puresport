@@ -1,10 +1,15 @@
 $(document).ready(function() {
 	var myTable = $('#example4').DataTable({
-		buttons : [ {
-			extend : 'collection',
-			text : '导出',
-			buttons : [ 'excel', 'print' ]
-		}  ],
+		dom: 'Bfrtip',
+		buttons: [
+            {
+                extend: 'collection',
+                text: '导出',
+                buttons: ['excel',  'print']
+            }
+       ],
+		scrollY: 500,
+        scrollX: true,
 		columns : [  {
 			data : "spt_prj"
 		}, {
