@@ -15,21 +15,16 @@ import puresport.constant.ConstantInitMy;
 import puresport.entity.ResultEntity;
 import puresport.mvc.t9tstlib.T9Tstlib;
 
-
 /**
- * XXX 管理	
- * 描述：
+ * XXX 管理 描述：
  * 
- * /jf/puresport/t5CrclStdy
- * /jf/puresport/t5CrclStdy/save
- * /jf/puresport/t5CrclStdy/edit
- * /jf/puresport/t5CrclStdy/update
- * /jf/puresport/t5CrclStdy/view
- * /jf/puresport/t5CrclStdy/delete
+ * /jf/puresport/t5CrclStdy /jf/puresport/t5CrclStdy/save
+ * /jf/puresport/t5CrclStdy/edit /jf/puresport/t5CrclStdy/update
+ * /jf/puresport/t5CrclStdy/view /jf/puresport/t5CrclStdy/delete
  * /puresport/t5CrclStdy/add.html
  * 
  */
-//@Controller(controllerKey = "/jf/puresport/t5CrclStdy")
+// @Controller(controllerKey = "/jf/puresport/t5CrclStdy")
 public class T5CrclStdyController extends BaseController {
 
 	@SuppressWarnings("unused")
@@ -43,74 +38,88 @@ public class T5CrclStdyController extends BaseController {
 	 */
 	@Clear
 	public void index() {
-//		paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T5CrclStdy.sqlId_splitPage_from);
+		// paging(ConstantInitMy.db_dataSource_main, splitPage,
+		// BaseModel.sqlId_splitPage_select, T5CrclStdy.sqlId_splitPage_from);
 		renderWithPath("/f/study.html");
 	}
-	
+
 	/**
 	 * 保存
 	 */
 	@Before(T5CrclStdyValidator.class)
 	public void save() {
 		T5CrclStdy t5CrclStdy = getModel(T5CrclStdy.class);
-		//other set 
-		
-		//t5CrclStdy.save();		//guiid
-		t5CrclStdy.saveGenIntId();	//serial int id
-		renderWithPath(pthv+"add.html");
+		// other set
+
+		// t5CrclStdy.save(); //guiid
+		t5CrclStdy.saveGenIntId(); // serial int id
+		renderWithPath(pthv + "add.html");
 	}
-	
+
 	/**
 	 * 准备更新
 	 */
 	public void edit() {
-		//T5CrclStdy t5CrclStdy = T5CrclStdy.dao.findById(getPara());	//guuid
-		T5CrclStdy t5CrclStdy = T5CrclStdyService.service.SelectById(getParaToInt());		//serial int id
+		// T5CrclStdy t5CrclStdy = T5CrclStdy.dao.findById(getPara()); //guuid
+		T5CrclStdy t5CrclStdy = T5CrclStdyService.service.SelectById(getParaToInt()); // serial int id
 		setAttr("t5CrclStdy", t5CrclStdy);
-		renderWithPath(pthv+"update.html");
+		renderWithPath(pthv + "update.html");
 
 	}
-	
+
+	/*	*//**
+			 * 记录用户学习结果 zhuchaobin 2018-05-13
+			 *//*
+				 * @Clear public void recordCourse() { //T5CrclStdy t5CrclStdy =
+				 * T5CrclStdy.dao.findById(getPara()); //guuid ResultEntity res = null; res =
+				 * new ResultEntity("0000", "ddsdfsdf"); renderJson(res); }
+				 */
+
 	/**
 	 * 更新课程学习记录
 	 */
-/*	@Before(T5CrclStdyValidator.class)*/
+	/* @Before(T5CrclStdyValidator.class) */
 	@Clear
-	public void update() {		
-/*		getModel(T5CrclStdy.class).update();
-		redirect(pthc);*/
-		String usrid = getPara("usrid");
+	public void update() {
+		/*
+		 * getModel(T5CrclStdy.class).update(); redirect(pthc);
+		 */
+		ResultEntity res = null;
+		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		String crclid = getPara("crclid");
-		T5CrclStdy t5 =  new T5CrclStdy();
+		T5CrclStdy t5 = new T5CrclStdy();
 		String sql = "select * from t5_crcl_stdy t where t.usrid ='" + usrid + "' and t.crclid = '" + crclid + "'";
 		List<T5CrclStdy> t5List = T5CrclStdy.dao.find(sql);
-		if((t5List != null) && (t5List.size() > 0)) {
+		if ((t5List != null) && (t5List.size() > 0)) {
 			// 更新;
 			t5 = t5List.get(0);
-			t5.setUsrid(Integer.parseInt(usrid));
+			t5.setUsrid(usrid);
 			t5.setCrclid(Integer.parseInt(crclid));
 			t5.setStdy_st("1");
 			t5.setTms(new Timestamp(System.currentTimeMillis()));
 			t5.update();
 		} else {
 			// 插入
-			t5.setUsrid(Integer.parseInt(usrid));
+			t5.setUsrid(usrid);
 			t5.setCrclid(Integer.parseInt(crclid));
 			t5.setStdy_st("1");
 			t5.setTms(new Timestamp(System.currentTimeMillis()));
 			t5.saveGenIntId();
 		}
+		res = new ResultEntity("0000", "课程学习记录成功.");
+		renderJson(res);
 	}
-		
+
 	/**
 	 * 查询课程学习记录，判断是否具备考试资格
-	 */	
+	 */
 	@Clear
-	public void isCanTest() {		
-/*		getModel(T5CrclStdy.class).update();
-		redirect(pthc);*/
-		/*String usrid = getPara("usrid");*/
-		String usrid = "333";
+	public void isCanTest() {
+		/*
+		 * getModel(T5CrclStdy.class).update(); redirect(pthc);
+		 */
+		/* String usrid = getPara("usrid"); */
+		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		ResultEntity res = null;
 		StringBuilder desc = new StringBuilder("");
 		boolean isCorse1Fnsh = false;
@@ -118,12 +127,13 @@ public class T5CrclStdyController extends BaseController {
 		boolean isCorse3Fnsh = false;
 		// 必修课程1
 		String crclid = "1";
-		String sql = "select * from t5_crcl_stdy t where t.usrid ='" + usrid + "' and t.crclid = '" + crclid + "' and t.stdy_st='1'";
+		String sql = "select * from t5_crcl_stdy t where t.usrid ='" + usrid + "' and t.crclid = '" + crclid
+				+ "' and t.stdy_st='1'";
 		List<T5CrclStdy> t5List = T5CrclStdy.dao.find(sql);
-		if((t5List != null) && (t5List.size() > 0)) {
-			// 课程已修;	
+		if ((t5List != null) && (t5List.size() > 0)) {
+			// 课程已修;
 			isCorse1Fnsh = true;
-		} 		
+		}
 		// 必修课程2
 		crclid = "'21', '22', '23', '24','25', '26', '27'";
 		sql = "select * from t5_crcl_stdy t where t.usrid ='" + usrid + "' and t.crclid in(" + crclid
@@ -142,43 +152,44 @@ public class T5CrclStdyController extends BaseController {
 			// 课程已修;
 			isCorse3Fnsh = true;
 		}
-		if(isCorse1Fnsh && isCorse2Fnsh && isCorse3Fnsh) {
+		if (isCorse1Fnsh && isCorse2Fnsh && isCorse3Fnsh) {
 			res = new ResultEntity("0000", "课程学习完毕，可以参加考试!");
 		} else {
-			if(!isCorse1Fnsh)
+			if (!isCorse1Fnsh)
 				desc.append("‘必修课程1’");
-			if(!isCorse2Fnsh)
+			if (!isCorse2Fnsh)
 				desc.append("‘必修课程2’");
-			if(!isCorse3Fnsh)
+			if (!isCorse3Fnsh)
 				desc.append("‘必修课程3’");
 			desc.append("没有完成学习，请完成后再参加考试！");
 			res = new ResultEntity("0001", desc.toString());
 		}
 		renderJson(res);
 	}
-	
+
 	/**
 	 * 查看
 	 */
 	public void view() {
-		//T5CrclStdy t5CrclStdy = T5CrclStdy.dao.findById(getPara());	//guuid
-		T5CrclStdy t5CrclStdy = T5CrclStdyService.service.SelectById(getParaToInt());		//serial int id
+		// T5CrclStdy t5CrclStdy = T5CrclStdy.dao.findById(getPara()); //guuid
+		T5CrclStdy t5CrclStdy = T5CrclStdyService.service.SelectById(getParaToInt()); // serial int id
 		setAttr("t5CrclStdy", t5CrclStdy);
-		renderWithPath(pthv+"view.html");
+		renderWithPath(pthv + "view.html");
 	}
-	
+
 	/**
 	 * 删除
 	 */
 	public void delete() {
-		//T5CrclStdyService.service.delete("t5_crcl_stdy", getPara() == null ? ids : getPara());	//guuid
-		T5CrclStdyService.service.deleteById("t5_crcl_stdy", getPara() == null ? ids : getPara());	//serial int id
+		// T5CrclStdyService.service.delete("t5_crcl_stdy", getPara() == null ? ids :
+		// getPara()); //guuid
+		T5CrclStdyService.service.deleteById("t5_crcl_stdy", getPara() == null ? ids : getPara()); // serial int id
 		redirect(pthc);
 	}
-	
-	public void setViewPath(){
+
+	public void setViewPath() {
 		setAttr(ConstantRender.PATH_CTL_NAME, pthc);
 		setAttr(ConstantRender.PATH_VIEW_NAME, pthv);
 	}
-	
+
 }

@@ -82,6 +82,12 @@ public class T7Crcl extends BaseModel<T7Crcl> {
 	 */
 	public static final String column_thumbnail_rte = "thumbnail_rte";
 	
+	/**
+	 * 字段描述：学习状态 
+	 * 字段类型：char  长度：1
+	 */
+	public static final String column_stdy_st = "stdy_st";
+	
 	
 	/**
 	 * sqlId : puresport.t7Crcl.splitPageFrom
@@ -101,11 +107,11 @@ public class T7Crcl extends BaseModel<T7Crcl> {
 	private String thumbnail_rte;
 	private String stdy_st;
 
-	public String getStdy_st() {
-		return stdy_st;
+	public void setStdy_st(String stdy_st){
+		set(column_stdy_st, stdy_st);
 	}
-	public void setStdy_st(String stdy_st) {
-		this.stdy_st = stdy_st;
+	public <T> T getStdy_st() {
+		return get(column_stdy_st);
 	}
 	public <T> T getThumbnail_rte() {
 		return get(column_thumbnail_rte);
