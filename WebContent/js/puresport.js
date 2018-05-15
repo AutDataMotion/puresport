@@ -662,6 +662,7 @@ function initScoreTable(userID)
 		    },
 		    success:function(data,textStatus,jqXHR){
 		    	if(data.flag) {  
+//		    		alert(data);
 //	                console.log(data.itemlist[0].exam_grd);
 		    		var dataSet = [];
 		    		for(var i =0;i<data.itemlist.length;i++)
@@ -671,19 +672,19 @@ function initScoreTable(userID)
 		    			score.push(data.itemlist[i].tms);
 		    			dataSet.push(score);
 		    		}
-		    		$('#score_excel').DataTable({
-	    		        data: dataSet,
-	    		        language: {
-	    		            url: "/ui/DataTables/Chinese.json"
-	    		        },
-//	    		        "filter": false,
-//	    		        "destroy": true,
-	    		        columns: [
-	    		            { title: "成绩" },
-	    		            { title: "时间" },
-	    		            { title: "赛事" }
-	    		        ]
-	    		    });
+//		    		$('#score_excel').DataTable({
+//	    		        data: dataSet,
+//	    		        language: {
+//	    		            url: "/ui/DataTables/Chinese.json"
+//	    		        },
+////	    		        "filter": false,
+////	    		        "destroy": true,
+//	    		        columns: [
+//	    		            { title: "成绩" },
+//	    		            { title: "时间" },
+//	    		            { title: "赛事" }
+//	    		        ]
+//	    		    });
 	            }  
 	            else { 
 	            	var dataSet = [];

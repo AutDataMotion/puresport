@@ -13,27 +13,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 </script>
 <!-- Bootstrap -->
-<link href="/css/bootstrap.css" rel='stylesheet' type='text/css' />
-
-<!-- 弹出框样式及js -->
-<link type="text/css" rel="stylesheet"
-	href="/ui/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-<script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
-<script src="/ui/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-
-<link href="/css/style.css" rel="stylesheet" type="text/css" media="all" />
-<!----font-Awesome----->
-<link rel="stylesheet" href="/fonts/css/font-awesome.min.css">
-<!----font-Awesome----->
+<link href="${cxt!}/ui/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+<link href="${cxt!}/css/style.css" rel="stylesheet" type="text/css" media="all" />
 <!-- start plugins -->
-<script type="text/javascript" src="/js/jquery.min.js"></script>
-<script src="/js/menu.js" type="text/javascript"></script>
-
-<script type="text/javascript" src="/js/jquery.easing.min.js"></script>
-<script type="text/javascript" src="/js/jquery.mixitup.min.js"></script>
-<link href="/css/owl.carousel.css" rel="stylesheet">
-<link href="/css/owl.theme.css" rel="stylesheet">
-<script src="/js/owl.carousel.js"></script>
+<script type="text/javascript" src="${cxt!}/js/puresport.js"></script>
+<script type="text/javascript" src="${cxt!}/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<!--start slider -->
+<link rel="stylesheet" href="${cxt!}/css/fwslider.css" media="all">
+<script src="${cxt!}/js/fwslider.js"></script>
+<!--end slider -->
+<!-- must have -->
+<link href="${cxt!}/css/allinone_carousel.css" rel="stylesheet" type="text/css">
+<script src="${cxt!}/js/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
+<script src="${cxt!}/js/allinone_carousel.js" type="text/javascript"></script>
 <script type="text/javascript">
 		function show2(){
 		document.getElementById("doTestDiv").style.display="";
@@ -72,83 +65,23 @@ $(document).ready(function(){
 });
 </script>
 
-<link rel="stylesheet" type="text/css" href="/css_zhuchaobin/lrtk.css"
-	media="all">
-<script type="text/javascript" src="/js/jquery.min.js"></script>
-
 <!-- 代码 结束 -->
 
 </head>
 <body>
-	<style>
-#owl-demo .owl-item div {
-	padding: 5px;
-}
 
-#owl-demo .owl-item img {
-	display: block;
-	width: 100%;
-	height: auto;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-}
-</style>
-
-	<style type="text/css">
-.videoView {
-	padding-top: 5px;
-	padding-right: 5px;
-	padding-bottom: 5px;
-	padding-left: 5px;
-	text-indent: 2em; /* 段首缩进2个字符 */
-	font-family: "微软雅黑", "黑体", "宋体";
-	font-size: 18px;
-	/*        height:800px； */
-	/*        word-spacing:50px; */
-	/*        background:pink; */
-}
-
-.paragh {
-	padding-top: 5px;
-	/*        padding-right:5px; */
-	padding-bottom: 15px;
-	/*        padding-left:5px; */
-	text-indent: 2em; /* 段首缩进2个字符  */
-	font-family: "微软雅黑", "黑体", "宋体";
-	font-size: 18px;
-	/*        height:800px； */
-	/*        word-spacing:50px; */
-	/*        background:pink; */
-}
-
-#tachu {
-	position: absolute;
-	width: 240px;
-	top: 240px;
-	left: screen.(width-240)/2;
-	z-index: 999;
-}
-</style>
 
 	<style type="text/css">
 .demo {
-	padding-top: 15px;
-	padding-right: 280px;
-	padding-bottom: 30px;
-	padding-left: 280px;
+	
 	/*        text-indent:2em; */ /* 段首缩进2个字符 */
 	font-family: "微软雅黑", "黑体", "宋体";
 	font-size: 20px;
-	height: 800px； /*        word-spacing:50px; */ 
-		/*        background:pink; */
+	padding-left: 5px;
 }
 
 .title {
-	padding-top: 15px;
-	padding-right: 250px;
-	padding-bottom: 15px;
-	padding-left: 250px;
+	
 	/*        text-indent:2em; */ /* 段首缩进2个字符 */
 	font-family: "微软雅黑", "黑体", "宋体";
 	font-size: 25px;
@@ -157,31 +90,8 @@ $(document).ready(function(){
 	/*        background:pink; */
 }
 
-.score {
-	padding-top: 130px;
-	padding-right: 250px;
-	padding-bottom: 160px;
-	padding-left: 250px;
-	/*        text-indent:2em; */ /* 段首缩进2个字符 */
-	font-family: "微软雅黑", "黑体", "宋体";
-	font-size: 25px;
-	height: 800px；
-}
 </style>
 
-	<link href="/css/video-js.css" rel="stylesheet">
-	<style>
-body {
-	background-color: #191919
-}
-
-.m {
-	width: 740px;
-	height: 400px;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top: 100px;
-}
 </style>
 
 	<% include("/f/header.html"){} %>
@@ -192,7 +102,7 @@ body {
 			<div class="main_grid1">
 				<h3 class="style pull-left">课程学习</h3>
 				<ol class="breadcrumb pull-right">
-					<li><a href="index.html">首页</a></li>
+					<li><a href="${cxt!}/jf/puresport/pagesController">首页</a></li>
 					<li class="active">准入</li>
 					<li class="active">课程学习</li>
 				</ol>
@@ -206,17 +116,22 @@ body {
 		<!-- 第一页：学习说明 -->
 		<div id="mannulDiv3" class="demo" align="center">
 			<div align="center" class="title">学习说明</div>
-			<div align="left" class="demo">
-				<p>1. 点击“开始”按钮开始进入考试；
-				<p>2. 考试过程中请注意保持浏览器客户端在线状态，不要强制刷新或者断开网络，否则考试将终止；
-				<p>3. 所有试题完成后，并确认提交，系统才保存记录成绩；
-				<p>4. 试题题型包含不定项选择题和判断题各10道，每道题5分，共100分；
-				<p>5. 考试成绩60分及以上视为及格；
-				<p>6. 可以进行多次考试，每次考试试题随机。多次参加考试的，视最后一次提交的成绩为最终成绩；
-				<p>7. 如有考试相关的其他疑问请联系管理员；
-				<p>8. 请遵守考试规定，按时完成测试。
-				<p>
+			<div class="container">
+				<div class="row" >
+					<div align="left" class="demo">
+						<p>1. 点击“开始”按钮开始进入考试；
+						<p>2. 考试过程中请注意保持浏览器客户端在线状态，不要强制刷新或者断开网络，否则考试将终止；
+						<p>3. 所有试题完成后，并确认提交，系统才保存记录成绩；
+						<p>4. 试题题型包含不定项选择题和判断题各10道，每道题5分，共100分；
+						<p>5. 考试成绩60分及以上视为及格；
+						<p>6. 可以进行多次考试，每次考试试题随机。多次参加考试的，视最后一次提交的成绩为最终成绩；
+						<p>7. 如有考试相关的其他疑问请联系管理员；
+						<p>8. 请遵守考试规定，按时完成测试。
+						<p>
+					</div>
+				</div>
 			</div>
+			
 			<div align="center">
 				<button
 					onclick="window.location.href='/jf/puresport/t7Crcl/video_play?crcl_attr=${t7.crcl_attr!''}&crcl_file_rte=${t7.crcl_file_rte!''}&stdy_st_hidden=${stdy_st_hidden!'0'}&crclid=${t7.crclid!'0'}'"

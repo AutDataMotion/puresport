@@ -118,6 +118,9 @@ public class pagesController extends BaseController {
         	}
         	
         }
+        else {
+    		renderWithPath(pthv+"login.html");
+    	}
 		
 	}
 //	@Clear

@@ -149,7 +149,7 @@ nav{
 }
 .menu_right{
 	display:block;
-	float:right;
+	float:right !important;
 }
 .menu li{
 	display:inline-block;
