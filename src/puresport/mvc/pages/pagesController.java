@@ -46,12 +46,25 @@ public class pagesController extends BaseController {
 		renderWithPath(pthv+"zhunru_index.html");
 		
 	}
+	@Clear
+	public void tuozhan_index() {
+		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
+		//renderWithPath(pthv+"list.html");
+		renderWithPath(pthv+"tuozhan_index.html");
+	}
+	@Clear
+	public void jiangzuo_index() {
+		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
+		//renderWithPath(pthv+"list.html");
+		renderWithPath(pthv+"jiangzuo_index.html");
+	}
 //	@Clear
 	public void zhunru_study() {
 		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
 		//renderWithPath(pthv+"list.html");
 		renderWithPath(pthv+"zhunru_study.html");
 	}
+	
 //	@Clear
 //	@Before(loginInterceptorlyf.class)  
 //	public void zhunru_dotest() {
@@ -90,12 +103,12 @@ public class pagesController extends BaseController {
 		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
 		//renderWithPath(pthv+"list.html");
 		Long userID = Long.valueOf((String)getSession().getAttribute("usrid"));
-		String phoneNum = (String)getSession().getAttribute("phoneNum");
+		String crdt_no = (String)getSession().getAttribute("crdt_no");
 		String pwd = (String)getSession().getAttribute("pwd");
 		T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", userID);//根据用户名查询数据库中的用户  
         if(item!=null)
         {
-        	if(phoneNum.equals((String)item.getMblph_no())&&pwd.equals((String)item.getPswd()))
+        	if(crdt_no.equals((String)item.getCrdt_no())&&pwd.equals((String)item.getPswd()))
         	{
         		setAttr("username", (String)item.getNm());
         		renderWithPath(pthv+"selfcenter.html");
@@ -105,6 +118,9 @@ public class pagesController extends BaseController {
         	}
         	
         }
+        else {
+    		renderWithPath(pthv+"login.html");
+    	}
 		
 	}
 //	@Clear
@@ -113,12 +129,12 @@ public class pagesController extends BaseController {
 		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
 		//renderWithPath(pthv+"list.html");
 		Long userID = Long.valueOf((String)getSession().getAttribute("usrid"));
-		String phoneNum = (String)getSession().getAttribute("phoneNum");
+		String crdt_no = (String)getSession().getAttribute("crdt_no");
 		String pwd = (String)getSession().getAttribute("pwd");
 		T6MgrAhr item = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where usrid=?", userID);//根据用户名查询数据库中的用户  
 		if(item!=null)
         {
-        	if(phoneNum.equals((String)item.getMblph_no())&&pwd.equals((String)item.getPswd()))
+        	if(crdt_no.equals((String)item.getCrdt_no())&&pwd.equals((String)item.getPswd()))
         	{
         		setAttr("username", (String)item.getNm());
         		renderWithPath(pthv+"admin.html");

@@ -1,5 +1,5 @@
 <!-- h1>登录成功，欢迎回来${session["usrid"]}</h1-->  
-<div class="header_bg">
+<div class="header_bg" id="header_bg">
 	<div class="header_bg1">
 		<div class="container">
 			<div class="row">
@@ -51,7 +51,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="header_bg2">
+	<div class="header_bg2" id="header_bg2">
 		<div class="container">
 			
 			<div class="row">
@@ -64,50 +64,139 @@
 			    </div>
 			    
 				<div class="h_menu_main collapse navbar-collapse" id="example-navbar-collapse">
-					<a id="touch-menu" class="mobile-menu" href="#">菜单</a>
-					
-						<ul class="menu nav navbar-nav">
-				            <li id = "menu_index"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController">首页</a></li>
+						<a id="touch-menu" class="mobile-menu" href="#">菜单</a>
+						<div style="width:200px;margin:0 auto;">
+							<ul class="menu_left nav navbar-nav">
+				           
 							<li id = "menu_zhunru"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/zhunru_index">准入</a></li>
-							<li id = "menu_tuozhan"><a class="header_bg2_ul_li_a" href="#">拓展</a></li>
-							<li id = "menu_jiangzuo"><a class="header_bg2_ul_li_a" href="#">讲座</a></li>
-				            <li class="dropdown selfcenterbtn">
-				            
-								<a class="dropdown-toggle" data-toggle="dropdown">
-									<span class="caret"></span>
-								</a>
-								<ul class="dropdown-menu" id="selfcenterbtn_id">
+							<li id = "menu_tuozhan"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/tuozhan_index">拓展</a></li>
+							<li id = "menu_jiangzuo"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/jiangzuo_index">讲座</a></li>
+				           
+				        	</ul>
+						</div>
+						<div>
+							<ul class="menu_right nav navbar-nav">
 								
-									<!--li data-toggle="modal" data-target="#selectroleModal"><a>登录</a></li-->
-									<script>
-									var usrid ='${session["usrid"]}';
-									if(usrid)//已登陆
-									{
-										$("#selfcenterbtn_id").html("<li><a href='${cxt!}/jf/puresport/pagesController/selfcenter'>个人中心</a></li>"
-										+"<li><a href='${cxt!}/jf/puresport/pagesController/loginout'>注销</a></li>");
-									}
-									else{
-										$("#selfcenterbtn_id").html("<li><a href='${cxt!}/jf/puresport/pagesController/login'>登录</a></li>");
-									}
-									</script>
-									<!--li><a href="${cxt!}/jf/puresport/pagesController/login">登录</a></li>
+								<li id = "menu_search"><a class="header_bg2_ul_li_a" href="#">搜索</a></li>
+								<li id = "menu_jiangzuo"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/about">关于</a></li>
+					            <li class="dropdown selfcenterbtn">
+					            
+									<a class="dropdown-toggle" data-toggle="dropdown">
+										<span class="caret"></span>
+									</a>
+									<ul class="dropdown-menu" id="selfcenterbtn_id">
 									
-									<li><a href="${cxt!}/jf/puresport/pagesController/selfcenter">个人中心</a></li>
-									<li><a href="${cxt!}/jf/puresport/pagesController/login">注销</a></li-->
-									
-								</ul>
-							</li>
-				        </ul>
+										
+										<script>
+										var usrid ='${session["usrid"]}';
+										if(usrid)//已登陆
+										{
+											$("#selfcenterbtn_id").html("<li><a href='${cxt!}/jf/puresport/pagesController/selfcenter'>个人中心</a></li>"
+											+"<li><a href='${cxt!}/jf/puresport/pagesController/loginout'>注销</a></li>");
+										}
+										else{
+											$("#selfcenterbtn_id").html("<li><a href='${cxt!}/jf/puresport/pagesController/login'>登录</a></li>");
+										}
+										</script>
+										
+									</ul>
+								</li>
+				        	</ul>
+						</div>
 					
-				
+				</div>
+			</div>
+		    
+		</div>
+	</div>
+	<div class="header_bg2">
+		<div class="container">
+			
+			<div class="row">
+				<div id="search_box" style="display:none;margin-top: 5px;">
+					<div class="input-group">
+						<input type="text" class="form-control">
+						<div class="input-group-btn">
+							 <button type="button" class="btn btn-sm" style="padding-bottom: 8px;padding-top: 8px;">
+					          	<span class="glyphicon glyphicon-search"></span>搜索
+					        </button>
+						</div>
+					</div><!-- /input-group -->
+				</div><!-- /.col-lg-6 -->
+			</div>
+		</div>
+	</div>
+	
+	<div class="header_bg2 float_header_bg2 headroom--top" id="float_header_bg2">
+		<div class="container">
+			
+			<div class="row">
+				<div class="navbar-header">
+			        <button type="button" class="navbar-toggle" data-toggle="collapse"
+			                data-target="#example-navbar-collapse">
+			            	菜单
+			        </button>
+			        
+			    </div>
+			    
+				<div class="h_menu_main collapse navbar-collapse" id="example-navbar-collapse">
+						<a id="touch-menu" class="mobile-menu" href="#">菜单</a>
+						<div style="width:200px;margin:0 auto;">
+							<ul class="menu_left nav navbar-nav">
+				           
+							<li id = "menu_zhunru"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/zhunru_index">准入</a></li>
+							<li id = "menu_tuozhan"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/tuozhan_index">拓展</a></li>
+							<li id = "menu_jiangzuo"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/jiangzuo_index">讲座</a></li>
+				           
+				        	</ul>
+						</div>
+						<div>
+							<ul class="menu_right nav navbar-nav">
+				           
+								<li id = "menu_search"><a class="header_bg2_ul_li_a" href="#">搜索</a></li>
+								<li id = "menu_jiangzuo"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/about">关于</a></li>
+					            <li class="dropdown selfcenterbtn">
+					            
+									<a class="dropdown-toggle" data-toggle="dropdown">
+										<span class="caret"></span>
+									</a>
+									<ul class="dropdown-menu" id="selfcenterbtn_id">
+									
+										
+										<script>
+										var usrid ='${session["usrid"]}';
+										if(usrid)//已登陆
+										{
+											$("#selfcenterbtn_id").html("<li><a href='${cxt!}/jf/puresport/pagesController/selfcenter'>个人中心</a></li>"
+											+"<li><a href='${cxt!}/jf/puresport/pagesController/loginout'>注销</a></li>");
+										}
+										else{
+											$("#selfcenterbtn_id").html("<li><a href='${cxt!}/jf/puresport/pagesController/login'>登录</a></li>");
+										}
+										</script>
+										
+									</ul>
+								</li>
+				        	</ul>
+						</div>
+					
 				</div>
 			</div>
 		    
 		</div>
 	</div>
 	
-	
 </div>
+<script src="${cxt!}/ui/headroom/headroom.js" type="text/javascript"></script>
 <script>
+$("#menu_search").click(function(){
+	  $("#search_box").toggle();
+});
+//grab an element
+var myElement = document.getElementById("float_header_bg2");
 
+// construct an instance of Headroom, passing the element
+var headroom  = new Headroom(myElement);
+// initialise
+headroom.init(); 
 </script>
