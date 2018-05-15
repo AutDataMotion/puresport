@@ -45,18 +45,29 @@ public class T6MgrAhrController extends BaseController {
 	@Clear
 	public void login() {
 		boolean flag = false;
+		boolean needImproveInfoOrNot = false;
 		String msg = "";
 		JSONObject json = new JSONObject();
 
-		String mblph_no = getPara("account");// 获取表单数据，这里的参数就是页面表单中的name属性值
+		String crdt_no = getPara("account");// 获取表单数据，这里的参数就是页面表单中的name属性值
 		String password = getPara("pwd");
-		T6MgrAhr item = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where mblph_no=?", mblph_no);// 根据用户名查询数据库中的用户
+		T6MgrAhr item = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where crdt_no=?", crdt_no);// 根据用户名查询数据库中的用户
 		if (item != null) {
 			if (password.equals(item.getPswd())) {// 判断数据库中的密码与用户输入的密码是否一致
 				flag = true;
 				getSession().setAttribute("usrid", item.getUsrid());// 设置session，保存登录用户的昵称
-				getSession().setAttribute("phoneNum", item.getMblph_no());// 设置session，保存登录用户的昵称
+				getSession().setAttribute("crdt_no", item.getCrdt_no());// 设置session，保存登录用户的昵称
 				getSession().setAttribute("pwd", item.getPswd());// 设置session，保存登录用户的昵称
+				
+				if(item.getWrk_unit()!=null&&item.getPost()!=null)
+            	{
+            		needImproveInfoOrNot  =false;
+            	}	
+            	else {
+            		needImproveInfoOrNot  =true;
+            	}
+				json.put("needImproveInfoOrNot", needImproveInfoOrNot); 
+				
 			} else {
 				msg = "密码不正确";
 			}

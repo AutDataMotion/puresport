@@ -76,8 +76,8 @@
 						</div>
 						<div>
 							<ul class="menu_right nav navbar-nav">
-				           
-								<li id = "menu_tuozhan"><a class="header_bg2_ul_li_a" href="#">搜索</a></li>
+								
+								<li id = "menu_search"><a class="header_bg2_ul_li_a" href="#">搜索</a></li>
 								<li id = "menu_jiangzuo"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/about">关于</a></li>
 					            <li class="dropdown selfcenterbtn">
 					            
@@ -109,6 +109,24 @@
 		    
 		</div>
 	</div>
+	<div class="header_bg2">
+		<div class="container">
+			
+			<div class="row">
+				<div id="search_box" style="display:none;margin-top: 5px;">
+					<div class="input-group">
+						<input type="text" class="form-control">
+						<div class="input-group-btn">
+							 <button type="button" class="btn btn-sm" style="padding-bottom: 8px;padding-top: 8px;">
+					          	<span class="glyphicon glyphicon-search"></span>搜索
+					        </button>
+						</div>
+					</div><!-- /input-group -->
+				</div><!-- /.col-lg-6 -->
+			</div>
+		</div>
+	</div>
+	
 	<div class="header_bg2 float_header_bg2 headroom--top" id="float_header_bg2">
 		<div class="container">
 			
@@ -135,7 +153,7 @@
 						<div>
 							<ul class="menu_right nav navbar-nav">
 				           
-								<li id = "menu_tuozhan"><a class="header_bg2_ul_li_a" href="#">搜索</a></li>
+								<li id = "menu_search"><a class="header_bg2_ul_li_a" href="#">搜索</a></li>
 								<li id = "menu_jiangzuo"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/about">关于</a></li>
 					            <li class="dropdown selfcenterbtn">
 					            
@@ -171,6 +189,9 @@
 </div>
 <script src="${cxt!}/ui/headroom/headroom.js" type="text/javascript"></script>
 <script>
+$("#menu_search").click(function(){
+	  $("#search_box").toggle();
+});
 //grab an element
 var myElement = document.getElementById("float_header_bg2");
 
