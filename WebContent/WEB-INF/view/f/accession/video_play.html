@@ -9,13 +9,13 @@
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- Bootstrap -->
-<link href="${cxt!}/ui/bootstrap-3.3.7-dist/css/bootstrap.min.css"
-	rel='stylesheet' type='text/css' />
 <link href="${cxt!}/css/style.css" rel="stylesheet" type="text/css"
 	media="all" />
 <!-- start plugins -->
 <script type="text/javascript" src="${cxt!}/js/puresport.js"></script>
 <script type="text/javascript" src="${cxt!}/js/jquery-1.11.1.min.js"></script>
+<link href="${cxt!}/ui/bootstrap-3.3.7-dist/css/bootstrap.min.css"
+	rel='stylesheet' type='text/css' />
 <script type="text/javascript"
 	src="${cxt!}/ui/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <!--start slider -->
@@ -61,8 +61,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					}
 					window.location.href='${action!}';// 进行下一步学习
 				} else {
-/* 				$('#tip1Modal').modal('show'); */
-				alert("对不起！视频播放完毕才能进行下一步学习，请耐心等待！");
+				 $('#tip1Modal').modal('show');				
 			}
 		}		
 		// 记录用户学习结果
