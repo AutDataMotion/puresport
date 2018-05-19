@@ -23,7 +23,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link href="${cxt!}/css/allinone_carousel.css" rel="stylesheet" type="text/css">
 <script src="${cxt!}/js/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
 <script src="${cxt!}/js/allinone_carousel.js" type="text/javascript"></script>
-
+<!-- 视频播放控件 start-->
+<link rel="stylesheet" href="/css_zhuchaobin/video-js.css">
+<!-- <script src="/js_zhuchaobin/video.min.js"></script> 
+<script src="/js_zhuchaobin/zh-CN.js"></script>
+<script type="text/javascript">
+			var myPlayer = videojs('my-video');
+			videojs("my-video").ready(function(){
+				var myPlayer = this;
+				myPlayer.play();
+			});	  
+</script>  -->
+<!-- 视频播放控件 end-->
 
 <script type="text/javascript">
 		function show2(){
@@ -69,7 +80,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						} else if (flag == 1) {
 							showDiv(2);
 						} */
-						alert(res.code);
+/* 						alert(res.code); */
 						return true;
 					} else {
 						/* 							alert(res.desc); */
@@ -110,8 +121,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	z-index: 999;
 }
 </style>
-
-<link href="/css/video-js.css" rel="stylesheet">
 
 <style type="text/css">
 .demo {
@@ -184,7 +193,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</td>
 				</tr>
 			</table-->
-			<p>
+			<br>
 			<div align="center">
 				<button onclick="do_next()" class="btn">下一步</button>
 			</div>
