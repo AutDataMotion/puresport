@@ -1,8 +1,9 @@
 $(document).ready(function() {
 	var myTable = $('#example5').DataTable({
 		dom: 'Bfrtip',
-		scrollY: 500,
+		scrollY: 400,
         scrollX: true,
+        responsive: true,
 		select: {
             style:    'os',
             selector: 'td:first-child'

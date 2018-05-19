@@ -21,7 +21,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link rel="stylesheet" href="${cxt!}/ui/DataTables/sport/buttons.dataTables.min.css">
 <link rel="stylesheet" href="${cxt!}/ui/DataTables/sport/select.dataTables.min.css">
 <link rel="stylesheet" type="text/css" href="${cxt!}/ui/Editor-1.7.3/css/editor.dataTables.css">
-<script type="text/javascript" src="${cxt!}/ui/DataTables/Responsive/dataTables.responsive.min.css"></script>
 <!----font-Awesome----->
 <!-- start plugins -->
 <link href="${cxt!}/css/owl.carousel.css" rel="stylesheet">
@@ -167,22 +166,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<a id="touch-menu" class="mobile-menu" href="#">菜单</a>
 					<nav>
 						<ul class="menu list-unstyled">
-							
 							<li class="dropdown">
 								<img src="${cxt!}/images/adminIcon.png" alt="" class="img-responsive dropdown-toggle" data-toggle="dropdown"/>
-								
-								<!-- a href="#"
-									class="dropdown-toggle" data-toggle="dropdown"> <span
-										class="caret"></span>
-								</a-->
 								<ul class="dropdown-menu">
 									<li><a href="${cxt!}/jf/puresport/pagesController/admin">个人中心</a></li>
 									<li><a data-toggle="modal" data-target="#passwordModal">重置密码</a></li>
-									<li><a
-										href="${cxt!}/jf/puresport/pagesController/loginout">注销</a></li>
-								</ul></li>
-							<!--li><a href="blog.html">BLOG</a></li>
-			<li><a href="contact.html">CONTACT</a></li-->
+									<li><a href="${cxt!}/jf/puresport/pagesController/loginout">注销</a></li>
+									</ul>
+								</li>
 						</ul>
 					</nav>
 				</div>
@@ -212,6 +203,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								</ul>
 							</div>
 							<div class="tab-content">
+							
 								<div class="tab-pane fade in active" id="myTabs_1_0">
 									<div class="form-group">
 										<div class="col-sm-10">
@@ -220,11 +212,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<a type="submit"
 											onclick="$('input[id=inputfileadmin]').click();"
 											class="btn col-sm-2 btn-default">上传EXCEL文件</a>
-
 									</div>
-									<table id="example1" class="display nowrap" style="width:100%" >
+									<table id="example1" class="display nowrap" style="width:1000px;" >
 										<thead>
 											<tr>
+												<th>userid</th>
 												<th>姓名</th>
 												<th>证件类型</th>
 												<th>证件号</th>
@@ -242,6 +234,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										</thead>
 									</table>
 								</div>
+								
 								<div class="tab-pane fade" id="myTabs_1_1">
 									<div class="form-group">
 										<div class="col-sm-10">
@@ -251,9 +244,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											onclick="$('input[id=inputfilesporter]').click();"
 											class="btn col-sm-2 btn-default">上传EXCEL文件</a>
 									</div>
-									<table id="example2" class="display nowrap" style="width:100%">
+									<table id="example2" class="display nowrap" style="width:1000px">
 										<thead>
 											<tr>
+											<th>userid</th>
 												<th>姓名</th>
 												<th>证件类型</th>
 												<th>证件号</th>
@@ -270,6 +264,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										</thead>
 									</table>
 								</div>
+								
 							</div>
 						</div>
 						<div class="tab-pane fade" id="tab_two">
@@ -281,6 +276,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								</ul>
 							</div>
 							<div class="tab-content">
+							
 								<div class="tab-pane fade in active" id="myTabs_2_0">
 									<div class="form-inline">
 										<div class="form-group">
@@ -312,11 +308,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												<option>5</option>
 											</select>
 										</div>
-										<div class="form-group">
-											<div class="col-sm-offset-2 col-sm-10">
-												<button type="submit" class="btn btn-default">导出</button>
-											</div>
-										</div>
+
 									</div>
 									<table id="example3" class="display nowrap" style="width:100%">
 										<thead>
@@ -340,6 +332,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										</thead>
 									</table>
 								</div>
+								
 								<div class="tab-pane fade" id="myTabs_2_1">
 									<div class="form-inline">
 										<div class="form-group">
@@ -382,11 +375,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												<option>5</option>
 											</select>
 										</div>
-										<div class="form-group">
-											<div class="col-sm-offset-2 col-sm-10">
-												<button type="submit" class="btn btn-default">导出</button>
-											</div>
-										</div>
 									</div>
 									<table id="example4" class="display nowrap" style="width:100%">
 										<thead>
@@ -401,6 +389,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										</thead>
 									</table>
 								</div>
+								
 								<div class="tab-pane fade" id="myTabs_2_2">
 									<div class="form-inline">
 										<div class="form-group">
@@ -412,11 +401,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												<option>4</option>
 												<option>5</option>
 											</select>
-										</div>
-										<div class="form-group">
-											<div class="col-sm-offset-2 col-sm-10">
-												<button type="submit" class="btn btn-default">导出</button>
-											</div>
 										</div>
 									</div>
 									<table id="example5" class="display nowrap" style="width:100%">
@@ -493,9 +477,63 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 			</div>
 		</div>
-		
 	</div>
 
+<!--=======编辑对话框 管理员CRUD=========-->
+	<div class="modal fade" id="adminModal" tabindex="-2" role="dialog"
+		aria-labelledby="exampleModalLabelAdmin" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 class="modal-title col-sm-4" id="exampleModalLabelAdmin">--</h3>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal" id = "form_admin">
+						<div class="col-sm-12" style="text-align: center; color: #e41818;">
+							<h5 id="passwordModal_hint"></h5>
+						</div>
+						<% include("/puresport/t6MgrAhr/form.html"){} %>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary system_btn" id="adminModal_btn" type="button" data-toggle="modal">提交</button>
+					<button class="btn btn-secondary" id="adminModal_cancel" type="button" data-dismiss="modal">取消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!--=======编辑对话框 运动员CRUD=========-->
+	<div class="clear"> </div>
+	<div class="modal fade" id="sporterModal" tabindex="-3" role="dialog"
+		aria-labelledby="exampleModalLabelSporter" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h3 class="modal-title col-sm-4" id="exampleModalLabelSporter">--</h3>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form class="form_sporter" id = "form_sporter">
+							<% include("/puresport/t1usrBsc/form.html"){} %>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary system_btn" id="sporterModal_btn" type="button" data-toggle="modal">提交</button>
+					<button class="btn btn-secondary" id="sporterModal_cancel" type="button" data-dismiss="modal">取消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!--  -->
 	<% include("/f/footer.html"){} %>
 
 <script type="text/javascript" src="${cxt!}/js/jquery-1.12.4.js"></script>
@@ -511,6 +549,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script type="text/javascript" src="${cxt!}/ui/DataTables/DataTables-1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="${cxt!}/js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" src="${cxt!}/js/dataTables.select.min.js"></script>
+<script type="text/javascript"  src="${cxt!}/ui/layer3/layer.js"></script>
 
 <script src="${cxt!}/js/t6admin.js"></script>
 <script src="${cxt!}/js/t1sporter.js"></script>
@@ -523,7 +562,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script type="text/javascript" src="${cxt!}/ui/DataTables/sport/vfs_fonts.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/DataTables/sport/buttons.html5.min.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/DataTables/sport/buttons.print.min.js"></script>
-<script type="text/javascript" src="${cxt!}/ui/DataTables/Responsive/dataTables.responsive.min.js"></script>
+
 
 
 </body>

@@ -1,192 +1,130 @@
-
-
-<div class="form-group">
+<div class="form-group col-sm-12  hide">
 	<label class="col-sm-2 control-label">用户id</label>
 	<div class="col-sm-7">
 		<input type="text" name="t1usrBsc.usrid" value="${t1usrBsc.usrid!}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		class="form-control" maxlength="100" vMin="1" vType="length" >
 		<span class="help-inline col-sm-2"></span>
 	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+	<span class="help-inline col-sm-2"> </span>
 </div>
 
-<div class="form-group">
-	<label class="col-sm-2 control-label">用户类型</label>
-	<div class="col-sm-7">
-		<input type="text" name="t1usrBsc.usr_tp" value="${t1usrBsc.usr_tp!}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
-		<span class="help-inline col-sm-2"></span>
-	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
-</div>
-
-<div class="form-group">
-	<label class="col-sm-2 control-label">用户名</label>
-	<div class="col-sm-7">
-		<input type="text" name="t1usrBsc.usr_nm" value="${escapeXml(t1usrBsc.usr_nm!)}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
-		<span class="help-inline col-sm-2"></span>
-	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
-</div>
-
-<div class="form-group">
+<div class="form-group col-sm-12  ">
 	<label class="col-sm-2 control-label">姓名</label>
 	<div class="col-sm-7">
 		<input type="text" name="t1usrBsc.nm" value="${escapeXml(t1usrBsc.nm!)}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		class="form-control" maxlength="100" vMin="1" vType="length" >
 		<span class="help-inline col-sm-2"></span>
 	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+	<span class="help-inline col-sm-2"> </span>
 </div>
 
-<div class="form-group">
+<div class="form-group col-sm-12  ">
 	<label class="col-sm-2 control-label">证件类型</label>
 	<div class="col-sm-7">
 		<input type="text" name="t1usrBsc.crdt_tp" value="${escapeXml(t1usrBsc.crdt_tp!)}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		class="form-control" maxlength="100" vMin="1" vType="length" >
 		<span class="help-inline col-sm-2"></span>
 	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+	<span class="help-inline col-sm-2"> </span>
 </div>
 
-<div class="form-group">
-	<label class="col-sm-2 control-label">运动项目</label>
-	<div class="col-sm-7">
-		<input type="text" name="t1usrBsc.spt_prj" value="${escapeXml(t1usrBsc.spt_prj!)}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
-		<span class="help-inline col-sm-2"></span>
-	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
-</div>
-
-<div class="form-group">
+<div class="form-group col-sm-12  ">
 	<label class="col-sm-2 control-label">证件号</label>
 	<div class="col-sm-7">
 		<input type="text" name="t1usrBsc.crdt_no" value="${escapeXml(t1usrBsc.crdt_no!)}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		class="form-control" maxlength="100" vMin="1" vType="length" >
 		<span class="help-inline col-sm-2"></span>
 	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+	<span class="help-inline col-sm-2"> </span>
 </div>
 
-<div class="form-group">
+<div class="form-group col-sm-12  ">
 	<label class="col-sm-2 control-label">性别</label>
 	<div class="col-sm-7">
 		<input type="text" name="t1usrBsc.gnd" value="${escapeXml(t1usrBsc.gnd!)}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		class="form-control" maxlength="100" vMin="1" vType="length" >
 		<span class="help-inline col-sm-2"></span>
 	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+	<span class="help-inline col-sm-2"> </span>
 </div>
 
-<div class="form-group">
-	<label class="col-sm-2 control-label">密码</label>
-	<div class="col-sm-7">
-		<input type="text" name="t1usrBsc.pswd" value="${escapeXml(t1usrBsc.pswd!)}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
-		<span class="help-inline col-sm-2"></span>
-	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
-</div>
-
-<div class="form-group">
+<div class="form-group col-sm-12  ">
 	<label class="col-sm-2 control-label">出生日期</label>
 	<div class="col-sm-7">
 		<input type="text" name="t1usrBsc.brth_dt" value="${escapeXml(t1usrBsc.brth_dt!)}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		class="form-control" maxlength="100" vMin="1" vType="length" >
 		<span class="help-inline col-sm-2"></span>
 	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+	<span class="help-inline col-sm-2"> </span>
 </div>
 
-<div class="form-group">
-	<label class="col-sm-2 control-label">行政区划代码</label>
+<div class="form-group col-sm-12  ">
+	<label class="col-sm-2 control-label">运动项目</label>
 	<div class="col-sm-7">
-		<input type="text" name="t1usrBsc.adiv_cd" value="${escapeXml(t1usrBsc.adiv_cd!)}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<input type="text" name="t1usrBsc.spt_prj" value="${escapeXml(t1usrBsc.spt_prj!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" >
 		<span class="help-inline col-sm-2"></span>
 	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+	<span class="help-inline col-sm-2"> </span>
 </div>
 
-<div class="form-group">
-	<label class="col-sm-2 control-label">协会id</label>
+<div class="form-group col-sm-12  ">
+	<label class="col-sm-2 control-label">类型级别</label>
 	<div class="col-sm-7">
-		<input type="text" name="t1usrBsc.asscid" value="${escapeXml(t1usrBsc.asscid!)}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<input type="text" name="t1usrBsc.typelevel" value="${escapeXml(t1usrBsc.typelevel!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" >
 		<span class="help-inline col-sm-2"></span>
 	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+	<span class="help-inline col-sm-2"> </span>
 </div>
 
-<div class="form-group">
+
+<div class="form-group col-sm-12  ">
+	<label class="col-sm-2 control-label">省份名称</label>
+	<div class="col-sm-7">
+		<input type="text" name="t1usrBsc.province" value="${escapeXml(t1usrBsc.province!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" >
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> </span>
+</div>
+
+<div class="form-group col-sm-12  ">
+	<label class="col-sm-2 control-label">城市名称</label>
+	<div class="col-sm-7">
+		<input type="text" name="t1usrBsc.city" value="${escapeXml(t1usrBsc.city!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" >
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> </span>
+</div>
+
+<div class="form-group col-sm-12  ">
+	<label class="col-sm-2 control-label">协会名称</label>
+	<div class="col-sm-7">
+		<input type="text" name="t1usrBsc.institute" value="${escapeXml(t1usrBsc.institute!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" >
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> </span>
+</div>
+
+<div class="form-group col-sm-12  ">
 	<label class="col-sm-2 control-label">手机号</label>
 	<div class="col-sm-7">
 		<input type="text" name="t1usrBsc.mblph_no" value="${escapeXml(t1usrBsc.mblph_no!)}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		class="form-control" maxlength="100" vMin="1" vType="length" >
 		<span class="help-inline col-sm-2"></span>
 	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+	<span class="help-inline col-sm-2"> </span>
 </div>
 
-<div class="form-group">
-	<label class="col-sm-2 control-label">维护时间</label>
-	<div class="col-sm-7">
-		<div class="input-group">
-		<input type="text" name="t1usrBsc.tms" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t1usrBsc.tms!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
-		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-		</div>
-		<span class="help-inline col-sm-2"></span>
-	</div>
-</div>
-
-<div class="form-group">
-	<label class="col-sm-2 control-label">国家省市管理员id</label>
-	<div class="col-sm-7">
-		<input type="text" name="t1usrBsc.cty_prov_city_mgrid" value="${t1usrBsc.cty_prov_city_mgrid!}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
-		<span class="help-inline col-sm-2"></span>
-	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
-</div>
-
-<div class="form-group">
-	<label class="col-sm-2 control-label">备注</label>
-	<div class="col-sm-7">
-		<input type="text" name="t1usrBsc.rmrk" value="${escapeXml(t1usrBsc.rmrk!)}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
-		<span class="help-inline col-sm-2"></span>
-	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
-</div>
-
-<div class="form-group">
-	<label class="col-sm-2 control-label">协会管理员用id</label>
-	<div class="col-sm-7">
-		<input type="text" name="t1usrBsc.assc_mgrid" value="${t1usrBsc.assc_mgrid!}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
-		<span class="help-inline col-sm-2"></span>
-	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
-</div>
-
-<div class="form-group">
+<div class="form-group col-sm-12  ">
 	<label class="col-sm-2 control-label">邮箱</label>
 	<div class="col-sm-7">
 		<input type="text" name="t1usrBsc.email" value="${escapeXml(t1usrBsc.email!)}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		class="form-control" maxlength="100" vMin="1" vType="length" >
 		<span class="help-inline col-sm-2"></span>
 	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
-</div>
-
-<div class="form-group">
-	<label class="col-sm-2 control-label">血型</label>
-	<div class="col-sm-7">
-		<input type="text" name="t1usrBsc.bloodtp" value="${escapeXml(t1usrBsc.bloodtp!)}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
-		<span class="help-inline col-sm-2"></span>
-	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+	<span class="help-inline col-sm-2"> </span>
 </div>
