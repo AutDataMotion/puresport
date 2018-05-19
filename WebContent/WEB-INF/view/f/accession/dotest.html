@@ -57,21 +57,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </style>
 <style type="text/css">
 .demo {
-	padding-top: 15px;
-	padding-right: 280px;
-	padding-bottom: 30px;
-	padding-left: 280px;
+	
 	/*        text-indent:2em; */ /* 段首缩进2个字符 */
 	font-family: "微软雅黑", "黑体", "宋体";
-	font-size: 18px;
-	height: 800px； /*        word-spacing:50px; */ 
-		/*        background:pink; */
+	font-size: 20px;
+	padding-left: 5px;
 }
+
 .title {
-	padding-top: 15px;
-	padding-right: 250px;
-	padding-bottom: 15px;
-	padding-left: 250px;
+	
 	/*        text-indent:2em; */ /* 段首缩进2个字符 */
 	font-family: "微软雅黑", "黑体", "宋体";
 	font-size: 25px;
@@ -294,21 +288,55 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<!-- 	<div class="main_btm1"> -->
 	<!-- start main_btm -->
 	<!-- 第一页：考试说明 -->
-	<div id="mannulDiv" class="demo" style="display: none;">
-		<div align="center" class="title">考 试 说 明</div>
-		<p>1. 点击“开始”按钮开始进入考试；
-		<p>2. 考试过程中请注意保持浏览器客户端在线状态，不要强制刷新或者断开网络，否则考试将终止；
-		<p>3. 所有试题完成后，并确认提交，系统才保存记录成绩；
-		<p>4. 试题题型包含不定项选择题和判断题各10道，每道题5分，共100分；
-		<p>5. 考试成绩60分及以上视为及格；
-		<p>6. 可以进行多次考试，每次考试试题随机。多次参加考试的，视最后一次提交的成绩为最终成绩；
-		<p>7. 如有考试相关的其他疑问请联系管理员；
-		<p>8. 请遵守考试规定，按时完成测试。
+	<div id="mannulDiv" class="demo" align="center" style="display: none;">
+	<p>
+			<div align="center" class="title">考 试 说 明</div>
+			<div class="container">
+				<div class="row" >
+					<div align="left" class="demo">
+					<p>
+					<p>1. 点击“开始”按钮开始进入考试；
+					<p>2. 考试过程中请注意保持浏览器客户端在线状态，不要强制刷新或者断开网络，否则考试将终止；
+					<p>3. 所有试题完成后，并确认提交，系统才保存记录成绩；
+					<p>4. 试题题型包含不定项选择题和判断题各10道，每道题5分，共100分；
+					<p>5. 考试成绩60分及以上视为及格；
+					<p>6. 可以进行多次考试，每次考试试题随机。多次参加考试的，视最后一次提交的成绩为最终成绩；
+					<p>7. 如有考试相关的其他疑问请联系管理员；
+					<p>8. 请遵守考试规定，按时完成测试。
+					<p>
+					</div>
+				</div>
+			</div>
+			<div align="center">
+				<button onclick="isCanTest(2)" class="btn">点击开始考试</button>
+			</div>
 		<p>
-		<div align="center">
-			<button onclick="isCanTest(2)" class="btn">点击开始考试</button>
-		</div>
 	</div>
+	
+<!-- 			<div id="mannulDiv3" class="demo" align="center">
+			<div align="center" class="title">学习说明</div>
+			<div class="container">
+				<div class="row" >
+					<div align="left" class="demo">
+						<p>1. 点击“开始”按钮开始进入考试；
+						<p>2. 考试过程中请注意保持浏览器客户端在线状态，不要强制刷新或者断开网络，否则考试将终止；
+						<p>3. 所有试题完成后，并确认提交，系统才保存记录成绩；
+						<p>4. 试题题型包含不定项选择题和判断题各10道，每道题5分，共100分；
+						<p>5. 考试成绩60分及以上视为及格；
+						<p>6. 可以进行多次考试，每次考试试题随机。多次参加考试的，视最后一次提交的成绩为最终成绩；
+						<p>7. 如有考试相关的其他疑问请联系管理员；
+						<p>8. 请遵守考试规定，按时完成测试。
+						<p>
+					</div>
+				</div>
+			</div> -->
+			
+<!-- 			<div align="center">
+				<button
+					onclick="window.location.href='/jf/puresport/t7Crcl/video_play?crcl_attr=${t7.crcl_attr!''}&crcl_file_rte=${t7.crcl_file_rte!''}&stdy_st_hidden=${stdy_st_hidden!'0'}&crclid=${t7.crclid!'0'}'"
+					class="btn">点击开始学习</button>
+			</div>
+		</div> -->
 
 	<!-- 最后部分：提交成功，展示成绩-->
 	<div id="showScoreDiv" class="score" style="display: none;">
@@ -366,9 +394,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 			<!-- 最后一页：考试提交说明 -->
 			<div id="mannulDiv" class="demo">
-				<div align="center" class="title">
-					<lable>考 试 提 交 说 明</lable>
-				</div>
+				<p align="center"><font><b>考 试 提 交 说 明</b></font></p>
+				<p>
+				<p>
 				<p>1. 请确认试题已经全部做完，然后在本页选择“同意”，同意后可点击提交试卷；
 				<p>2. 可以进行多次考试，每次考试试题随机。多次参加考试的，视最后一次提交的成绩为最终成绩；
 				<p>3. “提交”前可以返回修改试题答案，但是“提交”后将实时计算成绩且不能再进行修改；
@@ -386,6 +414,32 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<button onclick="submitExam()" class="btn">提交试卷</button>
 				</div>
 			</div>
+			
+<!-- 				<div id="mannulDiv" class="demo" align="center" style="display: none;">
+	<p>
+			<div align="center" class="title">考 试 说 明</div>
+			<div class="container">
+				<div class="row" >
+					<div align="left" class="demo">
+					<p>
+					<p>1. 点击“开始”按钮开始进入考试；
+					<p>2. 考试过程中请注意保持浏览器客户端在线状态，不要强制刷新或者断开网络，否则考试将终止；
+					<p>3. 所有试题完成后，并确认提交，系统才保存记录成绩；
+					<p>4. 试题题型包含不定项选择题和判断题各10道，每道题5分，共100分；
+					<p>5. 考试成绩60分及以上视为及格；
+					<p>6. 可以进行多次考试，每次考试试题随机。多次参加考试的，视最后一次提交的成绩为最终成绩；
+					<p>7. 如有考试相关的其他疑问请联系管理员；
+					<p>8. 请遵守考试规定，按时完成测试。
+					<p>
+					</div>
+				</div>
+			</div>
+			<div align="center">
+				<button onclick="isCanTest(2)" class="btn">点击开始考试</button>
+			</div>
+		<p>
+	</div> -->
+			
 		</div>
 	</div>
 	<!-- submit Modal-->

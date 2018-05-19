@@ -18,7 +18,7 @@ div#container {
      overflow: hidden;
 }
 div.examples_body {
-     width: 1050px;
+     width: 230px;
 	 margin: 0px auto 0 auto;
 	 clear: both;
 	 overflow: hidden;
@@ -28,7 +28,7 @@ div.examples_body {
 
 /* The main banner unordered list */
 .bannerHolder {
-     width: 1038px;
+     width: 165px;
 	 margin: 10px 0 15px 0;
 	 padding: 20px 10px 20px 10px;
 	 background-color: #f7f7f7;
@@ -49,7 +49,7 @@ div.examples_body {
 
 /* The banner divs */
 .banner {
-     width: 125px;
+     width: 145px;
 	 height: 125px;
 	 position: relative;
 	 overflow: hidden;
