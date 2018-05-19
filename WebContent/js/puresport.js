@@ -648,7 +648,7 @@ function initScoreTable(userID)
 	if(userID)
 	{
 		$.ajax({
-		    url:'/jf/puresport/t10ExamGrd/get_exam_grd',
+		    url:'/jf/puresport/T11ExamStat/get_exam_grd',
 		    type:'POST', //GET
 		    async:true,    //或false,是否异步
 		    data:{
@@ -669,22 +669,23 @@ function initScoreTable(userID)
 		    		{
 		    			var score = [];
 		    			score.push(data.itemlist[i].exam_grd);
+		    			score.push(data.itemlist[i].exam_name);
 		    			score.push(data.itemlist[i].tms);
 		    			dataSet.push(score);
 		    		}
-//		    		$('#score_excel').DataTable({
-//	    		        data: dataSet,
-//	    		        language: {
-//	    		            url: "/ui/DataTables/Chinese.json"
-//	    		        },
-////	    		        "filter": false,
-////	    		        "destroy": true,
-//	    		        columns: [
-//	    		            { title: "成绩" },
-//	    		            { title: "时间" },
-//	    		            { title: "赛事" }
-//	    		        ]
-//	    		    });
+		    		$('#score_excel').DataTable({
+	    		        data: dataSet,
+	    		        language: {
+	    		            url: "/ui/DataTables/Chinese.json"
+	    		        },
+//	    		        "filter": false,
+//	    		        "destroy": true,
+	    		        columns: [
+	    		            { title: "成绩" },
+	    		            { title: "赛事" },
+	    		            { title: "时间" }
+	    		        ]
+	    		    });
 	            }  
 	            else { 
 	            	var dataSet = [];
@@ -697,8 +698,8 @@ function initScoreTable(userID)
 //	    		        "destroy": true,
 	    		        columns: [
 	    		            { title: "成绩" },
-	    		            { title: "时间" },
-	    		            { title: "赛事" }
+	    		            { title: "赛事" },
+	    		            { title: "时间" }
 	    		        ]
 	    		    });
 	            }  
