@@ -76,7 +76,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 /* 						showDiv(1);
 						var t2 = document.getElementById('cantTestDesc');
 						t2.innerText = res.desc; */
-						alert(res.code);
 						return false;
 					}
 				},
@@ -133,7 +132,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<li class="active">准入</li>
 					<li class="active">课程学习</li>
 				</ol>
-				<div class="clearfix"></div>
 			</div>
 		</div>
 	</div>
@@ -142,8 +140,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<!-- start main_btm -->
 		<div class="container">
 			<div class="row" >
-				<div class="col-xs-8 col-sm-8">
-		         	<div align="center" class="demo">反兴奋剂准入系统操作流程</div>
+				<div class="col-xs-9 col-sm-9">
+				         	<div align="center" ><h3>反兴奋剂准入系统操作流程</h3></div>
+		         	<br>
+		         	</div>
+		         	<div class="col-xs-3 col-sm-3" >
+		         	</div>
+			<div class="row" >
+				<div class="col-xs-9 col-sm-9">
 					<div align="center">
 						<video id="my-video" class="video-js" controls="controls"
 							autoplay="autoplay" preload="auto" width="100%" height=100%; poster="m.png"
@@ -155,7 +159,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<script src="http://vjs.zencdn.net/5.19/lang/zh-CN.js"></script>
 					</div>
 		        </div>
-		        <div class="col-xs-4 col-sm-4">
+		        <div class="col-xs-3 col-sm-3"  style='padding-top:5%'>
 		         	简介：一般北京市中级经济师合格证书每年四五月份领取，一般领取前，大概4月中下旬，北京人事考试中心会发一个经济专业技术资格合格证书领取打印凭条的通知，大家下载打印了领取凭条之后就可以领取北京经济师合格证书了。具体的领证时间您可以关注：2017年经济师合格证领取时间汇总表。
 		        </div>
 			</div>
@@ -210,6 +214,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<input type="hidden" id="stdy_st_hidden" value="${stdy_st_hidden!'0'}">
 	</input>
 	<input type="hidden" id="crclid" value="${crclid!'-1'}">
+	</div>
 	</input> <% include("/f/footer.html"){} %>
 </body>
 </html>
