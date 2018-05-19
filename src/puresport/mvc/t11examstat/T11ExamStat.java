@@ -72,6 +72,12 @@ public class T11ExamStat extends BaseModel<T11ExamStat> {
 	 */
 	public static final String column_tms = "tms";
 	
+	/**
+	 * 字段描述：考试名称
+	 * 字段类型：String  长度：null
+	 */
+	public static final String column_exam_nm = "exam_nm";
+	
 	
 	/**
 	 * sqlId : puresport.t11ExamStat.splitPageFrom
@@ -87,6 +93,7 @@ public class T11ExamStat extends BaseModel<T11ExamStat> {
 	private String exam_channel;
 	private Integer exam_num;
 	private Timestamp tms;
+	private String exam_nm;
 
 	public void setId(Long id){
 		set(column_id, id);
@@ -135,6 +142,12 @@ public class T11ExamStat extends BaseModel<T11ExamStat> {
 	}
 	public <T> T getTms() {
 		return get(column_tms);
+	}
+	public void setExam_nm(String exam_nm){
+		set(column_exam_num, exam_nm);
+	}
+	public <T> T getExam_nm() {
+		return get(column_exam_nm);
 	}
 	
 }

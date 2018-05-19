@@ -19,7 +19,7 @@ import puresport.applicat.ExcelParseTool;
 import puresport.applicat.MdlExcelRow;
 import puresport.constant.EnumStatus;
 import puresport.mvc.comm.ParamComm;
-import puresport.mvc.comm.ResErrorTips;
+import puresport.mvc.comm.ResTips;
 
 /**
  * XXX 管理 描述：
@@ -121,13 +121,14 @@ public class T6MgrAhrController extends BaseController {
 	public void getData() {
 		renderJsonForTable(T6MgrAhrService.service.selectByPage(getParamWithServerPage()));
 	}
+	
 	@Clear
 	public void addTable(){
-		T6MgrAhr mdl = getModelForTable(T6MgrAhr.class);
+		T6MgrAhr mdl = getModel(T6MgrAhr.class);
 	    // 检查手机号的用户是否存在
 		if (T6MgrAhrService.service.isExist(mdl)) {
-			ResErrorTips errorTips = new ResErrorTips()
-					.addErroFiled(T6MgrAhr.column_mblph_no, "该手机号的运动员已存在");
+			ResTips errorTips = ResTips.getFailRes()
+					.addErroFiled(T6MgrAhr.column_mblph_no, "该手机号已存在");
 			renderJson(errorTips);
 			return ;
 		}
@@ -135,24 +136,24 @@ public class T6MgrAhrController extends BaseController {
 		// 用户名设置为手机号
 		mdl.set(T6MgrAhr.column_usr_nm, mdl.get(T6MgrAhr.column_mblph_no));
 		mdl.saveGenIntId();
-		renderJsonForRow(mdl);
+		renderJson(ResTips.getSuccRes());
 	}
 
 	@Clear
 	public void editTable(){
-		T6MgrAhr mdl = getModelForTable(T6MgrAhr.class);
+		T6MgrAhr mdl =getModel(T6MgrAhr.class);
 	    // 检查手机号的用户是否存在
 		if (!T6MgrAhrService.service.isExist(mdl)) {
 			// 不存在则不可以更新
-			ResErrorTips errorTips = new ResErrorTips()
-					.addErroFiled(T6MgrAhr.column_mblph_no, "该手机号的运动员不存在");
+			ResTips errorTips = ResTips.getFailRes()
+					.addErroFiled(T6MgrAhr.column_mblph_no, "该手机号不存在");
 			renderJson(errorTips);
 			return ;
 		}
 		// 用户名设置为手机号
 		mdl.set(T6MgrAhr.column_usr_nm, mdl.get(T6MgrAhr.column_mblph_no));
 		mdl.update();
-		renderJsonForRow(mdl);
+		renderJson(ResTips.getSuccRes());
 	}
 	@Clear
 	public void inload() {

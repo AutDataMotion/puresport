@@ -460,7 +460,11 @@ public abstract class BaseController extends Controller {
 	}
 	
 	public <T> T getParamWithClass(Class<? extends T> aClass){
-		String strvalue = getPara("v");
+		return getParamWithClass(aClass, "v");
+	}
+	
+	public <T> T getParamWithClass(Class<? extends T> aClass, String paramKey){
+		String strvalue = getPara(paramKey);
 		if (null == strvalue || strvalue.isEmpty()) {
 			renderText("-1");
 			return null;

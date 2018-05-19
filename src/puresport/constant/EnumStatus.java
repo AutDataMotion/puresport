@@ -10,8 +10,8 @@ package puresport.constant;
  *
  */
 public enum EnumStatus {
-	Failed(0, "失败"),
-	Success(1, "成功");
+	Failed(0, "操作失败"),
+	Success(1, "操作成功");
 	private int id;
 	private String name;
 	

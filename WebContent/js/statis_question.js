@@ -1,6 +1,9 @@
 $(document).ready(function() {
 	var myTable = $('#example5').DataTable({
 		dom: 'Bfrtip',
+		scrollY: 400,
+        scrollX: true,
+        responsive: true,
 		select: {
             style:    'os',
             selector: 'td:first-child'
@@ -12,12 +15,7 @@ $(document).ready(function() {
                  buttons: ['excel',  'print']
              }
         ],
-		columns : [  {
-            data: null,
-            defaultContent: '',
-            className: 'select-checkbox',
-            orderable: false
-        },{
+		columns : [ {
 			data : "type"
 		}, {
 			data : "title"

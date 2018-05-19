@@ -166,6 +166,38 @@
 										'mainPanel', 'splitPage', 'bloodtp')">
 									血型	${orderBy("bloodtp")}
 								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'ethnct')">
+									民族	${orderBy("ethnct")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'remark')">
+									备注	${orderBy("remark")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'typelevel')">
+									类型级别	${orderBy("typelevel")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'province')">
+									省份名称	${orderBy("province")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'city')">
+									城市名称	${orderBy("city")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'institute')">
+									协会名称	${orderBy("institute")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'department')">
+									工作单位	${orderBy("department")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'post')">
+									职务	${orderBy("post")}
+								</th>
 								<th class="hidden-xs">
 									${i18nMap["admin.common.operation"]}
 								</th>
@@ -304,6 +336,62 @@
 								<td>
 
 								${escapeXml(item["bloodtp"]!)}
+
+								</td>
+							
+								
+								<td>
+
+								${escapeXml(item["ethnct"]!)}
+
+								</td>
+							
+								
+								<td>
+
+								${escapeXml(item["remark"]!)}
+
+								</td>
+							
+								
+								<td>
+
+								${escapeXml(item["typelevel"]!)}
+
+								</td>
+							
+								
+								<td>
+
+								${escapeXml(item["province"]!)}
+
+								</td>
+							
+								
+								<td>
+
+								${escapeXml(item["city"]!)}
+
+								</td>
+							
+								
+								<td>
+
+								${escapeXml(item["institute"]!)}
+
+								</td>
+							
+								
+								<td>
+
+								${escapeXml(item["department"]!)}
+
+								</td>
+							
+								
+								<td>
+
+								${escapeXml(item["post"]!)}
 
 								</td>
 							

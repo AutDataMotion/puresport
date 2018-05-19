@@ -146,13 +146,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<!-- 必修视频课程一 -->
 			<div class="title">${course_title!''}</div>
 			<!-- 代码 开始 -->
+			<!-- <div class="col-xs-8 col-sm-8"> -->
 			<!-- STAR_CONTAINER -->
 			<div id="container">
-				<div id="wrap-container" class="clearfix">
-					<div class="examples_body">
-						<ul class="bannerHolder">
+				<!-- <div id="wrap-container" class="clearfix"> -->
+				<!-- 	<div class="examples_body"> -->
+						<!-- <ul class="bannerHolder"> -->
 							<%for(x in t7List){ %>
-							<li>
+						<!-- 	<ul class="bannerHolder"> -->
+							<!-- <li> -->
 								<div class="banner">
 									<a
 										href="/jf/puresport/t7Crcl/video_play?crcl_attr=${x.crcl_attr!''}&crcl_file_rte=${x.crcl_file_rte!''}&stdy_st=${x.stdy_st!'0'}&stdy_st_hidden=${stdy_st_hidden!'0'}&crclid=${x.crclid!'0'}" target="_self">
@@ -165,17 +167,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<div class="cornerBL"></div>
 									<div class="cornerBR"></div>
 								</div>
-							</li>
+							<!-- </li> -->
 							<input type="hidden" name="stdy_st_hidden"
 								value="${x.stdy_st!'0'}">
-							</input> <%}%>
-						</ul>
+							</input> 
+							<!-- </ul>  -->
+							<%}%>
+					<!-- 	</ul> -->
 						<!-- Examples body -->
-					</div>
-				</div>
+					<!-- </div>  -->
+				<!-- </div> -->
 				<!-- /COPYRIGHT -->
 			</div>
 			<!-- END_CONTAINER -->
+			<!-- </div> -->
 		</div>
 	</div>
 	<% include("/f/footer.html"){} %>

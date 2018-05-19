@@ -166,6 +166,22 @@
 										'mainPanel', 'splitPage', 'rmrk')">
 									备注	${orderBy("rmrk")}
 								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'typeleve')">
+									级别类型	${orderBy("typeleve")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'province')">
+									省	${orderBy("province")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'city')">
+									城市	${orderBy("city")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'institute')">
+									协会	${orderBy("institute")}
+								</th>
 								<th class="hidden-xs">
 									${i18nMap["admin.common.operation"]}
 								</th>
@@ -305,6 +321,34 @@
 								<td>
 
 								${escapeXml(item["rmrk"]!)}
+
+								</td>
+							
+								
+								<td>
+
+								${escapeXml(item["typeleve"]!)}
+
+								</td>
+							
+								
+								<td>
+
+								${escapeXml(item["province"]!)}
+
+								</td>
+							
+								
+								<td>
+
+								${escapeXml(item["city"]!)}
+
+								</td>
+							
+								
+								<td>
+
+								${escapeXml(item["institute"]!)}
 
 								</td>
 							

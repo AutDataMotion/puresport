@@ -1,76 +1,40 @@
 $(document).ready(function() {
-	var editor = new $.fn.dataTable.Editor({
-		ajax : {
-			create : {
-				type : 'POST',
-				url :encodeURI(encodeURI(cxt + "/jf/puresport/t1usrBsc/addSporter"))
-			},
-			edit : {
-				type : 'POST',
-				url : encodeURI(encodeURI(cxt + "/jf/puresport/t1usrBsc/editSporter"))
-			}
-		},
-		table : "#example2",
-		idSrc:  'usrid',
-		fields : [ {
-			label : "姓名:",
-			name : "nm"
-		}, {
-			label : "证件类型:",
-			name : "crdt_tp",
-			type:  "select",
-            options: [
-                { label: "身份证", value: '身份证' },
-                { label: "军官证",  value: '军官证' }
-            ],
-            def: 0
-		}, {
-			label : "证件号:",
-			name : "crdt_no"
-		}, {
-			label : "性别:",
-			name : "gnd",
-			type:  "select",
-            options: [
-                { label: "男", value: '男' },
-                { label: "女",  value: '女' }
-            ],
-            def: 0
-		}, {
-			label : "出生日期:",
-			name : "brth_dt",
-			type: "date"
-			
-		}, {
-			label : "运动项目:",
-			name : "spt_prj",
-		}, {
-			label : "级别:",
-			name : "typelevel",
-		}, {
-			label : "所属省（自治区）:",
-			name : "province",
-		}, {
-			label : "所属市:",
-			name : "city",
-		}, {
-			label : "所属协会:",
-			name : "institute",
-		}, {
-			label : "手机号:",
-			name : "mblph_no",
-		}, {
-			label : "邮箱:",
-			name : "email",
-		} ],
-		formOptions : {
-			bubble : {
-				title : '编辑',
-				buttons : false
-			}
-		}
-	});
+	// js 数据module
+	var dataMdl = {
+		id : '',
+		nm : '',
+		crdt_tp : '',
+		crdt_no : '',
+		gnd : '',
+		brth_dt : '',
+		spt_prj : '',
+		typeleve : '',
+		province : '',
+		city : '',
+		institute : '',
+		mblph_no : '',
+		email : ''
+	};
 
+	// 表单 引用
+	function  curFormMdl() {
+		return  {
+			usrid : $(':text[name="t1usrBsc.usrid"]'),
+			nm : $(':text[name="t1usrBsc.nm"]'),
+			crdt_tp : $(':text[name="t1usrBsc.crdt_tp"]'),
+			crdt_no : $(':text[name="t1usrBsc.crdt_no"]'),
+			gnd : $(':text[name="t1usrBsc.gnd"]'),
+			brth_dt : $(':text[name="t1usrBsc.brth_dt"]'),
+			spt_prj : $(':text[name="t1usrBsc.spt_prj"]'),
+			typeleve : $(':text[name="t1usrBsc.typeleve"]'),
+			province : $(':text[name="t1usrBsc.province"]'),
+			city : $(':text[name="t1usrBsc.city"]'),
+			institute : $(':text[name="t1usrBsc.institute"]'),
+			mblph_no : $(':text[name="t1usrBsc.mblph_no"]'),
+			email : $(':text[name="t1usrBsc.email"]')
+		}
+	};
+	
 	// 获取查询参数
 	var datasrch = {
 		id : '',
@@ -80,10 +44,37 @@ $(document).ready(function() {
 		pageIndex : '',
 		pageSize : ''
 	};
+	
+	var tableRowSelect = null;
+	var tableBtnType = 1;// 1:添加 2:编辑
 	var myTable = $('#example2').DataTable({
 		dom : 'Bfrtip',
 		select : true,
 		serverSide : true,
+		scrollY : 400,
+		scrollX : true,
+		responsive : true,
+		search : false,
+		"bProcessing" : true, // DataTables载入数据时，是否显示‘进度’提示
+		"sProcessing" : "加载中...",
+		"bFilter" : false, // 过滤功能
+		"bPaginate" : true, // 翻页功能
+		"bLengthChange" : true, // 改变每页显示数据数量
+		"bFilter" : false, // 过滤功能
+		"bSort" : true, // 排序功能
+		"oLanguage" : {
+			"sLengthMenu" : "每页显示 _MENU_ 条记录",
+			"sZeroRecords" : "抱歉， 没有找到",
+			"sInfoEmpty" : "没有数据",
+			"sInfoFiltered" : "(从 _MAX_ 条数据中检索)",
+			"oPaginate" : {
+				"sFirst" : "首页",
+				"sPrevious" : "前一页",
+				"sNext" : "后一页",
+				"sLast" : "尾页"
+			},
+			"sZeroRecords" : "没有检索到数据",
+		},
 		ajax : {
 			type : "POST",
 			url : encodeURI(encodeURI(cxt + "/jf/puresport/t1usrBsc/getData")),
@@ -93,19 +84,38 @@ $(document).ready(function() {
             }
 		},
 		buttons : [ {
-			extend : 'create',
 			text : '添加',
-			editor : editor
+			action : function(e, dt, node, config) {
+				// 清空表单赋值
+				selectRowToForm(null);
+				// 修改表单提示文字
+				$('#exampleModalLabelSporter').text('添加');
+				tableBtnType = 1;
+				$("#sporterModal").modal('show');
+			}
 		}, {
-			extend : 'edit',
 			text : '编辑',
-			editor : editor
+			action : function(e, dt, node, config) {
+				if (null == tableRowSelect) {
+					alert('请先选择某行');
+					return;
+				}
+				// 给表单赋值
+				selectRowToForm(tableRowSelect);
+				// 修改表单提示文字
+				$('#exampleModalLabelSporter').text('修改');
+				tableBtnType = 2;
+				$("#sporterModal").modal('show');
+			}
 		}, {
 			extend : 'collection',
 			text : '导出',
 			buttons : [ 'excel', 'print' ]
 		} ],
 		columns : [ {
+			data : "usrid",
+			"visible": false
+		},{
 			data : "nm"
 		}, {
 			data : "crdt_tp"
@@ -129,12 +139,101 @@ $(document).ready(function() {
 			data : "mblph_no"
 		}, {
 			data : "email"
-		} ],
-		"bProcessing" : true, // DataTables载入数据时，是否显示‘进度’提示
-		"sProcessing" : "加载中...",
-		"scrollX" : true
+		} ]
 	});
 
+
+	// ============选中一行触发
+	$('#example2 tbody').on('click', 'tr', function() {
+		if ($(this).hasClass('selected')) {
+			$(this).removeClass('selected');
+			tableRowSelect = null;
+		} else {
+			myTable.$('tr.selected').removeClass('selected');
+			$(this).addClass('selected');
+			tableRowSelect = myTable.row(this).data();
+		}
+	});
+
+	// ================Form表单操作
+	function selectRowToForm(row) {
+		var formMdl = curFormMdl();
+		if (null === row) {
+			formMdl.usrid.val('');
+			formMdl.nm.val('');
+			formMdl.crdt_tp.val('');
+			formMdl.crdt_no.val('');
+			formMdl.gnd.val('');
+			formMdl.brth_dt.val('');
+			formMdl.spt_prj.val('');
+			formMdl.typeleve.val('');
+			formMdl.province.val('');
+			formMdl.city.val('');
+			formMdl.institute.val('');
+			formMdl.mblph_no.val('');
+			formMdl.email.val('');
+			return;
+		}
+		formMdl.usrid.val(row.usrid);
+		formMdl.nm.val(row.nm);
+		formMdl.crdt_tp.val(row.crdt_tp);
+		formMdl.crdt_no.val(row.crdt_no);
+		formMdl.gnd.val(row.gnd);
+		formMdl.brth_dt.val(row.brth_dt);
+		formMdl.spt_prj.val(row.spt_prj);
+		formMdl.typeleve.val(row.typeleve);
+		formMdl.province.val(row.province);
+		formMdl.city.val(row.city);
+		formMdl.institute.val(row.institute);
+		formMdl.mblph_no.val(row.mblph_no);
+		formMdl.email.val(row.email);
+	}
+
+	function FormToDataMdl() {
+		var formMdl = curFormMdl();
+		dataMdl.nm = formMdl.nm.val();
+		dataMdl.crdt_tp = formMdl.crdt_tp.val();
+		dataMdl.crdt_no = formMdl.crdt_no.val();
+		dataMdl.gnd = formMdl.gnd.val();
+		dataMdl.brth_dt = formMdl.brth_dt.val();
+		dataMdl.spt_prj = formMdl.spt_prj.val();
+		dataMdl.typeleve = formMdl.typeleve.val();
+		dataMdl.province = formMdl.province.val();
+		dataMdl.city = formMdl.city.val();
+		dataMdl.institute = formMdl.institute.val();
+		dataMdl.mblph_no = formMdl.mblph_no.val();
+		dataMdl.email = formMdl.email.val();
+	}
+	// --------------------------表单提交
+	var urlAdd = "/jf/puresport/t1usrBsc/addSporter";
+	var urlEdit = "/jf/puresport/t1usrBsc/editSporter";
+	var urlUse = null;
+	$('#sporterModal_btn').bind('click', function() {
+		if (tableBtnType == 1) {
+			urlUse = urlAdd;
+		} else if (tableBtnType == 2) {
+			urlUse = urlEdit;
+		}
+		// 发送查询请求
+		$.ajax({
+			type : "post",
+			contentType : "application/x-www-form-urlencoded; charset=utf-8",
+			dataType : "json",
+			url : encodeURI(encodeURI(cxt + urlUse)),
+			data :$("#form_sporter").serialize(),
+			success : function(response) {
+				console.log(response);
+				// 操作结果提示
+				layer.msg(response.status.name);
+				// 隐藏form表单
+				$("#sporterModal").modal('hide');
+				// 重新加载table数据
+				myTable.ajax.reload();
+			}
+		});
+	});
+	
+	// =============搜索查询
 	function search(data, callback, settings) {
 		console.log("search");
 		// datasrch.userId = $('#userId').val();
