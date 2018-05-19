@@ -14,6 +14,7 @@ import com.platform.mvc.base.BaseService;
 import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 import csuduc.platform.util.ComOutMdl;
+import csuduc.platform.util.StringUtil;
 import puresport.applicat.MdlExcelRow;
 import puresport.config.ConfMain;
 import puresport.constant.ConstantInitMy;
@@ -23,7 +24,6 @@ import puresport.mvc.comm.ParamComm;
 public class T1usrBscService extends BaseService {
 	private final static String tableName = "t1_usr_bsc";
 	private final static String tableKey = "usr_nm";
-	
 
 	@SuppressWarnings("unused")
 	private static Logger log = Logger.getLogger(T1usrBscService.class);
@@ -36,34 +36,69 @@ public class T1usrBscService extends BaseService {
 		return mdl;
 	}
 
-	public boolean isExist(T1usrBsc mdl){
-		Record sporter = ConfMain.db().findById(tableName, T1usrBsc.column_mblph_no, (String)mdl.get(T1usrBsc.column_mblph_no));
+	public boolean isExist(T1usrBsc mdl) {
+		Record sporter = ConfMain.db().findById(tableName, T1usrBsc.column_mblph_no,
+				(String) mdl.get(T1usrBsc.column_mblph_no));
 		if (null == sporter) {
 			return false;
 		}
 		mdl.set(T1usrBsc.column_usrid, sporter.get(T1usrBsc.column_usrid));
-		return true ;
-	 }
-	
+		return true;
+	}
+
 	public List<T1usrBsc> selectByPage(ParamComm paramMdl) {
 		Long countTotal = ConfMain.db().queryLong(String.format("select count(1) from %s ", tableName));
 		paramMdl.setTotal(countTotal);
-		List<T1usrBsc> resList =new ArrayList<>();
+		List<T1usrBsc> resList = new ArrayList<>();
 		if (countTotal > 0) {
-			resList  =  T1usrBsc.dao.find(String.format("select usrid,nm,crdt_tp, crdt_no, gnd,brth_dt,spt_prj, typelevel, province, city,institute, mblph_no, email  from %s where %s  limit ?,?", tableName, "1=1"),
-					paramMdl.getPageIndex(), paramMdl.getPageSize());
+			resList = T1usrBsc.dao.find(String.format(
+					"select usrid,nm,crdt_tp, crdt_no, gnd,brth_dt,spt_prj, typelevel, province, city,institute, mblph_no, email  from %s where %s  limit ?,?",
+					tableName, "1=1"), paramMdl.getPageIndex(), paramMdl.getPageSize());
 		}
 		return resList;
 	}
+
+	/**
+	 * 成绩统计
+	 * 
+	 * @param paramMdl
+	 * @return
+	 */
+	private static String sql_score = "select u.*, s.exam_nm as exam_nm, s.exam_grd as exam_grd, (CASE WHEN s.exam_grd >= 80 THEN '及格'  WHEN s.exam_grd is null THEN '未考试'  ELSE '不及格' END) as passed "
+			+ " from t1_usr_bsc u " + " left join t11_exam_stat s on u.usrid = s.usrid " + " where 1=1 ";
+
+	public List<Record> selectScoreByPage(ParamComm paramMdl) {
 	
-	public List<ResUserScore> selectScoreByPage(ParamComm paramMdl) {
-		List<T1usrBsc> userInfos =  T1usrBsc.dao.find(String.format("select * from %s where %s  limit ?,?", tableName, "1=1"),
-				paramMdl.getPageIndex(), paramMdl.getPageSize());
-		
-		return userInfos.stream().map(e->getUserScore(e)).collect(Collectors.toList());
+		List<Object> listArgs = new ArrayList<>();
+		String whereSql = getProvinceWhere(paramMdl, listArgs);
+		Object[] listObjs = listArgs.toArray();
+		List<Record> userScoreRecords = ConfMain.db().find(sql_score + whereSql, listObjs);
+	
+		return userScoreRecords;
 	}
 
-	public  ResUserScore getUserScore(T1usrBsc user){
+	public static String getProvinceWhere(ParamComm paramMdl, List<Object> listArgs) {
+		StringBuilder whereStr = new StringBuilder();
+		if (StringUtil.notEmpty(paramMdl.getName1())) {
+			whereStr.append(" and province like '?%' ");
+			listArgs.add(paramMdl.getName1());
+		}
+		if (StringUtil.notEmpty(paramMdl.getName2())) {
+			whereStr.append(" and city like '?%' ");
+			listArgs.add(paramMdl.getName2());
+		}
+		if (StringUtil.notEmpty(paramMdl.getName3())) {
+			whereStr.append(" and institute like '?%' ");
+			listArgs.add(paramMdl.getName3());
+		}
+		// 分页必须加
+		whereStr.append(" limit ?,?");
+		listArgs.add(paramMdl.getPageIndex());
+		listArgs.add(paramMdl.getPageSize());
+		return whereStr.toString();
+	}
+
+	public ResUserScore getUserScore(T1usrBsc user) {
 		ResUserScore userScore = new ResUserScore();
 		userScore.setUsr_tp(user.getUsr_tp());
 		userScore.setUsr_nm(user.getUsr_nm());
@@ -83,19 +118,24 @@ public class T1usrBscService extends BaseService {
 		userScore.setPassed("合格");
 		return userScore;
 	}
+
 	/**
 	 * 统计-项目合格率
+	 * 
 	 * @param paramMdl
 	 * @return
 	 */
 	public List<ResPrjStatis> selectPassedPercent(ParamComm paramMdl) {
-		List<Record> prjStatistics =  Db.use(ConstantInitMy.db_dataSource_main).find(String.format("select spt_prj,province,city, institute  from %s group by spt_prj,province,city, institute  limit ?,?", tableName, "1=1"),
-				paramMdl.getPageIndex(), paramMdl.getPageSize());
-		
-		return prjStatistics.stream().map(e->getPrjStatisMdl(e)).collect(Collectors.toList());
+		List<Record> prjStatistics = Db.use(ConstantInitMy.db_dataSource_main)
+				.find(String.format(
+						"select spt_prj,province,city, institute  from %s group by spt_prj,province,city, institute  limit ?,?",
+						tableName, "1=1"), paramMdl.getPageIndex(), paramMdl.getPageSize());
+
+		return prjStatistics.stream().map(e -> getPrjStatisMdl(e)).collect(Collectors.toList());
 	}
-	public ResPrjStatis getPrjStatisMdl(Record record){
-		ResPrjStatis prjStatis =  new ResPrjStatis();
+
+	public ResPrjStatis getPrjStatisMdl(Record record) {
+		ResPrjStatis prjStatis = new ResPrjStatis();
 		prjStatis.setSpt_prj(record.getStr("spt_prj"));
 		prjStatis.setProvince(record.getStr("province"));
 		prjStatis.setCity(record.getStr("city"));
@@ -104,20 +144,23 @@ public class T1usrBscService extends BaseService {
 		prjStatis.setPassed("80%(40/50)");
 		return prjStatis;
 	}
-	
+
 	/**
 	 * 统计-试题错误率
+	 * 
 	 * @param paramMdl
 	 * @return
 	 */
 	public List<ResExamQuestion> selectExamQuestion(ParamComm paramMdl) {
-		List<Record> examQuestions =  Db.use(ConstantInitMy.db_dataSource_main).find("select prblm_tp, ttl,  opt, prblm_aswr, scor  from t9_tstlib   limit ?,?",
-				paramMdl.getPageIndex(), paramMdl.getPageSize());
-		
-		return examQuestions.stream().map(e->getExamQuestionMdl(e)).collect(Collectors.toList());
+		List<Record> examQuestions = Db.use(ConstantInitMy.db_dataSource_main).find(
+				"select prblm_tp, ttl,  opt, prblm_aswr, scor  from t9_tstlib   limit ?,?", paramMdl.getPageIndex(),
+				paramMdl.getPageSize());
+
+		return examQuestions.stream().map(e -> getExamQuestionMdl(e)).collect(Collectors.toList());
 	}
-	public ResExamQuestion getExamQuestionMdl(Record record){
-		ResExamQuestion item =  new ResExamQuestion();
+
+	public ResExamQuestion getExamQuestionMdl(Record record) {
+		ResExamQuestion item = new ResExamQuestion();
 		item.setType(record.getStr("prblm_tp"));
 		item.setTitle(record.getStr("ttl"));
 		item.setContent(record.getStr("opt"));
@@ -126,6 +169,7 @@ public class T1usrBscService extends BaseService {
 		item.setErrorPercent("10%(10/100)");
 		return item;
 	}
+
 	/**
 	 * 将excel数据导入数据库
 	 * 
@@ -156,14 +200,12 @@ public class T1usrBscService extends BaseService {
 		}
 		Record dbRow = new Record().set(T1usrBsc.column_usr_tp, EnumRoleType.Sporter.getName())
 				.set(T1usrBsc.column_usr_nm, excelRow.getByIndex(5))// 用户账户名：手机号
-				.set(T1usrBsc.column_nm, excelRow.getByIndex(0))
-				.set(T1usrBsc.column_crdt_tp, excelRow.getByIndex(1))
-				.set(T1usrBsc.column_crdt_no, crdt_number)
-				.set(T1usrBsc.column_gnd, excelRow.getByIndex(3))
+				.set(T1usrBsc.column_nm, excelRow.getByIndex(0)).set(T1usrBsc.column_crdt_tp, excelRow.getByIndex(1))
+				.set(T1usrBsc.column_crdt_no, crdt_number).set(T1usrBsc.column_gnd, excelRow.getByIndex(3))
 				.set(T1usrBsc.column_brth_dt, excelRow.getByIndex(4))
 				.set(T1usrBsc.column_pswd, crdt_number.substring(crdt_number.length() - 6))// 密码默认身份证后6位
 				.set(T1usrBsc.column_mblph_no, excelRow.getByIndex(5))
 				.set(T1usrBsc.column_email, excelRow.getByIndex(6));
-		return Db.use(ConstantInitMy.db_dataSource_main).saveOtherwiseUpdate(tableName, tableKey, dbRow);
+		return ConfMain.db().saveOtherwiseUpdate(tableName, tableKey, dbRow);
 	}
 }

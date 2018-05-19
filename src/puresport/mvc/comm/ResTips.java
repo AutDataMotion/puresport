@@ -9,20 +9,52 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import puresport.constant.EnumStatus;
+
 /**
  * @author zw
  *
  */
-public class ResErrorTips implements Serializable{
+public class ResTips implements Serializable{
+	private boolean isSuc;
+	private TipMdl status = new TipMdl();
 	private List<TipMdl> fieldErrors = new ArrayList<>();
 	
-	public ResErrorTips(){}
+	public ResTips(){}
 	
-	public ResErrorTips addErroFiled(String name, String status){
+	public ResTips(EnumStatus astatus){
+		isSuc = astatus == EnumStatus.Success?true:false;
+		status.setName(astatus.getName());
+	}
+	 
+	public ResTips addErroFiled(String name, String status){
 		fieldErrors.add(new TipMdl(name, status));
 		return this;
 	}
 	
+	
+	public static ResTips getSuccRes() {
+		return new ResTips(EnumStatus.Success);
+	}
+	
+	public static ResTips getFailRes() {
+		return new ResTips(EnumStatus.Failed);
+	}
+	
+	/**
+	 * @return the status
+	 */
+	public TipMdl getStatus() {
+		return status;
+	}
+
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(TipMdl status) {
+		this.status = status;
+	}
+
 	/**
 	 * @return the fieldErrors
 	 */

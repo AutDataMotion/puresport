@@ -18,7 +18,7 @@ import csuduc.platform.util.ComOutMdl;
 import puresport.applicat.ExcelParseTool;
 import puresport.applicat.MdlExcelRow;
 import puresport.constant.EnumStatus;
-import puresport.mvc.comm.ResErrorTips;
+import puresport.mvc.comm.ResTips;
 
 
 /**
@@ -56,11 +56,11 @@ public class T1usrBscController extends BaseController {
 	}
 	@Clear
 	public void addSporter(){
-		T1usrBsc mdl = getModelForTable(T1usrBsc.class);
+		T1usrBsc mdl = getModel(T1usrBsc.class);
 	    // 检查手机号的用户是否存在
 		if (T1usrBscService.service.isExist(mdl)) {
-			ResErrorTips errorTips = new ResErrorTips()
-					.addErroFiled(T1usrBsc.column_mblph_no, "该手机号的运动员已存在");
+			ResTips errorTips = ResTips.getFailRes()
+					.addErroFiled(T1usrBsc.column_mblph_no, "该手机号已存在");
 			renderJson(errorTips);
 			return ;
 		}
@@ -68,24 +68,24 @@ public class T1usrBscController extends BaseController {
 		// 用户名设置为手机号
 		mdl.set(T1usrBsc.column_usr_nm, mdl.get(T1usrBsc.column_mblph_no));
 		mdl.saveGenIntId();
-		renderJsonForRow(mdl);
+		renderJson(ResTips.getSuccRes());
 	}
 
 	@Clear
 	public void editSporter(){
-		T1usrBsc mdl = getModelForTable(T1usrBsc.class);
+		T1usrBsc mdl = getModel(T1usrBsc.class);
 	    // 检查手机号的用户是否存在
 		if (!T1usrBscService.service.isExist(mdl)) {
 			// 不存在则不可以更新
-			ResErrorTips errorTips = new ResErrorTips()
-					.addErroFiled(T1usrBsc.column_mblph_no, "该手机号的运动员不存在");
+			ResTips errorTips =ResTips.getFailRes()
+					.addErroFiled(T1usrBsc.column_mblph_no, "该手机号不存在");
 			renderJson(errorTips);
 			return ;
 		}
 		// 用户名设置为手机号
 		mdl.set(T1usrBsc.column_usr_nm, mdl.get(T1usrBsc.column_mblph_no));
 		mdl.update();
-		renderJsonForRow(mdl);
+		renderJson(ResTips.getSuccRes());
 	}
 	
 	@Clear
@@ -98,16 +98,19 @@ public class T1usrBscController extends BaseController {
 	
 	@Clear
 	public void getDataScore(){
+		// 成绩统计
 		renderJson(T1usrBscService.service.selectScoreByPage(getParamComm()));
 	}
 	
 	@Clear
 	public void getDataPrjStatis(){
+		// 项目合格率统计
 		renderJson(T1usrBscService.service.selectPassedPercent(getParamComm()));
 	}
 	
 	@Clear
 	public void getDataExamQues(){
+		// 试题错误率统计
 		renderJson(T1usrBscService.service.selectExamQuestion(getParamComm()));
 	}
 	
