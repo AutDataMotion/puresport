@@ -122,7 +122,7 @@ public class T11ExamStatController extends BaseController {
         	{
         		JSONObject json = new JSONObject();
         		json.put("exam_grd", item.getExam_grd());
-        		json.put("exam_name", "省运会");
+        		json.put("exam_name", item.getExam_nm());
         		json.put("tms", item.getTms());
         		
         		jsonArray.add(json);
