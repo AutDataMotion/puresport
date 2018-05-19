@@ -144,7 +144,7 @@ public class T11ExamStat extends BaseModel<T11ExamStat> {
 		return get(column_tms);
 	}
 	public void setExam_nm(String exam_nm){
-		set(column_exam_num, exam_nm);
+		set(column_exam_nm, exam_nm);
 	}
 	public <T> T getExam_nm() {
 		return get(column_exam_nm);

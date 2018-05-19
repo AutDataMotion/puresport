@@ -389,6 +389,7 @@ public class T7CrclController extends BaseController {
 		t11.setExam_channel("01");// 考试渠道,01:互联网站
 		t11.setExam_num(Integer.parseInt(examid));// 考试次数
 		t11.setTms(new Timestamp(System.currentTimeMillis()));// 维护时间
+		t11.setExam_nm("省运会");
 		t11.saveGenIntId();
 		// float fscore = (float) (score * 100.0 / 6.0);
 		ResultEntity res = new ResultEntity("0000", "恭喜您！您已完成测试，您的成绩为：" + score * 5 + "分！");
