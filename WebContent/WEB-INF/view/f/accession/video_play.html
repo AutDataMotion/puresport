@@ -9,21 +9,37 @@
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- Bootstrap -->
-<link href="${cxt!}/ui/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
-<link href="${cxt!}/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<link href="${cxt!}/css/style.css" rel="stylesheet" type="text/css"
+	media="all" />
 <!-- start plugins -->
 <script type="text/javascript" src="${cxt!}/js/puresport.js"></script>
 <script type="text/javascript" src="${cxt!}/js/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="${cxt!}/ui/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<link href="${cxt!}/ui/bootstrap-3.3.7-dist/css/bootstrap.min.css"
+	rel='stylesheet' type='text/css' />
+<script type="text/javascript"
+	src="${cxt!}/ui/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <!--start slider -->
 <link rel="stylesheet" href="${cxt!}/css/fwslider.css" media="all">
 <script src="${cxt!}/js/fwslider.js"></script>
 <!--end slider -->
 <!-- must have -->
-<link href="${cxt!}/css/allinone_carousel.css" rel="stylesheet" type="text/css">
-<script src="${cxt!}/js/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
+<link href="${cxt!}/css/allinone_carousel.css" rel="stylesheet"
+	type="text/css">
+<script src="${cxt!}/js/jquery-ui-1.8.16.custom.min.js"
+	type="text/javascript"></script>
 <script src="${cxt!}/js/allinone_carousel.js" type="text/javascript"></script>
-
+<!-- 视频播放控件 start-->
+<link rel="stylesheet" href="/css_zhuchaobin/video-js.css">
+<!-- <script src="/js_zhuchaobin/video.min.js"></script> 
+<script src="/js_zhuchaobin/zh-CN.js"></script>
+<script type="text/javascript">
+			var myPlayer = videojs('my-video');
+			videojs("my-video").ready(function(){
+				var myPlayer = this;
+				myPlayer.play();
+			});	  
+</script>  -->
+<!-- 视频播放控件 end-->
 
 <script type="text/javascript">
 		function show2(){
@@ -45,8 +61,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					}
 					window.location.href='${action!}';// 进行下一步学习
 				} else {
-/* 				$('#tip1Modal').modal('show'); */
-				alert("对不起！视频播放完毕才能进行下一步学习，请耐心等待！");
+				 $('#tip1Modal').modal('show');				
 			}
 		}		
 		// 记录用户学习结果
@@ -69,7 +84,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						} else if (flag == 1) {
 							showDiv(2);
 						} */
-						alert(res.code);
+/* 						alert(res.code); */
 						return true;
 					} else {
 						/* 							alert(res.desc); */
@@ -88,7 +103,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 	<style type="text/css">
-
 .title {
 	/*        padding-top:5px;
        padding-right:5px;
@@ -111,14 +125,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 }
 </style>
 
-<link href="/css/video-js.css" rel="stylesheet">
-
-<style type="text/css">
+	<style type="text/css">
 .demo {
-	
 	font-family: "微软雅黑", "黑体", "宋体";
 	font-size: 18px;
-	
 }
 </style>
 	<% include("/f/header.html"){} %>
@@ -139,31 +149,32 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<div class="main_btm1">
 		<!-- start main_btm -->
 		<div class="container">
-			<div class="row" >
-				<div class="col-xs-9 col-sm-9">
-				         	<div align="center" ><h3>反兴奋剂准入系统操作流程</h3></div>
-		         	<br>
-		         	</div>
-		         	<div class="col-xs-3 col-sm-3" >
-		         	</div>
-			<div class="row" >
+			<div class="row">
 				<div class="col-xs-9 col-sm-9">
 					<div align="center">
-						<video id="my-video" class="video-js" controls="controls"
-							autoplay="autoplay" preload="auto" width="100%" height=100%; poster="m.png"
-							data-setup="{}">
-							<source src="${crcl_file_rte!''}" type="video/mp4">
-							<!--         <p class="vjs-no-js"> To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a> </p> -->
-						</video>
-						<script src="/js/video.min.js"></script>
-						<script src="http://vjs.zencdn.net/5.19/lang/zh-CN.js"></script>
+						<h3>${crcl_nm!"反兴奋剂准入系统操作流程"}</h3>
 					</div>
-		        </div>
-		        <div class="col-xs-3 col-sm-3"  style='padding-top:5%'>
-		         	简介：一般北京市中级经济师合格证书每年四五月份领取，一般领取前，大概4月中下旬，北京人事考试中心会发一个经济专业技术资格合格证书领取打印凭条的通知，大家下载打印了领取凭条之后就可以领取北京经济师合格证书了。具体的领证时间您可以关注：2017年经济师合格证领取时间汇总表。
-		        </div>
-			</div>
-			<!-- table>
+					<br>
+				</div>
+				<div class="col-xs-3 col-sm-3"></div>
+				<div class="row">
+					<div class="col-xs-9 col-sm-9">
+						<div align="center">
+							<video id="my-video" class="video-js" controls="controls"
+								autoplay="autoplay" preload="auto" width="100%" height=100%;
+								poster="m.png" data-setup="{}">
+								<source src="${crcl_file_rte!''}" type="video/mp4">
+								<!--         <p class="vjs-no-js"> To view this video please enable JavaScript, and consider upgrading to a web browser that <a href="http://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a> </p> -->
+							</video>
+							<script src="/js/video.min.js"></script>
+							<script src="http://vjs.zencdn.net/5.19/lang/zh-CN.js"></script>
+						</div>
+					</div>
+					<div class="col-xs-3 col-sm-3" style='padding-top: 5%'>
+					${crcl_brf!"简介：一般北京市中级经济师合格证书每年四五月份领取，一般领取前，大概4月中下旬，北京人事考试中心会发一个经济专业技术资格合格证书领取打印凭条的通知，大家下载打印了领取凭条之后就可以领取北京经济师合格证书了。具体的领证时间您可以关注：2017年经济师合格证领取时间汇总表。"}
+					</div>
+				</div>
+				<!-- table>
 				<tr>
 					<td>
 						<div align="center" class="demo">反兴奋剂准入系统操作流程</div>
@@ -184,36 +195,35 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</td>
 				</tr>
 			</table-->
-			<p>
-			<div align="center">
-				<button onclick="do_next()" class="btn">下一步</button>
-			</div>
-		</div>
-	</div>
-	<!-- tip1 Modal-->
-	<div class="modal fade" id="tip1Modal" tabindex="-1" role="dialog"
-		aria-labelledby="tip1ModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header" align="center">
-					<h5 class="modal-title">友情提示</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body" align="center">对不起！视频播放完毕才能进行下一步学习，请耐心等待！</div>
-				<div class="modal-footer" align="center">
-					<button type="button" class="btn" data-dismiss="modal">确定</button>
+				<br>
+				<div align="center">
+					<button onclick="do_next()" class="btn">下一步</button>
 				</div>
 			</div>
-			<!-- /.modal-content -->
 		</div>
-		<!-- /.modal-dialog -->
-	</div>
-	<input type="hidden" id="stdy_st_hidden" value="${stdy_st_hidden!'0'}">
-	</input>
-	<input type="hidden" id="crclid" value="${crclid!'-1'}">
+		<!-- tip1 Modal-->
+		<div class="modal fade" id="tip1Modal" tabindex="-1" role="dialog"
+			aria-labelledby="tip1ModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header" align="center">
+						<h5 class="modal-title">友情提示</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body" align="center">对不起！视频播放完毕才能进行下一步学习，请耐心等待！</div>
+					<div class="modal-footer" align="center">
+						<button type="button" class="btn" data-dismiss="modal">确定</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+		<input type="hidden" id="stdy_st_hidden" value="${stdy_st_hidden!'0'}">
+		</input> <input type="hidden" id="crclid" value="${crclid!'-1'}">
 	</div>
 	</input> <% include("/f/footer.html"){} %>
 </body>
