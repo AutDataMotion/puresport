@@ -19,6 +19,8 @@ public class ParamComm implements Serializable{
 	private String name1;
 	private String name2;
 	private String name3;
+	private String name4;
+	
 	
 	private Integer draw;
 	private Integer pageIndex;
@@ -144,5 +146,24 @@ public class ParamComm implements Serializable{
 	public void setDraw(Integer draw) {
 		this.draw = draw;
 	}
+
+
+
+	/**
+	 * @return the name4
+	 */
+	public String getName4() {
+		return name4;
+	}
+
+
+
+	/**
+	 * @param name4 the name4 to set
+	 */
+	public void setName4(String name4) {
+		this.name4 = name4;
+	}
+	
 	
 }
