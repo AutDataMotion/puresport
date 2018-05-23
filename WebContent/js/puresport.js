@@ -181,7 +181,8 @@ function Improve_user_info()
 	if(app.userType=="运动员")//运动员
 	{
 //		alert(app.userType);
-		var group1=false;var code = "";
+		var group1=false;
+//		var code = "";
 		var group2=false;
 //		$().distpicker('getDistricts'); // 中国
 //		$().distpicker('getDistricts', 330000); // 浙江省
@@ -189,22 +190,27 @@ function Improve_user_info()
 		//console.log($("#getDist_user").distpicker('output',"province")); // 中国
 		var province = $('#getDist_user_province option:selected').val();
 		var city = $('#getDist_user_city option:selected').val();
-		var district = $('#getDist_user_district option:selected').val();
-		if(province||city||district)
+//		var district = $('#getDist_user_district option:selected').val();
+//		if(province||city||district)
+//		{
+//			group1=true;
+//			if(district)
+//			{
+//				code = district;
+//			}
+//			else if(city)
+//			{
+//				code = city;
+//			}
+//			else
+//			{
+//				code = province;
+//			}
+//			
+//		}
+		if(province&&city)
 		{
 			group1=true;
-			if(district)
-			{
-				code = district;
-			}
-			else if(city)
-			{
-				code = city;
-			}
-			else
-			{
-				code = province;
-			}
 			
 		}
 		else
@@ -239,13 +245,16 @@ function Improve_user_info()
 		if(group1&&group2)
 		{
 			//alert(code+","+Competetion+","+CompetetionItem);
+			
 			$.ajax({
 			    url:'/jf/puresport/t1usrBsc/ImproveUserInfo',
 			    type:'POST', //GET
 			    async:true,    //或false,是否异步
 			    data:{
 //			    	userType:app.userType,
-			    	code:code,
+//			    	code:code,
+			    	province:province,
+			    	city:city,
 			    	competetion:Competetion,
 			    	competetionitem:CompetetionItem
 			    },
