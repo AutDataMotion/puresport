@@ -92,17 +92,28 @@ public class T7CrclController extends BaseController {
 		System.out.println(crcl_file_rte);
 		if ("1".equals(crcl_attr)) {
 			setAttr("action", "/jf/puresport/t7Crcl/video2_select_3");// 必修视频2
+			// 必修课程1
+			String sql = "select * from t7_crcl t where t.crclid='" + getPara("crclid") + "'";
+			List<T7Crcl> t7List = T7Crcl.dao.find(sql);
+			if ((t7List != null) && (t7List.size() > 0)) {	// 去视频1			
+				setAttr("crcl_nm", "必修课程一：" + t7List.get(0).getCrcl_nm());// 课程名称
+				setAttr("crcl_brf", t7List.get(0).getCrcl_brf());// 课程简介
+			}
 			// setAttr("stdy_st", stdy_st);// 必修视频2
-		} else if ("2".equals(crcl_attr)) {
+		} else if ("2".equals(crcl_attr)) {// 去视频2
 			setAttr("action", "/jf/puresport/t7Crcl/video3_select_5");// 必修视频3
-			// setAttr("stdy_st", stdy_st);// 必修视频2
-		} else if ("3".equals(crcl_attr)) {
+			setAttr("crcl_nm", "必修课程二：" + getPara("crcl_nm"));// 课程名称
+		} else if ("3".equals(crcl_attr)) {// 去视频3
+			setAttr("crcl_nm", "必修课程三：" + getPara("crcl_nm"));// 课程名称
 			setAttr("action", "/jf/puresport/t7Crcl/generteTest");// 生成考试
 		}
 		setAttr("crcl_file_rte", crcl_file_rte);
 		setAttr("stdy_st_hidden", getPara("stdy_st_hidden"));// 本课程学习状态
 		String crclid = getPara("crclid");
 		setAttr("crclid", getPara("crclid"));// 课程id
+		if (!("1".equals(crcl_attr))){
+			setAttr("crcl_brf", getPara("crcl_brf"));// 课程简介
+		}
 		LOG.debug("crclid = " + crclid);
 		renderWithPath("/f/accession/video_play.html");
 	}
@@ -120,7 +131,6 @@ public class T7CrclController extends BaseController {
 		for (T7Crcl t7 : t7List) {
 			if ("1".equals(t7.getStdy_st())) {
 				setAttr("stdy_st_hidden", "1");
-				System.out.println("1111111111");
 				break;
 			}
 		}
@@ -379,6 +389,7 @@ public class T7CrclController extends BaseController {
 		t11.setExam_channel("01");// 考试渠道,01:互联网站
 		t11.setExam_num(Integer.parseInt(examid));// 考试次数
 		t11.setTms(new Timestamp(System.currentTimeMillis()));// 维护时间
+		t11.setExam_nm("省运会");
 		t11.saveGenIntId();
 		// float fscore = (float) (score * 100.0 / 6.0);
 		ResultEntity res = new ResultEntity("0000", "恭喜您！您已完成测试，您的成绩为：" + score * 5 + "分！");

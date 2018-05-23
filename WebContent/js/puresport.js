@@ -181,7 +181,8 @@ function Improve_user_info()
 	if(app.userType=="运动员")//运动员
 	{
 //		alert(app.userType);
-		var group1=false;var code = "";
+		var group1=false;
+//		var code = "";
 		var group2=false;
 //		$().distpicker('getDistricts'); // 中国
 //		$().distpicker('getDistricts', 330000); // 浙江省
@@ -189,22 +190,27 @@ function Improve_user_info()
 		//console.log($("#getDist_user").distpicker('output',"province")); // 中国
 		var province = $('#getDist_user_province option:selected').val();
 		var city = $('#getDist_user_city option:selected').val();
-		var district = $('#getDist_user_district option:selected').val();
-		if(province||city||district)
+//		var district = $('#getDist_user_district option:selected').val();
+//		if(province||city||district)
+//		{
+//			group1=true;
+//			if(district)
+//			{
+//				code = district;
+//			}
+//			else if(city)
+//			{
+//				code = city;
+//			}
+//			else
+//			{
+//				code = province;
+//			}
+//			
+//		}
+		if(province&&city)
 		{
 			group1=true;
-			if(district)
-			{
-				code = district;
-			}
-			else if(city)
-			{
-				code = city;
-			}
-			else
-			{
-				code = province;
-			}
 			
 		}
 		else
@@ -239,13 +245,16 @@ function Improve_user_info()
 		if(group1&&group2)
 		{
 			//alert(code+","+Competetion+","+CompetetionItem);
+			
 			$.ajax({
 			    url:'/jf/puresport/t1usrBsc/ImproveUserInfo',
 			    type:'POST', //GET
 			    async:true,    //或false,是否异步
 			    data:{
 //			    	userType:app.userType,
-			    	code:code,
+//			    	code:code,
+			    	province:province,
+			    	city:city,
 			    	competetion:Competetion,
 			    	competetionitem:CompetetionItem
 			    },
@@ -648,7 +657,7 @@ function initScoreTable(userID)
 	if(userID)
 	{
 		$.ajax({
-		    url:'/jf/puresport/t10ExamGrd/get_exam_grd',
+		    url:'/jf/puresport/T11ExamStat/get_exam_grd',
 		    type:'POST', //GET
 		    async:true,    //或false,是否异步
 		    data:{
@@ -669,22 +678,23 @@ function initScoreTable(userID)
 		    		{
 		    			var score = [];
 		    			score.push(data.itemlist[i].exam_grd);
+		    			score.push(data.itemlist[i].exam_name);
 		    			score.push(data.itemlist[i].tms);
 		    			dataSet.push(score);
 		    		}
-//		    		$('#score_excel').DataTable({
-//	    		        data: dataSet,
-//	    		        language: {
-//	    		            url: "/ui/DataTables/Chinese.json"
-//	    		        },
-////	    		        "filter": false,
-////	    		        "destroy": true,
-//	    		        columns: [
-//	    		            { title: "成绩" },
-//	    		            { title: "时间" },
-//	    		            { title: "赛事" }
-//	    		        ]
-//	    		    });
+		    		$('#score_excel').DataTable({
+	    		        data: dataSet,
+	    		        language: {
+	    		            url: "/ui/DataTables/Chinese.json"
+	    		        },
+//	    		        "filter": false,
+//	    		        "destroy": true,
+	    		        columns: [
+	    		            { title: "成绩" },
+	    		            { title: "赛事" },
+	    		            { title: "时间" }
+	    		        ]
+	    		    });
 	            }  
 	            else { 
 	            	var dataSet = [];
@@ -697,8 +707,8 @@ function initScoreTable(userID)
 //	    		        "destroy": true,
 	    		        columns: [
 	    		            { title: "成绩" },
-	    		            { title: "时间" },
-	    		            { title: "赛事" }
+	    		            { title: "赛事" },
+	    		            { title: "时间" }
 	    		        ]
 	    		    });
 	            }  

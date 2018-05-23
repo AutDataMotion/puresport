@@ -114,28 +114,25 @@ $(document).ready(function(){
 	<!-- start main_btm -->
 	<div class="main_btm1">
 		<!-- 第一页：学习说明 -->
-		<div id="mannulDiv3" class="demo" align="center">
-			<div align="center" class="title">学习说明</div>
-			<div class="container">
-				<div class="row" >
-					<div align="left" class="demo">
-						<p>1. 点击“开始”按钮开始进入考试；
-						<p>2. 考试过程中请注意保持浏览器客户端在线状态，不要强制刷新或者断开网络，否则考试将终止；
-						<p>3. 所有试题完成后，并确认提交，系统才保存记录成绩；
-						<p>4. 试题题型包含不定项选择题和判断题各10道，每道题5分，共100分；
-						<p>5. 考试成绩60分及以上视为及格；
-						<p>6. 可以进行多次考试，每次考试试题随机。多次参加考试的，视最后一次提交的成绩为最终成绩；
-						<p>7. 如有考试相关的其他疑问请联系管理员；
-						<p>8. 请遵守考试规定，按时完成测试。
-						<p>
-					</div>
-				</div>
+		<div id="mannulDiv3" class="demo" >
+			<div class="container">				
+		<h2 align="center">学 习 说 明</h2>
+			<ul>
+				<li>点击“开始”按钮开始进入考试；</li>
+				<li>考试过程中请注意保持浏览器客户端在线状态，不要强制刷新或者断开网络，否则考试将终止；</li>
+				<li>所有试题完成后，并确认提交，系统才保存记录成绩；</li>
+				<li>试题题型包含不定项选择题和判断题各10道，每道题5分，共100分；</li>
+				<li>考试成绩60分及以上视为及格；</li>
+				<li>可以进行多次考试，每次考试试题随机。多次参加考试的，视最后一次提交的成绩为最终成绩；</li>
+				<li>如有考试相关的其他疑问请联系管理员；</li>
+				<li>请遵守考试规定，按时完成测试。</li>
+			</ul>
 			</div>
 			
 			<div align="center">
 				<button
-					onclick="window.location.href='/jf/puresport/t7Crcl/video_play?crcl_attr=${t7.crcl_attr!''}&crcl_file_rte=${t7.crcl_file_rte!''}&stdy_st_hidden=${stdy_st_hidden!'0'}&crclid=${t7.crclid!'0'}'"
-					class="btn">点击开始学习</button>
+					onclick="window.location.href='/jf/puresport/t7Crcl/video_play?crcl_attr=${t7.crcl_attr!''}&crcl_file_rte=${t7.crcl_file_rte!''}&stdy_st_hidden=${stdy_st_hidden!'0'}&crclid=${t7.crclid!'0'}&crcl_nm=${t7.crcl_nm!'0'}'"
+					class="btn">点击学习课程</button>
 			</div>
 		</div>
 	</div>
