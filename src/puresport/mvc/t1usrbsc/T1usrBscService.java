@@ -2,7 +2,10 @@ package puresport.mvc.t1usrbsc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
+
+import javax.swing.event.ListSelectionEvent;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.log4j.Logger;
@@ -14,6 +17,7 @@ import com.platform.mvc.base.BaseService;
 import com.sun.org.apache.bcel.internal.generic.RETURN;
 
 import csuduc.platform.util.ComOutMdl;
+import csuduc.platform.util.ComUtil;
 import csuduc.platform.util.StringUtil;
 import puresport.applicat.MdlExcelRow;
 import puresport.config.ConfMain;
@@ -65,7 +69,7 @@ public class T1usrBscService extends BaseService {
 	 * @return
 	 */
 	private static String sql_score = "select u.*, s.exam_nm as exam_nm, s.exam_grd as exam_grd, (CASE WHEN s.exam_grd >= 80 THEN '及格'  WHEN s.exam_grd is null THEN '未考试'  ELSE '不及格' END) as passed "
-			+ " from t1_usr_bsc u " + " left join t11_exam_stat s on u.usrid = s.usrid " + " where 1=1 ";
+			+ " from t1_usr_bsc u  left join t11_exam_stat s on u.usrid = s.usrid  where 1=1 ";
 
 	public List<Record> selectScoreByPage(ParamComm paramMdl) {
 	
@@ -90,6 +94,10 @@ public class T1usrBscService extends BaseService {
 		if (StringUtil.notEmpty(paramMdl.getName3())) {
 			whereStr.append(" and institute like '?%' ");
 			listArgs.add(paramMdl.getName3());
+		}
+		if (StringUtil.notEmpty(paramMdl.getName4())) {
+			whereStr.append(" and spt_prj like '?%' ");
+			listArgs.add(paramMdl.getName4());
 		}
 		// 分页必须加
 		whereStr.append(" limit ?,?");
@@ -119,19 +127,42 @@ public class T1usrBscService extends BaseService {
 		return userScore;
 	}
 
+	
+	private static String sql_prj = "select * from prjGroupStatis where 1=1 ";
+
 	/**
 	 * 统计-项目合格率
 	 * 
 	 * @param paramMdl
 	 * @return
 	 */
-	public List<ResPrjStatis> selectPassedPercent(ParamComm paramMdl) {
-		List<Record> prjStatistics = Db.use(ConstantInitMy.db_dataSource_main)
-				.find(String.format(
-						"select spt_prj,province,city, institute  from %s group by spt_prj,province,city, institute  limit ?,?",
-						tableName, "1=1"), paramMdl.getPageIndex(), paramMdl.getPageSize());
-
-		return prjStatistics.stream().map(e -> getPrjStatisMdl(e)).collect(Collectors.toList());
+	public List<Record> selectPassedPercent(ParamComm paramMdl) {
+		List<Object> listArgs = new ArrayList<>();
+		String whereSql = getProvinceWhere(paramMdl, listArgs);
+		Object[] listObjs = listArgs.toArray();
+		List<Record> prjStatisticsRes = ConfMain.db().find(sql_prj + whereSql, listObjs);
+		
+		if (CollectionUtils.isEmpty(prjStatisticsRes))  return new ArrayList<>();
+		
+		prjStatisticsRes.stream().forEach(e-> {
+			Long cntTotal = e.getLong("cnt_total");
+			Long cntAnswered = e.getLong("cnt_answered");
+			Long cntPassed = e.getLong("cnt_passed");
+			if (ComUtil.notNullAndZero(cntTotal) && ComUtil.notNullAndZero(cntAnswered) && ComUtil.notNullAndZero(cntPassed)) {
+				e.set("answered", String.format("%d%%(%d/%d)", cntAnswered*100/cntTotal, cntAnswered, cntTotal));
+				e.set("passed", String.format("%d%%(%d/%d)", cntPassed*100/cntAnswered, cntPassed, cntAnswered));
+			}else if (ComUtil.notNullAndZero(cntTotal) && ComUtil.notNullAndZero(cntAnswered)) {
+				e.set("answered", String.format("%d%%(%d/%d)", cntAnswered*100/cntTotal, cntAnswered, cntTotal));
+				e.set("passed", String.format("0%%(0/%d)", cntAnswered));
+			}else  if (ComUtil.notNullAndZero(cntTotal)) {
+				e.set("answered", String.format("0%%(0/%d)", cntTotal));
+				e.set("passed", "0%%(0/0)");
+			}else {
+				e.set("answered", "0%%(0/0)");
+				e.set("passed", "0%%(0/0)");
+			}
+			});
+		return prjStatisticsRes;
 	}
 
 	public ResPrjStatis getPrjStatisMdl(Record record) {
@@ -145,18 +176,49 @@ public class T1usrBscService extends BaseService {
 		return prjStatis;
 	}
 
+	private static String sql_problem = "select * from problemStatis where 1=1 ";
+	
+
+	public static String getQuestionWhere(ParamComm paramMdl, List<Object> listArgs) {
+		StringBuilder whereStr = new StringBuilder();
+		if (StringUtil.notEmpty(paramMdl.getName1())) {
+			whereStr.append(" and prblm_tp like '?%' ");
+			listArgs.add(paramMdl.getName1());
+		}
+		// 分页必须加
+		whereStr.append(" limit ?,?");
+		listArgs.add(paramMdl.getPageIndex());
+		listArgs.add(paramMdl.getPageSize());
+		return whereStr.toString();
+	}
+	
 	/**
 	 * 统计-试题错误率
 	 * 
 	 * @param paramMdl
 	 * @return
 	 */
-	public List<ResExamQuestion> selectExamQuestion(ParamComm paramMdl) {
-		List<Record> examQuestions = Db.use(ConstantInitMy.db_dataSource_main).find(
-				"select prblm_tp, ttl,  opt, prblm_aswr, scor  from t9_tstlib   limit ?,?", paramMdl.getPageIndex(),
-				paramMdl.getPageSize());
-
-		return examQuestions.stream().map(e -> getExamQuestionMdl(e)).collect(Collectors.toList());
+	public List<Record> selectExamQuestion(ParamComm paramMdl) {
+	
+		List<Object> listArgs = new ArrayList<>();
+		String whereSql = getQuestionWhere(paramMdl, listArgs);
+		Object[] listObjs = listArgs.toArray();
+		List<Record> problemStatisRes = ConfMain.db().find(sql_problem + whereSql, listObjs);
+		
+		if (CollectionUtils.isEmpty(problemStatisRes))  return new ArrayList<>();
+		
+		problemStatisRes.stream().forEach(e-> {
+			Long cntTotal = e.getLong("cntall");
+			Long cntWrong = e.getLong("cntwrong");
+			if (ComUtil.notNullAndZero(cntTotal) && ComUtil.notNullAndZero(cntWrong) ) {
+				e.set("errorPercent", String.format("%d%%(%d/%d)", cntWrong*100/cntTotal, cntWrong, cntTotal));
+			}else if (ComUtil.notNullAndZero(cntTotal) ) {
+				e.set("errorPercent", String.format("0%%(0/%d)",  cntTotal));
+			}else {
+				e.set("errorPercent", "--(0/0)");
+			}
+			});
+		return problemStatisRes;
 	}
 
 	public ResExamQuestion getExamQuestionMdl(Record record) {

@@ -16,15 +16,15 @@ $(document).ready(function() {
              }
         ],
 		columns : [ {
-			data : "type"
+			data : "prblm_tp"
 		}, {
-			data : "title"
+			data : "ttl"
 		},{
-			data : "content"
+			data : "opt"
 		}, {
-			data : "answer"
+			data : "prblm_aswr"
 		}, {
-			data : "score"
+			data : "scor"
 		}, {
 			data : "errorPercent"
 		} ],
