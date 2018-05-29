@@ -96,5 +96,52 @@ $(document).ready(function() {
 			}
 		});
 	};
+	// 获取省
+	function initProvince() {
+		// 发送查询请求
+		$.ajax({
+			type : "get",
+			url : encodeURI(encodeURI(cxt + "/jf/puresport/area/selectProvince")),
+			success : function(obj) {
+				$("#provSelect_score option:not(:first)").remove();
+				$.each(obj,function (index,item) {
+					$("#provSelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].name+"</option>");
+				});
+			}
+		});
+	};
+	// 获取市
+	$("#provSelect_score").change(function () {
+        var provinceId=$("#provSelect_score option:selected").val();
+        $("#citySelect_score option:not(:first)").remove();
+        $.ajax({
+            url:encodeURI(encodeURI(cxt + "/jf/puresport/area/selectCity")),
+            type:"get",
+            data:"provinceId="+provinceId,
+            success:function (obj) {
+                $.each(obj,function (index,item) {
+$("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].name+"</option>");
+                });
+            } 
+        }) 
+    });
+	
+	// 获取协会
+	function initInstitute() {
+		// 发送查询请求
+		$.ajax({
+			type : "get",
+			url : encodeURI(encodeURI(cxt + "/jf/puresport/area/selectInstitute")),
+			success : function(obj) {
+				$("#instituteSelect_score option:not(:first)").remove();
+				$.each(obj,function (index,item) {
+					$("#instituteSelect_score").append("<option value='"+obj[index].institute+"'>"+obj[index].institute+"</option>");
+				});
+			}
+		});
+	};
+	
+	initProvince();
+	initInstitute();
 	search("","","");
 });
