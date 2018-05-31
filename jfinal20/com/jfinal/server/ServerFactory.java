@@ -73,6 +73,7 @@ public class ServerFactory {
 			temp = rootClassPath.split("/");
 		else
 			throw new RuntimeException("WEB-INF directory not found.");
+		String str = temp[temp.length - 3];
 		return temp[temp.length - 3];
 	}
 	

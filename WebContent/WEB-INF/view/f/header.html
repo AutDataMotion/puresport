@@ -1,8 +1,14 @@
 <!-- h1>登录成功，欢迎回来${session["usrid"]}</h1-->  
 <div class="header_bg" id="header_bg">
 	<div class="header_bg1">
-		<a href="${cxt!}/jf/puresport/pagesController">
-			<img src="${cxt!}/images/head1264x160px.png" class="img-responsive">
+		<a href="${cxt!}/jf/puresport/pagesController" id="headbanner">
+		<script>
+			var index = Math.floor(Math.random()*4+1);
+			var img_index = "headbanner"+index+".png";
+			
+			$("#headbanner").html("<img src='${cxt!}/images/"+img_index+"' class='img-responsive'>");
+		</script>
+			<!-- img src="${cxt!}/images/headbanner1.png" class="img-responsive"-->
 		</a>
 		<!--div class="container">
 			<div class="row">
@@ -39,6 +45,7 @@
 							<li id = "menu_zhunru"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/zhunru_index"><img src="${cxt!}/images/zhunrubtn.png" class="img-responsive"></a></li>
 							<li id = "menu_tuozhan"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/tuozhan_index"><img src="${cxt!}/images/tuozhanbtn.png" class="img-responsive"></a></li>
 							<li id = "menu_jiangzuo"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/jiangzuo_index"><img src="${cxt!}/images/jiangzuobtn.png" class="img-responsive"></a></li>
+				            <li id = "menu_ziyuan"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/resource_index"><img src="${cxt!}/images/ziyuanbtn.png" class="img-responsive"></a></li>
 				           
 				        	</ul>
 						</div>
@@ -116,10 +123,11 @@
 							<li id = "menu_zhunru"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/zhunru_index"><img src="${cxt!}/images/zhunrubtn.png" class="img-responsive"></a></li>
 							<li id = "menu_tuozhan"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/tuozhan_index"><img src="${cxt!}/images/tuozhanbtn.png" class="img-responsive"></a></li>
 							<li id = "menu_jiangzuo"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/jiangzuo_index"><img src="${cxt!}/images/jiangzuobtn.png" class="img-responsive"></a></li>
+				            <li id = "menu_ziyuan"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/resource_index"><img src="${cxt!}/images/ziyuanbtn.png" class="img-responsive"></a></li>
 				           
 				        	</ul>
 						</div>
-						<div>
+						<!-- div>
 							<ul class="menu_right nav navbar-nav">
 				           
 								<li id = "menu_search"><a class="header_bg2_ul_li_a" href="#"><img src="${cxt!}/images/searchbtn.png" class="img-responsive"></a></li>
@@ -147,7 +155,7 @@
 									</ul>
 								</li>
 				        	</ul>
-						</div>
+						</div-->
 					
 				</div>
 			</div>
