@@ -145,22 +145,22 @@ public class T1usrBscService extends BaseService {
 		if (CollectionUtils.isEmpty(prjStatisticsRes))  return new ArrayList<>();
 		
 		prjStatisticsRes.stream().forEach(e-> {
-			Long cntTotal = e.getLong("cnt_total");
-			Long cntAnswered = e.getLong("cnt_answered");
-			Long cntPassed = e.getLong("cnt_passed");
-			if (ComUtil.notNullAndZero(cntTotal) && ComUtil.notNullAndZero(cntAnswered) && ComUtil.notNullAndZero(cntPassed)) {
-				e.set("answered", String.format("%d%%(%d/%d)", cntAnswered*100/cntTotal, cntAnswered, cntTotal));
-				e.set("passed", String.format("%d%%(%d/%d)", cntPassed*100/cntAnswered, cntPassed, cntAnswered));
-			}else if (ComUtil.notNullAndZero(cntTotal) && ComUtil.notNullAndZero(cntAnswered)) {
-				e.set("answered", String.format("%d%%(%d/%d)", cntAnswered*100/cntTotal, cntAnswered, cntTotal));
-				e.set("passed", String.format("0%%(0/%d)", cntAnswered));
-			}else  if (ComUtil.notNullAndZero(cntTotal)) {
-				e.set("answered", String.format("0%%(0/%d)", cntTotal));
-				e.set("passed", "0%%(0/0)");
-			}else {
-				e.set("answered", "0%%(0/0)");
-				e.set("passed", "0%%(0/0)");
-			}
+//			Long cntTotal = e.getLong("cnt_total");
+//			Long cntAnswered = e.getLong("cnt_answered");
+//			Long cntPassed = e.getLong("cnt_passed");
+//			if (ComUtil.notNullAndZero(cntTotal) && ComUtil.notNullAndZero(cntAnswered) && ComUtil.notNullAndZero(cntPassed)) {
+//				e.set("answered", String.format("%d%%(%d/%d)", cntAnswered*100/cntTotal, cntAnswered, cntTotal));
+//				e.set("passed", String.format("%d%%(%d/%d)", cntPassed*100/cntAnswered, cntPassed, cntAnswered));
+//			}else if (ComUtil.notNullAndZero(cntTotal) && ComUtil.notNullAndZero(cntAnswered)) {
+//				e.set("answered", String.format("%d%%(%d/%d)", cntAnswered*100/cntTotal, cntAnswered, cntTotal));
+//				e.set("passed", String.format("0%%(0/%d)", cntAnswered));
+//			}else  if (ComUtil.notNullAndZero(cntTotal)) {
+//				e.set("answered", String.format("0%%(0/%d)", cntTotal));
+//				e.set("passed", "0%%(0/0)");
+//			}else {
+//				e.set("answered", "0%%(0/0)");
+//				e.set("passed", "0%%(0/0)");
+//			}
 			});
 		return prjStatisticsRes;
 	}
@@ -208,15 +208,15 @@ public class T1usrBscService extends BaseService {
 		if (CollectionUtils.isEmpty(problemStatisRes))  return new ArrayList<>();
 		
 		problemStatisRes.stream().forEach(e-> {
-			Long cntTotal = e.getLong("cntall");
-			Long cntWrong = e.getLong("cntwrong");
-			if (ComUtil.notNullAndZero(cntTotal) && ComUtil.notNullAndZero(cntWrong) ) {
-				e.set("errorPercent", String.format("%d%%(%d/%d)", cntWrong*100/cntTotal, cntWrong, cntTotal));
-			}else if (ComUtil.notNullAndZero(cntTotal) ) {
-				e.set("errorPercent", String.format("0%%(0/%d)",  cntTotal));
-			}else {
-				e.set("errorPercent", "--(0/0)");
-			}
+//			Long cntTotal = e.getLong("cntall");
+//			Long cntWrong = e.getLong("cntwrong");
+//			if (ComUtil.notNullAndZero(cntTotal) && ComUtil.notNullAndZero(cntWrong) ) {
+//				e.set("errorPercent", String.format("%d%%(%d/%d)", cntWrong*100/cntTotal, cntWrong, cntTotal));
+//			}else if (ComUtil.notNullAndZero(cntTotal) ) {
+//				e.set("errorPercent", String.format("0%%(0/%d)",  cntTotal));
+//			}else {
+//				e.set("errorPercent", "--(0/0)");
+//			}
 			});
 		return problemStatisRes;
 	}
