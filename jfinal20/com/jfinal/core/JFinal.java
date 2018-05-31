@@ -23,6 +23,7 @@ import com.jfinal.config.JFinalConfig;
 import com.jfinal.handler.Handler;
 import com.jfinal.handler.HandlerFactory;
 import com.jfinal.kit.PathKit;
+import com.jfinal.kit.StrKit;
 import com.jfinal.plugin.IPlugin;
 import com.jfinal.render.RenderFactory;
 import com.jfinal.server.IServer;
@@ -140,16 +141,48 @@ public final class JFinal {
 	public static void stop() {
 		server.stop();
 	}
+	public static void runOnServer()
+	{
+		/**
+         * 特别注意：IDEA 之下建议的启动方式，仅比 eclipse 之下少了最后一个参数
+         */
+        String baseBath = String.valueOf(JFinal.class.getProtectionDomain().getCodeSource().getLocation());
+        String classPath, webRootPath, jarPath;
+        if (StrKit.notBlank(baseBath) && baseBath.contains("file:/")) {
+            // 获取运行操作系统的运行方式  window和linux的细微区别
+            boolean windows = System.getProperties().getProperty("os.name").contains("Windows");
+            System.out.println(System.getProperties().getProperty("os.name"));
+            jarPath = (windows ? "" : "/") + baseBath.substring("file:/".length());
+            
+            classPath = (windows ? "" : "/") + jarPath.substring(0, jarPath.lastIndexOf("/")) + "/puresport/WebContent/WEB-INF/classes";
+            webRootPath = (windows ? "" : "/") + jarPath.substring(0, jarPath.lastIndexOf("/")) + "/puresport/WebContent";
+//            classPath = "E:/codingWorkspace/puresport/WebContent/WEB-INF/classes";
+            System.out.println("jarPath:" + jarPath);
+            System.out.println("webRootPath:" + classPath);
+            System.out.println("classPath:" + classPath);
+//            webRootPath = classPath;
+//            ZipUtil.unzip(jarPath, classPath);
+            // 这两步是核心指定 webapp目录和classpath目录
+            PathKit.setWebRootPath(webRootPath);
+            PathKit.setRootClassPath(classPath);
+            // eclipse 启动是4个参数    
+            JFinal.start(webRootPath, 80, "/",5);
+        } else {
+            throw new RuntimeException("你丫的路径不对!");
+        }
+    }
 	
 	/**
 	 * Run JFinal Server with Debug Configurations or Run Configurations in Eclipse JavaEE
 	 * args example: WebRoot 80 / 5
 	 */
 	public static void main(String[] args) {
+		//runOnServer();
 		if (args == null || args.length == 0) {
 			server = ServerFactory.getServer();
 			server.start();
 		}
+	
 		else {
 			String webAppDir = args[0];
 			int port = Integer.parseInt(args[1]);
