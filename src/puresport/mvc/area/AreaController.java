@@ -58,6 +58,16 @@ public class AreaController extends BaseController {
 		// 更具管理员级别，不同级别设置不同
 		renderJson(AreaService.service.getInstitute());
 	}
+	
+	@Clear
+	public void selectProject(){
+		renderJson(AreaService.service.getProject());
+	}
+	
+	@Clear
+	public void selectQuestionType(){
+		renderJson(AreaService.service.getQuestionType());
+	}
 	/**
 	 * 列表
 	 */

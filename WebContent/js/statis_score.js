@@ -74,12 +74,11 @@ $(document).ready(function() {
 		pageSize : ''
 	};
 	function search(data, callback, settings) {
-		console.log("search");
-//		datasrch.userId = $('#userId').val();
-//		datasrch.dateTimeBeg = $('#datetimeBeg').val();
-//		datasrch.dateTimeEnd = $('#datetimeEnd').val();
+		datasrch.name1 = $("#provSelect_score option:selected").html();
+		datasrch.name2 = $("#citySelect_score option:selected").html();
+		datasrch.name3 = $("#instituteSelect_score option:selected").html();
 		datasrch.pageIndex = 0;
-		datasrch.pageSize = 200;
+		datasrch.pageSize = 2000;
 		// 发送查询请求
 		$.ajax({
 			type : "get",
@@ -90,7 +89,6 @@ $(document).ready(function() {
 			dataType : 'json',
 			contentType : "application/json",
 			success : function(response) {
-				console.log(response);
 				myTable.clear().draw();
 				myTable.rows.add(response).draw();
 			}
@@ -140,6 +138,11 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 			}
 		});
 	};
+	
+	// 查询按钮
+	$("#selectBtn_score").click(function() {
+		search("","","");
+    });
 	
 	initProvince();
 	initInstitute();

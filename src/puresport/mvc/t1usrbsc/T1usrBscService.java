@@ -75,23 +75,27 @@ public class T1usrBscService extends BaseService {
 		return userScoreRecords;
 	}
 
+	private final static String defSelect = "全部";
+	private final static String getStringLikeLeft(String s){
+		return s+"%";
+	}
 	public static String getProvinceWhere(ParamComm paramMdl, List<Object> listArgs) {
 		StringBuilder whereStr = new StringBuilder();
-		if (StringUtil.notEmpty(paramMdl.getName1())) {
-			whereStr.append(" and province like '?%' ");
-			listArgs.add(paramMdl.getName1());
+		if (StringUtil.notEmptyOrDefault(paramMdl.getName1(), defSelect)) {
+			whereStr.append(" and province like ? ");
+			listArgs.add(getStringLikeLeft(paramMdl.getName1()));
 		}
-		if (StringUtil.notEmpty(paramMdl.getName2())) {
-			whereStr.append(" and city like '?%' ");
-			listArgs.add(paramMdl.getName2());
+		if (StringUtil.notEmptyOrDefault(paramMdl.getName2(), defSelect)) {
+			whereStr.append(" and city like ? ");
+			listArgs.add(getStringLikeLeft(paramMdl.getName2()));
 		}
-		if (StringUtil.notEmpty(paramMdl.getName3())) {
-			whereStr.append(" and institute like '?%' ");
-			listArgs.add(paramMdl.getName3());
+		if (StringUtil.notEmptyOrDefault(paramMdl.getName3(), defSelect)) {
+			whereStr.append(" and institute like ? ");
+			listArgs.add(getStringLikeLeft(paramMdl.getName3()));
 		}
-		if (StringUtil.notEmpty(paramMdl.getName4())) {
-			whereStr.append(" and spt_prj like '?%' ");
-			listArgs.add(paramMdl.getName4());
+		if (StringUtil.notEmptyOrDefault(paramMdl.getName4(), defSelect)) {
+			whereStr.append(" and spt_prj like ? ");
+			listArgs.add(getStringLikeLeft(paramMdl.getName4()));
 		}
 		// 分页必须加
 		whereStr.append(" limit ?,?");
@@ -175,9 +179,9 @@ public class T1usrBscService extends BaseService {
 
 	public static String getQuestionWhere(ParamComm paramMdl, List<Object> listArgs) {
 		StringBuilder whereStr = new StringBuilder();
-		if (StringUtil.notEmpty(paramMdl.getName1())) {
-			whereStr.append(" and prblm_tp like '?%' ");
-			listArgs.add(paramMdl.getName1());
+		if (StringUtil.notEmptyOrDefault(paramMdl.getName1(), defSelect)) {
+			whereStr.append(" and prblm_tp like ? ");
+			listArgs.add(getStringLikeLeft(paramMdl.getName1()));
 		}
 		// 分页必须加
 		whereStr.append(" limit ?,?");

@@ -40,4 +40,12 @@ public class AreaService extends BaseService {
 	public List<Record> getInstitute(){
 		return ConfMain.db().find(String.format("select institute from t1_usr_bsc group by institute "));
 	}
+	
+	public List<Record> getProject(){
+		return ConfMain.db().find(String.format("select spt_prj from t1_usr_bsc group by spt_prj "));
+	}
+
+	public List<Record> getQuestionType(){
+		return ConfMain.db().find(String.format("select prblm_tp from t9_tstlib group by prblm_tp "));
+	}
 }

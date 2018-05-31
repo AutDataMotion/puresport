@@ -1,20 +1,38 @@
 $(document).ready(function() {
 	var myTable = $('#example5').DataTable({
 		dom: 'Bfrtip',
-		scrollY: 400,
-        scrollX: true,
-        responsive: true,
-		select: {
-            style:    'os',
-            selector: 'td:first-child'
-        },
-        buttons: [
-             {
-                 extend: 'collection',
-                 text: '导出',
-                 buttons: ['excel',  'print']
-             }
-        ],
+		buttons: [
+            {
+                extend: 'collection',
+                text: '导出',
+                buttons: ['excel',  'print']
+            }
+       ],
+       select : true,
+		scrollY : 400,
+		scrollX : true,
+		responsive : true,
+		search : false,
+		"bProcessing" : true, // DataTables载入数据时，是否显示‘进度’提示
+		"sProcessing" : "加载中...",
+		"bFilter" : false, // 过滤功能
+		"bPaginate" : true, // 翻页功能
+		"bLengthChange" : true, // 改变每页显示数据数量
+		"bFilter" : false, // 过滤功能
+		"bSort" : true, // 排序功能
+		"oLanguage" : {
+			"sLengthMenu" : "每页显示 _MENU_ 条记录",
+			"sZeroRecords" : "抱歉， 没有找到",
+			"sInfoEmpty" : "没有数据",
+			"sInfoFiltered" : "(从 _MAX_ 条数据中检索)",
+			"oPaginate" : {
+				"sFirst" : "首页",
+				"sPrevious" : "前一页",
+				"sNext" : "后一页",
+				"sLast" : "尾页"
+			},
+			"sZeroRecords" : "没有检索到数据",
+		},
 		columns : [ {
 			data : "prblm_tp"
 		}, {
@@ -27,10 +45,7 @@ $(document).ready(function() {
 			data : "scor"
 		}, {
 			data : "errorPercent"
-		} ],
-		"bProcessing" : true, // DataTables载入数据时，是否显示‘进度’提示
-		"sProcessing" : "loading...",
-		"scrollX" : true
+		} ]
 	});
 
 	// 获取查询参数
@@ -43,12 +58,9 @@ $(document).ready(function() {
 		pageSize : ''
 	};
 	function search(data, callback, settings) {
-		console.log("search");
-//		datasrch.userId = $('#userId').val();
-//		datasrch.dateTimeBeg = $('#datetimeBeg').val();
-//		datasrch.dateTimeEnd = $('#datetimeEnd').val();
+		datasrch.name1 = $("#typeSelect_question option:selected").html();
 		datasrch.pageIndex = 0;
-		datasrch.pageSize = 200;
+		datasrch.pageSize = 2000;
 		// 发送查询请求
 		$.ajax({
 			type : "get",
@@ -59,11 +71,31 @@ $(document).ready(function() {
 			dataType : 'json',
 			contentType : "application/json",
 			success : function(response) {
-				console.log(response);
 				myTable.clear().draw();
 				myTable.rows.add(response).draw();
 			}
 		});
 	};
+	
+	// 获取试题类型
+	function initQuestionType() {
+		// 发送查询请求e
+		$.ajax({
+			type : "get",
+			url : encodeURI(encodeURI(cxt + "/jf/puresport/area/selectQuestionType")),
+			success : function(obj) {
+				$("#typeSelect_question option:not(:first)").remove();
+				$.each(obj,function (index,item) {
+					$("#typeSelect_question").append("<option value='"+obj[index].prblm_tp+"'>"+obj[index].prblm_tp+"</option>");
+				});
+			}
+		});
+	};
+	
+	// 查询按钮
+	$("#selectBtn_question").click(function() {
+		search("","","");
+    });
+	initQuestionType();
 	search("","","");
 });

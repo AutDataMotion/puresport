@@ -58,12 +58,12 @@ $(document).ready(function() {
 		pageSize : ''
 	};
 	function search(data, callback, settings) {
-		console.log("search");
-//		datasrch.userId = $('#userId').val();
-//		datasrch.dateTimeBeg = $('#datetimeBeg').val();
-//		datasrch.dateTimeEnd = $('#datetimeEnd').val();
+		datasrch.name1 = $("#provSelect_prj option:selected").html();
+		datasrch.name2 = $("#citySelect_prj option:selected").html();
+		datasrch.name3 = $("#instituteSelect_prj option:selected").html();
+		datasrch.name4 = $("#prjSelect_prj option:selected").html();
 		datasrch.pageIndex = 0;
-		datasrch.pageSize = 200;
+		datasrch.pageSize = 2000;
 		// 发送查询请求
 		$.ajax({
 			type : "get",
@@ -74,11 +74,80 @@ $(document).ready(function() {
 			dataType : 'json',
 			contentType : "application/json",
 			success : function(response) {
-				console.log(response);
 				myTable.clear().draw();
 				myTable.rows.add(response).draw();
 			}
 		});
 	};
+	
+	// 获取省
+	function initProvince() {
+		// 发送查询请求
+		$.ajax({
+			type : "get",
+			url : encodeURI(encodeURI(cxt + "/jf/puresport/area/selectProvince")),
+			success : function(obj) {
+				$("#provSelect_prj option:not(:first)").remove();
+				$.each(obj,function (index,item) {
+					$("#provSelect_prj").append("<option value='"+obj[index].id+"'>"+obj[index].name+"</option>");
+				});
+			}
+		});
+	};
+	// 获取市
+	$("#provSelect_prj").change(function () {
+        var provinceId=$("#provSelect_prj option:selected").val();
+        $("#citySelect_prj option:not(:first)").remove();
+        $.ajax({
+            url:encodeURI(encodeURI(cxt + "/jf/puresport/area/selectCity")),
+            type:"get",
+            data:"provinceId="+provinceId,
+            success:function (obj) {
+                $.each(obj,function (index,item) {
+$("#citySelect_prj").append("<option value='"+obj[index].id+"'>"+obj[index].name+"</option>");
+                });
+            } 
+        }) 
+    });
+	
+	// 获取协会
+	function initInstitute() {
+		// 发送查询请求
+		$.ajax({
+			type : "get",
+			url : encodeURI(encodeURI(cxt + "/jf/puresport/area/selectInstitute")),
+			success : function(obj) {
+				$("#instituteSelect_prj option:not(:first)").remove();
+				$.each(obj,function (index,item) {
+					$("#instituteSelect_prj").append("<option value='"+obj[index].institute+"'>"+obj[index].institute+"</option>");
+				});
+			}
+		});
+	};
+	
+	// 获取项目
+	function initProject() {
+		// 发送查询请求
+		$.ajax({
+			type : "get",
+			url : encodeURI(encodeURI(cxt + "/jf/puresport/area/selectProject")),
+			success : function(obj) {
+				$("#prjSelect_prj option:not(:first)").remove();
+				$.each(obj,function (index,item) {
+					$("#prjSelect_prj").append("<option value='"+obj[index].spt_prj+"'>"+obj[index].spt_prj+"</option>");
+				});
+			}
+		});
+	};
+	
+	// 查询按钮
+	$("#selectBtn_prj").click(function() {
+		search("","","");
+    });
+	
+	initProvince();
+	initInstitute();
+	initProject();
+	
 	search("","","");
 });
