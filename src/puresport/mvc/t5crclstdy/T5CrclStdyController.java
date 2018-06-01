@@ -114,7 +114,7 @@ public class T5CrclStdyController extends BaseController {
 	 * 查询课程学习记录，判断是否具备考试资格
 	 */
 	@Clear
-	public void isCanTest() {
+	public boolean isCanTest() {
 		/*
 		 * getModel(T5CrclStdy.class).update(); redirect(pthc);
 		 */
@@ -165,6 +165,10 @@ public class T5CrclStdyController extends BaseController {
 			res = new ResultEntity("0001", desc.toString());
 		}
 		renderJson(res);
+		if(isCorse1Fnsh && isCorse2Fnsh && isCorse3Fnsh)
+			return true;
+		else
+			return false;
 	}
 
 	/**

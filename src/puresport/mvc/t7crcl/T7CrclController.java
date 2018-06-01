@@ -20,6 +20,7 @@ import puresport.entity.ResultEntity;
 import puresport.mvc.t10examgrd.T10ExamGrd;
 import puresport.mvc.t11examstat.T11ExamStat;
 import puresport.mvc.t5crclstdy.T5CrclStdy;
+import puresport.mvc.t5crclstdy.T5CrclStdyController;
 //import puresport.entity.ExamEntity;
 import puresport.mvc.t9tstlib.T9Tstlib;
 
@@ -126,7 +127,7 @@ public class T7CrclController extends BaseController {
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		List<T7Crcl> t7List = queryCrcl(2, usrid);
 		setAttr("t7List", t7List);
-		setAttr("course_title", "必修课程二：7选1");// 课程标题
+		setAttr("course_title", "案例篇选学（选择一篇完成观看）");// 课程标题
 		// 检查课程是否完成，只要有一门完成即可
 		for (T7Crcl t7 : t7List) {
 			if ("1".equals(t7.getStdy_st())) {
@@ -145,7 +146,7 @@ public class T7CrclController extends BaseController {
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		List<T7Crcl> t7List = queryCrcl(3, usrid);
 		setAttr("t7List", t7List);
-		setAttr("course_title", "必修课程三：7选1");// 课程标题
+		setAttr("course_title", "流程篇选学（选择一篇完成观看）");// 课程标题
 		// 检查课程是否完成，只要有一门完成即可
 		for (T7Crcl t7 : t7List) {
 			if ("1".equals(t7.getStdy_st())) {
@@ -219,6 +220,8 @@ public class T7CrclController extends BaseController {
 	// zhuchaobin
 	@Clear
 	public void generteTest() {
+		if(!isCanTest())
+			renderWithPath("/f/accession/dotest.html");;
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		// 选择题
 		String sql = "select * from t9_tstlib t where t.prblm_tp ='01' order by rand() limit 10";
@@ -315,6 +318,63 @@ public class T7CrclController extends BaseController {
 		renderWithPath("/f/accession/dotest.html");
 	}
 
+	public boolean isCanTest() {
+		/*
+		 * getModel(T5CrclStdy.class).update(); redirect(pthc);
+		 */
+		/* String usrid = getPara("usrid"); */
+		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
+		ResultEntity res = null;
+		StringBuilder desc = new StringBuilder("");
+		boolean isCorse1Fnsh = false;
+		boolean isCorse2Fnsh = false;
+		boolean isCorse3Fnsh = false;
+		// 必修课程1
+		String crclid = "1";
+		String sql = "select * from t5_crcl_stdy t where t.usrid ='" + usrid + "' and t.crclid = '" + crclid
+				+ "' and t.stdy_st='1'";
+		List<T5CrclStdy> t5List = T5CrclStdy.dao.find(sql);
+		if ((t5List != null) && (t5List.size() > 0)) {
+			// 课程已修;
+			isCorse1Fnsh = true;
+		}
+		// 必修课程2
+		crclid = "'21', '22', '23', '24','25', '26', '27'";
+		sql = "select * from t5_crcl_stdy t where t.usrid ='" + usrid + "' and t.crclid in(" + crclid
+				+ ") and t.stdy_st='1'";
+		t5List = T5CrclStdy.dao.find(sql);
+		if ((t5List != null) && (t5List.size() > 0)) {
+			// 课程已修;
+			isCorse2Fnsh = true;
+		}
+		// 必修课程3
+		crclid = "'31', '32', '33', '34','35', '36', '37'";
+		sql = "select * from t5_crcl_stdy t where t.usrid ='" + usrid + "' and t.crclid in(" + crclid
+				+ ") and t.stdy_st='1'";
+		t5List = T5CrclStdy.dao.find(sql);
+		if ((t5List != null) && (t5List.size() > 0)) {
+			// 课程已修;
+			isCorse3Fnsh = true;
+		}
+		if (isCorse1Fnsh && isCorse2Fnsh && isCorse3Fnsh) {
+			res = new ResultEntity("0000", "课程学习完毕，可以参加考试!");
+		} else {
+			if (!isCorse1Fnsh)
+				desc.append("‘必修课程1’");
+			if (!isCorse2Fnsh)
+				desc.append("‘必修课程2’");
+			if (!isCorse3Fnsh)
+				desc.append("‘必修课程3’");
+			desc.append("没有完成学习，请完成后再参加考试！");
+			res = new ResultEntity("0001", desc.toString());
+		}
+		renderJson(res);
+		if(isCorse1Fnsh && isCorse2Fnsh && isCorse3Fnsh)
+			return true;
+		else
+			return false;
+	}
+	
 	// 提交考试，判定对错，记录题目记录，考试成绩
 	// zhuchaobin
 	@Clear
