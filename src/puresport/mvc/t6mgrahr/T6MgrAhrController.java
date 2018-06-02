@@ -120,7 +120,8 @@ public class T6MgrAhrController extends BaseController {
 
 	@Clear
 	public void getData() {
-		renderJsonForTable(T6MgrAhrService.service.selectByPage(getParamWithServerPage()));
+		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
+		renderJsonForTable(T6MgrAhrService.service.selectByPage(mgrSession, getParamWithServerPage()));
 	}
 	
 	@Clear

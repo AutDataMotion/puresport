@@ -11,7 +11,9 @@ import com.platform.mvc.base.BaseService;
 
 import puresport.config.ConfMain;
 import puresport.constant.ConstantInitMy;
+import puresport.constant.EnumTypeLevel;
 import puresport.mvc.comm.ParamComm;
+import puresport.mvc.t6mgrahr.T6MgrSession;
 
 public class AreaService extends BaseService {
 
@@ -29,12 +31,30 @@ public class AreaService extends BaseService {
 		return mdl;
 	}
 	
-	public List<Area> getProvince(){
-		return  Area.dao.find(String.format("select id, name from %s where %s ", tableName, "parent_id=?"), 0);
+	public List<Area> getProvince(T6MgrSession mgrSession){
+		String whereStr = "1 = 2 ";
+		if (mgrSession.getTypeleve().equals(EnumTypeLevel.Country.getName())) {
+			// 国家级 全部可见
+			whereStr = " parent_id=0 ";
+		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.Province.getName())
+				|| mgrSession.getTypeleve().equals(EnumTypeLevel.City.getName())) {
+			// 省市级 只可见属于该省的
+			whereStr = String.format(" name='%s' ", mgrSession.getProvince());
+		} 
+		return  Area.dao.find(String.format("select id, name from %s where %s ", tableName, whereStr));
 	}
 	
-	public List<Area> getCityByProvince(Integer provinceId){
-		return  Area.dao.find(String.format("select id, name from %s where %s ", tableName, "parent_id=?"), provinceId);
+	public List<Area> getCityByProvince(T6MgrSession mgrSession, Integer provinceId){
+		String whereStr = "1 = 2 ";
+		if (mgrSession.getTypeleve().equals(EnumTypeLevel.Country.getName())
+				|| mgrSession.getTypeleve().equals(EnumTypeLevel.Province.getName())) {
+			// 国家、省级 全部可见
+			whereStr = String.format(" parent_id= %d ", provinceId);
+		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.City.getName())) {
+			// 市级 只可见属于该市的
+			whereStr = String.format(" name='%s' and parent_id= %d", mgrSession.getCity(), provinceId);
+		} 
+		return  Area.dao.find(String.format("select id, name from %s where %s ", tableName, whereStr));
 	}
 	
 	public List<Record> getInstitute(){

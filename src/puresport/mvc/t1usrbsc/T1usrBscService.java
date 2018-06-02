@@ -18,6 +18,7 @@ import csuduc.platform.util.StringUtil;
 import puresport.applicat.MdlExcelRow;
 import puresport.config.ConfMain;
 import puresport.constant.EnumRoleType;
+import puresport.constant.EnumTypeLevel;
 import puresport.mvc.comm.ParamComm;
 import puresport.mvc.t6mgrahr.T6MgrSession;
 
@@ -46,14 +47,15 @@ public class T1usrBscService extends BaseService {
 		return true;
 	}
 
-	public List<T1usrBsc> selectByPage(ParamComm paramMdl) {
-		Long countTotal = ConfMain.db().queryLong(String.format("select count(1) from %s ", tableName));
+	public List<T1usrBsc> selectByPage(T6MgrSession mgrSession, ParamComm paramMdl) {
+		final String roleStr = mgrSession.selectRoleStr();
+		Long countTotal = ConfMain.db().queryLong(String.format("select count(1) from %s where %s ", tableName, roleStr));
 		paramMdl.setTotal(countTotal);
 		List<T1usrBsc> resList = new ArrayList<>();
 		if (countTotal > 0) {
 			resList = T1usrBsc.dao.find(String.format(
 					"select usrid,nm,crdt_tp, crdt_no, gnd,brth_dt,spt_prj, typelevel, province, city,institute, mblph_no, email  from %s where %s  limit ?,?",
-					tableName, "1=1"), paramMdl.getPageIndex(), paramMdl.getPageSize());
+					tableName, roleStr), paramMdl.getPageIndex(), paramMdl.getPageSize());
 		}
 		return resList;
 	}
@@ -67,10 +69,10 @@ public class T1usrBscService extends BaseService {
 	private static String sql_score = "select u.*, s.exam_nm as exam_nm, s.exam_grd as exam_grd, (CASE WHEN s.exam_grd >= 80 THEN '及格'  WHEN s.exam_grd is null THEN '未考试'  ELSE '不及格' END) as passed "
 			+ " from t1_usr_bsc u  left join t11_exam_stat s on u.usrid = s.usrid  where 1=1 ";
 
-	public List<Record> selectScoreByPage(ParamComm paramMdl) {
+	public List<Record> selectScoreByPage(T6MgrSession mgrSession, ParamComm paramMdl) {
 	
 		List<Object> listArgs = new ArrayList<>();
-		String whereSql = getProvinceWhere(paramMdl, listArgs);
+		String whereSql = getProvinceWhere(mgrSession, paramMdl, listArgs);
 		Object[] listObjs = listArgs.toArray();
 		List<Record> userScoreRecords = ConfMain.db().find(sql_score + whereSql, listObjs);
 	
@@ -81,15 +83,34 @@ public class T1usrBscService extends BaseService {
 	private final static String getStringLikeLeft(String s){
 		return s+"%";
 	}
-	public static String getProvinceWhere(ParamComm paramMdl, List<Object> listArgs) {
+	public static String getProvinceWhere(T6MgrSession mgrSession, ParamComm paramMdl, List<Object> listArgs) {
 		StringBuilder whereStr = new StringBuilder();
-		if (StringUtil.notEmptyOrDefault(paramMdl.getName1(), defSelect)) {
+		if (mgrSession.getTypeleve().equals(EnumTypeLevel.Country.getName())) {
+			// 国家级 全部可见
+			if (StringUtil.notEmptyOrDefault(paramMdl.getName1(), defSelect)) {
+				whereStr.append(" and province like ? ");
+				listArgs.add(getStringLikeLeft(paramMdl.getName1()));
+			}
+			if (StringUtil.notEmptyOrDefault(paramMdl.getName2(), defSelect)) {
+				whereStr.append(" and city like ? ");
+				listArgs.add(getStringLikeLeft(paramMdl.getName2()));
+			}
+		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.Province.getName())) {
+			// 省级 只可见属于该省的
 			whereStr.append(" and province like ? ");
-			listArgs.add(getStringLikeLeft(paramMdl.getName1()));
-		}
-		if (StringUtil.notEmptyOrDefault(paramMdl.getName2(), defSelect)) {
+			listArgs.add(getStringLikeLeft(mgrSession.getProvince()));
+			
+			if (StringUtil.notEmptyOrDefault(paramMdl.getName2(), defSelect)) {
+				whereStr.append(" and city like ? ");
+				listArgs.add(getStringLikeLeft(paramMdl.getName2()));
+			}
+		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.City.getName())) {
+			// 市级 只可见属于该市的
+			whereStr.append(" and province like ? ");
+			listArgs.add(getStringLikeLeft(mgrSession.getProvince()));
 			whereStr.append(" and city like ? ");
-			listArgs.add(getStringLikeLeft(paramMdl.getName2()));
+			listArgs.add(getStringLikeLeft(mgrSession.getCity()));
+			
 		}
 		if (StringUtil.notEmptyOrDefault(paramMdl.getName3(), defSelect)) {
 			whereStr.append(" and institute like ? ");
@@ -136,31 +157,31 @@ public class T1usrBscService extends BaseService {
 	 * @param paramMdl
 	 * @return
 	 */
-	public List<Record> selectPassedPercent(ParamComm paramMdl) {
+	public List<Record> selectPassedPercent(T6MgrSession mgrSession, ParamComm paramMdl) {
 		List<Object> listArgs = new ArrayList<>();
-		String whereSql = getProvinceWhere(paramMdl, listArgs);
+		String whereSql = getProvinceWhere(mgrSession, paramMdl, listArgs);
 		Object[] listObjs = listArgs.toArray();
 		List<Record> prjStatisticsRes = ConfMain.db().find(sql_prj + whereSql, listObjs);
 		
 		if (CollectionUtils.isEmpty(prjStatisticsRes))  return new ArrayList<>();
 		
 		prjStatisticsRes.stream().forEach(e-> {
-//			Long cntTotal = e.getLong("cnt_total");
-//			Long cntAnswered = e.getLong("cnt_answered");
-//			Long cntPassed = e.getLong("cnt_passed");
-//			if (ComUtil.notNullAndZero(cntTotal) && ComUtil.notNullAndZero(cntAnswered) && ComUtil.notNullAndZero(cntPassed)) {
-//				e.set("answered", String.format("%d%%(%d/%d)", cntAnswered*100/cntTotal, cntAnswered, cntTotal));
-//				e.set("passed", String.format("%d%%(%d/%d)", cntPassed*100/cntAnswered, cntPassed, cntAnswered));
-//			}else if (ComUtil.notNullAndZero(cntTotal) && ComUtil.notNullAndZero(cntAnswered)) {
-//				e.set("answered", String.format("%d%%(%d/%d)", cntAnswered*100/cntTotal, cntAnswered, cntTotal));
-//				e.set("passed", String.format("0%%(0/%d)", cntAnswered));
-//			}else  if (ComUtil.notNullAndZero(cntTotal)) {
-//				e.set("answered", String.format("0%%(0/%d)", cntTotal));
-//				e.set("passed", "0%%(0/0)");
-//			}else {
-//				e.set("answered", "0%%(0/0)");
-//				e.set("passed", "0%%(0/0)");
-//			}
+			Long cntTotal = e.getLong("cnt_total");
+			Long cntAnswered = e.getLong("cnt_answered");
+			Long cntPassed = e.getLong("cnt_passed");
+			if (ComUtil.notNullAndZero(cntTotal) && ComUtil.notNullAndZero(cntAnswered) && ComUtil.notNullAndZero(cntPassed)) {
+				e.set("answered", String.format("%d%%(%d/%d)", cntAnswered*100/cntTotal, cntAnswered, cntTotal));
+				e.set("passed", String.format("%d%%(%d/%d)", cntPassed*100/cntAnswered, cntPassed, cntAnswered));
+			}else if (ComUtil.notNullAndZero(cntTotal) && ComUtil.notNullAndZero(cntAnswered)) {
+				e.set("answered", String.format("%d%%(%d/%d)", cntAnswered*100/cntTotal, cntAnswered, cntTotal));
+				e.set("passed", String.format("0%%(0/%d)", cntAnswered));
+			}else  if (ComUtil.notNullAndZero(cntTotal)) {
+				e.set("answered", String.format("0%%(0/%d)", cntTotal));
+				e.set("passed", "0%%(0/0)");
+			}else {
+				e.set("answered", "0%%(0/0)");
+				e.set("passed", "0%%(0/0)");
+			}
 			});
 		return prjStatisticsRes;
 	}
@@ -208,15 +229,15 @@ public class T1usrBscService extends BaseService {
 		if (CollectionUtils.isEmpty(problemStatisRes))  return new ArrayList<>();
 		
 		problemStatisRes.stream().forEach(e-> {
-//			Long cntTotal = e.getLong("cntall");
-//			Long cntWrong = e.getLong("cntwrong");
-//			if (ComUtil.notNullAndZero(cntTotal) && ComUtil.notNullAndZero(cntWrong) ) {
-//				e.set("errorPercent", String.format("%d%%(%d/%d)", cntWrong*100/cntTotal, cntWrong, cntTotal));
-//			}else if (ComUtil.notNullAndZero(cntTotal) ) {
-//				e.set("errorPercent", String.format("0%%(0/%d)",  cntTotal));
-//			}else {
-//				e.set("errorPercent", "--(0/0)");
-//			}
+			Long cntTotal = e.getLong("cntall");
+			Long cntWrong = e.getLong("cntwrong");
+			if (ComUtil.notNullAndZero(cntTotal) && ComUtil.notNullAndZero(cntWrong) ) {
+				e.set("errorPercent", String.format("%d%%(%d/%d)", cntWrong*100/cntTotal, cntWrong, cntTotal));
+			}else if (ComUtil.notNullAndZero(cntTotal) ) {
+				e.set("errorPercent", String.format("0%%(0/%d)",  cntTotal));
+			}else {
+				e.set("errorPercent", "--(0/0)");
+			}
 			});
 		return problemStatisRes;
 	}

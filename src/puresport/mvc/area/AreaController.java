@@ -15,6 +15,7 @@ import oracle.net.aso.e;
 import puresport.constant.ConstantInitMy;
 import puresport.constant.EnumStatus;
 import puresport.mvc.comm.ParamComm;
+import puresport.mvc.t6mgrahr.T6MgrSession;
 
 
 /**
@@ -42,15 +43,16 @@ public class AreaController extends BaseController {
 	@Clear
 	public void selectProvince(){
 		// 判断管理员级别，不同级别设置可见省份
-		
-		renderJson(AreaService.service.getProvince());
+		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
+		renderJson(AreaService.service.getProvince(mgrSession));
 	}
 	
 	@Clear
 	public void selectCity(){
 		// 获取检索条件
+		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
 		Integer provinceId = getParaToInt("provinceId");
-	 	renderJson(AreaService.service.getCityByProvince(provinceId));
+	 	renderJson(AreaService.service.getCityByProvince(mgrSession, provinceId));
 	}
 	
 	@Clear
