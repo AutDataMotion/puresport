@@ -114,7 +114,7 @@ public class T5CrclStdyController extends BaseController {
 	 * 查询课程学习记录，判断是否具备考试资格
 	 */
 	@Clear
-	public void isCanTest() {
+	public boolean isCanTest() {
 		/*
 		 * getModel(T5CrclStdy.class).update(); redirect(pthc);
 		 */
@@ -135,7 +135,7 @@ public class T5CrclStdyController extends BaseController {
 			isCorse1Fnsh = true;
 		}
 		// 必修课程2
-		crclid = "'21', '22', '23', '24','25', '26', '27'";
+		crclid = "'21', '22', '23', '24','25'";
 		sql = "select * from t5_crcl_stdy t where t.usrid ='" + usrid + "' and t.crclid in(" + crclid
 				+ ") and t.stdy_st='1'";
 		t5List = T5CrclStdy.dao.find(sql);
@@ -165,6 +165,10 @@ public class T5CrclStdyController extends BaseController {
 			res = new ResultEntity("0001", desc.toString());
 		}
 		renderJson(res);
+		if(isCorse1Fnsh && isCorse2Fnsh && isCorse3Fnsh)
+			return true;
+		else
+			return false;
 	}
 
 	/**

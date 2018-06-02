@@ -1,3 +1,4 @@
+<!DOCTYPE HTML>
 <html>
 <head>
 <title>考试</title>
@@ -196,11 +197,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			success : function(res) {
 				if (res.code == "0000") {
 					showDiv(4);
-/*  					var t2 = document.getElementById('scoreDesc');
-					t2.innerText = res.desc;  */
-					var pic = document.getElementById("certificateImgId");//picture是img的id
-					pic.src = res.desc;
-					
+					var t2 = document.getElementById('scoreDesc');
+					t2.innerText = res.desc;
 				} else {
 					alert(res.desc);
 				}
@@ -293,207 +291,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	</div>
 <div class="main_btm1">
 	<!-- 第一页：考试说明 -->
-	<div id="mannulDiv" class="demo" style="display: none;">
-		<div class="container">
-			<h2 align="center">准入考试说明</h2>
-			</br>		
-							<div class="row">
-					<div class="col-md-1 myTest"></div>
-					<div class="col-md-10 myTest">
-						<ul>
-				<li>1.本次考试包含不定项选择和判断题各10道，每题5分，满分100分，80分及格；</li>
-				<li>2.考试成绩不合格，可以进行多次考试。每次考试试题随机。多次参加考试，试最后一次提交的成绩为最终成绩；</li>
-				<li>3.所有试题完成后，点击提交试卷，系统才保存成绩；</li>
-				<li>4.考试过程中请注意保持浏览器客户端在线状态，不要强制刷新或者断开网络，否则考试将终止。</li>
-						</ul>
-					</div>
-					<div class="col-md-2 myTest"></div>
-				</div>
-				
-			<div align="center">
-				<button onclick="isCanTest(2)" class="btn">点击开始考试</button>
-			</div>
-		</div>
-	</div>
-		
-<!-- 	<div id="commitmentDiv" class="score" style="display: none;">
-		<div align="center">
-		<img src="/images_zhuchaobin/logo_cn.png" class="img-thumbnail">
-			<p id="scoreDesc"></p>
-		</div>
-	</div> -->
-	
-	<!-- 最后部分：提交成功，展示成绩-->
-<!-- 	<div id="showScoreDiv" class="score" style="display: none;">
-		<div align="center">
-			<p id="scoreDesc"></p>
-		</div>
-		
-		<img src="" id="certificateImgId" class="img-thumbnail" height="300" width="300" >
-	</div> -->
-	
-		<div id="showScoreDiv" class="demo" >
+	<div id="mannulDiv" class="demo" >
 		<div class="container">	
-		<div align="center">
-			<div class="row">
-						<div class="col-md-3 myTest"></div>
-						<div class="col-md-6 myTest">
-							
-						<img src="" id="certificateImgId" class="img-thumbnail" height="400" width="400" >	
-						</div>	
-			<div class="col-md-3 myTest">
-			
-											<div class="row">
-				  <div class="col-md-4 myTest">
-				  	 <img src="http://qr.liantu.com/api.php?text=http://m.qpic.cn/psb?/V10zsTr30tgqVO/JjLdVKa1q7ZJAlpFtcuGqVvutgKH1cvPUeTuDeTpKBY!/b/dCIBAAAAAAAA&bo=TwIgAwAAAAARF04!&rf=viewer_4&t=5&bg=ffffff&200" height="150" width="150"/>
-				  </div>
-				  <div class="col-md-4 myTest"></div>
-				  <div class="col-md-4 myTest"></div>
-				</div>
-				
-				
-																<div class="row">
-				  <div >
-				  	 使用如下app扫描二维码分享
-				  </div>
-
-				</div>
-				<div class="row">
-				  <div >
-				  	<img src="/images_zhuchaobin/share.png" height="80" width="290" >
-				  </div>
-<!-- 				  <div class="col-md-4 myTest"></div>
-				  <div class="col-md-4 myTest"></div> -->
-				</div>					
-				
-			</div>
+		<div align="center">	
+		<img src="${certificatePath!""}" class="img-rounded" align="middle" height="300" width="300">
+<!-- 		<img src="/images_zhuchaobin/certificateTemp.jpg" class="img-thumbnail" height="300" width="300" > -->
+		
 		</div>
 	
 		</div>
 	</div>
-	</div>
-	
-	<!-- 开始部分：学习没完成，无资格考试-->
-	<div id="cantTestDiv" class="score" style="display: none;">
-		<div align="center" hight="300">
-			<p id="cantTestDesc"></p>
-			<table height="60">
-			</table>
-			<button
-				onclick="window.location.href='/jf/puresport/t7Crcl/study_notify_1'"
-				class="btn">跳转到课程学习</button>
-		</div>
-	</div>
 
-	<div class="container" id="doTestDiv" style="display: none;">	
-		<!--  start cursual  -->
-		<div id="owl-demo" class="owl-carousel">
-			<%for(x in examSelectList){ %>
-			<div>				
-				<label>【多项选择】 </label>
-				</br>
-				<label>第${x.prblmno!''}题： ${x.ttl!''}</label>
-				</br> <label
-					for=${x.prblmid!''}A class="prblSelect" style="font-weight: lighter">
-					<input type="checkbox" name=${x.prblmno!''} value=A id=${x.prblmid!''}A>
-					${x.prblmid!} ${x.optA!}
-				</label> </br> <label for=${x.prblmid!''}B class="prblSelect"
-					style="font-weight: lighter"> <input type="checkbox"
-					name=${x.prblmno!''} value=B id=${x.prblmid!''}B> ${x.prblmid!}
-					${x.optB!}
-				</label> </br> <label for=${x.prblmid!''}C class="prblSelect"
-					style="font-weight: lighter"> <input type="checkbox"
-					name=${x.prblmno!''} value=C id=${x.prblmid!''}C> ${x.prblmid!}
-					${x.optC!}
-				</label> </br> <label for=${x.prblmid!''}D class="prblSelect"
-					style="font-weight: lighter"> <input type="checkbox"
-					name=${x.prblmno!''} value=D id=${x.prblmid!''}D> ${x.prblmid!}
-					${x.optD!}
-				</label> </br>
-			</div>
-			
-			<%}%> <%for(y in examDeducList){ %>
-			<div>
-				<label>【判断题】  </label>
-				</br>
-				<label> 第${y.prblmno!''}题： ${y.ttl!''} </label>
-				</br> </br> <label
-					for=${y.prblmid!''}A class="prblSelect" style="font-weight: lighter">
-					<input type="radio" name=${y.prblmno!''} value=A id=${y.prblmid!''}A>
-					正 确<!-- ${y.prblmid!} -->
-				</label> </br> </br> <label for=${y.prblmid!''}B class="prblSelect"
-					style="font-weight: lighter"> <input type="radio"
-					name=${y.prblmno!''} value=B id=${y.prblmid!''}B> 错 误<!-- ${y.prblmid!} -->
-				</label> </br> </br>
-			</div>
-			<%}%>
-
-			<!-- 最后一页：考试提交说明 -->
-			<div id="mannulDiv">
-<!-- 				<h2 align="center">考试提交说明</h2>
-				<li>请确认试题已经全部做完，然后在本页选择“同意”，同意后可点击提交试卷；</li>
-				<li>可以进行多次考试，每次考试试题随机。多次参加考试的，视最后一次提交的成绩为最终成绩；</li>
-				<li>“提交”前可以返回修改试题答案，但是“提交”后将实时计算成绩且不能再进行修改；</li>
-				<li>提交失败或有其他疑问请联系管理员处理；</li>
-				<li>点击“同意”后，才能提交考试成绩。</li> -->
-				<div align="center">
-					<label style="font-weight: lighter"> <input type="radio"
-						name="agreeSubmit" value="1"> 同意
-					</label> &nbsp &nbsp <label style="font-weight: lighter"> <input
-						type="radio" name="agreeSubmit" value="0"> 拒绝
-					</label>
-				</div>
-				<div align="center">
-					<button onclick="submitExam()" class="btn">提交试卷</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- submit Modal-->
-	<div class="modal fade" id="submitModal" tabindex="-1" role="dialog"
-		aria-labelledby="submitModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header" align="center">
-					<h4 class="modal-title">友情提示</h4>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body" align="center">提交后不能再修改答案，请您再次确认是否要提交考试?</div>
-				<div class="modal-footer" align="center">
-					<button type="button" onclick="isSubmit2()" class="btn"
-						data-dismiss="modal">确定</button>
-					<button type="button" class="btn" data-dismiss="modal">取消</button>
-				</div>
-			</div>
-			<!-- /.modal-content -->
-		</div>
-		<!-- /.modal-dialog -->
-	</div>
-
-	<!-- tip1 Modal-->
-	<div class="modal fade" id="tip1Modal" tabindex="-1" role="dialog"
-		aria-labelledby="tip1ModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header" align="center">
-					<h5 class="modal-title">提 示</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body" align="center">对不起，选择"同意"后才能提交试卷！</div>
-				<div class="modal-footer" align="center">
-					<button type="button" class="btn" data-dismiss="modal">确定</button>
-				</div>
-			</div>
-			<!-- /.modal-content -->
-		</div>
-		<!-- /.modal-dialog -->
-	</div>
 	</div>
 	<!-- start footer -->
 	<% include("/f/footer.html"){} %>
