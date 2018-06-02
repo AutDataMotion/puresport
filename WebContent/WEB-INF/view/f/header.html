@@ -1,55 +1,29 @@
 <!-- h1>登录成功，欢迎回来${session["usrid"]}</h1-->  
 <div class="header_bg" id="header_bg">
 	<div class="header_bg1">
-		<div class="container">
+		<a href="${cxt!}/jf/puresport/pagesController" id="headbanner">
+		<script>
+			var index = Math.floor(Math.random()*4+1);
+			var img_index = "headbanner"+index+".png";
+			
+			$("#headbanner").html("<img src='${cxt!}/images/"+img_index+"' class='img-responsive'>");
+		</script>
+			<!-- img src="${cxt!}/images/headbanner1.png" class="img-responsive"-->
+		</a>
+		<!--div class="container">
 			<div class="row">
 				<div class="header">
 					<div class="logo">
 						<h1><a href="${cxt!}/jf/puresport/pagesController">反兴奋剂在线教育平台</a></h1>
 					</div>
-				<!--div class="h_menu">
-				<a id="touch-menu" class="mobile-menu" href="#">Menu</a>
-				<nav>
-				<ul class="menu list-unstyled">
-					<li id = "menu_index"><a href="${cxt!}/jf/puresport/pagesController">首页</a></li>
-					<li id = "menu_study"><a href="${cxt!}/jf/puresport/pagesController/study">课程学习</a></li>
-					<li id = "menu_dotest"><a href="${cxt!}/jf/puresport/pagesController/dotest">考试</a></li>
-					
-					<li class="dropdown selfcenterbtn">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-							
-							<span class="caret"></span>
-						</a>
-						<ul class="dropdown-menu" id="selfcenterbtn_id">
-						
-							
-							<script>
-							var usrid ='${session["usrid"]}';
-							if(usrid)//已登陆
-							{
-								$("#selfcenterbtn_id").html("<li><a href='${cxt!}/jf/puresport/pagesController/selfcenter'>个人中心</a></li>"
-								+"<li><a href='${cxt!}/jf/puresport/pagesController/loginout'>注销</a></li>");
-							}
-							else{
-								$("#selfcenterbtn_id").html("<li><a href='${cxt!}/jf/puresport/pagesController/login'>登录</a></li>");
-							}
-							</script>
-							
-							
-						</ul>
-					</li>
-					
-				</ul>
-				</nav>
-				<script src="${cxt!}/js/menu.js" type="text/javascript"></script>
-				</div-->
+				
 				<div class="clearfix"></div>
 			</div>
 			<div class="grid_12">
 		      <img src="${cxt!}/images/color_stripe.jpg" class="img-responsive" class="c_stripe">
 		    </div>
 			</div>
-		</div>
+		</div-->
 	</div>
 	<div class="header_bg2" id="header_bg2">
 		<div class="container">
@@ -65,24 +39,26 @@
 			    
 				<div class="h_menu_main collapse navbar-collapse" id="example-navbar-collapse">
 						<a id="touch-menu" class="mobile-menu" href="#">菜单</a>
-						<div style="width:200px;margin:0 auto;">
+						<div>
 							<ul class="menu_left nav navbar-nav">
 				           
-							<li id = "menu_zhunru"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/zhunru_index">准入</a></li>
-							<li id = "menu_tuozhan"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/tuozhan_index">拓展</a></li>
-							<li id = "menu_jiangzuo"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/jiangzuo_index">讲座</a></li>
+							<li id = "menu_zhunru"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/zhunru_index"><img src="${cxt!}/images/zhunrubtn.png" class="img-responsive"></a></li>
+							<li id = "menu_tuozhan"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/tuozhan_index"><img src="${cxt!}/images/tuozhanbtn.png" class="img-responsive"></a></li>
+							<li id = "menu_jiangzuo"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/jiangzuo_index"><img src="${cxt!}/images/jiangzuobtn.png" class="img-responsive"></a></li>
+				            <li id = "menu_ziyuan"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/resource_index"><img src="${cxt!}/images/ziyuanbtn.png" class="img-responsive"></a></li>
 				           
 				        	</ul>
 						</div>
 						<div>
 							<ul class="menu_right nav navbar-nav">
 								
-								<li id = "menu_search"><a class="header_bg2_ul_li_a" href="#">搜索</a></li>
-								<li id = "menu_jiangzuo"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/about">关于</a></li>
+								<li id = "menu_search"><a class="header_bg2_ul_li_a" href="#"><img src="${cxt!}/images/searchbtn.png" class="img-responsive"></a></li>
+								<li id = "menu_about"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/about"><img src="${cxt!}/images/aboutbtn.png" class="img-responsive"></a></li>
 					            <li class="dropdown selfcenterbtn">
 					            
-									<a class="dropdown-toggle" data-toggle="dropdown">
-										<span class="caret"></span>
+									<a class="dropdown-toggle header_bg2_ul_li_a" data-toggle="dropdown">
+										
+										<img src="${cxt!}/images/loginbtn.png" class="img-responsive">
 									</a>
 									<ul class="dropdown-menu" id="selfcenterbtn_id">
 									
@@ -141,24 +117,25 @@
 			    
 				<div class="h_menu_main collapse navbar-collapse" id="example-navbar-collapse">
 						<a id="touch-menu" class="mobile-menu" href="#">菜单</a>
-						<div style="width:200px;margin:0 auto;">
+						<div>
 							<ul class="menu_left nav navbar-nav">
 				           
-							<li id = "menu_zhunru"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/zhunru_index">准入</a></li>
-							<li id = "menu_tuozhan"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/tuozhan_index">拓展</a></li>
-							<li id = "menu_jiangzuo"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/jiangzuo_index">讲座</a></li>
+							<li id = "menu_zhunru"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/zhunru_index"><img src="${cxt!}/images/zhunrubtn.png" class="img-responsive"></a></li>
+							<li id = "menu_tuozhan"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/tuozhan_index"><img src="${cxt!}/images/tuozhanbtn.png" class="img-responsive"></a></li>
+							<li id = "menu_jiangzuo"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/jiangzuo_index"><img src="${cxt!}/images/jiangzuobtn.png" class="img-responsive"></a></li>
+				            <li id = "menu_ziyuan"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/resource_index"><img src="${cxt!}/images/ziyuanbtn.png" class="img-responsive"></a></li>
 				           
 				        	</ul>
 						</div>
-						<div>
+						<!-- div>
 							<ul class="menu_right nav navbar-nav">
 				           
-								<li id = "menu_search"><a class="header_bg2_ul_li_a" href="#">搜索</a></li>
-								<li id = "menu_jiangzuo"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/about">关于</a></li>
+								<li id = "menu_search"><a class="header_bg2_ul_li_a" href="#"><img src="${cxt!}/images/searchbtn.png" class="img-responsive"></a></li>
+								<li id = "menu_about"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/about"><img src="${cxt!}/images/aboutbtn.png" class="img-responsive"></a></li>
 					            <li class="dropdown selfcenterbtn">
 					            
-									<a class="dropdown-toggle" data-toggle="dropdown">
-										<span class="caret"></span>
+									<a class="dropdown-toggle header_bg2_ul_li_a" data-toggle="dropdown">
+										<img src="${cxt!}/images/loginbtn.png" class="img-responsive">
 									</a>
 									<ul class="dropdown-menu" id="selfcenterbtn_id">
 									
@@ -178,7 +155,7 @@
 									</ul>
 								</li>
 				        	</ul>
-						</div>
+						</div-->
 					
 				</div>
 			</div>

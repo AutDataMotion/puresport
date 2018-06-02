@@ -40,19 +40,23 @@ public class AreaController extends BaseController {
 	public static final String pthv = "/puresport/area/";
 
 	@Clear
-	public void getProvince(){
+	public void selectProvince(){
+		// 判断管理员级别，不同级别设置可见省份
+		
 		renderJson(AreaService.service.getProvince());
 	}
 	
 	@Clear
-	public void getCityByProvinceId(){
+	public void selectCity(){
 		// 获取检索条件
-	 	renderJson(AreaService.service.getCityByProvince(getParamComm()));
+		Integer provinceId = getParaToInt("provinceId");
+	 	renderJson(AreaService.service.getCityByProvince(provinceId));
 	}
 	
 	@Clear
-	public void getInstitute(){
-		renderJson(AreaService.service.getInstitute(getParamComm()));
+	public void selectInstitute(){
+		// 更具管理员级别，不同级别设置不同
+		renderJson(AreaService.service.getInstitute());
 	}
 	/**
 	 * 列表

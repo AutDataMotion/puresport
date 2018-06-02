@@ -9,12 +9,13 @@ import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
 import com.platform.mvc.base.BaseService;
 
+import puresport.config.ConfMain;
 import puresport.constant.ConstantInitMy;
 import puresport.mvc.comm.ParamComm;
 
 public class AreaService extends BaseService {
 
-	private final static String tableName = "area";
+	private final static String tableName = "dt_area";
 	private final static String tableKey = "id";
 	
 	@SuppressWarnings("unused")
@@ -29,15 +30,14 @@ public class AreaService extends BaseService {
 	}
 	
 	public List<Area> getProvince(){
-		return  Area.dao.find(String.format("select * from %s where %s ", tableName, "parent_id=?"), 0);
+		return  Area.dao.find(String.format("select id, name from %s where %s ", tableName, "parent_id=?"), 0);
 	}
 	
-	public List<Area> getCityByProvince(ParamComm province){
-		return  Area.dao.find(String.format("select * from %s where %s ", tableName, "parent_id=?"), province.getId());
+	public List<Area> getCityByProvince(Integer provinceId){
+		return  Area.dao.find(String.format("select id, name from %s where %s ", tableName, "parent_id=?"), provinceId);
 	}
 	
-	public List<Record> getInstitute(ParamComm province){
-		return Db.use(ConstantInitMy.db_dataSource_main)
-				.find(String.format("select institute from %s group by institute ", "t1_usr_bsc"));
+	public List<Record> getInstitute(){
+		return ConfMain.db().find(String.format("select institute from t1_usr_bsc group by institute "));
 	}
 }

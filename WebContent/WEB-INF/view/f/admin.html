@@ -124,7 +124,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 .myTabs>li.active>a, .myTabs>li.active>a:focus, .myTabs>li.active>a:hover
 	{
 	color: #fff;
-	background-color: #86d186 !important;
+	/*background-color: #86d186 !important;*/
 }
 
 .myTabs>li>a {
@@ -280,32 +280,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<div class="tab-pane fade in active" id="myTabs_2_0">
 									<div class="form-inline">
 										<div class="form-group">
-											<label for="name" class="control-label">省：</label> <select class="form-control">
-												<option>全选</option>
-												<option>2</option>
-												<option>3</option>
-												<option>4</option>
-												<option>5</option>
+											<label for="name" class="control-label">省：</label> 
+										<select id="provSelect_score" class="form-control">
+												<option name="prov_9999" value="9999">全部</option>
 											</select>
 										</div>
 										<div class="form-group">
-											<label for="name" class="control-label">市：</label> <select
-												class="form-control">
-												<option>全选</option>
-												<option>2</option>
-												<option>3</option>
-												<option>4</option>
-												<option>5</option>
+											<label for="name" class="control-label">市：</label> 
+											<select  id="citySelect_score" class="form-control">
+												<option name="city_9999" value="9999">全部</option>
 											</select>
 										</div>
 										<div class="form-group">
-											<label for="name" class="control-label">协会：</label> <select
-												class="form-control">
-												<option>全选</option>
-												<option>2</option>
-												<option>3</option>
-												<option>4</option>
-												<option>5</option>
+											<label for="name" class="control-label">协会：</label> 
+											<select  id="instituteSelect_score"  class="form-control">
+												<option name="institute_9999" value="9999">全部</option>
 											</select>
 										</div>
 
@@ -383,8 +372,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												<th>所属省（自治区）</th>
 												<th>所属市</th>
 												<th>所属协会</th>
-												<th>合格率</th>
-												<th>答题率</th>
+												<th>合格率(及格/已答题人数)</th>
+												<th>答题率(已答题/总人数)</th>
 											</tr>
 										</thead>
 									</table>
@@ -411,7 +400,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												<th>试题内容</th>
 												<th>试题答案</th>
 												<th>试题分值</th>
-												<th>错误率</th>
+												<th>错误率(错误次数/答题次数)</th>
 											</tr>
 										</thead>
 									</table>
@@ -550,6 +539,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script type="text/javascript" src="${cxt!}/js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" src="${cxt!}/js/dataTables.select.min.js"></script>
 <script type="text/javascript"  src="${cxt!}/ui/layer3/layer.js"></script>
+
 
 <script src="${cxt!}/js/t6admin.js"></script>
 <script src="${cxt!}/js/t1sporter.js"></script>
