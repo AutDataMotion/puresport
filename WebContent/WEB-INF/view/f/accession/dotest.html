@@ -181,6 +181,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			dataSet.push(item);
 		}
 		/* 			alert(dataSet); */
+		// 承诺人姓名		
+		var commimentNm = document.getElementById("commimentNm").value;
+		if(commimentNm == ""){
+			$('#tip3Modal').modal('show');	
+			return;
+		}
 		var url;
 		url = '/jf/puresport/t7Crcl/submitExam';
 		var examid = document.getElementById("examid").value;
@@ -191,22 +197,51 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			traditional : true,
 			data : {
 				"dataSet" : dataSet,
-				"examid" : examid
+				"examid" : examid,
+				"commimentNm" : commimentNm
 			},
 			success : function(res) {
 				if (res.code == "0000") {
-					showDiv(4);
+					showDiv(5);
 /*  					var t2 = document.getElementById('scoreDesc');
 					t2.innerText = res.desc;  */
+					var t2 = document.getElementById('pageTitle');
+					t2.innerText = "成绩证书";
+					
 					var pic = document.getElementById("certificateImgId");//picture是img的id
 					pic.src = res.desc;
 					
-				} else {
+				} else if (res.code == "0002") {
+					$('#tip2Modal').modal('show');				
+				} else{
 					alert(res.desc);
 				}
 			},
 			dataType : "json"
 		});
+	}
+	
+	
+	//确认提交试卷
+	function confirSubmit() {
+		/* 		if(confirmNum == 0){ */
+		var obj1 = document.getElementsByName("agreeSubmit")
+		var isAgreeSubmit = false;
+		for (var i = 0; i < obj1.length; i++) { //遍历Radio   
+			if (obj1[i].checked) {
+				if (obj1[i].value == 1) {
+					isAgreeSubmit = true;
+				}
+			}
+		}
+		if (!isAgreeSubmit) {
+			$('#tip1Modal').modal('show');
+			return;
+		}
+		
+		showDiv(4);
+		var t2 = document.getElementById('pageTitle');
+		t2.innerText = "承诺书";
 	}
 </script>
 
@@ -217,21 +252,32 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			document.getElementById("cantTestDiv").style.display = "";
 			document.getElementById("showScoreDiv").style.display = "none";
 			document.getElementById("doTestDiv").style.display = "none";
+			document.getElementById("commimentDiv").style.display = "none";
+			
 		} else if (flag == 2) {
 			document.getElementById("mannulDiv").style.display = "";
 			document.getElementById("cantTestDiv").style.display = "none";
 			document.getElementById("showScoreDiv").style.display = "none";
 			document.getElementById("doTestDiv").style.display = "none";
+			document.getElementById("commimentDiv").style.display = "none";
 		} else if (flag == 3) {
 			document.getElementById("mannulDiv").style.display = "none";
 			document.getElementById("cantTestDiv").style.display = "none";
 			document.getElementById("showScoreDiv").style.display = "none";
 			document.getElementById("doTestDiv").style.display = "";
+			document.getElementById("commimentDiv").style.display = "none";
 		} else if (flag == 4) {
+			document.getElementById("mannulDiv").style.display = "none";
+			document.getElementById("cantTestDiv").style.display = "none";
+			document.getElementById("showScoreDiv").style.display = "none";
+			document.getElementById("doTestDiv").style.display = "none";
+			document.getElementById("commimentDiv").style.display = "";
+		}else if (flag == 5) {
 			document.getElementById("mannulDiv").style.display = "none";
 			document.getElementById("cantTestDiv").style.display = "none";
 			document.getElementById("showScoreDiv").style.display = "";
 			document.getElementById("doTestDiv").style.display = "none";
+			document.getElementById("commimentDiv").style.display = "none";
 		}
 	}
 
@@ -278,29 +324,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </head>
 <body>
 	<% include("/f/header.html"){} %>
-	<div class="main_bg">
+		<div class="main_bg">
 		<!-- start main -->
 		<div class="container">
 			<div class="main_grid1">
-				<h3 class="style pull-left">考试</h3>
-				<ol class="breadcrumb pull-right">
-					<li><a href="${cxt!}/jf/puresport/pagesController">首页</a></li>
-					<li class="active">准入</li>
-					<li class="active">考试</li>
-				</ol>
+				<h3 id="pageTitle" class="style pull-left">考试</h3>
+				<h3 class="style pull-right">省运会</h3>
 			</div>
 		</div>
 	</div>
+	
 <div class="main_btm1">
 	<!-- 第一页：考试说明 -->
 	<div id="mannulDiv" class="demo" style="display: none;">
-		<div class="container">
+		<div class="container" >
 			<h2 align="center">准入考试说明</h2>
 			</br>		
 							<div class="row">
 					<div class="col-md-1 myTest"></div>
 					<div class="col-md-10 myTest">
 						<ul>
+						
 				<li>1.本次考试包含不定项选择和判断题各10道，每题5分，满分100分，80分及格；</li>
 				<li>2.考试成绩不合格，可以进行多次考试。每次考试试题随机。多次参加考试，试最后一次提交的成绩为最终成绩；</li>
 				<li>3.所有试题完成后，点击提交试卷，系统才保存成绩；</li>
@@ -332,6 +376,48 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<img src="" id="certificateImgId" class="img-thumbnail" height="300" width="300" >
 	</div> -->
 	
+		<!-- 承诺书页 -->
+	<div id="commimentDiv" class="demo" >
+		<div class="container" >	
+							<div class="row">
+					<div class="col-md-3 myTest"></div>
+					<div class="col-md-6 myTest" style="background:#FAFAFA">
+					<br>
+						<div align="center">	<img src="/images_zhuchaobin/logo_cn.png" class="img-rounded" align="middle"></div>
+						<h1 align="center">省运会反兴奋剂教育准入系统</h1>
+						<h2 align="center">反兴奋剂承诺书</h2>
+						     我将以维护国家荣普、发扬体育精神为己任，自觉
+遵守反兴奋剂法律法规，认更艘行反兴奋剂责任义务，
+保证千干净净参加比宜．
+<br>
+在此我承诺：						
+						<ul>
+				<li style="color:#F00;font-size:20px;">坚决抵制使用兴奋剂</li>
+				<li style="color:#F00;font-size:20px;">严防误服误用兴奋剂</li>
+				<li style="color:#F00;font-size:20px;">配合兴奋剂检查调查</li>
+				<li style="color:#F00;font-size:20px;">及时申请用药豁免</li>
+				<li style="color:#F00;font-size:20px;">准确填报行踪信息</li>
+				<li style="color:#F00;font-size:20px;">互相监督主动举报</li>
+						</ul>
+						      <div class="input-group input-group-lg">
+					            <span class="input-group-addon">承诺人</span>
+					            <input type="text" class="form-control" placeholder="请输入姓名..." id="commimentNm">
+					        </div>
+					        <br>
+					        			<div align="center">
+				<button onclick="submitExam()" class="btn">确认提交</button>
+				<br>
+				<p>
+			</div>
+					</div>
+					<div class="col-md-3 myTest"></div>
+				</div>
+				
+
+		</div>
+	</div>
+	
+	
 		<div id="showScoreDiv" class="demo" >
 		<div class="container">	
 		<div align="center">
@@ -343,7 +429,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>	
 			<div class="col-md-3 myTest">
 			
-											<div class="row">
+											<div class="row" class="style pull-bottom">
 				  <div class="col-md-4 myTest">
 				  	 <img src="http://qr.liantu.com/api.php?text=http://m.qpic.cn/psb?/V10zsTr30tgqVO/JjLdVKa1q7ZJAlpFtcuGqVvutgKH1cvPUeTuDeTpKBY!/b/dCIBAAAAAAAA&bo=TwIgAwAAAAARF04!&rf=viewer_4&t=5&bg=ffffff&200" height="150" width="150"/>
 				  </div>
@@ -444,7 +530,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</label>
 				</div>
 				<div align="center">
-					<button onclick="submitExam()" class="btn">提交试卷</button>
+					<button onclick="confirSubmit()" class="btn">提交试卷</button>
 				</div>
 			</div>
 		</div>
@@ -479,7 +565,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header" align="center">
-					<h5 class="modal-title">提 示</h5>
+					<h5 class="modal-title">提   示</h5>
 					<button type="button" class="close" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
@@ -494,6 +580,51 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</div>
 		<!-- /.modal-dialog -->
 	</div>
+	
+		<!-- tip2 Modal-->
+	<div class="modal fade" id="tip2Modal" tabindex="-1" role="dialog"
+		aria-labelledby="tip1ModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header" align="center">
+					<h5 class="modal-title">提   示</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" align="center">对不起，承诺书姓名与登录用户姓名不一致，请确认！</div>
+				<div class="modal-footer" align="center">
+					<button type="button" class="btn" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	
+			<!-- tip3 Modal-->
+	<div class="modal fade" id="tip3Modal" tabindex="-1" role="dialog"
+		aria-labelledby="tip1ModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header" align="center">
+					<h5 class="modal-title">提   示</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" align="center">对不起，必须填写承诺书姓名，请确认！</div>
+				<div class="modal-footer" align="center">
+					<button type="button" class="btn" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	
 	</div>
 	<!-- start footer -->
 	<% include("/f/footer.html"){} %>
