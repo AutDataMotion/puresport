@@ -59,6 +59,11 @@ public class T6MgrAhrController extends BaseController {
 				getSession().setAttribute("crdt_no", item.getCrdt_no());// 设置session，保存登录用户的昵称
 				getSession().setAttribute("pwd", item.getPswd());// 设置session，保存登录用户的昵称
 				
+				getSession().setAttribute("typeleve", item.getTypeleve());// 管理员级别
+				getSession().setAttribute("province", item.getProvince());//  省
+				getSession().setAttribute("city", item.getCity());// 市
+				getSession().setAttribute("institute", item.getInstitute());// 协会
+				
 				if(item.getWrk_unit()!=null&&item.getPost()!=null)
             	{
             		needImproveInfoOrNot  =false;
