@@ -209,7 +209,15 @@ public class T1usrBscController extends BaseController {
         json.put("flag", flag); 
         json.put("userType", userType); 
         json.put("msg", msg); 
-        json.put("url", getCxt()+"/jf/puresport/pagesController/selfcenter"); 
+//        json.put("url", getCxt()+"/jf/puresport/pagesController/selfcenter"); 
+//        System.out.println("login----"+(String)getSession().getAttribute("RequestURL"));
+        if(getSession().getAttribute("RequestURL")!=null)
+        {
+        	json.put("url", (String)getSession().getAttribute("RequestURL")); 
+        }
+        else {
+        	json.put("url", getCxt()+"/jf/puresport/pagesController"); 
+        }
         renderJson(json);  
 	}
 	@Clear

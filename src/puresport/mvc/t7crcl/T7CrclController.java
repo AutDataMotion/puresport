@@ -1,7 +1,22 @@
 package puresport.mvc.t7crcl;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URISyntaxException;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -14,12 +29,18 @@ import com.jfinal.aop.Clear;
 import com.platform.annotation.Controller;
 import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
+import com.sun.image.codec.jpeg.ImageFormatException;
+import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGImageDecoder;
+import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 import puresport.entity.ExamEntity;
 import puresport.entity.ResultEntity;
 import puresport.mvc.t10examgrd.T10ExamGrd;
 import puresport.mvc.t11examstat.T11ExamStat;
+import puresport.mvc.t1usrbsc.T1usrBsc;
 import puresport.mvc.t5crclstdy.T5CrclStdy;
+import puresport.mvc.t5crclstdy.T5CrclStdyController;
 //import puresport.entity.ExamEntity;
 import puresport.mvc.t9tstlib.T9Tstlib;
 
@@ -77,6 +98,14 @@ public class T7CrclController extends BaseController {
 		}
 		renderWithPath("/f/accession/study_notify_1.html");
 	}
+	
+	// 从30道选择题中随机取10道，从30道判断题中随机取10道构成试卷。并保存到成绩记录表中。
+	// zhuchaobin
+	@Clear
+	public void test2() {
+
+		renderWithPath("/f/accession/certificate.html");
+	}
 
 	/**
 	 * 描述：视频播放 zhuchaobin 2018-05-09
@@ -126,7 +155,7 @@ public class T7CrclController extends BaseController {
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		List<T7Crcl> t7List = queryCrcl(2, usrid);
 		setAttr("t7List", t7List);
-		setAttr("course_title", "必修课程二：7选1");// 课程标题
+		setAttr("course_title", "案例篇选学（选择一篇完成观看）");// 课程标题
 		// 检查课程是否完成，只要有一门完成即可
 		for (T7Crcl t7 : t7List) {
 			if ("1".equals(t7.getStdy_st())) {
@@ -145,7 +174,7 @@ public class T7CrclController extends BaseController {
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		List<T7Crcl> t7List = queryCrcl(3, usrid);
 		setAttr("t7List", t7List);
-		setAttr("course_title", "必修课程三：7选1");// 课程标题
+		setAttr("course_title", "流程篇选学（选择一篇完成观看）");// 课程标题
 		// 检查课程是否完成，只要有一门完成即可
 		for (T7Crcl t7 : t7List) {
 			if ("1".equals(t7.getStdy_st())) {
@@ -219,6 +248,8 @@ public class T7CrclController extends BaseController {
 	// zhuchaobin
 	@Clear
 	public void generteTest() {
+		if(!isCanTest())
+			renderWithPath("/f/accession/dotest.html");;
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		// 选择题
 		String sql = "select * from t9_tstlib t where t.prblm_tp ='01' order by rand() limit 10";
@@ -315,6 +346,63 @@ public class T7CrclController extends BaseController {
 		renderWithPath("/f/accession/dotest.html");
 	}
 
+	public boolean isCanTest() {
+		/*
+		 * getModel(T5CrclStdy.class).update(); redirect(pthc);
+		 */
+		/* String usrid = getPara("usrid"); */
+		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
+		ResultEntity res = null;
+		StringBuilder desc = new StringBuilder("");
+		boolean isCorse1Fnsh = false;
+		boolean isCorse2Fnsh = false;
+		boolean isCorse3Fnsh = false;
+		// 必修课程1
+		String crclid = "1";
+		String sql = "select * from t5_crcl_stdy t where t.usrid ='" + usrid + "' and t.crclid = '" + crclid
+				+ "' and t.stdy_st='1'";
+		List<T5CrclStdy> t5List = T5CrclStdy.dao.find(sql);
+		if ((t5List != null) && (t5List.size() > 0)) {
+			// 课程已修;
+			isCorse1Fnsh = true;
+		}
+		// 必修课程2
+		crclid = "'21', '22', '23', '24','25'";
+		sql = "select * from t5_crcl_stdy t where t.usrid ='" + usrid + "' and t.crclid in(" + crclid
+				+ ") and t.stdy_st='1'";
+		t5List = T5CrclStdy.dao.find(sql);
+		if ((t5List != null) && (t5List.size() > 0)) {
+			// 课程已修;
+			isCorse2Fnsh = true;
+		}
+		// 必修课程3
+		crclid = "'31', '32', '33', '34','35', '36', '37'";
+		sql = "select * from t5_crcl_stdy t where t.usrid ='" + usrid + "' and t.crclid in(" + crclid
+				+ ") and t.stdy_st='1'";
+		t5List = T5CrclStdy.dao.find(sql);
+		if ((t5List != null) && (t5List.size() > 0)) {
+			// 课程已修;
+			isCorse3Fnsh = true;
+		}
+		if (isCorse1Fnsh && isCorse2Fnsh && isCorse3Fnsh) {
+			res = new ResultEntity("0000", "课程学习完毕，可以参加考试!");
+		} else {
+			if (!isCorse1Fnsh)
+				desc.append("‘必修课程1’");
+			if (!isCorse2Fnsh)
+				desc.append("‘必修课程2’");
+			if (!isCorse3Fnsh)
+				desc.append("‘必修课程3’");
+			desc.append("没有完成学习，请完成后再参加考试！");
+			res = new ResultEntity("0001", desc.toString());
+		}
+		renderJson(res);
+		if(isCorse1Fnsh && isCorse2Fnsh && isCorse3Fnsh)
+			return true;
+		else
+			return false;
+	}
+	
 	// 提交考试，判定对错，记录题目记录，考试成绩
 	// zhuchaobin
 	@Clear
@@ -392,11 +480,105 @@ public class T7CrclController extends BaseController {
 		t11.setExam_nm("省运会");
 		t11.saveGenIntId();
 		// float fscore = (float) (score * 100.0 / 6.0);
-		ResultEntity res = new ResultEntity("0000", "恭喜您！您已完成测试，您的成绩为：" + score * 5 + "分！");
-		// renderWithPath("/f/study.html");
+		Integer totalScoreInt = score * 5;
+		String toltalScore = totalScoreInt.toString();
+//		ResultEntity res = new ResultEntity("0000", "恭喜您！您已完成测试，您的成绩为：" + toltalScore + "分！");
+		// 查询用户信息
+		 T1usrBsc  t1 = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", usrid);//根据用户名查询数据库中的用户  
+		 String certificatePath = "";
+		 if(t1 != null) {  
+	         Date date=new Date();  
+	         DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
+	         String dataTime = format.format(date);
+	         // 获取工程路径
+	         String webContentPath = "";
+			try {
+				String path = Class .class.getResource("/").toURI().getPath();
+		        webContentPath =  new File(path).getParentFile().getParentFile().getCanonicalPath();
+		        LOG.info("webContentPath=" + webContentPath);
+			} catch (URISyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+	         //DateFormat类的静态工厂方法  
+	        System.out.println(format.getInstance().format(date)); 
+	     	String srcImg = webContentPath + "\\images_zhuchaobin\\certificateTemp.jpg";
+//	    	String srcTemp1 = "\\images_zhuchaobin\\certificateTemp.jpg";
+//	    	String srcTemp2 = "\\images_zhuchaobin\\certificateTemp.jpg";
+	    	String dscImg = webContentPath + "\\images_zhuchaobin\\certificates\\" + t1.getCrdt_no() + ".jpg";
+	     	certificatePath = "\\images_zhuchaobin\\certificates\\" + t1.getCrdt_no() + ".jpg";
+	    	LOG.info("srcImg=" + srcImg);
+	    	LOG.info("certificatePath=" + certificatePath);
+	    	waterMark(toltalScore,srcImg, dscImg, 230, 580);  
+	    	waterMark(t1.getUsr_nm(),dscImg, dscImg, 230, 638); 
+	    	waterMark(dataTime,dscImg, dscImg, 230, 696); 
+	    	LOG.info(toltalScore + t1.getUsr_nm() + dataTime );
+//	    	waterMark("100",srcImg, certificatePath, 230, 580);  
+//	    	waterMark("傅园慧",certificatePath, certificatePath, 230, 638); 
+//	    	waterMark("2018-06-01",certificatePath, certificatePath, 230, 696); 
+	     } else {
+	    	 LOG.error("查不到用户信息！");
+	     }
+		// 合格证书加水印
+			ResultEntity res = new ResultEntity("0000", certificatePath);
+//			setAttr("certificatePath", certificatePath);
+//		 renderWithPath("/f/accession/certificate.html");
 		renderJson(res);
 	}
-
+	
+    public static void waterMark(String waterMsg,String inputImg, String outImg, Integer x, Integer y){  
+        try {  
+            //1.jpg是你的 主图片的路径  
+            InputStream is = new FileInputStream(inputImg);  
+                         
+            //通过JPEG图象流创建JPEG数据流解码器  
+            JPEGImageDecoder jpegDecoder = JPEGCodec.createJPEGDecoder(is);  
+            //解码当前JPEG数据流，返回BufferedImage对象  
+            BufferedImage buffImg = jpegDecoder.decodeAsBufferedImage();  
+            //得到画笔对象  
+            Graphics g = buffImg.getGraphics();  
+                            
+            //设置颜色。  
+            g.setColor(Color.BLACK);  
+                            
+            //最后一个参数用来设置字体的大小  
+            Font f = new Font("黑体",Font.PLAIN,28);  
+            Color mycolor = Color.darkGray;//new Color(0, 0, 255);  
+            g.setColor(mycolor);  
+            g.setFont(f);  
+            
+            //10,20 表示这段文字在图片上的位置(x,y) .第一个是你设置的内容。  
+            g.drawString(waterMsg,x,y);  
+            g.dispose();  
+                          
+            OutputStream os;  
+          
+            //os = new FileOutputStream("d:/union.jpg");  
+            String shareFileName = outImg;  
+            os = new FileOutputStream(shareFileName);  
+             //创键编码器，用于编码内存中的图象数据。            
+            JPEGImageEncoder en = JPEGCodec.createJPEGEncoder(os);  
+            en.encode(buffImg);           
+              
+            is.close();  
+            os.close();  
+        } catch (FileNotFoundException e) {  
+            // TODO Auto-generated catch block  
+            e.printStackTrace();  
+        } catch (ImageFormatException e) {  
+            // TODO Auto-generated catch block  
+            e.printStackTrace();  
+        } catch (IOException e) {  
+            // TODO Auto-generated catch block  
+            e.printStackTrace();  
+        }  
+          
+    }   
+	   
 	/**
 	 * 保存
 	 */
