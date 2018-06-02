@@ -53,7 +53,8 @@ public class T1usrBscController extends BaseController {
 
 	@Clear
 	public void getData() {
-		renderJsonForTable(T1usrBscService.service.selectByPage(getParamWithServerPage()));
+		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
+		renderJsonForTable(T1usrBscService.service.selectByPage(mgrSession, getParamWithServerPage()));
 	}
 	@Clear
 	public void addSporter(){
@@ -100,13 +101,15 @@ public class T1usrBscController extends BaseController {
 	@Clear
 	public void getDataScore(){
 		// 成绩统计
-		renderJson(T1usrBscService.service.selectScoreByPage(getParamComm()));
+		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
+		renderJson(T1usrBscService.service.selectScoreByPage(mgrSession, getParamComm()));
 	}
 	
 	@Clear
 	public void getDataPrjStatis(){
 		// 项目合格率统计
-		renderJson(T1usrBscService.service.selectPassedPercent(getParamComm()));
+		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
+		renderJson(T1usrBscService.service.selectPassedPercent(mgrSession, getParamComm()));
 	}
 	
 	@Clear

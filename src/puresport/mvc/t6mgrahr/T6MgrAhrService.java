@@ -17,6 +17,7 @@ import puresport.applicat.MdlExcelRow;
 import puresport.config.ConfMain;
 import puresport.constant.ConstantInitMy;
 import puresport.constant.EnumRoleType;
+import puresport.constant.EnumTypeLevel;
 import puresport.mvc.comm.ParamComm;
 
 public class T6MgrAhrService extends BaseService {
@@ -43,12 +44,13 @@ public class T6MgrAhrService extends BaseService {
 		return true ;
 	 }
 
-	public List<T6MgrAhr> selectByPage(ParamComm paramMdl){
-		Long countTotal = ConfMain.db().queryLong(String.format("select count(1) from %s ", tableName));
+	public List<T6MgrAhr> selectByPage(T6MgrSession mgrSession, ParamComm paramMdl){
+		final String roleStr = mgrSession.selectRoleStr();
+		Long countTotal = ConfMain.db().queryLong(String.format("select count(1) from %s where %s ", tableName, roleStr));
 		paramMdl.setTotal(countTotal);
 		List<T6MgrAhr> resList =new ArrayList<>();
 		if (countTotal > 0) {
-			resList  =  T6MgrAhr.dao.find(String.format("select usrid,nm,crdt_tp, crdt_no, gnd,brth_dt,wrk_unit, post,typeleve, province, city,institute, mblph_no, email  from %s where %s  limit ?,?", tableName, "1=1"),
+			resList  =  T6MgrAhr.dao.find(String.format("select usrid,nm,crdt_tp, crdt_no, gnd,brth_dt,wrk_unit, post,typeleve, province, city,institute, mblph_no, email  from %s where %s  limit ?,?", tableName, roleStr),
 					paramMdl.getPageIndex(), paramMdl.getPageSize());
 		}
 		return resList;

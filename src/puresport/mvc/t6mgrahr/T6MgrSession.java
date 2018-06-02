@@ -7,12 +7,16 @@ package puresport.mvc.t6mgrahr;
 
 import java.io.Serializable;
 
+import puresport.constant.EnumTypeLevel;
+
 /**
  * @author zw
  *
  */
 public class T6MgrSession implements Serializable{
-	
+
+	private static final long serialVersionUID = 2305013944330477412L;
+
 	public final static String KeyName = "_T6MgrSession_";
 	
 	private Long usrid;
@@ -32,12 +36,28 @@ public class T6MgrSession implements Serializable{
 	}
 	
 	public T6MgrSession(T6MgrAhr mdl){
-		usrid = mdl.getUsrid();
+		usrid = Long.valueOf((String)mdl.getUsrid()) ;
 		typeleve = mdl.getTypeleve();
 		province = mdl.getProvince();
 		city = mdl.getCity();
 		institute = mdl.getInstitute();
 	}
+	
+	public String selectRoleStr(){
+		if (typeleve.equals(EnumTypeLevel.Country.getName())) {
+			// 国家级 全部可见
+			return " 1=1 ";
+		} else if (typeleve.equals(EnumTypeLevel.Province.getName())) {
+			// 省级 只可见属于该省的
+			return String.format(" province='%s' ", province);
+		} else if (typeleve.equals(EnumTypeLevel.City.getName())) {
+			// 市级 只可见属于该市的
+			return String.format(" city='%s' and province='%s' ", city , province);
+		}
+		// 未知的都不可见
+		return " 1=2 ";
+	}
+	
 	/**
 	 * @return the usrid
 	 */
