@@ -1,4 +1,3 @@
-<!DOCTYPE HTML>
 <html>
 <head>
 <title>考试</title>
@@ -197,8 +196,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			success : function(res) {
 				if (res.code == "0000") {
 					showDiv(4);
-					var t2 = document.getElementById('scoreDesc');
-					t2.innerText = res.desc;
+/*  					var t2 = document.getElementById('scoreDesc');
+					t2.innerText = res.desc;  */
+					var pic = document.getElementById("certificateImgId");//picture是img的id
+					pic.src = res.desc;
+					
 				} else {
 					alert(res.desc);
 				}
@@ -322,11 +324,55 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	</div> -->
 	
 	<!-- 最后部分：提交成功，展示成绩-->
-	<div id="showScoreDiv" class="score" style="display: none;">
+<!-- 	<div id="showScoreDiv" class="score" style="display: none;">
 		<div align="center">
 			<p id="scoreDesc"></p>
 		</div>
+		
+		<img src="" id="certificateImgId" class="img-thumbnail" height="300" width="300" >
+	</div> -->
+	
+		<div id="showScoreDiv" class="demo" >
+		<div class="container">	
+		<div align="center">
+			<div class="row">
+						<div class="col-md-3 myTest"></div>
+						<div class="col-md-6 myTest">
+							
+						<img src="" id="certificateImgId" class="img-thumbnail" height="400" width="400" >	
+						</div>	
+			<div class="col-md-3 myTest">
+			
+											<div class="row">
+				  <div class="col-md-4 myTest">
+				  	 <img src="http://qr.liantu.com/api.php?text=http://m.qpic.cn/psb?/V10zsTr30tgqVO/JjLdVKa1q7ZJAlpFtcuGqVvutgKH1cvPUeTuDeTpKBY!/b/dCIBAAAAAAAA&bo=TwIgAwAAAAARF04!&rf=viewer_4&t=5&bg=ffffff&200" height="150" width="150"/>
+				  </div>
+				  <div class="col-md-4 myTest"></div>
+				  <div class="col-md-4 myTest"></div>
+				</div>
+				
+				
+																<div class="row">
+				  <div >
+				  	 使用如下app扫描二维码分享
+				  </div>
+
+				</div>
+				<div class="row">
+				  <div >
+				  	<img src="/images_zhuchaobin/share.png" height="80" width="290" >
+				  </div>
+<!-- 				  <div class="col-md-4 myTest"></div>
+				  <div class="col-md-4 myTest"></div> -->
+				</div>					
+				
+			</div>
+		</div>
+	
+		</div>
 	</div>
+	</div>
+	
 	<!-- 开始部分：学习没完成，无资格考试-->
 	<div id="cantTestDiv" class="score" style="display: none;">
 		<div align="center" hight="300">
