@@ -19,6 +19,7 @@ import puresport.applicat.ExcelParseTool;
 import puresport.applicat.MdlExcelRow;
 import puresport.constant.EnumStatus;
 import puresport.mvc.comm.ResTips;
+import puresport.mvc.t6mgrahr.T6MgrSession;
 
 
 /**
@@ -143,7 +144,10 @@ public class T1usrBscController extends BaseController {
 		}
 		// 存入数据库
 		ComOutMdl<List<MdlExcelRow>> outFailedMdl = new ComOutMdl<>();
-		if (T1usrBscService.service.insertFromExcel(table, outFailedMdl)) {
+		
+		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
+		
+		if (T1usrBscService.service.insertFromExcel(mgrSession, table, outFailedMdl)) {
 			renderText(String.valueOf(EnumStatus.Success.getId()));
 		} else {
 			log.error(outFailedMdl.get());

@@ -38,7 +38,6 @@ public class T6MgrAhrController extends BaseController {
 
 	public static final String pthc = "/jf/puresport/t6MgrAhr/";
 	public static final String pthv = "/f/";
-
 	/**
 	 * 列表
 	 */
@@ -59,11 +58,8 @@ public class T6MgrAhrController extends BaseController {
 				getSession().setAttribute("crdt_no", item.getCrdt_no());// 设置session，保存登录用户的昵称
 				getSession().setAttribute("pwd", item.getPswd());// 设置session，保存登录用户的昵称
 				
-				getSession().setAttribute("typeleve", item.getTypeleve());// 管理员级别
-				getSession().setAttribute("province", item.getProvince());//  省
-				getSession().setAttribute("city", item.getCity());// 市
-				getSession().setAttribute("institute", item.getInstitute());// 协会
-				
+				T6MgrSession mgrSession = new T6MgrSession(item);
+				setSessionAttr(T6MgrSession.KeyName, mgrSession);// 管理员session对象	
 				if(item.getWrk_unit()!=null&&item.getPost()!=null)
             	{
             		needImproveInfoOrNot  =false;

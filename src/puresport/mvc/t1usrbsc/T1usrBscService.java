@@ -2,6 +2,7 @@ package puresport.mvc.t1usrbsc;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -18,6 +19,7 @@ import puresport.applicat.MdlExcelRow;
 import puresport.config.ConfMain;
 import puresport.constant.EnumRoleType;
 import puresport.mvc.comm.ParamComm;
+import puresport.mvc.t6mgrahr.T6MgrSession;
 
 public class T1usrBscService extends BaseService {
 	private final static String tableName = "t1_usr_bsc";
@@ -237,14 +239,14 @@ public class T1usrBscService extends BaseService {
 	 * @param outFailedRows
 	 * @return
 	 */
-	public boolean insertFromExcel(List<MdlExcelRow> excelRows, final ComOutMdl<List<MdlExcelRow>> outFailedMdl) {
-		if (CollectionUtils.isEmpty(excelRows)) {
-			log.error("excelRows is null");
+	public boolean insertFromExcel(T6MgrSession mgrSession, List<MdlExcelRow> excelRows, final ComOutMdl<List<MdlExcelRow>> outFailedMdl) {
+		if (CollectionUtils.isEmpty(excelRows) || Objects.isNull(mgrSession)) {
+			log.error("excelRows or  mgrSession is null");
 			return false;
 		}
 		// 根据手机号匹配，没有插入、已有更新
 		// 记录失败的
-		List<MdlExcelRow> failedRows = excelRows.stream().filter(e -> !insertRowToDb(e)).collect(Collectors.toList());
+		List<MdlExcelRow> failedRows = excelRows.stream().filter(e -> !insertRowToDb(mgrSession, e)).collect(Collectors.toList());
 		if (CollectionUtils.isEmpty(failedRows)) {
 			return true;
 		}
@@ -252,7 +254,7 @@ public class T1usrBscService extends BaseService {
 		return false;
 	}
 
-	private boolean insertRowToDb(MdlExcelRow excelRow) {
+	private boolean insertRowToDb(T6MgrSession mgrSession, MdlExcelRow excelRow) {
 		// 根据手机号匹配，没有插入、已有更新
 		String crdt_number = excelRow.getByIndex(2);// 身份证号
 		if (crdt_number.length() < 18) {
@@ -265,7 +267,13 @@ public class T1usrBscService extends BaseService {
 				.set(T1usrBsc.column_brth_dt, excelRow.getByIndex(4))
 				.set(T1usrBsc.column_pswd, crdt_number.substring(crdt_number.length() - 6))// 密码默认身份证后6位
 				.set(T1usrBsc.column_mblph_no, excelRow.getByIndex(5))
-				.set(T1usrBsc.column_email, excelRow.getByIndex(6));
+				.set(T1usrBsc.column_email, excelRow.getByIndex(6))
+				
+				.set(T1usrBsc.column_cty_prov_city_mgrid, mgrSession.getUsrid())
+				.set(T1usrBsc.column_typelevel, mgrSession.getTypeleve())
+				.set(T1usrBsc.column_province, mgrSession.getProvince())
+				.set(T1usrBsc.column_city, mgrSession.getCity())
+				;
 		return ConfMain.db().saveOtherwiseUpdate(tableName, tableKey, dbRow);
 	}
 }
