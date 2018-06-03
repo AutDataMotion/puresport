@@ -11,7 +11,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.URISyntaxException;
+import java.net.UnknownHostException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -408,10 +410,30 @@ public class T7CrclController extends BaseController {
 	@Clear
 	public void submitExam() {
 		// // 处理结果
-		// ResultEntity res = null;
+		ResultEntity res = null;
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		String examid = getPara("examid");
 		String[] ds = getParaValues("dataSet");
+		// 承诺人姓名
+		String commimentNm = getPara("commimentNm");
+		// 查询用户信息
+		T1usrBsc  t1 = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", usrid);//根据用户名查询数据库中的用户  
+		if(t1 == null) {
+			LOG.error("查询用户信息失败，无法提交考试成绩.");
+			res = new ResultEntity("0001", "查询用户信息失败，无法提交考试成绩.");
+			renderJson(res);
+			return;
+		} else {
+			if(commimentNm.equals(t1.getUsr_nm())) {
+				LOG.debug("commimentNm= " + commimentNm + "用户姓名= " + t1.getUsr_nm()+ "承诺人姓名无误." );
+			} else {
+				LOG.error("commimentNm= " + commimentNm + "用户姓名= " + t1.getUsr_nm()+ "承诺人姓名与用户姓名不一致，无法提交考试成绩.");
+				res = new ResultEntity("0002", "承诺人姓名与用户姓名不一致，无法提交考试成绩!");
+				renderJson(res);
+				return;
+			}				
+		}
+		
 		T10ExamGrd t10 = new T10ExamGrd();
 		t10.setUsrid(usrid);
 		t10.setExamid(Integer.parseInt(examid));
@@ -483,8 +505,6 @@ public class T7CrclController extends BaseController {
 		Integer totalScoreInt = score * 5;
 		String toltalScore = totalScoreInt.toString();
 //		ResultEntity res = new ResultEntity("0000", "恭喜您！您已完成测试，您的成绩为：" + toltalScore + "分！");
-		// 查询用户信息
-		 T1usrBsc  t1 = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", usrid);//根据用户名查询数据库中的用户  
 		 String certificatePath = "";
 		 if(t1 != null) {  
 	         Date date=new Date();  
@@ -524,7 +544,15 @@ public class T7CrclController extends BaseController {
 	    	 LOG.error("查不到用户信息！");
 	     }
 		// 合格证书加水印
-			ResultEntity res = new ResultEntity("0000", certificatePath);
+		 String hostAddress = "";
+		 try {
+         InetAddress address = InetAddress.getLocalHost();//获取的是本地的IP地址 //PC-20140317PXKX/192.168.0.121
+         hostAddress = address.getHostAddress();//192.168.0.121   
+         
+	} catch (UnknownHostException e) {
+		e.printStackTrace();
+	}
+			res = new ResultEntity("0000", hostAddress + certificatePath);
 //			setAttr("certificatePath", certificatePath);
 //		 renderWithPath("/f/accession/certificate.html");
 		renderJson(res);
