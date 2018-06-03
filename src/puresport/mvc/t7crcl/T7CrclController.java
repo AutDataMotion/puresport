@@ -100,7 +100,7 @@ public class T7CrclController extends BaseController {
 		}
 		renderWithPath("/f/accession/study_notify_1.html");
 	}
-	
+
 	// 从30道选择题中随机取10道，从30道判断题中随机取10道构成试卷。并保存到成绩记录表中。
 	// zhuchaobin
 	@Clear
@@ -126,7 +126,7 @@ public class T7CrclController extends BaseController {
 			// 必修课程1
 			String sql = "select * from t7_crcl t where t.crclid='" + getPara("crclid") + "'";
 			List<T7Crcl> t7List = T7Crcl.dao.find(sql);
-			if ((t7List != null) && (t7List.size() > 0)) {	// 去视频1			
+			if ((t7List != null) && (t7List.size() > 0)) { // 去视频1
 				setAttr("crcl_nm", "必修课程一：" + t7List.get(0).getCrcl_nm());// 课程名称
 				setAttr("crcl_brf", t7List.get(0).getCrcl_brf());// 课程简介
 			}
@@ -142,7 +142,7 @@ public class T7CrclController extends BaseController {
 		setAttr("stdy_st_hidden", getPara("stdy_st_hidden"));// 本课程学习状态
 		String crclid = getPara("crclid");
 		setAttr("crclid", getPara("crclid"));// 课程id
-		if (!("1".equals(crcl_attr))){
+		if (!("1".equals(crcl_attr))) {
 			setAttr("crcl_brf", getPara("crcl_brf"));// 课程简介
 		}
 		LOG.debug("crclid = " + crclid);
@@ -250,8 +250,9 @@ public class T7CrclController extends BaseController {
 	// zhuchaobin
 	@Clear
 	public void generteTest() {
-		if(!isCanTest())
-			renderWithPath("/f/accession/dotest.html");;
+		if (!isCanTest())
+			renderWithPath("/f/accession/dotest.html");
+		;
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		// 选择题
 		String sql = "select * from t9_tstlib t where t.prblm_tp ='01' order by rand() limit 10";
@@ -399,12 +400,12 @@ public class T7CrclController extends BaseController {
 			res = new ResultEntity("0001", desc.toString());
 		}
 		renderJson(res);
-		if(isCorse1Fnsh && isCorse2Fnsh && isCorse3Fnsh)
+		if (isCorse1Fnsh && isCorse2Fnsh && isCorse3Fnsh)
 			return true;
 		else
 			return false;
 	}
-	
+
 	// 提交考试，判定对错，记录题目记录，考试成绩
 	// zhuchaobin
 	@Clear
@@ -417,23 +418,23 @@ public class T7CrclController extends BaseController {
 		// 承诺人姓名
 		String commimentNm = getPara("commimentNm");
 		// 查询用户信息
-		T1usrBsc  t1 = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", usrid);//根据用户名查询数据库中的用户  
-		if(t1 == null) {
+		T1usrBsc t1 = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", usrid);// 根据用户名查询数据库中的用户
+		if (t1 == null) {
 			LOG.error("查询用户信息失败，无法提交考试成绩.");
 			res = new ResultEntity("0001", "查询用户信息失败，无法提交考试成绩.");
 			renderJson(res);
 			return;
 		} else {
-			if(commimentNm.equals(t1.getUsr_nm())) {
-				LOG.debug("commimentNm= " + commimentNm + "用户姓名= " + t1.getUsr_nm()+ "承诺人姓名无误." );
+			if (commimentNm.equals(t1.getUsr_nm())) {
+				LOG.debug("commimentNm= " + commimentNm + "用户姓名= " + t1.getUsr_nm() + "承诺人姓名无误.");
 			} else {
-				LOG.error("commimentNm= " + commimentNm + "用户姓名= " + t1.getUsr_nm()+ "承诺人姓名与用户姓名不一致，无法提交考试成绩.");
+				LOG.error("commimentNm= " + commimentNm + "用户姓名= " + t1.getUsr_nm() + "承诺人姓名与用户姓名不一致，无法提交考试成绩.");
 				res = new ResultEntity("0002", "承诺人姓名与用户姓名不一致，无法提交考试成绩!");
 				renderJson(res);
 				return;
-			}				
+			}
 		}
-		
+
 		T10ExamGrd t10 = new T10ExamGrd();
 		t10.setUsrid(usrid);
 		t10.setExamid(Integer.parseInt(examid));
@@ -506,18 +507,19 @@ public class T7CrclController extends BaseController {
 		// float fscore = (float) (score * 100.0 / 6.0);
 		Integer totalScoreInt = score * 5;
 		String toltalScore = totalScoreInt.toString();
-//		ResultEntity res = new ResultEntity("0000", "恭喜您！您已完成测试，您的成绩为：" + toltalScore + "分！");
-		 String certificatePath = "";
-		 if(t1 != null) {  
-	         Date date=new Date();  
-	         DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");  
-	         String dataTime = format.format(date);
-	         // 获取工程路径
-	         String webContentPath = "";
+		// ResultEntity res = new ResultEntity("0000", "恭喜您！您已完成测试，您的成绩为：" + toltalScore
+		// + "分！");
+		String certificatePath = "";
+		if (t1 != null) {
+			Date date = new Date();
+			DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String dataTime = format.format(date);
+			// 获取工程路径
+			String webContentPath = "";
 			try {
-				String path = Class .class.getResource("/").toURI().getPath();
-		        webContentPath =  new File(path).getParentFile().getParentFile().getCanonicalPath();
-		        LOG.info("webContentPath=" + webContentPath);
+				String path = Class.class.getResource("/").toURI().getPath();
+				webContentPath = new File(path).getParentFile().getParentFile().getCanonicalPath();
+				LOG.info("webContentPath=" + webContentPath);
 			} catch (URISyntaxException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -526,89 +528,89 @@ public class T7CrclController extends BaseController {
 				e.printStackTrace();
 			}
 
-	         //DateFormat类的静态工厂方法  
-	        System.out.println(format.getInstance().format(date)); 
-	     	String srcImg = webContentPath + "\\images_zhuchaobin\\certificateTemp.jpg";
-//	    	String srcTemp1 = "\\images_zhuchaobin\\certificateTemp.jpg";
-//	    	String srcTemp2 = "\\images_zhuchaobin\\certificateTemp.jpg";
-	    	String dscImg = webContentPath + "\\images_zhuchaobin\\certificates\\" + t1.getCrdt_no() + ".jpg";
-	     	certificatePath = "\\images_zhuchaobin\\certificates\\" + t1.getCrdt_no() + ".jpg";
-	    	LOG.info("srcImg=" + srcImg);
-	    	LOG.info("certificatePath=" + certificatePath);
-	    	waterMark(toltalScore,srcImg, dscImg, 230, 580);  
-	    	waterMark(t1.getUsr_nm(),dscImg, dscImg, 230, 638); 
-	    	waterMark(dataTime,dscImg, dscImg, 230, 696); 
-	    	LOG.info(toltalScore + t1.getUsr_nm() + dataTime );
-//	    	waterMark("100",srcImg, certificatePath, 230, 580);  
-//	    	waterMark("傅园慧",certificatePath, certificatePath, 230, 638); 
-//	    	waterMark("2018-06-01",certificatePath, certificatePath, 230, 696); 
-	     } else {
-	    	 LOG.error("查不到用户信息！");
-	     }
+			// DateFormat类的静态工厂方法
+			System.out.println(format.getInstance().format(date));
+			String srcImg = webContentPath + "\\images_zhuchaobin\\certificateTemp.jpg";
+			// String srcTemp1 = "\\images_zhuchaobin\\certificateTemp.jpg";
+			// String srcTemp2 = "\\images_zhuchaobin\\certificateTemp.jpg";
+			String dscImg = webContentPath + "\\images_zhuchaobin\\certificates\\" + t1.getCrdt_no() + ".jpg";
+			certificatePath = "\\images_zhuchaobin\\certificates\\" + t1.getCrdt_no() + ".jpg";
+			LOG.info("srcImg=" + srcImg);
+			LOG.info("certificatePath=" + certificatePath);
+			waterMark(toltalScore, srcImg, dscImg, 230, 580);
+			waterMark(t1.getUsr_nm(), dscImg, dscImg, 230, 638);
+			waterMark(dataTime, dscImg, dscImg, 230, 696);
+			LOG.info(toltalScore + t1.getUsr_nm() + dataTime);
+			// waterMark("100",srcImg, certificatePath, 230, 580);
+			// waterMark("傅园慧",certificatePath, certificatePath, 230, 638);
+			// waterMark("2018-06-01",certificatePath, certificatePath, 230, 696);
+		} else {
+			LOG.error("查不到用户信息！");
+		}
 		// 合格证书加水印
-		 String hostAddress = "";
-		 try {
-         InetAddress address = InetAddress.getLocalHost();//获取的是本地的IP地址 //PC-20140317PXKX/192.168.0.121
-         hostAddress = address.getHostAddress();//192.168.0.121   
-         
-	} catch (UnknownHostException e) {
-		e.printStackTrace();
-	}
-			res = new ResultEntity("0000", "考试成绩提交成功.", certificatePath, "http://" + hostAddress);
-//		setAttr("certificatePath", certificatePath);
-//		 renderWithPath("/f/accession/certificate.html");
+		String hostAddress = "";
+		try {
+			InetAddress address = InetAddress.getLocalHost();// 获取的是本地的IP地址 //PC-20140317PXKX/192.168.0.121
+			hostAddress = address.getHostAddress();// 192.168.0.121
+
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		}
+		res = new ResultEntity("0000", "考试成绩提交成功.", certificatePath, "http://" + hostAddress);
+		// setAttr("certificatePath", certificatePath);
+		// renderWithPath("/f/accession/certificate.html");
 		renderJson(res);
 	}
-	
-    public static void waterMark(String waterMsg,String inputImg, String outImg, Integer x, Integer y){  
-        try {  
-            //1.jpg是你的 主图片的路径  
-            InputStream is = new FileInputStream(inputImg);  
-                         
-            //通过JPEG图象流创建JPEG数据流解码器  
-            JPEGImageDecoder jpegDecoder = JPEGCodec.createJPEGDecoder(is);  
-            //解码当前JPEG数据流，返回BufferedImage对象  
-            BufferedImage buffImg = jpegDecoder.decodeAsBufferedImage();  
-            //得到画笔对象  
-            Graphics g = buffImg.getGraphics();  
-                            
-            //设置颜色。  
-            g.setColor(Color.BLACK);  
-                            
-            //最后一个参数用来设置字体的大小  
-            Font f = new Font("黑体",Font.PLAIN,28);  
-            Color mycolor = Color.darkGray;//new Color(0, 0, 255);  
-            g.setColor(mycolor);  
-            g.setFont(f);  
-            
-            //10,20 表示这段文字在图片上的位置(x,y) .第一个是你设置的内容。  
-            g.drawString(waterMsg,x,y);  
-            g.dispose();  
-                          
-            OutputStream os;  
-          
-            //os = new FileOutputStream("d:/union.jpg");  
-            String shareFileName = outImg;  
-            os = new FileOutputStream(shareFileName);  
-             //创键编码器，用于编码内存中的图象数据。            
-            JPEGImageEncoder en = JPEGCodec.createJPEGEncoder(os);  
-            en.encode(buffImg);           
-              
-            is.close();  
-            os.close();  
-        } catch (FileNotFoundException e) {  
-            // TODO Auto-generated catch block  
-            e.printStackTrace();  
-        } catch (ImageFormatException e) {  
-            // TODO Auto-generated catch block  
-            e.printStackTrace();  
-        } catch (IOException e) {  
-            // TODO Auto-generated catch block  
-            e.printStackTrace();  
-        }  
-          
-    }   
-	   
+
+	public static void waterMark(String waterMsg, String inputImg, String outImg, Integer x, Integer y) {
+		try {
+			// 1.jpg是你的 主图片的路径
+			InputStream is = new FileInputStream(inputImg);
+
+			// 通过JPEG图象流创建JPEG数据流解码器
+			JPEGImageDecoder jpegDecoder = JPEGCodec.createJPEGDecoder(is);
+			// 解码当前JPEG数据流，返回BufferedImage对象
+			BufferedImage buffImg = jpegDecoder.decodeAsBufferedImage();
+			// 得到画笔对象
+			Graphics g = buffImg.getGraphics();
+
+			// 设置颜色。
+			g.setColor(Color.BLACK);
+
+			// 最后一个参数用来设置字体的大小
+			Font f = new Font("黑体", Font.PLAIN, 28);
+			Color mycolor = Color.darkGray;// new Color(0, 0, 255);
+			g.setColor(mycolor);
+			g.setFont(f);
+
+			// 10,20 表示这段文字在图片上的位置(x,y) .第一个是你设置的内容。
+			g.drawString(waterMsg, x, y);
+			g.dispose();
+
+			OutputStream os;
+
+			// os = new FileOutputStream("d:/union.jpg");
+			String shareFileName = outImg;
+			os = new FileOutputStream(shareFileName);
+			// 创键编码器，用于编码内存中的图象数据。
+			JPEGImageEncoder en = JPEGCodec.createJPEGEncoder(os);
+			en.encode(buffImg);
+
+			is.close();
+			os.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ImageFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
 	/**
 	 * 保存
 	 */
