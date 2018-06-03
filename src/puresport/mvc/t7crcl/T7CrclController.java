@@ -552,8 +552,8 @@ public class T7CrclController extends BaseController {
 	} catch (UnknownHostException e) {
 		e.printStackTrace();
 	}
-			res = new ResultEntity("0000", hostAddress + certificatePath);
-//			setAttr("certificatePath", certificatePath);
+			res = new ResultEntity("0000", "考试成绩提交成功.", certificatePath, "http://" + hostAddress);
+//		setAttr("certificatePath", certificatePath);
 //		 renderWithPath("/f/accession/certificate.html");
 		renderJson(res);
 	}
