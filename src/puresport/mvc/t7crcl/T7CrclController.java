@@ -111,7 +111,7 @@ public class T7CrclController extends BaseController {
 	@Clear
 	public void queryCetifate() {
 		setAttr("crdt_no", getPara("crdt_no"));
-		setAttr("hstAddr", getPara("hstAddr"));
+//		setAttr("hstAddr", getPara("hstAddr"));
 		renderWithPath("/f/accession/certificate.html");
 	}
 
