@@ -104,9 +104,9 @@ public class T7CrclController extends BaseController {
 	// 从30道选择题中随机取10道，从30道判断题中随机取10道构成试卷。并保存到成绩记录表中。
 	// zhuchaobin
 	@Clear
-	public void test2() {
-		String crdt_no = getPara("crdt_no");
-		setAttr("crdt_no", crdt_no);
+	public void queryCetifate() {
+		setAttr("crdt_no", getPara("crdt_no"));
+		setAttr("hstAddr", getPara("hstAddr"));
 		renderWithPath("/f/accession/certificate.html");
 	}
 
