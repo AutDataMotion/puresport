@@ -170,7 +170,8 @@ public class T7CrclController extends BaseController {
 		for (T7Crcl t7 : t7List) {
 			if ("1".equals(t7.getStdy_st())) {
 				setAttr("stdy_st_hidden", "1");
-				setAttr("action", "/jf/puresport/t7Crcl/video3_select_5");// 必修视频3
+				setAttr("action_hidden", "/jf/puresport/t7Crcl/video3_select_5");// 必修视频3
+//				setAttr("action", "/jf/puresport/t7Crcl/video3_select_5");// 必修视频3
 				break;
 			}
 		}
@@ -191,7 +192,8 @@ public class T7CrclController extends BaseController {
 		for (T7Crcl t7 : t7List) {
 			if ("1".equals(t7.getStdy_st())) {
 				setAttr("stdy_st_hidden", "1");
-				setAttr("action", "/jf/puresport/t7Crcl/generteTest");// 生成考试
+//				setAttr("action", "/jf/puresport/t7Crcl/generteTest");// 生成考试
+				setAttr("action_hidden", "/jf/puresport/t7Crcl/generteTest");// 生成考试
 				break;
 			}
 		}
