@@ -7,8 +7,10 @@
 <meta name="keywords"
 	content="Skate Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
-<script type="application/x-javascript">	
+<script type="application/x-javascript">
+		
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
 </script>
 <!-- Bootstrap -->
 <link href="${cxt!}/ui/bootstrap-3.3.7-dist/css/bootstrap.min.css"
@@ -59,11 +61,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	});
 </script>
 <script>
-function do_jump(){
+	function do_jump() {
 		var stdy_st_hidden = document.getElementById("stdy_st_hidden").value;
 		var action_hidden = document.getElementById("action_hidden").value;
-		if(stdy_st_hidden == 1){
-			window.location.href=action_hidden;// 进行下一步
+		if (stdy_st_hidden == 1) {
+			window.location.href = action_hidden;// 进行下一步
 		} else {
 			// 提示当前课程必须学完才能下一步
 			$('#tipModal').modal('show');
@@ -116,7 +118,7 @@ function do_jump(){
 		<!-- start main_btm -->
 		<div class="container">
 			<!-- 必修视频课程一 -->
-			<div class="title">${course_title!''}</div>
+			<div class="title" >${course_title!''}</div>
 			<!-- 代码 开始 -->
 			<div id="container">
 				<%for(x in t7List){ %>
@@ -143,7 +145,7 @@ function do_jump(){
 			<!-- END_CONTAINER -->
 		</div>
 		<div align="center">
-			<button onclick="do_jump()" class="btn">跳  过</button>
+			<button onclick="do_jump()" class="btn">下一步</button>
 		</div>
 		<br>
 	</div>

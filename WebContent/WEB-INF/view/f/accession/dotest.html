@@ -7,8 +7,12 @@
 	content="Skate Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 <script type="application/x-javascript">
+	
+	
 			
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
+
 
 </script>
 <!-- Bootstrap -->
@@ -33,18 +37,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="/ui/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <style>
 #owl-demo .owl-item div {
-	padding: 5px;
-	padding-left: 150px;
-	padding-top: 15px;
-	padding-right: 150px;
-	padding-bottom: 15px;
+	padding: 1%;
+	padding-left: 12%;
+	padding-top: 3%;
+	padding-right: 12%;
+	padding-bottom: 1%;
 	font-family: "微软雅黑", "黑体", "宋体";
 	font-size: 18px;
 }
 
 #owl-demo .owl-item img {
 	display: block;
-	width: 100%;
+	width: 95%;
 	height: auto;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -131,7 +135,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		}
 		confirmNum = 0;
 		var dataSet = new Array();
-		for (var j = 1; j < 7; j++) {
+		for (var j = 1; j < 21; j++) {
 			var obj = document.getElementsByName(j)
 			var item = j + ":";
 			for (var i = 0; i < obj.length; i++) { //遍历Radio   
@@ -150,37 +154,37 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		var url;
 		url = '/jf/puresport/t7Crcl/submitExam';
 		var examid = document.getElementById("examid").value;
-		$.ajax({
-			type : 'POST',
-			url : url,
-			dataType : "json",
-			traditional : true,
-			data : {
-				"dataSet" : dataSet,
-				"examid" : examid,
-				"commimentNm" : commimentNm
-			},
-			success : function(res) {
-				if (res.code == "0000") {
-					/* 					showDiv(5);
-					 var t2 = document.getElementById('pageTitle');
-					 t2.innerText = "成绩证书";					
-					 var pic = document.getElementById("certificateImgId");//picture是img的id
-					 pic.src = res.parm1;					
-					 var pic = document.getElementById("erweima");//picture是img的id
-					 pic.src = "http://qr.liantu.com/api.php?text=" + res.parm2"; */
-					//					http://qr.liantu.com/api.php?text=http://m.qpic.cn/psb?/V10zsTr30tgqVO/JjLdVKa1q7ZJAlpFtcuGqVvutgKH1cvPUeTuDeTpKBY!/b/dCIBAAAAAAAA&bo=TwIgAwAAAAARF04!&rf=viewer_4&t=5&bg=ffffff&200					
-					window.location.href = "http://" + res.parm2
-							+ "/jf/puresport/t7Crcl/queryCetifate?crdt_no="
-							+ res.parm3 + "&hstAddr=" + res.parm2;
-				} else if (res.code == "0002") {
-					$('#tip2Modal').modal('show');
-				} else {
-					alert(res.desc);
-				}
-			},
-			dataType : "json"
-		});
+		$
+				.ajax({
+					type : 'POST',
+					url : url,
+					dataType : "json",
+					traditional : true,
+					data : {
+						"dataSet" : dataSet,
+						"examid" : examid,
+						"commimentNm" : commimentNm
+					},
+					success : function(res) {
+						if (res.code == "0000") {
+							/* 					showDiv(5);
+							 var t2 = document.getElementById('pageTitle');
+							 t2.innerText = "成绩证书";					
+							 var pic = document.getElementById("certificateImgId");//picture是img的id
+							 pic.src = res.parm1;					
+							 var pic = document.getElementById("erweima");//picture是img的id
+							 pic.src = "http://qr.liantu.com/api.php?text=" + res.parm2"; */
+							//					http://qr.liantu.com/api.php?text=http://m.qpic.cn/psb?/V10zsTr30tgqVO/JjLdVKa1q7ZJAlpFtcuGqVvutgKH1cvPUeTuDeTpKBY!/b/dCIBAAAAAAAA&bo=TwIgAwAAAAARF04!&rf=viewer_4&t=5&bg=ffffff&200					
+							window.location.href = "${cxt!''}/jf/puresport/t7Crcl/queryCetifate?crdt_no="
+									+ res.parm3;
+						} else if (res.code == "0002") {
+							$('#tip2Modal').modal('show');
+						} else {
+							alert(res.desc);
+						}
+					},
+					dataType : "json"
+				});
 	}
 
 	//确认提交试卷
@@ -262,7 +266,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						showDiv(2);
 					}
 				} else {
-					/* 							alert(res.desc); */
 					showDiv(1);
 					var t2 = document.getElementById('cantTestDesc');
 					t2.innerText = res.desc;
@@ -278,7 +281,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 }
 
 .prblSelect:hover {
-	background-color: #CCFFCC;
+	background-color: #6699CC;
 }
 </style>
 </head>
@@ -329,17 +332,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<img src="/images_zhuchaobin/logo_cn.png" class="img-rounded"
 								align="middle">
 						</div>
-						<h1 align="center">省运会反兴奋剂教育准入系统</h1>
-						<h2 align="center">反兴奋剂承诺书</h2>
+						<h2 align="center">省运会反兴奋剂教育准入系统</h2>
+						<h3 align="center">反兴奋剂承诺书</h3>
 						我将以维护国家荣普、发扬体育精神为己任，自觉 遵守反兴奋剂法律法规，认更艘行反兴奋剂责任义务， 保证千干净净参加比宜． <br>
 						在此我承诺：
 						<ul>
-							<li style="color: #F00; font-size: 20px;">坚决抵制使用兴奋剂</li>
-							<li style="color: #F00; font-size: 20px;">严防误服误用兴奋剂</li>
-							<li style="color: #F00; font-size: 20px;">配合兴奋剂检查调查</li>
-							<li style="color: #F00; font-size: 20px;">及时申请用药豁免</li>
-							<li style="color: #F00; font-size: 20px;">准确填报行踪信息</li>
-							<li style="color: #F00; font-size: 20px;">互相监督主动举报</li>
+							<li style="color: #F00; font-size: 18px;">坚决抵制使用兴奋剂</li>
+							<li style="color: #F00; font-size: 18px;">严防误服误用兴奋剂</li>
+							<li style="color: #F00; font-size: 18px;">配合兴奋剂检查调查</li>
+							<li style="color: #F00; font-size: 18px;">及时申请用药豁免</li>
+							<li style="color: #F00; font-size: 18px;">准确填报行踪信息</li>
+							<li style="color: #F00; font-size: 18px;">互相监督主动举报</li>
 						</ul>
 						<div class="input-group input-group-lg">
 							<span class="input-group-addon">承诺人</span> <input type="text"
@@ -402,7 +405,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</div>
 		</div>
 
-		<div class="container" id="doTestDiv" style="display: none;">
+		<div id="doTestDiv" class="container" style="display: none;">
 			<!--  start cursual  -->
 			<div id="owl-demo" class="owl-carousel">
 				<%for(x in examSelectList){ %>
@@ -425,6 +428,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						name=${x.prblmno! ''} value=D id=${x.prblmid! ''}D>
 						${x.optD!}
 					</label> </br>
+
+					<!-- 		 </br> <input type="checkbox"
+						name=${x.prblmno! ''} value=A id=${x.prblmid! ''}A>
+						${x.optA!}
+					 <input type="checkbox"
+						name=${x.prblmno! ''} value=B id=${x.prblmid! ''}B>
+						${x.optB!}
+					 <input type="checkbox"
+						name=${x.prblmno! ''} value=C id=${x.prblmid! ''}C>
+						${x.optC!}
+					<input type="checkbox"
+						name=${x.prblmno! ''} value=D id=${x.prblmid! ''}D>
+						${x.optD!}
+					</br> -->
+
 				</div>
 				<%}%> <%for(y in examDeducList){ %>
 				<div>
