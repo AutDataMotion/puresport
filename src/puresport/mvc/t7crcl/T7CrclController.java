@@ -83,7 +83,7 @@ public class T7CrclController extends BaseController {
 	}
 
 	/**
-	 * @exception 学习说明  
+	 * 描述：学习说明  
 	 * @author zhuchaobin
 	 * 2018-06-03
 	 */
@@ -104,7 +104,7 @@ public class T7CrclController extends BaseController {
 	}
 
 	/**
-	 * @exception 查询证书  
+	 * 描述：查询证书  
 	 * @author zhuchaobin
 	 * 2018-06-03
 	 */
@@ -116,7 +116,7 @@ public class T7CrclController extends BaseController {
 	}
 
 	/**
-	 * @exception 视频播放 
+	 * 描述：视频播放 
 	 * @author zhuchaobin
 	 * 2018-05-09
 	 */
@@ -157,7 +157,7 @@ public class T7CrclController extends BaseController {
 	}
 
 	/**
-	 * @exception 视频2选择_3
+	 * 描述：视频2选择_3
 	 * @author zhuchaobin
 	 * 2018-05-09
 	 */
