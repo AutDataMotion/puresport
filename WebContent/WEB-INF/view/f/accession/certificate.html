@@ -1,18 +1,14 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>考试</title>
+<title>合格证书</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords"
 	content="Skate Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
-<script type="application/x-javascript">
-	
-		
+<script type="application/x-javascript">		
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
-
-
 </script>
 <!-- Bootstrap -->
 <link href="/css/bootstrap.css" rel='stylesheet' type='text/css' />
@@ -280,27 +276,42 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<!-- start main -->
 		<div class="container">
 			<div class="main_grid1">
-				<h3 class="style pull-left">考试</h3>
-				<ol class="breadcrumb pull-right">
-					<li><a href="${cxt!}/jf/puresport/pagesController">首页</a></li>
-					<li class="active">准入</li>
-					<li class="active">考试</li>
-				</ol>
+				<h3 class="style pull-left">合格证书</h3>
+				<h3 class="style pull-right">省运会</h3>
 			</div>
 		</div>
 	</div>
 <div class="main_btm1">
-	<!-- 第一页：考试说明 -->
-	<div id="mannulDiv" class="demo" >
-		<div class="container">	
-		<div align="center">	
-		<img src="${certificatePath!""}" class="img-rounded" align="middle" height="300" width="300">
-<!-- 		<img src="/images_zhuchaobin/certificateTemp.jpg" class="img-thumbnail" height="300" width="300" > -->
-		
+		<div id="showScoreDiv" class="demo">
+			<div class="container">
+				<div align="center">
+					<div class="row">
+						<div class="col-md-3 myTest"></div>
+						<div class="col-md-6 myTest">
+							<img src="/images_zhuchaobin/certificates/${crdt_no!''}.jpg" id="certificateImgId" class="img-thumbnail"
+								height="400" width="400">
+						</div>
+						<div class="col-md-3 myTest">
+							<div class="row" class="style pull-bottom">
+								<div class="col-md-4 myTest">
+									<img id="erweima" src="http://qr.liantu.com/api.php?text=http://${hstAddr!''}/jf/puresport/t7Crcl/test2?crdt_no=${crdt_no!''}&rf=viewer_4&t=5&bg=ffffff&200" height="150" width="150" />
+								</div>
+								<div class="col-md-4 myTest"></div>
+								<div class="col-md-4 myTest"></div>
+							</div>
+							<div class="row">
+								<div>使用如下app扫描二维码分享</div>								
+							</div>
+							<div class="row">
+								<div align="left">
+									<img src="/images_zhuchaobin/share.png" height="55" width="210">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-	
-		</div>
-	</div>
 
 	</div>
 	<!-- start footer -->
