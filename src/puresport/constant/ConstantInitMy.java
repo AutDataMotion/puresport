@@ -16,4 +16,5 @@ import com.platform.constant.ConstantInit;
 
 public interface ConstantInitMy extends ConstantInit{
 	public static final String db_dataSource_main = "db.dataSource.puresport";
+	public static final String SPKEY = "aD0jl#159@";
 }
