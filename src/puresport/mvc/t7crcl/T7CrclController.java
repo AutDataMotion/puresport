@@ -479,9 +479,11 @@ public class T7CrclController extends BaseController {
 				}
 				if (isRight) {
 					score++;
-					t10Data.setExam_grd(1);
+					t10Data.setExam_grd(5);
+					t10Data.setResult("正确");
 				} else {
 					t10Data.setExam_grd(0);
+					t10Data.setResult("错误");
 				}
 				t10Data.setUsr_aswr(usr_aswr);
 				t10Data.setExam_st("1");
