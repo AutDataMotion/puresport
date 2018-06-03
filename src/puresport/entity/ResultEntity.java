@@ -19,10 +19,16 @@ import com.jfinal.kit.PropKit;
  */
 public class ResultEntity {
 	private static Logger LOG = Logger.getLogger(ResultEntity.class);
+	
 	// 错误码
+	
 	private String code;
 	// 错误描述
 	private String desc;
+	// 参数1
+	private String parm1;
+	// 参数2
+	private String parm2;
 public ResultEntity(String initCcode) {
 		// TODO Auto-generated constructor stub
 		// 返回错误码
@@ -52,6 +58,32 @@ public ResultEntity(String initCcode, String initDesc) {
 	this.code = initCcode;
 	// 返回错误描述
 	this.desc = initDesc;
+}
+
+public ResultEntity(String initCcode, String initDesc, String parm1, String parm2) {
+	// TODO Auto-generated constructor stub
+	// 返回错误码
+	this.code = initCcode;
+	// 返回错误描述
+	this.desc = initDesc;
+	this.parm1 = parm1;
+	this.parm2 = parm2;
+}
+
+	public String getParm1() {
+	return parm1;
+}
+
+public void setParm1(String parm1) {
+	this.parm1 = parm1;
+}
+
+public String getParm2() {
+	return parm2;
+}
+
+public void setParm2(String parm2) {
+	this.parm2 = parm2;
 }
 
 	public String getCode() {
