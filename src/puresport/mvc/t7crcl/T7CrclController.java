@@ -83,7 +83,9 @@ public class T7CrclController extends BaseController {
 	}
 
 	/**
-	 * 描述：学习说明_1 zhuchaobin 2018-05-09
+	 * @exception 学习说明  
+	 * @author zhuchaobin
+	 * 2018-06-03
 	 */
 	public void study_notify_1() {
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
@@ -101,8 +103,11 @@ public class T7CrclController extends BaseController {
 		renderWithPath("/f/accession/study_notify_1.html");
 	}
 
-	// 从30道选择题中随机取10道，从30道判断题中随机取10道构成试卷。并保存到成绩记录表中。
-	// zhuchaobin
+	/**
+	 * @exception 查询证书  
+	 * @author zhuchaobin
+	 * 2018-06-03
+	 */
 	@Clear
 	public void queryCetifate() {
 		setAttr("crdt_no", getPara("crdt_no"));
@@ -111,9 +116,10 @@ public class T7CrclController extends BaseController {
 	}
 
 	/**
-	 * 描述：视频播放 zhuchaobin 2018-05-09
+	 * @exception 视频播放 
+	 * @author zhuchaobin
+	 * 2018-05-09
 	 */
-	@Clear
 	public void video_play() {
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		System.out.println(usrid);
@@ -151,9 +157,10 @@ public class T7CrclController extends BaseController {
 	}
 
 	/**
-	 * 描述：视频2选择_3 zhuchaobin 2018-05-09
+	 * @exception 视频2选择_3
+	 * @author zhuchaobin
+	 * 2018-05-09
 	 */
-	@Clear
 	public void video2_select_3() {
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		List<T7Crcl> t7List = queryCrcl(2, usrid);
@@ -168,11 +175,11 @@ public class T7CrclController extends BaseController {
 		}
 		renderWithPath("/f/accession/video2_select_3.html");
 	}
-
 	/**
-	 * 描述：视频3选择_5 zhuchaobin 2018-05-09
+	 * 描述：视频3选择_5
+	 * @author zhuchaobin
+	 * 2018-05-09
 	 */
-	@Clear
 	public void video3_select_5() {
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		List<T7Crcl> t7List = queryCrcl(3, usrid);
@@ -187,7 +194,12 @@ public class T7CrclController extends BaseController {
 		}
 		renderWithPath("/f/accession/video2_select_3.html");
 	}
-
+	
+	/**
+	 * 描述：课程信息查询
+	 * @author zhuchaobin
+	 * 2018-05-12
+	 */
 	public List<T7Crcl> queryCrcl(Integer flag, Integer usrid) {
 		ResultEntity res = null;
 		StringBuilder desc = new StringBuilder("");
@@ -246,14 +258,14 @@ public class T7CrclController extends BaseController {
 		}
 		return null;
 	}
-
-	// 从30道选择题中随机取10道，从30道判断题中随机取10道构成试卷。并保存到成绩记录表中。
-	// zhuchaobin
-	@Clear
+	/**
+	 * 描述：从30道选择题中随机取10道，从30道判断题中随机取10道构成试卷。并保存到成绩记录表中。
+	 * @author zhuchaobin
+	 * 2018-05-21
+	 */
 	public void generteTest() {
 		if (!isCanTest())
 			renderWithPath("/f/accession/dotest.html");
-		;
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		// 选择题
 		String sql = "select * from t9_tstlib t where t.prblm_tp ='01' order by rand() limit 10";
@@ -349,12 +361,12 @@ public class T7CrclController extends BaseController {
 		setAttr("examDeducList", examEntityList2);
 		renderWithPath("/f/accession/dotest.html");
 	}
-
+	/**
+	 * 描述：检测是否具备考试条件
+	 * @author zhuchaobin
+	 * 2018-05-23
+	 */
 	public boolean isCanTest() {
-		/*
-		 * getModel(T5CrclStdy.class).update(); redirect(pthc);
-		 */
-		/* String usrid = getPara("usrid"); */
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		ResultEntity res = null;
 		StringBuilder desc = new StringBuilder("");
@@ -406,10 +418,11 @@ public class T7CrclController extends BaseController {
 		else
 			return false;
 	}
-
-	// 提交考试，判定对错，记录题目记录，考试成绩
-	// zhuchaobin
-	@Clear
+	/**
+	 * 描述：提交考试，判定对错，记录题目记录，考试成绩
+	 * @author zhuchaobin
+	 * 2018-05-25
+	 */
 	public void submitExam() {
 		// // 处理结果
 		ResultEntity res = null;
@@ -562,7 +575,11 @@ public class T7CrclController extends BaseController {
 		// renderWithPath("/f/accession/certificate.html");
 		renderJson(res);
 	}
-
+	/**
+	 * 描述：加水印，在合格证书上打印考试结果信息
+	 * @author zhuchaobin
+	 * 2018-06-01
+	 */
 	public static void waterMark(String waterMsg, String inputImg, String outImg, Integer x, Integer y) {
 		try {
 			// 1.jpg是你的 主图片的路径
@@ -619,7 +636,6 @@ public class T7CrclController extends BaseController {
 	public void save() {
 		T7Crcl t7Crcl = getModel(T7Crcl.class);
 		// other set
-
 		// t7Crcl.save(); //guiid
 		t7Crcl.saveGenIntId(); // serial int id
 		renderWithPath(pthv + "add.html");
