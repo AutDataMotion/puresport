@@ -93,6 +93,12 @@ public class T10ExamGrd extends BaseModel<T10ExamGrd> {
 	public static final String column_exam_end_tm = "exam_end_tm";
 	
 	/**
+	 * 字段描述：答题结果：正确|错误
+	 * 字段类型：varchar  长度：16
+	 */
+	public static final String column_result = "result";
+	
+	/**
 	 * sqlId : puresport.t10ExamGrd.splitPageFrom
 	 * 描述：分页from
 	 */
@@ -113,6 +119,8 @@ public class T10ExamGrd extends BaseModel<T10ExamGrd> {
 	private Timestamp exam_end_tm;
 	// 题号
 	private Integer prblmno;
+	
+	private String result;
 	
 	public void setPrblmno(Integer prblmno){
 		set(column_prblmno, prblmno);
@@ -187,5 +195,13 @@ public class T10ExamGrd extends BaseModel<T10ExamGrd> {
 	public <T> T getTms() {
 		return get(column_tms);
 	}
+	
+	public void setResult(String result){
+		set(column_result, result);
+	}
+	public <T> T getResult() {
+		return get(column_result);
+	}
+	
 	
 }
