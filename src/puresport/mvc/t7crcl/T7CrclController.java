@@ -105,7 +105,8 @@ public class T7CrclController extends BaseController {
 	// zhuchaobin
 	@Clear
 	public void test2() {
-
+		String crdt_no = getPara("crdt_no");
+		setAttr("crdt_no", crdt_no);
 		renderWithPath("/f/accession/certificate.html");
 	}
 
@@ -556,7 +557,7 @@ public class T7CrclController extends BaseController {
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
-		res = new ResultEntity("0000", "考试成绩提交成功.", certificatePath, "http://" + hostAddress);
+		res = new ResultEntity("0000", "考试成绩提交成功.", certificatePath, hostAddress, t1.getCrdt_no());
 		// setAttr("certificatePath", certificatePath);
 		// renderWithPath("/f/accession/certificate.html");
 		renderJson(res);

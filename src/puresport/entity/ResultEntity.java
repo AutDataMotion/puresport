@@ -29,6 +29,8 @@ public class ResultEntity {
 	private String parm1;
 	// 参数2
 	private String parm2;
+	// 参数3
+	private String parm3;
 public ResultEntity(String initCcode) {
 		// TODO Auto-generated constructor stub
 		// 返回错误码
@@ -60,7 +62,7 @@ public ResultEntity(String initCcode, String initDesc) {
 	this.desc = initDesc;
 }
 
-public ResultEntity(String initCcode, String initDesc, String parm1, String parm2) {
+public ResultEntity(String initCcode, String initDesc, String parm1, String parm2, String parm3) {
 	// TODO Auto-generated constructor stub
 	// 返回错误码
 	this.code = initCcode;
@@ -68,11 +70,20 @@ public ResultEntity(String initCcode, String initDesc, String parm1, String parm
 	this.desc = initDesc;
 	this.parm1 = parm1;
 	this.parm2 = parm2;
+	this.parm3 = parm3;
 }
 
 	public String getParm1() {
 	return parm1;
 }
+
+public String getParm3() {
+		return parm3;
+	}
+
+	public void setParm3(String parm3) {
+		this.parm3 = parm3;
+	}
 
 public void setParm1(String parm1) {
 	this.parm1 = parm1;
