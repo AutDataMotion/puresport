@@ -209,7 +209,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					t2.innerText = "成绩证书";
 					
 					var pic = document.getElementById("certificateImgId");//picture是img的id
-					pic.src = res.desc;
+					pic.src = res.parm1;
+					
+					var pic = document.getElementById("erweima");//picture是img的id
+					pic.src = "http://qr.liantu.com/api.php?text=" + res.parm2";
+					
+//					http://qr.liantu.com/api.php?text=http://m.qpic.cn/psb?/V10zsTr30tgqVO/JjLdVKa1q7ZJAlpFtcuGqVvutgKH1cvPUeTuDeTpKBY!/b/dCIBAAAAAAAA&bo=TwIgAwAAAAARF04!&rf=viewer_4&t=5&bg=ffffff&200
 					
 				} else if (res.code == "0002") {
 					$('#tip2Modal').modal('show');				
@@ -431,7 +436,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			
 											<div class="row" class="style pull-bottom">
 				  <div class="col-md-4 myTest">
-				  	 <img src="http://qr.liantu.com/api.php?text=http://m.qpic.cn/psb?/V10zsTr30tgqVO/JjLdVKa1q7ZJAlpFtcuGqVvutgKH1cvPUeTuDeTpKBY!/b/dCIBAAAAAAAA&bo=TwIgAwAAAAARF04!&rf=viewer_4&t=5&bg=ffffff&200" height="150" width="150"/>
+	<!-- 			  	 <img src="http://qr.liantu.com/api.php?text=http://m.qpic.cn/psb?/V10zsTr30tgqVO/JjLdVKa1q7ZJAlpFtcuGqVvutgKH1cvPUeTuDeTpKBY!/b/dCIBAAAAAAAA&bo=TwIgAwAAAAARF04!&rf=viewer_4&t=5&bg=ffffff&200" height="150" width="150"/> -->
+				  	 <img id="erweima" src="" height="150" width="150"/>
 				  </div>
 				  <div class="col-md-4 myTest"></div>
 				  <div class="col-md-4 myTest"></div>
