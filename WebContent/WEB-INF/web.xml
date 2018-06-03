@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	id="JFinalUIB" version="3.0">
 
-	<display-name>Thai Rice</display-name>
+	<display-name>PureSport</display-name>
 
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
@@ -65,7 +65,6 @@
 		<dispatcher>REQUEST</dispatcher>
 		<dispatcher>FORWARD</dispatcher>
 	</filter-mapping>
-
 
 	<error-page>
 		<error-code>404</error-code>
