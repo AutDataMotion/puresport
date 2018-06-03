@@ -6,8 +6,10 @@
 <meta name="keywords"
 	content="Skate Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
-<script type="application/x-javascript">		
+<script type="application/x-javascript">
+			
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
 </script>
 <!-- Bootstrap -->
 <link href="/css/bootstrap.css" rel='stylesheet' type='text/css' />
@@ -39,6 +41,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	font-family: "微软雅黑", "黑体", "宋体";
 	font-size: 18px;
 }
+
 #owl-demo .owl-item img {
 	display: block;
 	width: 100%;
@@ -54,10 +57,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	font-size: 20px;
 	padding-left: 5px;
 }
+
 .title {
 	font-family: "微软雅黑", "黑体", "宋体";
 	font-size: 25px;
 }
+
 .score {
 	padding-top: 130px;
 	padding-right: 250px;
@@ -138,8 +143,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		}
 		// 承诺人姓名		
 		var commimentNm = document.getElementById("commimentNm").value;
-		if(commimentNm == ""){
-			$('#tip3Modal').modal('show');	
+		if (commimentNm == "") {
+			$('#tip3Modal').modal('show');
 			return;
 		}
 		var url;
@@ -157,25 +162,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			},
 			success : function(res) {
 				if (res.code == "0000") {
-/* 					showDiv(5);
-					var t2 = document.getElementById('pageTitle');
-					t2.innerText = "成绩证书";					
-					var pic = document.getElementById("certificateImgId");//picture是img的id
-					pic.src = res.parm1;					
-					var pic = document.getElementById("erweima");//picture是img的id
-					pic.src = "http://qr.liantu.com/api.php?text=" + res.parm2"; */					
-//					http://qr.liantu.com/api.php?text=http://m.qpic.cn/psb?/V10zsTr30tgqVO/JjLdVKa1q7ZJAlpFtcuGqVvutgKH1cvPUeTuDeTpKBY!/b/dCIBAAAAAAAA&bo=TwIgAwAAAAARF04!&rf=viewer_4&t=5&bg=ffffff&200					
-					window.location.href="http://" + res.parm2 + "/jf/puresport/t7Crcl/queryCetifate?crdt_no=" + res.parm3 +"&hstAddr=" + res.parm2;
+					/* 					showDiv(5);
+					 var t2 = document.getElementById('pageTitle');
+					 t2.innerText = "成绩证书";					
+					 var pic = document.getElementById("certificateImgId");//picture是img的id
+					 pic.src = res.parm1;					
+					 var pic = document.getElementById("erweima");//picture是img的id
+					 pic.src = "http://qr.liantu.com/api.php?text=" + res.parm2"; */
+					//					http://qr.liantu.com/api.php?text=http://m.qpic.cn/psb?/V10zsTr30tgqVO/JjLdVKa1q7ZJAlpFtcuGqVvutgKH1cvPUeTuDeTpKBY!/b/dCIBAAAAAAAA&bo=TwIgAwAAAAARF04!&rf=viewer_4&t=5&bg=ffffff&200					
+					window.location.href = "http://" + res.parm2
+							+ "/jf/puresport/t7Crcl/queryCetifate?crdt_no="
+							+ res.parm3 + "&hstAddr=" + res.parm2;
 				} else if (res.code == "0002") {
-					$('#tip2Modal').modal('show');				
-				} else{
+					$('#tip2Modal').modal('show');
+				} else {
 					alert(res.desc);
 				}
 			},
 			dataType : "json"
 		});
 	}
-		
+
 	//确认提交试卷
 	function confirSubmit() {
 		/* 		if(confirmNum == 0){ */
@@ -192,7 +199,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			$('#tip1Modal').modal('show');
 			return;
 		}
-		
+
 		showDiv(4);
 		var t2 = document.getElementById('pageTitle');
 		t2.innerText = "承诺书";
@@ -207,7 +214,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			document.getElementById("showScoreDiv").style.display = "none";
 			document.getElementById("doTestDiv").style.display = "none";
 			document.getElementById("commimentDiv").style.display = "none";
-			
+
 		} else if (flag == 2) {
 			document.getElementById("mannulDiv").style.display = "";
 			document.getElementById("cantTestDiv").style.display = "none";
@@ -226,7 +233,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			document.getElementById("showScoreDiv").style.display = "none";
 			document.getElementById("doTestDiv").style.display = "none";
 			document.getElementById("commimentDiv").style.display = "";
-		}else if (flag == 5) {
+		} else if (flag == 5) {
 			document.getElementById("mannulDiv").style.display = "none";
 			document.getElementById("cantTestDiv").style.display = "none";
 			document.getElementById("showScoreDiv").style.display = "";
@@ -363,7 +370,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<div class="col-md-3 myTest">
 							<div class="row" class="style pull-bottom">
 								<div class="col-md-4 myTest">
-									<img id="erweima" src="/images_zhuchaobin/certificates/139282192837111111.jpg" height="150" width="150" />
+									<img id="erweima"
+										src="/images_zhuchaobin/certificates/139282192837111111.jpg"
+										height="150" width="150" />
 								</div>
 								<div class="col-md-4 myTest"></div>
 								<div class="col-md-4 myTest"></div>
@@ -444,7 +453,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 			</div>
 		</div>
-		
+
 		<!-- submit Modal-->
 		<div class="modal fade" id="submitModal" tabindex="-1" role="dialog"
 			aria-labelledby="submitModalLabel" aria-hidden="true">
@@ -475,7 +484,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header" align="center">
-						<h5 class="modal-title">提 示</h5>
+						<h5 class="modal-title">友情提示</h5>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
@@ -497,7 +506,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header" align="center">
-						<h5 class="modal-title">提 示</h5>
+						<h5 class="modal-title">友情提示</h5>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
@@ -519,7 +528,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header" align="center">
-						<h5 class="modal-title">提 示</h5>
+						<h5 class="modal-title">友情提示</h5>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>

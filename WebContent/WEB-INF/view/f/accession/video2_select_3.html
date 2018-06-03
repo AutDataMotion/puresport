@@ -61,16 +61,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script>
 function do_jump(){
 		var stdy_st_hidden = document.getElementById("stdy_st_hidden").value;
-		var action = document.getElementById("action").value;
+		var action_hidden = document.getElementById("action_hidden").value;
 		if(stdy_st_hidden == 1){
-			window.location.href=action;// 进行下一步
+			window.location.href=action_hidden;// 进行下一步
 		} else {
 			// 提示当前课程必须学完才能下一步
 			$('#tipModal').modal('show');
 			return;
 		}
 	}
-</script>		
+</script>
 <link rel="stylesheet" type="text/css" href="/css_zhuchaobin/lrtk.css"
 	media="all">
 </head>
@@ -133,42 +133,44 @@ function do_jump(){
 					<div class="cornerBL"></div>
 					<div class="cornerBR"></div>
 				</div>
-				<input type="hidden" name="stdy_st_hidden" id="stdy_st_hidden" value="${x.stdy_st!'0'}">
-				<input type="hidden" name="action" id="action" value="${action!''}">
+				<input type="hidden" name="stdy_st_hidden" id="stdy_st_hidden"
+					value="${stdy_st_hidden!'0'}"> <input type="hidden"
+					name="action_hidden" id="action_hidden" value="${action_hidden!''}">
 				</input> <%}%>
 				<!-- Examples body -->
 			</div>
 			<br>
 			<!-- END_CONTAINER -->
 		</div>
-			<div align="center">
-					<button onclick="do_jump()" class="btn">跳過</button>
-				</div>
-	</div>
-	
-	<!-- tip1 Modal-->
-		<div class="modal fade" id="tipModal" tabindex="-1" role="dialog"
-			aria-labelledby="tip1ModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header" align="center">
-						<h5 class="modal-title">提  示</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body" align="center">对不起，当前课程学习完成才能进行后续环节！</div>
-					<div class="modal-footer" align="center">
-						<button type="button" class="btn" data-dismiss="modal">确定</button>
-					</div>
-				</div>
-				<!-- /.modal-content -->
-			</div>
-			<!-- /.modal-dialog -->
+		<div align="center">
+			<button onclick="do_jump()" class="btn">跳過</button>
 		</div>
-		
-		
+		<br>
+	</div>
+
+	<!-- tip1 Modal-->
+	<div class="modal fade" id="tipModal" tabindex="-1" role="dialog"
+		aria-labelledby="tip1ModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header" align="center">
+					<h5 class="modal-title">友情提示</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" align="center">对不起，当前课程学习完成才能进行后续环节！</div>
+				<div class="modal-footer" align="center">
+					<button type="button" class="btn" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+
+
 	<% include("/f/footer.html"){} %>
 </body>
 </html>

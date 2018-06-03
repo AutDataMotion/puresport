@@ -83,9 +83,9 @@ public class T7CrclController extends BaseController {
 	}
 
 	/**
-	 * 描述：学习说明  
-	 * @author zhuchaobin
-	 * 2018-06-03
+	 * 描述：学习说明
+	 * 
+	 * @author zhuchaobin 2018-06-03
 	 */
 	public void study_notify_1() {
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
@@ -104,9 +104,9 @@ public class T7CrclController extends BaseController {
 	}
 
 	/**
-	 * 描述：查询证书  
-	 * @author zhuchaobin
-	 * 2018-06-03
+	 * 描述：查询证书
+	 * 
+	 * @author zhuchaobin 2018-06-03
 	 */
 	@Clear
 	public void queryCetifate() {
@@ -116,9 +116,9 @@ public class T7CrclController extends BaseController {
 	}
 
 	/**
-	 * 描述：视频播放 
-	 * @author zhuchaobin
-	 * 2018-05-09
+	 * 描述：视频播放
+	 * 
+	 * @author zhuchaobin 2018-05-09
 	 */
 	public void video_play() {
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
@@ -158,8 +158,8 @@ public class T7CrclController extends BaseController {
 
 	/**
 	 * 描述：视频2选择_3
-	 * @author zhuchaobin
-	 * 2018-05-09
+	 * 
+	 * @author zhuchaobin 2018-05-09
 	 */
 	public void video2_select_3() {
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
@@ -176,10 +176,11 @@ public class T7CrclController extends BaseController {
 		}
 		renderWithPath("/f/accession/video2_select_3.html");
 	}
+
 	/**
 	 * 描述：视频3选择_5
-	 * @author zhuchaobin
-	 * 2018-05-09
+	 * 
+	 * @author zhuchaobin 2018-05-09
 	 */
 	public void video3_select_5() {
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
@@ -196,11 +197,11 @@ public class T7CrclController extends BaseController {
 		}
 		renderWithPath("/f/accession/video2_select_3.html");
 	}
-	
+
 	/**
 	 * 描述：课程信息查询
-	 * @author zhuchaobin
-	 * 2018-05-12
+	 * 
+	 * @author zhuchaobin 2018-05-12
 	 */
 	public List<T7Crcl> queryCrcl(Integer flag, Integer usrid) {
 		ResultEntity res = null;
@@ -260,10 +261,11 @@ public class T7CrclController extends BaseController {
 		}
 		return null;
 	}
+
 	/**
 	 * 描述：从30道选择题中随机取10道，从30道判断题中随机取10道构成试卷。并保存到成绩记录表中。
-	 * @author zhuchaobin
-	 * 2018-05-21
+	 * 
+	 * @author zhuchaobin 2018-05-21
 	 */
 	public void generteTest() {
 		if (!isCanTest())
@@ -363,10 +365,11 @@ public class T7CrclController extends BaseController {
 		setAttr("examDeducList", examEntityList2);
 		renderWithPath("/f/accession/dotest.html");
 	}
+
 	/**
 	 * 描述：检测是否具备考试条件
-	 * @author zhuchaobin
-	 * 2018-05-23
+	 * 
+	 * @author zhuchaobin 2018-05-23
 	 */
 	public boolean isCanTest() {
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
@@ -420,10 +423,11 @@ public class T7CrclController extends BaseController {
 		else
 			return false;
 	}
+
 	/**
 	 * 描述：提交考试，判定对错，记录题目记录，考试成绩
-	 * @author zhuchaobin
-	 * 2018-05-25
+	 * 
+	 * @author zhuchaobin 2018-05-25
 	 */
 	public void submitExam() {
 		// // 处理结果
@@ -577,10 +581,11 @@ public class T7CrclController extends BaseController {
 		// renderWithPath("/f/accession/certificate.html");
 		renderJson(res);
 	}
+
 	/**
 	 * 描述：加水印，在合格证书上打印考试结果信息
-	 * @author zhuchaobin
-	 * 2018-06-01
+	 * 
+	 * @author zhuchaobin 2018-06-01
 	 */
 	public static void waterMark(String waterMsg, String inputImg, String outImg, Integer x, Integer y) {
 		try {
