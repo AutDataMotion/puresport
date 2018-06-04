@@ -2,5 +2,5 @@
 
 <%
 	//response.sendRedirect("/jf/platform/login");
-	request.getRequestDispatcher("/jf/targrecog/index/shw").forward(request, response);
+	request.getRequestDispatcher("/jf/puresport/pagesController").forward(request, response);
 %>
