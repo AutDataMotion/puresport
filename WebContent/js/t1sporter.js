@@ -222,7 +222,6 @@ $(document).ready(function() {
 			url : encodeURI(encodeURI(cxt + urlUse)),
 			data :$("#form_sporter").serialize(),
 			success : function(response) {
-				console.log(response);
 				// 操作结果提示
 				layer.msg(response.status.name);
 				// 隐藏form表单
@@ -235,7 +234,6 @@ $(document).ready(function() {
 	
 	// =============搜索查询
 	function search(data, callback, settings) {
-		console.log("search");
 		// datasrch.userId = $('#userId').val();
 		// datasrch.dateTimeBeg = $('#datetimeBeg').val();
 		// datasrch.dateTimeEnd = $('#datetimeEnd').val();
@@ -251,7 +249,6 @@ $(document).ready(function() {
 			dataType : 'json',
 			contentType : "application/json",
 			success : function(response) {
-				console.log(response);
 				myTable.clear().draw();
 				myTable.rows.add(response).draw();
 			}
@@ -263,26 +260,24 @@ $(document).ready(function() {
 
 	// ------------------上传 start
 	function checktext(f) {
-
 		if (f == "") {
-			alert("请上传excel");
+			layer.msg("请上传excel");
 			return false;
 		} else if ((!/\.(xls)$/.test(f)) && (!/\.(xlsx)$/.test(f))) {
-			alert("文件类型必须是xls或xlsx格式")
+			layer.msg("文件类型必须是xls或xlsx格式")
 			return false;
-		} else {
-			return true;
-		}
+		} 
+		return true;
 	}
 
-	$("#inputfilesporter").on('change keyup', function() {
+	$("#inputfilesporter").on('change', function() {
 		console.log(" inputfilesporter change");
 		var f = document.getElementById("inputfilesporter").value;// 获取input
 																	// type="file"的值
-		console.log(f);
 		var docObj = document.getElementById("inputfilesporter");
 		uploadtext(f, docObj);
 	});
+	
 	function uploadtext(file, docObj) {
 		if (!checktext(file)) {
 			return;
@@ -300,11 +295,11 @@ $(document).ready(function() {
 			success : function(data) {
 				console.log(data);
 				if (data == "1") {
-					alert("上传成功");
-					search("", "", "");
+					layer.msg("上传成功");
 				} else {
-					alert("上传失败，请检查如下信息：" + data);
+					layer.msg("文件处理有点问题，信息如下：" + data);
 				}
+				search("", "", "");
 			}
 		});
 	}
