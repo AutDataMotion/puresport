@@ -9,7 +9,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -17,6 +20,7 @@ import java.util.Objects;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -27,14 +31,15 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *         然后，Excel中的每一行都是一个Row对象， 每一个单元格都是一个Cell对象。
  */
 public class ExcelParseTool {
-	private static final String SUFFIX_2003 = ".xls";
-	private static final String SUFFIX_2007 = ".xlsx";
+	public static final String SUFFIX_2003 = ".xls";
+	public static final String SUFFIX_2007 = ".xlsx";
 
 	@SuppressWarnings("resource")
 	public static List<MdlExcelRow> getWorkBookTable(String filePath) throws IOException, IllegalArgumentException {
 		File file = new File(filePath);
 		return getWorkBookTable(file);
 	}
+
 	@SuppressWarnings("resource")
 	public static List<MdlExcelRow> getWorkBookTable(File file) throws IOException, IllegalArgumentException {
 		InputStream is = new FileInputStream(file);
@@ -111,8 +116,19 @@ public class ExcelParseTool {
 			return String.valueOf(cell.getBooleanCellValue());
 		}
 		if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
-			return String.valueOf((int)cell.getNumericCellValue());
+			// 判断是否为日期类型
+			if (DateUtil.isCellDateFormatted(cell)) {
+				// 用于转化为日期格式
+				Date d = cell.getDateCellValue();
+				DateFormat formater = new SimpleDateFormat("yyyy/MM/dd");
+				return formater.format(d);
+			}
+			return String.valueOf((int) cell.getNumericCellValue());
 		}
+		if (cell.getCellType() == Cell.CELL_TYPE_FORMULA) {
+			return cell.getCellFormula();
+		}
+		
 		return cell.getStringCellValue();
 
 	}
@@ -124,7 +140,7 @@ public class ExcelParseTool {
 	 */
 	public static void main(String[] args) throws IllegalArgumentException, IOException {
 		// TODO Auto-generated method stub
-		List<MdlExcelRow> table = ExcelParseTool.getWorkBookTable("/home/zw/Downloads/user_admin.xls");
+		List<MdlExcelRow> table = ExcelParseTool.getWorkBookTable("/home/zw/Downloads/puresport/sport_admin.xls");
 		if (Objects.isNull(table)) {
 			System.out.println("empty");
 		} else {

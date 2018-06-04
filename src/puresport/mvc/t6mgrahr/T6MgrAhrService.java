@@ -13,7 +13,9 @@ import com.jfinal.plugin.activerecord.Record;
 import com.platform.mvc.base.BaseService;
 
 import csuduc.platform.util.ComOutMdl;
+import csuduc.platform.util.StringUtil;
 import csuduc.platform.util.encrypt.CommDES;
+import csuduc.platform.util.encrypt.DESUtil;
 import puresport.applicat.MdlExcelRow;
 import puresport.config.ConfMain;
 import puresport.constant.ConstantInitMy;
@@ -35,27 +37,31 @@ public class T6MgrAhrService extends BaseService {
 		T6MgrAhr mdl = T6MgrAhr.dao.findFirst("select * from t6MgrAhr where id=?", id);
 		return mdl;
 	}
-	
-	public boolean isExist(T6MgrAhr mdl){
-		Record user = ConfMain.db().findById(tableName, T6MgrAhr.column_mblph_no, (String)mdl.get(T6MgrAhr.column_mblph_no));
+
+	public boolean isExist(T6MgrAhr mdl) {
+		Record user = ConfMain.db().findById(tableName, T6MgrAhr.column_mblph_no,
+				(String) mdl.get(T6MgrAhr.column_mblph_no));
 		if (null == user) {
 			return false;
 		}
 		mdl.set(T6MgrAhr.column_usrid, user.get(T6MgrAhr.column_usrid));
-		return true ;
-	 }
+		return true;
+	}
 
-	public List<T6MgrAhr> selectByPage(T6MgrSession mgrSession, ParamComm paramMdl){
+	public List<T6MgrAhr> selectByPage(T6MgrSession mgrSession, ParamComm paramMdl) {
 		final String roleStr = mgrSession.selectRoleStr();
-		Long countTotal = ConfMain.db().queryLong(String.format("select count(1) from %s where %s ", tableName, roleStr));
+		Long countTotal = ConfMain.db()
+				.queryLong(String.format("select count(1) from %s where %s ", tableName, roleStr));
 		paramMdl.setTotal(countTotal);
-		List<T6MgrAhr> resList =new ArrayList<>();
+		List<T6MgrAhr> resList = new ArrayList<>();
 		if (countTotal > 0) {
-			resList  =  T6MgrAhr.dao.find(String.format("select usrid,nm,crdt_tp, crdt_no, gnd,brth_dt,wrk_unit, post,typeleve, province, city,institute, mblph_no, email  from %s where %s  limit ?,?", tableName, roleStr),
-					paramMdl.getPageIndex(), paramMdl.getPageSize());
+			resList = T6MgrAhr.dao.find(String.format(
+					"select usrid,nm,crdt_tp, crdt_no, gnd,brth_dt,wrk_unit, post,typeleve, province, city,institute, mblph_no, email  from %s where %s  limit ?,?",
+					tableName, roleStr), paramMdl.getPageIndex(), paramMdl.getPageSize());
 		}
 		return resList;
 	}
+
 	/**
 	 * 将excel数据导入数据库
 	 * 
@@ -79,29 +85,88 @@ public class T6MgrAhrService extends BaseService {
 	}
 
 	private boolean insertAdminToDb(MdlExcelRow excelRow) {
-		// 根据手机号匹配，没有插入、已有更新
-		System.out.println(excelRow);
-		String crdt_number  = excelRow.getByIndex(2);
-		if (crdt_number.length()<18) {
+		// 校验输入
+		if (StringUtil.invalidateLength(excelRow.getByIndex(0), 2, 64)) {
+			log.error("insertAdminToDb数据校验失败:" + excelRow);
+			// 因为可能有空行，当姓名没有的时候，直接默认未空行
+			return true;
+		}
+		if (StringUtil.invalidateLength(excelRow.getByIndex(1), 1, 8)) {
+			log.error("insertAdminToDb数据校验失败:" + excelRow);
 			return false;
 		}
-		Record admin = new Record()
-				.set(T6MgrAhr.column_usr_tp, EnumRoleType.Admin.getName())
-				.set(T6MgrAhr.column_usr_nm, excelRow.getByIndex(11))
-				.set(T6MgrAhr.column_nm, excelRow.getByIndex(0))
-				.set(T6MgrAhr.column_crdt_tp, excelRow.getByIndex(1))
-				.set(T6MgrAhr.column_crdt_no, crdt_number)
-				.set(T6MgrAhr.column_gnd, excelRow.getByIndex(3))
-				.set(T6MgrAhr.column_brth_dt, excelRow.getByIndex(4))
-				.set(T6MgrAhr.column_wrk_unit, excelRow.getByIndex(5))
-				.set(T6MgrAhr.column_post, excelRow.getByIndex(6))
-//				.set(T6MgrAhr.column_typeleve, excelRow.getByIndex(7))
-//				.set(T6MgrAhr.column_province, excelRow.getByIndex(8))
-//				.set(T6MgrAhr.column_city, excelRow.getByIndex(9))
-//				.set(T6MgrAhr.column_institute, excelRow.getByIndex(10))
-				.set(T6MgrAhr.column_pswd,  CommDES.get3DESDecrypt(crdt_number.substring(crdt_number.length()-6), ConstantInitMy.SPKEY))
-				.set(T6MgrAhr.column_mblph_no, excelRow.getByIndex(11))
-				.set(T6MgrAhr.column_email, excelRow.getByIndex(12));
-		return Db.use(ConstantInitMy.db_dataSource_main).saveOtherwiseUpdate(tableName, tableKey,admin);
+		if (StringUtil.invalidateLength(excelRow.getByIndex(2), 2, 20)) {
+			log.error("insertAdminToDb数据校验失败:" + excelRow);
+			return false;
+		}
+		if (StringUtil.invalidateLength(excelRow.getByIndex(3), 1, 4)) {
+			log.error("insertAdminToDb数据校验失败:" + excelRow);
+			return false;
+		}
+		if (StringUtil.invalidateLength(excelRow.getByIndex(4), 2, 64)) {
+			log.error("insertAdminToDb数据校验失败:" + excelRow);
+			return false;
+		}
+		if (StringUtil.invalidateLength(excelRow.getByIndex(5), 2, 128)) {
+			log.error("insertAdminToDb数据校验失败:" + excelRow);
+			return false;
+		}
+		if (StringUtil.invalidateLength(excelRow.getByIndex(6), 2, 128)) {
+			log.error("insertAdminToDb数据校验失败:" + excelRow);
+			return false;
+		}
+		if (StringUtil.invalidateLength(excelRow.getByIndex(7), 2, 64)) {
+			log.error("insertAdminToDb数据校验失败:" + excelRow);
+			return false;
+		}
+		if (StringUtil.invalidateLength(excelRow.getByIndex(8), 2, 128)) {
+			log.error("insertAdminToDb数据校验失败:" + excelRow);
+			return false;
+		}
+		if (StringUtil.invalidateLength(excelRow.getByIndex(9), 2, 128)) {
+			log.error("insertAdminToDb数据校验失败:" + excelRow);
+			return false;
+		}
+		if (StringUtil.invalidateLength(excelRow.getByIndex(10), 2, 128)) {
+			log.error("insertAdminToDb数据校验失败:" + excelRow);
+			return false;
+		}
+		if (StringUtil.invalidateLength(excelRow.getByIndex(11), 2, 128)) {
+			log.error("insertAdminToDb数据校验失败:" + excelRow);
+			return false;
+		}
+		if (StringUtil.invalidateLength(excelRow.getByIndex(12), 2, 128)) {
+			log.error("insertAdminToDb数据校验失败:" + excelRow);
+			return false;
+		}
+		// 根据手机号匹配，没有插入、已有更新
+		String crdt_number = excelRow.getByIndex(2);
+		if (crdt_number.length() < 18) {
+			return false;
+		}
+		Record admin;
+		try {
+			admin = new Record().set(T6MgrAhr.column_usr_tp, EnumRoleType.Admin.getName())
+					.set(T6MgrAhr.column_usr_nm, excelRow.getByIndex(11))
+					.set(T6MgrAhr.column_nm, excelRow.getByIndex(0))
+					.set(T6MgrAhr.column_crdt_tp, excelRow.getByIndex(1)).set(T6MgrAhr.column_crdt_no, crdt_number)
+					.set(T6MgrAhr.column_gnd, excelRow.getByIndex(3))
+					.set(T6MgrAhr.column_brth_dt, excelRow.getByIndex(4))
+					.set(T6MgrAhr.column_wrk_unit, excelRow.getByIndex(5))
+					.set(T6MgrAhr.column_post, excelRow.getByIndex(6))
+					.set(T6MgrAhr.column_typeleve, excelRow.getByIndex(7))
+					.set(T6MgrAhr.column_province, excelRow.getByIndex(8))
+					.set(T6MgrAhr.column_city, excelRow.getByIndex(9))
+					.set(T6MgrAhr.column_institute, excelRow.getByIndex(10))
+					.set(T6MgrAhr.column_pswd, DESUtil.encrypt(crdt_number.substring(crdt_number.length() - 6), ConstantInitMy.SPKEY))
+					.set(T6MgrAhr.column_mblph_no, excelRow.getByIndex(11))
+					.set(T6MgrAhr.column_email, excelRow.getByIndex(12));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error(e);
+			return false;
+		}
+		return  ConfMain.db().saveOtherwiseUpdate(tableName, tableKey, admin);
 	}
 }

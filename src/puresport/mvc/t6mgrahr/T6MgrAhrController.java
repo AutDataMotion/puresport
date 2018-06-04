@@ -15,6 +15,7 @@ import com.platform.mvc.base.BaseController;
 
 import csuduc.platform.util.ComOutMdl;
 import csuduc.platform.util.JsonUtils;
+import csuduc.platform.util.StringUtil;
 import puresport.applicat.ExcelParseTool;
 import puresport.applicat.MdlExcelRow;
 import puresport.constant.EnumStatus;
@@ -165,17 +166,18 @@ public class T6MgrAhrController extends BaseController {
 		UploadFile picFile = getFile("fileexcel");// 得到 文件对象
 		String fileName = picFile.getFileName();
 		String mimeType = picFile.getContentType();// 得到 上传文件的MIME类型:audio/mpeg
-		System.out.println(mimeType);
-		// if(!"image/gif".equals(mimeType) && !"image/jpeg".equals(mimeType)
-		// &&!"image/x-png".equals(mimeType) &&!"image/png".equals(mimeType)){
-		// setAttr("message","上传文件类型错误！！！");
-		// renderJson();
-		// return ;
-		// }
-		// String realpath = getSession().getServletContext().getRealPath(path);
-		// String lastName = fileName.substring(fileName.lastIndexOf(".")); //
-		// 获取文件的后缀
-		// String newName= "2018"+lastName;
+		if (StringUtil.invalidateLength(mimeType, 6, 64)) {
+			log.error("message:上传文件类型错误！"+mimeType);
+			 renderJson("上传文件类型错误！");
+			 return ;
+		}
+		String mimeTypeSuffix = mimeType.substring(mimeType.length() -4);
+		String mimeTypeSuffix2 = mimeType.substring(mimeType.length() -5);
+		 if(!ExcelParseTool.SUFFIX_2003.equals(mimeTypeSuffix) && !ExcelParseTool.SUFFIX_2007.equals(mimeTypeSuffix2)){
+			 log.error("message:上传文件类型错误！！！"+mimeType);
+			 renderJson("上传文件类型错误！！！");
+			 return ;
+		 }
 
 		List<MdlExcelRow> table = null;
 		try {
@@ -183,6 +185,9 @@ public class T6MgrAhrController extends BaseController {
 		} catch (IllegalArgumentException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			log.error(e);
+			renderJson("解析文件内容错误，请检查内容格式！");
+			return ;
 		}
 		// 存入数据库
 		ComOutMdl<List<MdlExcelRow>> outFailedMdl = new ComOutMdl<>();
