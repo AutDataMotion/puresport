@@ -550,19 +550,14 @@ public class T7CrclController extends BaseController {
 			// DateFormat类的静态工厂方法
 			System.out.println(format.getInstance().format(date));
 			String srcImg = webContentPath + "\\images_zhuchaobin\\certificateTemp.jpg";
-			// String srcTemp1 = "\\images_zhuchaobin\\certificateTemp.jpg";
-			// String srcTemp2 = "\\images_zhuchaobin\\certificateTemp.jpg";
 			String dscImg = webContentPath + "\\images_zhuchaobin\\certificates\\" + t1.getCrdt_no() + ".jpg";
 			certificatePath = "\\images_zhuchaobin\\certificates\\" + t1.getCrdt_no() + ".jpg";
 			LOG.info("srcImg=" + srcImg);
 			LOG.info("certificatePath=" + certificatePath);
-			waterMark(totalScore.toString()  , srcImg, dscImg, 230, 580);
-			waterMark(t1.getUsr_nm(), dscImg, dscImg, 230, 638);
-			waterMark(dataTime, dscImg, dscImg, 230, 696);
+			waterMark(totalScore.toString()  , srcImg, dscImg, 230, 572);
+			waterMark(t1.getUsr_nm(), dscImg, dscImg, 230, 625);
+			waterMark(dataTime, dscImg, dscImg, 230, 680);
 			LOG.info(totalScore.toString() + t1.getUsr_nm() + dataTime);
-			// waterMark("100",srcImg, certificatePath, 230, 580);
-			// waterMark("傅园慧",certificatePath, certificatePath, 230, 638);
-			// waterMark("2018-06-01",certificatePath, certificatePath, 230, 696);
 		} else {
 			LOG.error("查不到用户信息！");
 		}
