@@ -374,6 +374,9 @@ nav{margin:0;background:none;}.menu li{display:block;margin:0;}.menu li a{backgr
 .span1_of_4:first-child{
 	margin-left: 0;
 }
+.jiangzuo_row_margin{
+margin-bottom: 10px;
+}
 .span4_of_list{
 	cursor:pointer;
 	background: #ffffff;
