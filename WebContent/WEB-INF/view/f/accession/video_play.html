@@ -56,7 +56,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				} else {
 				 $('#tip1Modal').modal('show');				
 			}
-		}		
+		}
+		//  返回上一页面
+		function do_pre(){
+			window.location.href=document.referrer;
+		}	
+		
 		// 记录用户学习结果
 		function recordCourse(flag) {
 			var url;
@@ -140,10 +145,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<p>
 				<div align="center">
+<!-- 					<button onclick="do_pre()" class="btn">上一步</button> -->
 					<button onclick="do_next()" class="btn">下一步</button>
 				</div>
 			</div>
-			<p>
+			</br>
 		</div>
 		<!-- tip1 Modal-->
 		<div class="modal fade" id="tip1Modal" tabindex="-1" role="dialog"

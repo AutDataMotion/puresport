@@ -7,55 +7,34 @@
 <meta name="keywords"
 	content="Skate Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
-<script type="application/x-javascript">		
+
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="0">
+
+<script type="application/x-javascript">
+			
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
 </script>
-<!-- Bootstrap -->
 <link href="/css/bootstrap.css" rel='stylesheet' type='text/css' />
 <link href="/css/style.css" rel="stylesheet" type="text/css" media="all" />
 <!----font-Awesome----->
 <link rel="stylesheet" href="/fonts/css/font-awesome.min.css">
-<!----font-Awesome----->
-<!-- start plugins -->
 <script type="text/javascript" src="/js/jquery.min.js"></script>
 <script src="/js/menu.js" type="text/javascript"></script>
 <script type="text/javascript" src="/js/jquery.easing.min.js"></script>
 <script type="text/javascript" src="/js/jquery.mixitup.min.js"></script>
-<link href="/css/owl.carousel.css" rel="stylesheet">
-<link href="/css/owl.theme.css" rel="stylesheet">
-<!-- <link rel="stylesheet" href="/styles/jquery-labelauty.css"
-	type="text/css" media="screen" charset="utf-8" /> -->
-<!-- <link rel="stylesheet" href="/styles/lby-main.css" type="text/css"
-	media="screen" charset="utf-8" /> -->
-<!-- <script type="text/javascript" src="/js_rd/jquery-labelauty.js"></script> -->
-<script type="text/javascript"
-	src="http://code.jquery.com/jquery-latest.min.js"></script>
+
+<meta charset="utf-8">
+<script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="/js_zhuchaobin/jquery.qrcode.min.js"></script>
+
 <!-- 弹出框样式及js -->
 <link type="text/css" rel="stylesheet"
 	href="/ui/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-<script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
-<script src="/ui/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-<style>
-#owl-demo .owl-item div {
-	padding: 5px;
-	padding-left: 150px;
-	padding-top: 15px;
-	padding-right: 150px;
-	padding-bottom: 15px;
-	/*        text-indent:2em; /* 段首缩进2个字符 */ */
-	font-family: "微软雅黑", "黑体", "宋体";
-	font-size: 18px;
-}
 
-#owl-demo .owl-item img {
-	display: block;
-	width: 100%;
-	height: auto;
-	-webkit-border-radius: 3px;
-	-moz-border-radius: 3px;
-	border-radius: 3px;
-}
-</style>
+<script src="/ui/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+
 <style type="text/css">
 .demo {
 	/*        text-indent:2em; */ /* 段首缩进2个字符 */
@@ -63,16 +42,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	font-size: 20px;
 	padding-left: 5px;
 }
-
 .title {
-	/*        text-indent:2em; */ /* 段首缩进2个字符 */
 	font-family: "微软雅黑", "黑体", "宋体";
 	font-size: 25px;
-	/*        height:800px； */
-	/*        word-spacing:50px; */
-	/*        background:pink; */
 }
-
 .score {
 	padding-top: 130px;
 	padding-right: 250px;
@@ -84,182 +57,39 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	height: 600px；
 }
 </style>
-<script src="/js/owl.carousel.js"></script>
 <script type="text/javascript">
 	$(function() {
-		$("#owl-demo").owlCarousel({
-			//autoPlay : 3000,
-			stopOnHover : true,
-			navigation : true,
-			navigationText : [ "上一题", "下一题" ],
-			paginationSpeed : 1000,
-			//goToFirstSpeed : 2000,
-			pagination : true,
-			paginationNumbers : true,
-			singleItem : true,
-			autoHeight : true,
-			transitionStyle : "fade"
+		var str = "${cxt!''}/images_zhuchaobin/certificates/${crdt_no!''}.jpg";
+		/* 	$('#code').qrcode(str); */
+		$("#code").qrcode({
+			render : "table",
+			width : 130,
+			height : 130,
+			text : str
 		});
-	});
-</script>
-<!-- <script type="text/javascript" src="/js/jquery.fancybox-1.2.1.js"></script> -->
-<script type="text/javascript">
-	$(document).ready(function() {
-		// 判断是否可以进行考试
-		isCanTest(1);
-	});
-</script>
-<script type="text/javascript">
-	//提交试卷操作确认
-	function isSubmit() {
-		var msg = "您确定要提交试卷吗?\n\n请确认！";
-		if (confirm(msg) == true) {
-			return true;
-		} else {
-			return false;
-		}
-	}
-	var confirmNum = 0;
-	//提交试卷操作确认
-	function isSubmit2() {
-		confirmNum = confirmNum + 1;
-		submitExam();
-	}
+	})
 
-	//提交考试
-	function submitExam() {
-		/* 		if(confirmNum == 0){ */
-		var obj1 = document.getElementsByName("agreeSubmit")
-		var isAgreeSubmit = false;
-		for (var i = 0; i < obj1.length; i++) { //遍历Radio   
-			if (obj1[i].checked) {
-				if (obj1[i].value == 1) {
-					isAgreeSubmit = true;
-				}
+	function toUtf8(str) {
+		var out, i, len, c;
+		out = "";
+		len = str.length;
+		for (i = 0; i < len; i++) {
+			c = str.charCodeAt(i);
+			if ((c >= 0x0001) && (c <= 0x007F)) {
+				out += str.charAt(i);
+			} else if (c > 0x07FF) {
+				out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+				out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+				out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+			} else {
+				out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+				out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
 			}
 		}
-		if (!isAgreeSubmit) {
-			$('#tip1Modal').modal('show');
-			return;
-		}
-		/* 	 		$('#submitModal').modal('show');
-		 return;
-		 } else if(confirmNum < 3){
-		 $('#submitModal').modal('show');
-		 return;
-		 } */
-
-		// 提交确认，需要三次
-		/*  		$('#submitModal').modal('show'); */
-		// 提交确认次数重置为0 
-		confirmNum = 0;
-		/* 	if(!checkBoxCheckMore(flag))
-		 return;*/
-		/* 		if (isSubmit()) {
-		 if (isSubmit()) {
-		 if (isSubmit()) {
-		 //提交试卷
-		 } else
-		 return;
-		 } else
-		 return;
-		 } else
-		 return; */
-		var dataSet = new Array();
-
-		for (var j = 1; j < 7; j++) {
-			var obj = document.getElementsByName(j)
-			var item = j + ":";
-			for (var i = 0; i < obj.length; i++) { //遍历Radio   
-				if (obj[i].checked) {
-					item = item + obj[i].value;
-				}
-			}
-			dataSet.push(item);
-		}
-		/* 			alert(dataSet); */
-		var url;
-		url = '/jf/puresport/t7Crcl/submitExam';
-		var examid = document.getElementById("examid").value;
-		$.ajax({
-			type : 'POST',
-			url : url,
-			dataType : "json",
-			traditional : true,
-			data : {
-				"dataSet" : dataSet,
-				"examid" : examid
-			},
-			success : function(res) {
-				if (res.code == "0000") {
-					showDiv(4);
-					var t2 = document.getElementById('scoreDesc');
-					t2.innerText = res.desc;
-				} else {
-					alert(res.desc);
-				}
-			},
-			dataType : "json"
-		});
+		return out;
 	}
 </script>
 
-<script type="text/javascript">
-	function showDiv(flag) {
-		if (flag == 1) {
-			document.getElementById("mannulDiv").style.display = "none";
-			document.getElementById("cantTestDiv").style.display = "";
-			document.getElementById("showScoreDiv").style.display = "none";
-			document.getElementById("doTestDiv").style.display = "none";
-		} else if (flag == 2) {
-			document.getElementById("mannulDiv").style.display = "";
-			document.getElementById("cantTestDiv").style.display = "none";
-			document.getElementById("showScoreDiv").style.display = "none";
-			document.getElementById("doTestDiv").style.display = "none";
-		} else if (flag == 3) {
-			document.getElementById("mannulDiv").style.display = "none";
-			document.getElementById("cantTestDiv").style.display = "none";
-			document.getElementById("showScoreDiv").style.display = "none";
-			document.getElementById("doTestDiv").style.display = "";
-		} else if (flag == 4) {
-			document.getElementById("mannulDiv").style.display = "none";
-			document.getElementById("cantTestDiv").style.display = "none";
-			document.getElementById("showScoreDiv").style.display = "";
-			document.getElementById("doTestDiv").style.display = "none";
-		}
-	}
-
-	// 判定用户是否有资格参加考试
-	function isCanTest(flag) {
-		var userid = "333";
-		var url;
-		url = '/jf/puresport/t5CrclStdy/isCanTest';
-		$.ajax({
-			type : 'POST',
-			url : url,
-			dataType : "json",
-			traditional : true,
-			data : {
-				userid : userid
-			},
-			success : function(res) {
-				if (res.code == "0000") {
-					if (flag == 2) {
-						showDiv(3);
-					} else if (flag == 1) {
-						showDiv(2);
-					}
-				} else {
-					/* 							alert(res.desc); */
-					showDiv(1);
-					var t2 = document.getElementById('cantTestDesc');
-					t2.innerText = res.desc;
-				}
-			},
-			dataType : "json"
-		});
-	}
-</script>
 <style type="text/css">
 .prblSelect {
 	width: 850px;
@@ -281,30 +111,48 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</div>
 		</div>
 	</div>
-<div class="main_btm1">
+	<div class="main_btm1">
 		<div id="showScoreDiv" class="demo">
 			<div class="container">
 				<div align="center">
 					<div class="row">
 						<div class="col-md-3 myTest"></div>
 						<div class="col-md-6 myTest">
-							<img src="/images_zhuchaobin/certificates/${crdt_no!''}.jpg" id="certificateImgId" class="img-thumbnail"
-								height="400" width="400">
+							<img src="/images_zhuchaobin/certificates/${crdt_no!''}.jpg"
+								id="certificateImgId" class="img-thumbnail" height="400"
+								width="400">
 						</div>
 						<div class="col-md-3 myTest">
 							<div class="row" class="style pull-bottom">
-								<div class="col-md-4 myTest">
-									<img id="erweima" src="http://qr.liantu.com/api.php?text=http://${hstAddr!''}/jf/puresport/t7Crcl/test2?crdt_no=${crdt_no!''}&rf=viewer_4&t=5&bg=ffffff&200" height="150" width="150" />
-								</div>
+								<!--<div class="col-md-4 myTest"> -->
+								<!--<img id="erweima" src="http://qr.liantu.com/api.php?text=http://${hstAddr!''}/jf/puresport/t7Crcl/test2?crdt_no=${crdt_no!''}&rf=viewer_4&t=5&bg=ffffff&200" height="150" width="150" /> -->
+								<!--<img id="erweima" src="http://qr.liantu.com/api.php?text=${cxt!''}/images_zhuchaobin/certificates/${crdt_no!''}.jpg&rf=viewer_4&t=5&bg=ffffff&200" height="150" width="150" /> -->
+								</br> </br>
+								<div align="left" id="code"></div>
+								<!--</div>
 								<div class="col-md-4 myTest"></div>
-								<div class="col-md-4 myTest"></div>
+								<div class="col-md-4 myTest"></div> -->
 							</div>
 							<div class="row">
-								<div>使用如下app扫描二维码分享</div>								
+								<div align="left">使用如下app扫描二维码分享</div>
 							</div>
 							<div class="row">
 								<div align="left">
 									<img src="/images_zhuchaobin/share.png" height="55" width="210">
+								</div>
+							</div>
+							</br> </br>
+							<div class="row">
+								<div align="left">对成绩不满意？</div>
+							</div>
+							<div class="row">
+								<div align="left">
+									<button
+										onclick="window.location.href='/jf/puresport/t7Crcl/study_notify_1'"
+										class="btn">重新学习</button>
+									<button
+										onclick="window.location.href='/jf/puresport/t7Crcl/generteTest'"
+										class="btn">重新考试</button>
 								</div>
 							</div>
 						</div>

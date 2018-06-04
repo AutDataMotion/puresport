@@ -51,6 +51,7 @@ import puresport.mvc.t9tstlib.T9TstlibController;
 public class RoutePlugins extends Routes {
 	@Override
 	public void config() {
+//		add("/", pagesController.class);
 		add("/jf/puresport/pagesController", pagesController.class);
 		add("/jf/puresport/area", AreaController.class);
 		add("/jf/puresport/t1usrBsc", T1usrBscController.class);

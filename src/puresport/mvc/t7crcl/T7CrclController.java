@@ -111,7 +111,7 @@ public class T7CrclController extends BaseController {
 	@Clear
 	public void queryCetifate() {
 		setAttr("crdt_no", getPara("crdt_no"));
-		setAttr("hstAddr", getPara("hstAddr"));
+//		setAttr("hstAddr", getPara("hstAddr"));
 		renderWithPath("/f/accession/certificate.html");
 	}
 
@@ -526,9 +526,7 @@ public class T7CrclController extends BaseController {
 		t11.setTms(new Timestamp(System.currentTimeMillis()));// 维护时间
 		t11.setExam_nm("省运会");
 		t11.saveGenIntId();
-		// float fscore = (float) (score * 100.0 / 6.0);
-		Integer totalScoreInt = score * 5;
-		String toltalScore = totalScoreInt.toString();
+
 		// ResultEntity res = new ResultEntity("0000", "恭喜您！您已完成测试，您的成绩为：" + toltalScore
 		// + "分！");
 		String certificatePath = "";
@@ -549,23 +547,17 @@ public class T7CrclController extends BaseController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 			// DateFormat类的静态工厂方法
 			System.out.println(format.getInstance().format(date));
 			String srcImg = webContentPath + "\\images_zhuchaobin\\certificateTemp.jpg";
-			// String srcTemp1 = "\\images_zhuchaobin\\certificateTemp.jpg";
-			// String srcTemp2 = "\\images_zhuchaobin\\certificateTemp.jpg";
 			String dscImg = webContentPath + "\\images_zhuchaobin\\certificates\\" + t1.getCrdt_no() + ".jpg";
 			certificatePath = "\\images_zhuchaobin\\certificates\\" + t1.getCrdt_no() + ".jpg";
 			LOG.info("srcImg=" + srcImg);
 			LOG.info("certificatePath=" + certificatePath);
-			waterMark(toltalScore, srcImg, dscImg, 230, 580);
-			waterMark(t1.getUsr_nm(), dscImg, dscImg, 230, 638);
-			waterMark(dataTime, dscImg, dscImg, 230, 696);
-			LOG.info(toltalScore + t1.getUsr_nm() + dataTime);
-			// waterMark("100",srcImg, certificatePath, 230, 580);
-			// waterMark("傅园慧",certificatePath, certificatePath, 230, 638);
-			// waterMark("2018-06-01",certificatePath, certificatePath, 230, 696);
+			waterMark(totalScore.toString()  , srcImg, dscImg, 230, 572);
+			waterMark(t1.getUsr_nm(), dscImg, dscImg, 230, 625);
+			waterMark(dataTime, dscImg, dscImg, 230, 680);
+			LOG.info(totalScore.toString() + t1.getUsr_nm() + dataTime);
 		} else {
 			LOG.error("查不到用户信息！");
 		}
