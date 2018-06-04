@@ -26,17 +26,13 @@ import puresport.mvc.t9tstlib.T9Tstlib;
  */
 // @Controller(controllerKey = "/jf/puresport/t5CrclStdy")
 public class T5CrclStdyController extends BaseController {
-
 	@SuppressWarnings("unused")
 	private static Logger log = Logger.getLogger(T5CrclStdyController.class);
-
 	public static final String pthc = "/jf/puresport/t5CrclStdy/";
 	public static final String pthv = "/puresport/t5CrclStdy/";
-
 	/**
 	 * 列表
 	 */
-	@Clear
 	public void index() {
 		// paging(ConstantInitMy.db_dataSource_main, splitPage,
 		// BaseModel.sqlId_splitPage_select, T5CrclStdy.sqlId_splitPage_from);
@@ -49,9 +45,6 @@ public class T5CrclStdyController extends BaseController {
 	@Before(T5CrclStdyValidator.class)
 	public void save() {
 		T5CrclStdy t5CrclStdy = getModel(T5CrclStdy.class);
-		// other set
-
-		// t5CrclStdy.save(); //guiid
 		t5CrclStdy.saveGenIntId(); // serial int id
 		renderWithPath(pthv + "add.html");
 	}
@@ -67,23 +60,12 @@ public class T5CrclStdyController extends BaseController {
 
 	}
 
-	/*	*//**
-			 * 记录用户学习结果 zhuchaobin 2018-05-13
-			 *//*
-				 * @Clear public void recordCourse() { //T5CrclStdy t5CrclStdy =
-				 * T5CrclStdy.dao.findById(getPara()); //guuid ResultEntity res = null; res =
-				 * new ResultEntity("0000", "ddsdfsdf"); renderJson(res); }
-				 */
-
 	/**
-	 * 更新课程学习记录
+	 * 描述： 更新课程学习记录
+	 * @author zhuchaobin
+	 * 2018-05-09
 	 */
-	/* @Before(T5CrclStdyValidator.class) */
-	@Clear
 	public void update() {
-		/*
-		 * getModel(T5CrclStdy.class).update(); redirect(pthc);
-		 */
 		ResultEntity res = null;
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		String crclid = getPara("crclid");
@@ -109,16 +91,12 @@ public class T5CrclStdyController extends BaseController {
 		res = new ResultEntity("0000", "课程学习记录成功.");
 		renderJson(res);
 	}
-
 	/**
-	 * 查询课程学习记录，判断是否具备考试资格
+	 * 描述： 查询课程学习记录，判断是否具备考试资格
+	 * @author zhuchaobin
+	 * 2018-05-09
 	 */
-	@Clear
 	public boolean isCanTest() {
-		/*
-		 * getModel(T5CrclStdy.class).update(); redirect(pthc);
-		 */
-		/* String usrid = getPara("usrid"); */
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		ResultEntity res = null;
 		StringBuilder desc = new StringBuilder("");

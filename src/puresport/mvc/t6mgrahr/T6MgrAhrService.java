@@ -13,6 +13,7 @@ import com.jfinal.plugin.activerecord.Record;
 import com.platform.mvc.base.BaseService;
 
 import csuduc.platform.util.ComOutMdl;
+import csuduc.platform.util.encrypt.CommDES;
 import puresport.applicat.MdlExcelRow;
 import puresport.config.ConfMain;
 import puresport.constant.ConstantInitMy;
@@ -98,7 +99,7 @@ public class T6MgrAhrService extends BaseService {
 //				.set(T6MgrAhr.column_province, excelRow.getByIndex(8))
 //				.set(T6MgrAhr.column_city, excelRow.getByIndex(9))
 //				.set(T6MgrAhr.column_institute, excelRow.getByIndex(10))
-				.set(T6MgrAhr.column_pswd,  crdt_number.substring(crdt_number.length()-6))
+				.set(T6MgrAhr.column_pswd,  CommDES.get3DESDecrypt(crdt_number.substring(crdt_number.length()-6), ConstantInitMy.SPKEY))
 				.set(T6MgrAhr.column_mblph_no, excelRow.getByIndex(11))
 				.set(T6MgrAhr.column_email, excelRow.getByIndex(12));
 		return Db.use(ConstantInitMy.db_dataSource_main).saveOtherwiseUpdate(tableName, tableKey,admin);

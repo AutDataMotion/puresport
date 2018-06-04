@@ -6,10 +6,13 @@
 <meta name="keywords"
 	content="Skate Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
-<script type="application/x-javascript">
-		
-	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
 
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache"> 
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"> 
+<META HTTP-EQUIV="Expires" CONTENT="0">
+
+<script type="application/x-javascript">
+ addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
 </script>
 <!-- Bootstrap -->
 <link href="/css/bootstrap.css" rel='stylesheet' type='text/css' />
@@ -33,18 +36,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="/ui/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <style>
 #owl-demo .owl-item div {
-	padding: 5px;
-	padding-left: 150px;
-	padding-top: 15px;
-	padding-right: 150px;
-	padding-bottom: 15px;
+	padding: 1%;
+	padding-left: 12%;
+	padding-top: 3%;
+	padding-right: 12%;
+	padding-bottom: 1%;
 	font-family: "微软雅黑", "黑体", "宋体";
 	font-size: 18px;
 }
 
 #owl-demo .owl-item img {
 	display: block;
-	width: 100%;
+	width: 95%;
 	height: auto;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
@@ -56,6 +59,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	font-family: "微软雅黑", "黑体", "宋体";
 	font-size: 20px;
 	padding-left: 5px;
+}
+
+.commiment {
+	text-indent:2em;
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-size: 20px;
+	padding-left: 5px;
+}
+
+.commiment2 {
+	text-indent:2em;
+	font-family: "微软雅黑", "黑体", "宋体";
 }
 
 .title {
@@ -131,7 +146,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		}
 		confirmNum = 0;
 		var dataSet = new Array();
-		for (var j = 1; j < 7; j++) {
+		for (var j = 1; j < 21; j++) {
 			var obj = document.getElementsByName(j)
 			var item = j + ":";
 			for (var i = 0; i < obj.length; i++) { //遍历Radio   
@@ -143,43 +158,46 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		}
 		// 承诺人姓名		
 		var commimentNm = document.getElementById("commimentNm").value;
-		if(commimentNm == ""){
-			$('#tip3Modal').modal('show');	
+		if (commimentNm == "") {
+			$('#tip3Modal').modal('show');
 			return;
 		}
 		var url;
 		url = '/jf/puresport/t7Crcl/submitExam';
 		var examid = document.getElementById("examid").value;
-		$.ajax({
-			type : 'POST',
-			url : url,
-			dataType : "json",
-			traditional : true,
-			data : {
-				"dataSet" : dataSet,
-				"examid" : examid,
-				"commimentNm" : commimentNm
-			},
-			success : function(res) {
-				if (res.code == "0000") {
-					showDiv(5);
-					var t2 = document.getElementById('pageTitle');
-					t2.innerText = "成绩证书";					
-					var pic = document.getElementById("certificateImgId");//picture是img的id
-					pic.src = res.parm1;					
-					var pic = document.getElementById("erweima");//picture是img的id
-					pic.src = "http://qr.liantu.com/api.php?text=" + res.parm2";					
-//					http://qr.liantu.com/api.php?text=http://m.qpic.cn/psb?/V10zsTr30tgqVO/JjLdVKa1q7ZJAlpFtcuGqVvutgKH1cvPUeTuDeTpKBY!/b/dCIBAAAAAAAA&bo=TwIgAwAAAAARF04!&rf=viewer_4&t=5&bg=ffffff&200					
-				} else if (res.code == "0002") {
-					$('#tip2Modal').modal('show');				
-				} else{
-					alert(res.desc);
-				}
-			},
-			dataType : "json"
-		});
+		$
+				.ajax({
+					type : 'POST',
+					url : url,
+					dataType : "json",
+					traditional : true,
+					data : {
+						"dataSet" : dataSet,
+						"examid" : examid,
+						"commimentNm" : commimentNm
+					},
+					success : function(res) {
+						if (res.code == "0000") {
+							/*showDiv(5);
+							 var t2 = document.getElementById('pageTitle');
+							 t2.innerText = "成绩证书";					
+							 var pic = document.getElementById("certificateImgId");//picture是img的id
+							 pic.src = res.parm1;					
+							 var pic = document.getElementById("erweima");//picture是img的id
+							 pic.src = "http://qr.liantu.com/api.php?text=" + res.parm2"; */
+							//					http://qr.liantu.com/api.php?text=http://m.qpic.cn/psb?/V10zsTr30tgqVO/JjLdVKa1q7ZJAlpFtcuGqVvutgKH1cvPUeTuDeTpKBY!/b/dCIBAAAAAAAA&bo=TwIgAwAAAAARF04!&rf=viewer_4&t=5&bg=ffffff&200					
+							window.location.href = "${cxt!''}/jf/puresport/t7Crcl/queryCetifate?crdt_no="
+									+ res.parm3;
+						} else if (res.code == "0002") {
+							$('#tip2Modal').modal('show');
+						} else {
+							alert(res.desc);
+						}
+					},
+					dataType : "json"
+				});
 	}
-		
+
 	//确认提交试卷
 	function confirSubmit() {
 		/* 		if(confirmNum == 0){ */
@@ -196,7 +214,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			$('#tip1Modal').modal('show');
 			return;
 		}
-		
+
 		showDiv(4);
 		var t2 = document.getElementById('pageTitle');
 		t2.innerText = "承诺书";
@@ -211,7 +229,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			document.getElementById("showScoreDiv").style.display = "none";
 			document.getElementById("doTestDiv").style.display = "none";
 			document.getElementById("commimentDiv").style.display = "none";
-			
+
 		} else if (flag == 2) {
 			document.getElementById("mannulDiv").style.display = "";
 			document.getElementById("cantTestDiv").style.display = "none";
@@ -230,7 +248,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			document.getElementById("showScoreDiv").style.display = "none";
 			document.getElementById("doTestDiv").style.display = "none";
 			document.getElementById("commimentDiv").style.display = "";
-		}else if (flag == 5) {
+		} else if (flag == 5) {
 			document.getElementById("mannulDiv").style.display = "none";
 			document.getElementById("cantTestDiv").style.display = "none";
 			document.getElementById("showScoreDiv").style.display = "";
@@ -259,7 +277,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						showDiv(2);
 					}
 				} else {
-					/* 							alert(res.desc); */
 					showDiv(1);
 					var t2 = document.getElementById('cantTestDesc');
 					t2.innerText = res.desc;
@@ -271,11 +288,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </script>
 <style type="text/css">
 .prblSelect {
-	width: 850px;
+	width: 80%;
 }
 
 .prblSelect:hover {
-	background-color: #CCFFCC;
+	background-color: #80B2D6;
 }
 </style>
 </head>
@@ -313,10 +330,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<div align="center">
 					<button onclick="isCanTest(2)" class="btn">点击开始考试</button>
 				</div>
+				<p>
 			</div>
 		</div>
 		<!-- 承诺书页 -->
-		<div id="commimentDiv" class="demo">
+		<div id="commimentDiv" class="demo" style="display: none;">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-3 myTest"></div>
@@ -326,17 +344,20 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<img src="/images_zhuchaobin/logo_cn.png" class="img-rounded"
 								align="middle">
 						</div>
-						<h1 align="center">省运会反兴奋剂教育准入系统</h1>
-						<h2 align="center">反兴奋剂承诺书</h2>
-						我将以维护国家荣普、发扬体育精神为己任，自觉 遵守反兴奋剂法律法规，认更艘行反兴奋剂责任义务， 保证千干净净参加比宜． <br>
+						<h2 align="center">省运会反兴奋剂教育准入系统</h2>
+						<h3 align="center">反兴奋剂承诺书</h3>
+						<div class="commiment">我将以维护国家荣普、发扬体育精神为己任，自觉 遵守反兴奋剂法律法规，认更艘行反兴奋剂责任义务， 保证千干净净参加比宜。 <br>
+						</div>
+						<div class="commiment">
 						在此我承诺：
+						</div>					
 						<ul>
-							<li style="color: #F00; font-size: 20px;">坚决抵制使用兴奋剂</li>
-							<li style="color: #F00; font-size: 20px;">严防误服误用兴奋剂</li>
-							<li style="color: #F00; font-size: 20px;">配合兴奋剂检查调查</li>
-							<li style="color: #F00; font-size: 20px;">及时申请用药豁免</li>
-							<li style="color: #F00; font-size: 20px;">准确填报行踪信息</li>
-							<li style="color: #F00; font-size: 20px;">互相监督主动举报</li>
+							<li style="color: #F00; font-size: 18px;">&nbsp坚决抵制使用兴奋剂</li>
+							<li style="color: #F00; font-size: 18px;">&nbsp严防误服误用兴奋剂</li>
+							<li style="color: #F00; font-size: 18px;">&nbsp配合兴奋剂检查调查</li>
+							<li style="color: #F00; font-size: 18px;">&nbsp及时申请用药豁免</li>
+							<li style="color: #F00; font-size: 18px;">&nbsp准确填报行踪信息</li>
+							<li style="color: #F00; font-size: 18px;">&nbsp互相监督主动举报</li>
 						</ul>
 						<div class="input-group input-group-lg">
 							<span class="input-group-addon">承诺人</span> <input type="text"
@@ -355,7 +376,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 			</div>
 		</div>
-		<div id="showScoreDiv" class="demo">
+		<div id="showScoreDiv" class="demo" style="display: none;">
 			<div class="container">
 				<div align="center">
 					<div class="row">
@@ -367,7 +388,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<div class="col-md-3 myTest">
 							<div class="row" class="style pull-bottom">
 								<div class="col-md-4 myTest">
-									<img id="erweima" src="" height="150" width="150" />
+									<img id="erweima"
+										src="/images_zhuchaobin/certificates/139282192837111111.jpg"
+										height="150" width="150" />
 								</div>
 								<div class="col-md-4 myTest"></div>
 								<div class="col-md-4 myTest"></div>
@@ -378,6 +401,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<div class="row">
 								<div>
 									<img src="/images_zhuchaobin/share.png" height="80" width="290">
+								</div>
+							</div>
+							<div class="row">
+								<div>
+									<div>对成绩不满意？</div>
+								</div>
+							</div>
+							<div class="row">
+								<div>
+													<button
+					onclick="window.location.href='/jf/puresport/t7Crcl/study_notify_1'"
+					class="btn">跳转到课程学习</button>
+			</div>
 								</div>
 							</div>
 						</div>
@@ -393,11 +429,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</table>
 				<button
 					onclick="window.location.href='/jf/puresport/t7Crcl/study_notify_1'"
-					class="btn">跳转到课程学习</button>
+					class="btn">重新学习</button>
 			</div>
 		</div>
 
-		<div class="container" id="doTestDiv" style="display: none;">
+		<div id="doTestDiv" class="container" style="display: none;">
 			<!--  start cursual  -->
 			<div id="owl-demo" class="owl-carousel">
 				<%for(x in examSelectList){ %>
@@ -406,22 +442,36 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						${x.ttl!''}</label> </br> <label for=${x.prblmid! ''}A class="prblSelect"
 						style="font-weight: lighter"> <input type="checkbox"
 						name=${x.prblmno! ''} value=A id=${x.prblmid! ''}A>
-						${x.prblmid!} ${x.optA!}
+						${x.optA!}
 					</label> </br> <label for=${x.prblmid! ''}B class="prblSelect"
 						style="font-weight: lighter"> <input type="checkbox"
 						name=${x.prblmno! ''} value=B id=${x.prblmid! ''}B>
-						${x.prblmid!} ${x.optB!}
+						${x.optB!}
 					</label> </br> <label for=${x.prblmid! ''}C class="prblSelect"
 						style="font-weight: lighter"> <input type="checkbox"
 						name=${x.prblmno! ''} value=C id=${x.prblmid! ''}C>
-						${x.prblmid!} ${x.optC!}
+						${x.optC!}
 					</label> </br> <label for=${x.prblmid! ''}D class="prblSelect"
 						style="font-weight: lighter"> <input type="checkbox"
 						name=${x.prblmno! ''} value=D id=${x.prblmid! ''}D>
-						${x.prblmid!} ${x.optD!}
+						${x.optD!}
 					</label> </br>
-				</div>
 
+					<!-- 		 </br> <input type="checkbox"
+						name=${x.prblmno! ''} value=A id=${x.prblmid! ''}A>
+						${x.optA!}
+					 <input type="checkbox"
+						name=${x.prblmno! ''} value=B id=${x.prblmid! ''}B>
+						${x.optB!}
+					 <input type="checkbox"
+						name=${x.prblmno! ''} value=C id=${x.prblmid! ''}C>
+						${x.optC!}
+					<input type="checkbox"
+						name=${x.prblmno! ''} value=D id=${x.prblmid! ''}D>
+						${x.optD!}
+					</br> -->
+
+				</div>
 				<%}%> <%for(y in examDeducList){ %>
 				<div>
 					<label>【判断题】 </label> </br> <label> 第${y.prblmno!''}题：
@@ -434,7 +484,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</label> </br> </br>
 				</div>
 				<%}%>
-
 				<!-- 最后一页：考试提交说明 -->
 				<div id="mannulDiv">
 					<div align="center">
@@ -450,6 +499,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 			</div>
 		</div>
+
 		<!-- submit Modal-->
 		<div class="modal fade" id="submitModal" tabindex="-1" role="dialog"
 			aria-labelledby="submitModalLabel" aria-hidden="true">
@@ -480,7 +530,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header" align="center">
-						<h5 class="modal-title">提 示</h5>
+						<h5 class="modal-title">友情提示</h5>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
@@ -502,7 +552,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header" align="center">
-						<h5 class="modal-title">提 示</h5>
+						<h5 class="modal-title">友情提示</h5>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>
@@ -524,7 +574,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="modal-dialog" role="document">
 				<div class="modal-content">
 					<div class="modal-header" align="center">
-						<h5 class="modal-title">提 示</h5>
+						<h5 class="modal-title">友情提示</h5>
 						<button type="button" class="close" data-dismiss="modal"
 							aria-label="Close">
 							<span aria-hidden="true">&times;</span>

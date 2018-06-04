@@ -83,7 +83,9 @@ public class T7CrclController extends BaseController {
 	}
 
 	/**
-	 * 描述：学习说明_1 zhuchaobin 2018-05-09
+	 * 描述：学习说明
+	 * 
+	 * @author zhuchaobin 2018-06-03
 	 */
 	public void study_notify_1() {
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
@@ -101,18 +103,23 @@ public class T7CrclController extends BaseController {
 		renderWithPath("/f/accession/study_notify_1.html");
 	}
 
-	// 从30道选择题中随机取10道，从30道判断题中随机取10道构成试卷。并保存到成绩记录表中。
-	// zhuchaobin
+	/**
+	 * 描述：查询证书
+	 * 
+	 * @author zhuchaobin 2018-06-03
+	 */
 	@Clear
-	public void test2() {
-
+	public void queryCetifate() {
+		setAttr("crdt_no", getPara("crdt_no"));
+//		setAttr("hstAddr", getPara("hstAddr"));
 		renderWithPath("/f/accession/certificate.html");
 	}
 
 	/**
-	 * 描述：视频播放 zhuchaobin 2018-05-09
+	 * 描述：视频播放
+	 * 
+	 * @author zhuchaobin 2018-05-09
 	 */
-	@Clear
 	public void video_play() {
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		System.out.println(usrid);
@@ -150,9 +157,10 @@ public class T7CrclController extends BaseController {
 	}
 
 	/**
-	 * 描述：视频2选择_3 zhuchaobin 2018-05-09
+	 * 描述：视频2选择_3
+	 * 
+	 * @author zhuchaobin 2018-05-09
 	 */
-	@Clear
 	public void video2_select_3() {
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		List<T7Crcl> t7List = queryCrcl(2, usrid);
@@ -162,6 +170,8 @@ public class T7CrclController extends BaseController {
 		for (T7Crcl t7 : t7List) {
 			if ("1".equals(t7.getStdy_st())) {
 				setAttr("stdy_st_hidden", "1");
+				setAttr("action_hidden", "/jf/puresport/t7Crcl/video3_select_5");// 必修视频3
+//				setAttr("action", "/jf/puresport/t7Crcl/video3_select_5");// 必修视频3
 				break;
 			}
 		}
@@ -169,9 +179,10 @@ public class T7CrclController extends BaseController {
 	}
 
 	/**
-	 * 描述：视频3选择_5 zhuchaobin 2018-05-09
+	 * 描述：视频3选择_5
+	 * 
+	 * @author zhuchaobin 2018-05-09
 	 */
-	@Clear
 	public void video3_select_5() {
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		List<T7Crcl> t7List = queryCrcl(3, usrid);
@@ -181,12 +192,19 @@ public class T7CrclController extends BaseController {
 		for (T7Crcl t7 : t7List) {
 			if ("1".equals(t7.getStdy_st())) {
 				setAttr("stdy_st_hidden", "1");
+//				setAttr("action", "/jf/puresport/t7Crcl/generteTest");// 生成考试
+				setAttr("action_hidden", "/jf/puresport/t7Crcl/generteTest");// 生成考试
 				break;
 			}
 		}
 		renderWithPath("/f/accession/video2_select_3.html");
 	}
 
+	/**
+	 * 描述：课程信息查询
+	 * 
+	 * @author zhuchaobin 2018-05-12
+	 */
 	public List<T7Crcl> queryCrcl(Integer flag, Integer usrid) {
 		ResultEntity res = null;
 		StringBuilder desc = new StringBuilder("");
@@ -246,13 +264,14 @@ public class T7CrclController extends BaseController {
 		return null;
 	}
 
-	// 从30道选择题中随机取10道，从30道判断题中随机取10道构成试卷。并保存到成绩记录表中。
-	// zhuchaobin
-	@Clear
+	/**
+	 * 描述：从30道选择题中随机取10道，从30道判断题中随机取10道构成试卷。并保存到成绩记录表中。
+	 * 
+	 * @author zhuchaobin 2018-05-21
+	 */
 	public void generteTest() {
 		if (!isCanTest())
 			renderWithPath("/f/accession/dotest.html");
-		;
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		// 选择题
 		String sql = "select * from t9_tstlib t where t.prblm_tp ='01' order by rand() limit 10";
@@ -349,11 +368,12 @@ public class T7CrclController extends BaseController {
 		renderWithPath("/f/accession/dotest.html");
 	}
 
+	/**
+	 * 描述：检测是否具备考试条件
+	 * 
+	 * @author zhuchaobin 2018-05-23
+	 */
 	public boolean isCanTest() {
-		/*
-		 * getModel(T5CrclStdy.class).update(); redirect(pthc);
-		 */
-		/* String usrid = getPara("usrid"); */
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		ResultEntity res = null;
 		StringBuilder desc = new StringBuilder("");
@@ -406,9 +426,11 @@ public class T7CrclController extends BaseController {
 			return false;
 	}
 
-	// 提交考试，判定对错，记录题目记录，考试成绩
-	// zhuchaobin
-	@Clear
+	/**
+	 * 描述：提交考试，判定对错，记录题目记录，考试成绩
+	 * 
+	 * @author zhuchaobin 2018-05-25
+	 */
 	public void submitExam() {
 		// // 处理结果
 		ResultEntity res = null;
@@ -504,9 +526,7 @@ public class T7CrclController extends BaseController {
 		t11.setTms(new Timestamp(System.currentTimeMillis()));// 维护时间
 		t11.setExam_nm("省运会");
 		t11.saveGenIntId();
-		// float fscore = (float) (score * 100.0 / 6.0);
-		Integer totalScoreInt = score * 5;
-		String toltalScore = totalScoreInt.toString();
+
 		// ResultEntity res = new ResultEntity("0000", "恭喜您！您已完成测试，您的成绩为：" + toltalScore
 		// + "分！");
 		String certificatePath = "";
@@ -527,23 +547,17 @@ public class T7CrclController extends BaseController {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
 			// DateFormat类的静态工厂方法
 			System.out.println(format.getInstance().format(date));
 			String srcImg = webContentPath + "\\images_zhuchaobin\\certificateTemp.jpg";
-			// String srcTemp1 = "\\images_zhuchaobin\\certificateTemp.jpg";
-			// String srcTemp2 = "\\images_zhuchaobin\\certificateTemp.jpg";
 			String dscImg = webContentPath + "\\images_zhuchaobin\\certificates\\" + t1.getCrdt_no() + ".jpg";
 			certificatePath = "\\images_zhuchaobin\\certificates\\" + t1.getCrdt_no() + ".jpg";
 			LOG.info("srcImg=" + srcImg);
 			LOG.info("certificatePath=" + certificatePath);
-			waterMark(toltalScore, srcImg, dscImg, 230, 580);
-			waterMark(t1.getUsr_nm(), dscImg, dscImg, 230, 638);
-			waterMark(dataTime, dscImg, dscImg, 230, 696);
-			LOG.info(toltalScore + t1.getUsr_nm() + dataTime);
-			// waterMark("100",srcImg, certificatePath, 230, 580);
-			// waterMark("傅园慧",certificatePath, certificatePath, 230, 638);
-			// waterMark("2018-06-01",certificatePath, certificatePath, 230, 696);
+			waterMark(totalScore.toString()  , srcImg, dscImg, 230, 572);
+			waterMark(t1.getUsr_nm(), dscImg, dscImg, 230, 625);
+			waterMark(dataTime, dscImg, dscImg, 230, 680);
+			LOG.info(totalScore.toString() + t1.getUsr_nm() + dataTime);
 		} else {
 			LOG.error("查不到用户信息！");
 		}
@@ -556,12 +570,17 @@ public class T7CrclController extends BaseController {
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
-		res = new ResultEntity("0000", "考试成绩提交成功.", certificatePath, "http://" + hostAddress);
+		res = new ResultEntity("0000", "考试成绩提交成功.", certificatePath, hostAddress, t1.getCrdt_no());
 		// setAttr("certificatePath", certificatePath);
 		// renderWithPath("/f/accession/certificate.html");
 		renderJson(res);
 	}
 
+	/**
+	 * 描述：加水印，在合格证书上打印考试结果信息
+	 * 
+	 * @author zhuchaobin 2018-06-01
+	 */
 	public static void waterMark(String waterMsg, String inputImg, String outImg, Integer x, Integer y) {
 		try {
 			// 1.jpg是你的 主图片的路径
@@ -618,7 +637,6 @@ public class T7CrclController extends BaseController {
 	public void save() {
 		T7Crcl t7Crcl = getModel(T7Crcl.class);
 		// other set
-
 		// t7Crcl.save(); //guiid
 		t7Crcl.saveGenIntId(); // serial int id
 		renderWithPath(pthv + "add.html");

@@ -155,8 +155,7 @@ public class T6MgrAhrController extends BaseController {
 		// 用户名设置为手机号
 		mdl.set(T6MgrAhr.column_usr_nm, mdl.get(T6MgrAhr.column_mblph_no));
 		mdl.update();
-		
-
+		renderJson(ResTips.getSuccRes());
 	}
 	@Clear
 	public void inload() {

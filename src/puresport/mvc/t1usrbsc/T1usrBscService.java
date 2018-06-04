@@ -15,8 +15,10 @@ import com.platform.mvc.base.BaseService;
 import csuduc.platform.util.ComOutMdl;
 import csuduc.platform.util.ComUtil;
 import csuduc.platform.util.StringUtil;
+import csuduc.platform.util.encrypt.CommDES;
 import puresport.applicat.MdlExcelRow;
 import puresport.config.ConfMain;
+import puresport.constant.ConstantInitMy;
 import puresport.constant.EnumRoleType;
 import puresport.constant.EnumTypeLevel;
 import puresport.mvc.comm.ParamComm;
@@ -286,7 +288,7 @@ public class T1usrBscService extends BaseService {
 				.set(T1usrBsc.column_nm, excelRow.getByIndex(0)).set(T1usrBsc.column_crdt_tp, excelRow.getByIndex(1))
 				.set(T1usrBsc.column_crdt_no, crdt_number).set(T1usrBsc.column_gnd, excelRow.getByIndex(3))
 				.set(T1usrBsc.column_brth_dt, excelRow.getByIndex(4))
-				.set(T1usrBsc.column_pswd, crdt_number.substring(crdt_number.length() - 6))// 密码默认身份证后6位
+				.set(T1usrBsc.column_pswd, CommDES.get3DESDecrypt(crdt_number.substring(crdt_number.length() - 6), ConstantInitMy.SPKEY) )// 密码默认身份证后6位
 				.set(T1usrBsc.column_mblph_no, excelRow.getByIndex(5))
 				.set(T1usrBsc.column_email, excelRow.getByIndex(6))
 				

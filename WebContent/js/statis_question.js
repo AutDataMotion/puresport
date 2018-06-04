@@ -72,7 +72,7 @@ $(document).ready(function() {
 			contentType : "application/json",
 			success : function(response) {
 				myTable.clear().draw();
-				myTable.rows.add(response).draw();q
+				myTable.rows.add(response).draw();
 			}
 		});
 	};
