@@ -60,6 +60,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script type="text/javascript">
 	$(function() {
 		var str = "${cxt!''}${certificatePath!'/images_zhuchaobin/certificates/certificateDefault.jpg'}";
+		str = toUtf8(str);
 		/* 	$('#code').qrcode(str); */
 		$("#code").qrcode({
 			render : "table",
@@ -142,7 +143,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<img src="/images_zhuchaobin/share.png" height="55" width="210">
 								</div>
 							</div>
-							</br> </br>
+							</br> 
+														<div class="row">
+														<div align="left">您在${totalExamer!''}名参考人员中排名第${mingci!''}，击败了全国${koPercent!''}的考生！</div>
+								
+							</div>
+							<P>
 							<div class="row">
 								<div align="left">对成绩不满意？</div>
 							</div>
@@ -154,6 +160,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<button
 										onclick="window.location.href='/jf/puresport/t7Crcl/generteTest'"
 										class="btn">重新考试</button>
+									<button
+										onclick="window.location.href='/jf/puresport/t7Crcl/heroList/'"
+										class="btn">英雄榜</button>
 								</div>
 							</div>
 						</div>
