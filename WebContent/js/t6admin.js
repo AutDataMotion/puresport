@@ -306,6 +306,7 @@ $(document).ready(function() {
 				} else {
 					layer.msg("文件处理有点问题，信息如下：" + data);
 				}
+				  $('#inputfileadmin').val(''); 
 				search("", "", "");
 			}
 		});

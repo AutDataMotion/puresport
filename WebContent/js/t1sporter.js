@@ -271,9 +271,7 @@ $(document).ready(function() {
 	}
 
 	$("#inputfilesporter").on('change', function() {
-		console.log(" inputfilesporter change");
-		var f = document.getElementById("inputfilesporter").value;// 获取input
-																	// type="file"的值
+		var f = document.getElementById("inputfilesporter").value;// 获取input type="file"的值
 		var docObj = document.getElementById("inputfilesporter");
 		uploadtext(f, docObj);
 	});
@@ -299,6 +297,8 @@ $(document).ready(function() {
 				} else {
 					layer.msg("文件处理有点问题，信息如下：" + data);
 				}
+				//并且清空原文件，不然选择相同文件不能再次传 
+		         $('#inputfilesporter').val(''); 
 				search("", "", "");
 			}
 		});
