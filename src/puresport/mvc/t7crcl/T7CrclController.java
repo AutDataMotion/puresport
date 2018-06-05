@@ -194,21 +194,28 @@ public class T7CrclController extends BaseController {
 
 		// 插入或者更新成绩统计表最后一次成绩
 		String sql = "select t.*, r.nm, r.spt_prj, r.province, r.city from t11_exam_stat t "
-				+ "LEFT JOIN t1_usr_bsc r on t.usrid = r.usrid and t.exam_st = '9' order by exam_grd desc limit 10";
+				+ "JOIN t1_usr_bsc r on t.exam_st = '9' and t.usrid = r.usrid order by exam_grd desc limit 10";
 		List<T11ExamStat> heroList = T11ExamStat.dao.find(sql);
 		List<T11ExamStat> heroListRlt = new ArrayList<T11ExamStat>();
 		// 名次，名次缩略图赋值
-		for (int i = 0; i < heroList.size(); i++) {
-			T11ExamStat t11 = heroList.get(i);
-			t11.setRank(i + 1 + "");
+		for (int i = 0; i < 10; i++) {
+			T11ExamStat t11 = new T11ExamStat();
+			String rankImg = "";
 			if (0 == i)
-				t11.setRankImg("rank1.png");
+				rankImg = "rank1.png";
 			else if (1 == i)
-				t11.setRankImg("rank2.png");
+				rankImg = "rank2.png";
 			else if (2 == i)
-				t11.setRankImg("rank3.png");
+				rankImg = "rank3.png";
 			else
-				t11.setRankImg("rank4.png");
+				rankImg = "rank4.png";
+			if(i < heroList.size()) {
+				t11 = heroList.get(i);
+			} else {
+				;
+			}
+			t11.setRank(i + 1 + "");
+			t11.setRankImg(rankImg);
 			heroListRlt.add(t11);
 		}
 		setAttr("heroList", heroListRlt);
