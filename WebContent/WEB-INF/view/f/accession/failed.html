@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>${pageHead!'省运会反兴奋剂教育准入合格证书'}</title>
+<title>省运会反兴奋剂教育准入考试结果</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords"
@@ -42,10 +42,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	font-size: 20px;
 	padding-left: 5px;
 }
+
 .title {
 	font-family: "微软雅黑", "黑体", "宋体";
 	font-size: 25px;
 }
+
 .score {
 	padding-top: 130px;
 	padding-right: 250px;
@@ -107,7 +109,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<!-- start main -->
 		<div class="container">
 			<div class="main_grid1">
-				<h3 class="style pull-left">合格证书</h3>
+				<h3 class="style pull-left">考试结果</h3>
 				<h3 class="style pull-right">省运会</h3>
 			</div>
 		</div>
@@ -116,56 +118,37 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<div id="showScoreDiv" class="demo">
 			<div class="container">
 				<div align="center">
+				</br>
+				</br>
 					<div class="row">
-						<div class="col-md-3 myTest"></div>
-						<div class="col-md-6 myTest">
-<!-- 							<img src="/images_zhuchaobin/certificates/${crdt_no!''}.jpg" -->
-							<img src="${cxt!''}${certificatePath!'/images_zhuchaobin/certificates/certificateDefault.jpg'}"
-								id="certificateImgId" class="img-thumbnail" height="400"
-								width="400">
-						</div>
-						<div class="col-md-3 myTest">
-							<div class="row" class="style pull-bottom">
-								<!--<div class="col-md-4 myTest"> -->
-								<!--<img id="erweima" src="http://qr.liantu.com/api.php?text=http://${hstAddr!''}/jf/puresport/t7Crcl/test2?crdt_no=${crdt_no!''}&rf=viewer_4&t=5&bg=ffffff&200" height="150" width="150" /> -->
-								<!--<img id="erweima" src="http://qr.liantu.com/api.php?text=${cxt!''}/images_zhuchaobin/certificates/${crdt_no!''}.jpg&rf=viewer_4&t=5&bg=ffffff&200" height="150" width="150" /> -->
-								</br> </br>
-								<div align="left" id="code"></div>
-								<!--</div>
-								<div class="col-md-4 myTest"></div>
-								<div class="col-md-4 myTest"></div> -->
-							</div>
-							<div class="row">
-								<div align="left">使用如下app扫描二维码分享</div>
-							</div>
-							<div class="row">
-								<div align="left">
-									<img src="/images_zhuchaobin/share.png" height="55" width="210">
+						<div class="col-md-2 "></div>
+						
+							<div class="col-md-8 " align="center">
+						
+								<img src="/images_zhuchaobin/cry.png" height="98" width="94">很遗憾，您的成绩为${totalScore!'[成绩获取失败]'}，80分以上才能取得合格证书。
+				</br>
+				</br>
+								<div class="row">
+									<div >对成绩不满意？</div>
 								</div>
-							</div>
-							</br> 
-														<div class="row">
-														<div align="left">您在${totalExamer!''}名参考人员中排名第${mingci!''}，击败了全国${koPercent!''}的考生！</div>
-								
-							</div>
-							<P>
-							<div class="row">
-								<div align="left">对成绩不满意？</div>
-							</div>
-							<div class="row">
-								<div align="left">
-									<button
-										onclick="window.location.href='/jf/puresport/t7Crcl/study_notify_1'"
-										class="btn">重新学习</button>
-									<button
-										onclick="window.location.href='/jf/puresport/t7Crcl/generteTest'"
-										class="btn">重新考试</button>
-									<button
-										onclick="window.location.href='/jf/puresport/t7Crcl/heroList/'"
-										class="btn">英雄榜</button>
+								<div class="row">
+
+										<button
+											onclick="window.location.href='/jf/puresport/t7Crcl/study_notify_1'"
+											class="btn">重新学习</button>
+										<button
+											onclick="window.location.href='/jf/puresport/t7Crcl/generteTest'"
+											class="btn">重新考试</button>
+										<button
+											onclick="window.location.href='/jf/puresport/t7Crcl/heroList/'"
+											class="btn">英雄榜</button>
+				
 								</div>
-							</div>
+												</br>
+				</br>
+				
 						</div>
+						<div class="col-md-2 "></div>
 					</div>
 				</div>
 			</div>

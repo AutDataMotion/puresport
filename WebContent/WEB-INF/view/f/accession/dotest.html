@@ -7,8 +7,8 @@
 	content="Skate Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 
-<META HTTP-EQUIV="Pragma" CONTENT="no-cache"> 
-<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache"> 
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
 <META HTTP-EQUIV="Expires" CONTENT="0">
 
 <script type="application/x-javascript">
@@ -34,6 +34,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	href="/ui/bootstrap-3.3.7-dist/css/bootstrap.min.css">
 <script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
 <script src="/ui/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<!-- 承诺书样式 -->
+   <style type="text/css">
+        *{margin:0px;padding:0px;}
+	.img_one{width:510px;height:687px;background:url(/images_zhuchaobin/comiment.png);}
+        .txt_pwd{padding-left:130px;padding-top:547px;width:200px;height:200px;}
+   </style>
 <style>
 #owl-demo .owl-item div {
 	padding: 1%;
@@ -62,14 +68,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 }
 
 .commiment {
-	text-indent:2em;
+	text-indent: 2em;
 	font-family: "微软雅黑", "黑体", "宋体";
 	font-size: 20px;
 	padding-left: 5px;
 }
 
 .commiment2 {
-	text-indent:2em;
+	text-indent: 2em;
 	font-family: "微软雅黑", "黑体", "宋体";
 }
 
@@ -191,10 +197,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							 var pic = document.getElementById("erweima");//picture是img的id
 							 pic.src = "http://qr.liantu.com/api.php?text=" + res.parm2"; */
 							//					http://qr.liantu.com/api.php?text=http://m.qpic.cn/psb?/V10zsTr30tgqVO/JjLdVKa1q7ZJAlpFtcuGqVvutgKH1cvPUeTuDeTpKBY!/b/dCIBAAAAAAAA&bo=TwIgAwAAAAARF04!&rf=viewer_4&t=5&bg=ffffff&200					
-							window.location.href = "${cxt!''}/jf/puresport/t7Crcl/queryCetifate?crdt_no="
+							window.location.href = "${cxt!''}/jf/puresport/t7Crcl/queryCetifate?flag=1&crdt_no="
 									+ res.parm3;
 						} else if (res.code == "0002") {
 							$('#tip2Modal').modal('show');
+						} else if (res.code == "0003") {
+							window.location.href = "${cxt!''}/jf/puresport/t7Crcl/queryCetifate?flag=2&totalScore="
+								+ res.parm1;
 						} else {
 							alert(res.desc);
 						}
@@ -340,7 +349,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</div>
 		</div>
 		<!-- 承诺书页 -->
-		<div id="commimentDiv" class="demo" style="display: none;">
+	<!-- 	<div id="commimentDiv" class="demo" style="display: none;">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-3 myTest"></div>
@@ -352,11 +361,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						</div>
 						<h2 align="center">省运会反兴奋剂教育准入系统</h2>
 						<h3 align="center">反兴奋剂承诺书</h3>
-						<div class="commiment">我将以维护国家荣普、发扬体育精神为己任，自觉 遵守反兴奋剂法律法规，认更艘行反兴奋剂责任义务， 保证千干净净参加比宜。 <br>
-						</div>
 						<div class="commiment">
-						在此我承诺：
-						</div>					
+							我将以维护国家荣普、发扬体育精神为己任，自觉 遵守反兴奋剂法律法规，认更艘行反兴奋剂责任义务， 保证千干净净参加比宜。 <br>
+						</div>
+						<div class="commiment">在此我承诺：</div>
 						<ul>
 							<li style="color: #F00; font-size: 18px;">&nbsp坚决抵制使用兴奋剂</li>
 							<li style="color: #F00; font-size: 18px;">&nbsp严防误服误用兴奋剂</li>
@@ -378,10 +386,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</div>
 					<div class="col-md-3 myTest"></div>
 				</div>
-
-
 			</div>
-		</div>
+		</div> -->
+		
+				<!-- 承诺书页 -->
+<!--  		<div id="commimentDiv" class="demo" style="display: none;"> 
+			<div class="container" align="center"> -->
+			<div id="commimentDiv" align="center" style="display: none;">
+			
+			   <div class="img_one">
+     <div class="txt_pwd">
+     <input type="text" class="form-control" placeholder="姓名..." id="commimentNm"> </div>
+
+    <!--  <input type="text" id="commimentNm" name="commimentNm" value="请输入姓名..."  maxlength="18" size="18" > </div> -->
+   </div>
+									<div align="center">
+									<p>
+							<button onclick="submitExam()" class="btn">确认提交</button>
+							</br>
+							<p>
+						</div>
+		
 		<div id="showScoreDiv" class="demo" style="display: none;">
 			<div class="container">
 				<div align="center">
@@ -416,10 +441,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</div>
 							<div class="row">
 								<div>
-													<button
-					onclick="window.location.href='/jf/puresport/t7Crcl/study_notify_1'"
-					class="btn">跳转到课程学习</button>
-			</div>
+									<button
+										onclick="window.location.href='/jf/puresport/t7Crcl/study_notify_1'"
+										class="btn">跳转到课程学习</button>
 								</div>
 							</div>
 						</div>
@@ -427,43 +451,44 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 			</div>
 		</div>
-		<!-- 开始部分：学习没完成，无资格考试-->
-		<div id="cantTestDiv" class="score" style="display: none;">
-			<div align="center" hight="300">
-				<p id="cantTestDesc"></p>
-				<table height="60">
-				</table>
-				<button
-					onclick="window.location.href='/jf/puresport/t7Crcl/study_notify_1'"
-					class="btn">重新学习</button>
-			</div>
+	</div>
+	<!-- 开始部分：学习没完成，无资格考试-->
+	<div id="cantTestDiv" class="score" style="display: none;">
+		<div align="center" hight="300">
+			<p id="cantTestDesc"></p>
+			<table height="60">
+			</table>
+			<button
+				onclick="window.location.href='/jf/puresport/t7Crcl/study_notify_1'"
+				class="btn">重新学习</button>
 		</div>
+	</div>
 
-		<div id="doTestDiv" class="container" style="display: none;">
-			<!--  start cursual  -->
-			<div id="owl-demo" class="owl-carousel">
-				<%for(x in examSelectList){ %>
-				<div>
-					<label>【多项选择】 </label> </br> <label>第${x.prblmno!''}题：
-						${x.ttl!''}</label> </br> <label for=${x.prblmid! ''}A class="prblSelect"
-						style="font-weight: lighter"> <input type="checkbox"
-						name=${x.prblmno! ''} value=A id=${x.prblmid! ''}A>
-						${x.optA!}
-					</label> </br> <label for=${x.prblmid! ''}B class="prblSelect"
-						style="font-weight: lighter"> <input type="checkbox"
-						name=${x.prblmno! ''} value=B id=${x.prblmid! ''}B>
-						${x.optB!}
-					</label> </br> <label for=${x.prblmid! ''}C class="prblSelect"
-						style="font-weight: lighter"> <input type="checkbox"
-						name=${x.prblmno! ''} value=C id=${x.prblmid! ''}C>
-						${x.optC!}
-					</label> </br> <label for=${x.prblmid! ''}D class="prblSelect"
-						style="font-weight: lighter"> <input type="checkbox"
-						name=${x.prblmno! ''} value=D id=${x.prblmid! ''}D>
-						${x.optD!}
-					</label> </br>
+	<div id="doTestDiv" class="container" style="display: none;">
+		<!--  start cursual  -->
+		<div id="owl-demo" class="owl-carousel">
+			<%for(x in examSelectList){ %>
+			<div>
+				<label>【多项选择】 </label> </br> <label>第${x.prblmno!''}题：
+					${x.ttl!''}</label> </br> <label for=${x.prblmid! ''}A class="prblSelect"
+					style="font-weight: lighter"> <input type="checkbox"
+					name=${x.prblmno! ''} value=A id=${x.prblmid! ''}A>
+					${x.optA!}
+				</label> </br> <label for=${x.prblmid! ''}B class="prblSelect"
+					style="font-weight: lighter"> <input type="checkbox"
+					name=${x.prblmno! ''} value=B id=${x.prblmid! ''}B>
+					${x.optB!}
+				</label> </br> <label for=${x.prblmid! ''}C class="prblSelect"
+					style="font-weight: lighter"> <input type="checkbox"
+					name=${x.prblmno! ''} value=C id=${x.prblmid! ''}C>
+					${x.optC!}
+				</label> </br> <label for=${x.prblmid! ''}D class="prblSelect"
+					style="font-weight: lighter"> <input type="checkbox"
+					name=${x.prblmno! ''} value=D id=${x.prblmid! ''}D>
+					${x.optD!}
+				</label> </br>
 
-					<!-- 		 </br> <input type="checkbox"
+				<!-- 		 </br> <input type="checkbox"
 						name=${x.prblmno! ''} value=A id=${x.prblmid! ''}A>
 						${x.optA!}
 					 <input type="checkbox"
@@ -477,124 +502,124 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						${x.optD!}
 					</br> -->
 
+			</div>
+			<%}%> <%for(y in examDeducList){ %>
+			<div>
+				<label>【判断题】 </label> </br> <label> 第${y.prblmno!''}题：
+					${y.ttl!''} </label> </br> </br> <label for=${y.prblmid! ''}A class="prblSelect"
+					style="font-weight: lighter"> <input type="radio"
+					name=${y.prblmno! ''} value=A id=${y.prblmid! ''}A> 正 确<!-- ${y.prblmid!} -->
+				</label> </br> </br> <label for=${y.prblmid! ''}B class="prblSelect"
+					style="font-weight: lighter"> <input type="radio"
+					name=${y.prblmno! ''} value=B id=${y.prblmid! ''}B> 错 误<!-- ${y.prblmid!} -->
+				</label> </br> </br>
+			</div>
+			<%}%>
+			<!-- 最后一页：考试提交说明 -->
+			<div id="mannulDiv">
+				<div align="center">
+					<label style="font-weight: lighter"> <input type="radio"
+						name="agreeSubmit" value="1"> 同意
+					</label> &nbsp &nbsp <label style="font-weight: lighter"> <input
+						type="radio" name="agreeSubmit" value="0"> 拒绝
+					</label>
 				</div>
-				<%}%> <%for(y in examDeducList){ %>
-				<div>
-					<label>【判断题】 </label> </br> <label> 第${y.prblmno!''}题：
-						${y.ttl!''} </label> </br> </br> <label for=${y.prblmid! ''}A class="prblSelect"
-						style="font-weight: lighter"> <input type="radio"
-						name=${y.prblmno! ''} value=A id=${y.prblmid! ''}A> 正 确<!-- ${y.prblmid!} -->
-					</label> </br> </br> <label for=${y.prblmid! ''}B class="prblSelect"
-						style="font-weight: lighter"> <input type="radio"
-						name=${y.prblmno! ''} value=B id=${y.prblmid! ''}B> 错 误<!-- ${y.prblmid!} -->
-					</label> </br> </br>
-				</div>
-				<%}%>
-				<!-- 最后一页：考试提交说明 -->
-				<div id="mannulDiv">
-					<div align="center">
-						<label style="font-weight: lighter"> <input type="radio"
-							name="agreeSubmit" value="1"> 同意
-						</label> &nbsp &nbsp <label style="font-weight: lighter"> <input
-							type="radio" name="agreeSubmit" value="0"> 拒绝
-						</label>
-					</div>
-					<div align="center">
-						<button onclick="confirSubmit()" class="btn">提交试卷</button>
-					</div>
+				<div align="center">
+					<button onclick="confirSubmit()" class="btn">提交试卷</button>
 				</div>
 			</div>
 		</div>
+	</div>
 
-		<!-- submit Modal-->
-		<div class="modal fade" id="submitModal" tabindex="-1" role="dialog"
-			aria-labelledby="submitModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header" align="center">
-						<h4 class="modal-title">友情提示</h4>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body" align="center">提交后不能再修改答案，请您再次确认是否要提交考试?</div>
-					<div class="modal-footer" align="center">
-						<button type="button" onclick="isSubmit2()" class="btn"
-							data-dismiss="modal">确定</button>
-						<button type="button" class="btn" data-dismiss="modal">取消</button>
-					</div>
+	<!-- submit Modal-->
+	<div class="modal fade" id="submitModal" tabindex="-1" role="dialog"
+		aria-labelledby="submitModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header" align="center">
+					<h4 class="modal-title">友情提示</h4>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
-				<!-- /.modal-content -->
+				<div class="modal-body" align="center">提交后不能再修改答案，请您再次确认是否要提交考试?</div>
+				<div class="modal-footer" align="center">
+					<button type="button" onclick="isSubmit2()" class="btn"
+						data-dismiss="modal">确定</button>
+					<button type="button" class="btn" data-dismiss="modal">取消</button>
+				</div>
 			</div>
-			<!-- /.modal-dialog -->
+			<!-- /.modal-content -->
 		</div>
+		<!-- /.modal-dialog -->
+	</div>
 
-		<!-- tip1 Modal-->
-		<div class="modal fade" id="tip1Modal" tabindex="-1" role="dialog"
-			aria-labelledby="tip1ModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header" align="center">
-						<h5 class="modal-title">友情提示</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body" align="center">对不起，选择"同意"后才能提交试卷！</div>
-					<div class="modal-footer" align="center">
-						<button type="button" class="btn" data-dismiss="modal">确定</button>
-					</div>
+	<!-- tip1 Modal-->
+	<div class="modal fade" id="tip1Modal" tabindex="-1" role="dialog"
+		aria-labelledby="tip1ModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header" align="center">
+					<h5 class="modal-title">友情提示</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
-				<!-- /.modal-content -->
+				<div class="modal-body" align="center">对不起，选择"同意"后才能提交试卷！</div>
+				<div class="modal-footer" align="center">
+					<button type="button" class="btn" data-dismiss="modal">确定</button>
+				</div>
 			</div>
-			<!-- /.modal-dialog -->
+			<!-- /.modal-content -->
 		</div>
+		<!-- /.modal-dialog -->
+	</div>
 
-		<!-- tip2 Modal-->
-		<div class="modal fade" id="tip2Modal" tabindex="-1" role="dialog"
-			aria-labelledby="tip1ModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header" align="center">
-						<h5 class="modal-title">友情提示</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body" align="center">对不起，承诺书姓名与登录用户姓名不一致，请确认！</div>
-					<div class="modal-footer" align="center">
-						<button type="button" class="btn" data-dismiss="modal">确定</button>
-					</div>
+	<!-- tip2 Modal-->
+	<div class="modal fade" id="tip2Modal" tabindex="-1" role="dialog"
+		aria-labelledby="tip1ModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header" align="center">
+					<h5 class="modal-title">友情提示</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
-				<!-- /.modal-content -->
+				<div class="modal-body" align="center">对不起，承诺书姓名与登录用户姓名不一致，请确认！</div>
+				<div class="modal-footer" align="center">
+					<button type="button" class="btn" data-dismiss="modal">确定</button>
+				</div>
 			</div>
-			<!-- /.modal-dialog -->
+			<!-- /.modal-content -->
 		</div>
+		<!-- /.modal-dialog -->
+	</div>
 
-		<!-- tip3 Modal-->
-		<div class="modal fade" id="tip3Modal" tabindex="-1" role="dialog"
-			aria-labelledby="tip1ModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<div class="modal-content">
-					<div class="modal-header" align="center">
-						<h5 class="modal-title">友情提示</h5>
-						<button type="button" class="close" data-dismiss="modal"
-							aria-label="Close">
-							<span aria-hidden="true">&times;</span>
-						</button>
-					</div>
-					<div class="modal-body" align="center">对不起，必须填写承诺书姓名，请确认！</div>
-					<div class="modal-footer" align="center">
-						<button type="button" class="btn" data-dismiss="modal">确定</button>
-					</div>
+	<!-- tip3 Modal-->
+	<div class="modal fade" id="tip3Modal" tabindex="-1" role="dialog"
+		aria-labelledby="tip1ModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header" align="center">
+					<h5 class="modal-title">友情提示</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
 				</div>
-				<!-- /.modal-content -->
+				<div class="modal-body" align="center">对不起，必须填写承诺书姓名，请确认！</div>
+				<div class="modal-footer" align="center">
+					<button type="button" class="btn" data-dismiss="modal">确定</button>
+				</div>
 			</div>
-			<!-- /.modal-dialog -->
+			<!-- /.modal-content -->
 		</div>
+		<!-- /.modal-dialog -->
+	</div>
 
 	</div>
 	<!-- start footer -->
