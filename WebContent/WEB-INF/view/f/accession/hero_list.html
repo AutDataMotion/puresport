@@ -120,21 +120,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<table class="table table-striped" background="/images_zhuchaobin/tbl_bg.jpg">
 	<thead>
 		<tr>
-			<th></th>
-			<th><h3>名次</h3></th>
-			<th><h3>分数</h3></th>
-			<th><h3>姓名</h3></th>
-			<th><h3>项目</h3></th>
-			<th><h3>地区</h3></th>
+					<th></th>
+			<th align="center"><h3>排名</h3></th>
+
+			<th align="center"><h3>分数</h3></th>
+			<th align="center"><h3>姓名</h3></th>
+			<th align="center"><h3>项目</h3></th>
+			<th align="center"><h3>地区</h3></th>
 		</tr>
 	</thead>
 	<tbody>
 			<%for(x in heroList){ %>
 			<tr>
+			<td><h4>${x.rank!''}</h4></td>	
 			<td>
 				<img src="/images_zhuchaobin/${x.rankImg!''}" width="60" height="39" >
-			</td>
-			<td><h4>${x.rank!''}</h4></td>			
+			</td>		
 			<td><h4>${x.exam_grd!''}</h4></td>
 			<td><h4>${x.nm!'虚位以待'}</h4></td>
 			<td><h4>${x.spt_prj!''}</h4></td>
