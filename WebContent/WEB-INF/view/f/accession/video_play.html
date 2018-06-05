@@ -59,7 +59,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		}
 		//  返回上一页面
 		function do_pre(){
-			window.location.href=document.referrer;
+/* 			window.location.href=document.referrer; */
+			window.location.href='${pre_action!}';
 		}	
 		
 		// 记录用户学习结果
@@ -145,7 +146,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<p>
 				<div align="center">
-<!-- 					<button onclick="do_pre()" class="btn">上一步</button> -->
+					<button onclick="do_pre()" class="btn">上一步</button>
 					<button onclick="do_next()" class="btn">下一步</button>
 				</div>
 			</div>

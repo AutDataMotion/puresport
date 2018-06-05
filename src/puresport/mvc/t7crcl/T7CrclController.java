@@ -130,6 +130,7 @@ public class T7CrclController extends BaseController {
 		System.out.println(crcl_file_rte);
 		if ("1".equals(crcl_attr)) {
 			setAttr("action", "/jf/puresport/t7Crcl/video2_select_3");// 必修视频2
+			setAttr("pre_action", "/jf/puresport/t7Crcl/study_notify_1");// 必修课程1
 			// 必修课程1
 			String sql = "select * from t7_crcl t where t.crclid='" + getPara("crclid") + "'";
 			List<T7Crcl> t7List = T7Crcl.dao.find(sql);
@@ -140,10 +141,12 @@ public class T7CrclController extends BaseController {
 			// setAttr("stdy_st", stdy_st);// 必修视频2
 		} else if ("2".equals(crcl_attr)) {// 去视频2
 			setAttr("action", "/jf/puresport/t7Crcl/video3_select_5");// 必修视频3
+			setAttr("pre_action", "/jf/puresport/t7Crcl/video2_select_3");// 必修视频2
 			setAttr("crcl_nm", "必修课程二：" + getPara("crcl_nm"));// 课程名称
 		} else if ("3".equals(crcl_attr)) {// 去视频3
 			setAttr("crcl_nm", "必修课程三：" + getPara("crcl_nm"));// 课程名称
 			setAttr("action", "/jf/puresport/t7Crcl/generteTest");// 生成考试
+			setAttr("pre_action", "/jf/puresport/t7Crcl/video3_select_5");// 必修视频3
 		}
 		setAttr("crcl_file_rte", crcl_file_rte);
 		setAttr("stdy_st_hidden", getPara("stdy_st_hidden"));// 本课程学习状态
