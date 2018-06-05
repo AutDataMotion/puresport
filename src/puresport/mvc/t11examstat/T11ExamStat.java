@@ -78,6 +78,30 @@ public class T11ExamStat extends BaseModel<T11ExamStat> {
 	 */
 	public static final String column_exam_nm = "exam_nm";
 	
+	/**
+	 * 字段描述：姓名 
+	 * 字段类型：varchar  长度：32
+	 */
+	public static final String column_nm = "nm";
+		
+	/**
+	 * 字段描述：运动项目 
+	 * 字段类型：varchar  长度：512
+	 */
+	public static final String column_spt_prj = "spt_prj";
+	
+	/**
+	 * 字段描述：省份名称 
+	 * 字段类型：varchar  长度：128
+	 */
+	public static final String column_province = "province";
+	
+	/**
+	 * 字段描述：城市名称 
+	 * 字段类型：varchar  长度：128
+	 */
+	public static final String column_city = "city";
+	
 	
 	/**
 	 * sqlId : puresport.t11ExamStat.splitPageFrom
@@ -94,7 +118,27 @@ public class T11ExamStat extends BaseModel<T11ExamStat> {
 	private Integer exam_num;
 	private Timestamp tms;
 	private String exam_nm;
-
+	
+	//zhuchaobin
+	protected String nm;
+	protected String spt_prj;
+	protected String province;
+	protected String city;
+	protected String rankImg;
+	protected String rank;
+	
+	public String getRankImg() {
+		return rankImg;
+	}
+	public void setRankImg(String rankImg) {
+		this.rankImg = rankImg;
+	}
+	public String getRank() {
+		return rank;
+	}
+	public void setRank(String rank) {
+		this.rank = rank;
+	}
 	public void setId(Long id){
 		set(column_id, id);
 	}
@@ -148,6 +192,31 @@ public class T11ExamStat extends BaseModel<T11ExamStat> {
 	}
 	public <T> T getExam_nm() {
 		return get(column_exam_nm);
+	}
+	// zhuchaobin
+	public void setNm(String nm){
+		set(column_nm, nm);
+	}
+	public <T> T getNm() {
+		return get(column_nm);
+	}
+	public void setSpt_prj(String spt_prj){
+		set(column_spt_prj, spt_prj);
+	}
+	public <T> T getSpt_prj() {
+		return get(column_spt_prj);
+	}
+		public void setProvince(String province){
+		set(column_province, province);
+	}
+	public <T> T getProvince() {
+		return get(column_province);
+	}
+	public void setCity(String city){
+		set(column_city, city);
+	}
+	public <T> T getCity() {
+		return get(column_city);
 	}
 	
 }
