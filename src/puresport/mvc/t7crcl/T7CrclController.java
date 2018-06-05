@@ -107,13 +107,59 @@ public class T7CrclController extends BaseController {
 	 * 描述：查询证书
 	 * 
 	 * @author zhuchaobin 2018-06-03
+	 * @throws URISyntaxException 
 	 */
 	@Clear
 	public void queryCetifate() {
-		setAttr("crdt_no", getPara("crdt_no"));
-//		setAttr("hstAddr", getPara("hstAddr"));
+		String crdt_no = getPara("crdt_no");
+		setAttr("crdt_no", crdt_no);
+		String certificatePath = "";
+		// 查询用户信息
+		T1usrBsc t1 = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where crdt_no=?", crdt_no);// 根据用户名查询数据库中的用户
+		if (t1 == null) {
+			LOG.error("查询用户信息失败.");
+			return;
+		} else {
+			setAttr("pageHead", "省运会反兴奋剂教育准入合格证书-" + t1.getUsr_nm());
+			// 取身份证号码第1位+ 最后1位
+			String crdt_no_endStr = "";
+			if(!StringUtils.isBlank(crdt_no)) {
+				crdt_no_endStr = crdt_no.substring(0, 1) + crdt_no.substring(crdt_no.length() -2, crdt_no.length() -1);
+			}
+			certificatePath = "\\images_zhuchaobin\\certificates\\" + "省运会反兴奋剂教育准入合格证书_" + t1.getUsr_nm() + "_" +crdt_no_endStr + ".jpg";
+			setAttr("certificatePath", certificatePath);
+		}
+		// 判定证书文件是否存在,不存在则返回默认未取得证书路径
+        try {
+    		String path = Class .class.getResource("/").toURI().getPath();
+			String filepath =  new File(path).getParentFile().getParentFile().getCanonicalPath();
+			File file = new File(filepath + certificatePath);
+			if(!judeFileExists(file)) {
+				setAttr("certificatePath", "\\images_zhuchaobin\\certificates\\certificateDefault.jpg");
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		LOG.debug("certificatePath="+ certificatePath);
 		renderWithPath("/f/accession/certificate.html");
 	}
+	
+	// 判断文件是否存在
+	public boolean judeFileExists(File file) {
+
+	    if (file.exists()) {
+	        return true;
+	    } else {
+	        System.out.println(file + ":file not exists...");
+	        return false;
+	    }
+
+	}
+
 
 	/**
 	 * 描述：视频播放
@@ -553,9 +599,16 @@ public class T7CrclController extends BaseController {
 			// DateFormat类的静态工厂方法
 			System.out.println(format.getInstance().format(date));
 			String srcImg = webContentPath + "\\images_zhuchaobin\\certificateTemp.jpg";
-			String dscImg = webContentPath + "\\images_zhuchaobin\\certificates\\" + t1.getCrdt_no() + ".jpg";
-			certificatePath = "\\images_zhuchaobin\\certificates\\" + t1.getCrdt_no() + ".jpg";
+			// 取身份证号码第1位+ 最后1位
+			String crdt_no = t1.getCrdt_no().toString();
+			String crdt_no_endStr = "";
+			if(!StringUtils.isBlank(crdt_no)) {
+				crdt_no_endStr = crdt_no.substring(0, 1) + crdt_no.substring(crdt_no.length() -2, crdt_no.length() -1);
+			}
+			certificatePath = "\\images_zhuchaobin\\certificates\\" + "省运会反兴奋剂教育准入合格证书_" + t1.getUsr_nm() + "_" +crdt_no_endStr + ".jpg";
+			String dscImg = webContentPath + certificatePath;
 			LOG.info("srcImg=" + srcImg);
+			LOG.info("dscImg=" + dscImg);
 			LOG.info("certificatePath=" + certificatePath);
 			waterMark(totalScore.toString()  , srcImg, dscImg, 230, 572);
 			waterMark(t1.getUsr_nm(), dscImg, dscImg, 230, 625);
@@ -573,7 +626,8 @@ public class T7CrclController extends BaseController {
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		}
-		res = new ResultEntity("0000", "考试成绩提交成功.", certificatePath, hostAddress, t1.getCrdt_no());
+//		res = new ResultEntity("0000", "考试成绩提交成功.", certificatePath, hostAddress, t1.getCrdt_no());
+		res = new ResultEntity("0000", "考试成绩提交成功.", "", "", t1.getCrdt_no());
 		// setAttr("certificatePath", certificatePath);
 		// renderWithPath("/f/accession/certificate.html");
 		renderJson(res);
