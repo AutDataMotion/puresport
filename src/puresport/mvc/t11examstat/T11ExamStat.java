@@ -119,6 +119,7 @@ public class T11ExamStat extends BaseModel<T11ExamStat> {
 	private Timestamp tms;
 	private String exam_nm;
 	
+	
 	//zhuchaobin
 	protected String nm;
 	protected String spt_prj;
