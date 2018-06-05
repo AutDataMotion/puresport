@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>合格证书</title>
+<title>${pageHead!'省运会反兴奋剂教育准入合格证书'}</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords"
@@ -59,7 +59,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </style>
 <script type="text/javascript">
 	$(function() {
-		var str = "${cxt!''}/images_zhuchaobin/certificates/${crdt_no!''}.jpg";
+		var str = "${cxt!''}${certificatePath!'/images_zhuchaobin/certificates/certificateDefault.jpg'}";
 		/* 	$('#code').qrcode(str); */
 		$("#code").qrcode({
 			render : "table",
@@ -118,7 +118,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="row">
 						<div class="col-md-3 myTest"></div>
 						<div class="col-md-6 myTest">
-							<img src="/images_zhuchaobin/certificates/${crdt_no!''}.jpg"
+<!-- 							<img src="/images_zhuchaobin/certificates/${crdt_no!''}.jpg" -->
+							<img src="${cxt!''}${certificatePath!'/images_zhuchaobin/certificates/certificateDefault.jpg'}"
 								id="certificateImgId" class="img-thumbnail" height="400"
 								width="400">
 						</div>
