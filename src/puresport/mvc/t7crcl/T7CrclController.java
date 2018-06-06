@@ -143,12 +143,16 @@ public class T7CrclController extends BaseController {
 			setAttr("certificatePath", certificatePath);
 		}
 		// 判定证书文件是否存在,不存在则返回默认未取得证书路径
+		// 是否有证书
+		boolean isCertificated = false;
 		try {
 			String path = Class.class.getResource("/").toURI().getPath();
 			String filepath = new File(path).getParentFile().getParentFile().getCanonicalPath();
 			File file = new File(filepath + certificatePath);
 			if (!judeFileExists(file)) {
 				setAttr("certificatePath", "/images_zhuchaobin/certificates/certificateDefault.jpg");
+			} else {
+				isCertificated = true;
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -157,20 +161,37 @@ public class T7CrclController extends BaseController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		// 插入或者更新成绩统计表最后一次成绩
+		// 是否参加过考试
+		boolean isExamed = false;
+		// 查询个人排名
 		String sql = "select * from t11_exam_stat t where  t.exam_st = '9' order by exam_grd desc";
 		List<T11ExamStat> t11List = T11ExamStat.dao.find(sql);
 		int mingci = 0;
 		for (T11ExamStat t11 : t11List) {
 			mingci++;
 			if (t11.getUsrid().equals(t1.getUsrid())) {
+				isExamed = true;
 				break;
 			}
+		}
+		// 根据是否有证书和是否参加过考试，决定显示效果
+		if(isCertificated) {
+			setAttr("shareDisplay", "inline");
+			setAttr("rankDisplay", "inline");
+			setAttr("disappointDisplay", "inline");
+		} else if(isExamed) {
+			setAttr("rankDisplay", "inline");
+			setAttr("disappointDisplay", "inline");
+		} else {
+			setAttr("startDisplay", "inline");
 		}
 		setAttr("mingci", mingci);
 		setAttr("totalExamer", t11List.size());
 		double percent = (t11List.size() + 1 - mingci) * 1.0 / (t11List.size());
+		// 最后一名特殊处理
+		if(t11List.size() == mingci) {
+			percent = 0.0;
+		}
 		NumberFormat nf = java.text.NumberFormat.getPercentInstance();
 		nf.setMinimumFractionDigits(1);// 小数点后保留几位
 		LOG.info(percent);
