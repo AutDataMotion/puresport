@@ -705,9 +705,9 @@ public class T7CrclController extends BaseController {
 			LOG.info("srcImg=" + srcImg);
 			LOG.info("dscImg=" + dscImg);
 			LOG.info("certificatePath=" + certificatePath);
-			waterMark(totalScore.toString(), srcImg, dscImg, 230, 572);
-			waterMark(t1.getUsr_nm(), dscImg, dscImg, 230, 625);
-			waterMark(dataTime, dscImg, dscImg, 230, 680);
+			waterMark(totalScore.toString(), srcImg, dscImg, 212, 616);
+			waterMark(t1.getUsr_nm(), dscImg, dscImg, 212, 671);
+			waterMark(dataTime, dscImg, dscImg, 212, 731);
 			LOG.info(totalScore.toString() + t1.getUsr_nm() + dataTime);
 		} else {
 			LOG.error("查不到用户信息！");
