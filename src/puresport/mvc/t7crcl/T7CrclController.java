@@ -191,7 +191,8 @@ public class T7CrclController extends BaseController {
 		String crdt_no = getPara("crdt_no");
 		setAttr("crdt_no", crdt_no);
 		String certificatePath = "";
-
+		
+		String useridStr = (String) getSession().getAttribute("usrid");
 		// 插入或者更新成绩统计表最后一次成绩
 		String sql = "select t.*, r.nm, r.spt_prj, r.province, r.city from t11_exam_stat t "
 				+ "JOIN t1_usr_bsc r on t.exam_st = '9' and t.usrid = r.usrid order by exam_grd desc limit 10";
@@ -206,8 +207,13 @@ public class T7CrclController extends BaseController {
 			} else {
 				;
 			}
-			t11.setRank(i + 1 + "");
 			t11.setRankImg(rankImg);
+			LOG.debug("t11.getUsrid()" + t11.getUsrid());
+			if(null != useridStr) {
+				if(useridStr.equals((t11.getUsrid()+""))) {
+					t11.setRank("#FF0202");
+				}
+			}
 			heroListRlt.add(t11);
 		}
 		setAttr("heroList", heroListRlt);
