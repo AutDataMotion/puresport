@@ -119,9 +119,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<table class="table table-striped" background="/images_zhuchaobin/tbl_bg.jpg">
 	<thead>
 		<tr>
-					<th></th>
 			<th align="center"><h3>排名</h3></th>
-
 			<th align="center"><h3>分数</h3></th>
 			<th align="center"><h3>姓名</h3></th>
 			<th align="center"><h3>项目</h3></th>
@@ -131,9 +129,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<tbody>
 			<%for(x in heroList){ %>
 			<tr>
-			<td><h4>${x.rank!''}</h4></td>	
+<!-- 			<td><h4>${x.rank!''}</h4></td>	 -->
 			<td>
-				<img src="/images_zhuchaobin/${x.rankImg!''}" width="60" height="39" >
+				<img src="/images_zhuchaobin/${x.rankImg!''}" width="45" height="45" >
 			</td>		
 			<td><h4>${x.exam_grd!''}</h4></td>
 			<td><h4>${x.nm!'虚位以待'}</h4></td>
