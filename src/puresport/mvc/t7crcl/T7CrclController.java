@@ -131,14 +131,14 @@ public class T7CrclController extends BaseController {
 			renderWithPath("/f/accession/certificate.html");
 			return;
 		} else {
-			setAttr("pageHead", "省运会反兴奋剂教育准入合格证书-" + t1.getUsr_nm());
+			setAttr("pageHead", "省运会反兴奋剂教育准入合格证书-" + t1.getNm());
 			// 取身份证号码第1位+ 最后1位
 			String crdt_no_endStr = "";
 			if (!StringUtils.isBlank(crdt_no)) {
 				crdt_no_endStr = crdt_no.substring(0, 1)
 						+ crdt_no.substring(crdt_no.length() - 2, crdt_no.length() - 1);
 			}
-			certificatePath = "/images_zhuchaobin/certificates/" + "省运会反兴奋剂教育准入合格证书_" + t1.getUsr_nm() + "_"
+			certificatePath = "/images_zhuchaobin/certificates/" + "省运会反兴奋剂教育准入合格证书_" + t1.getNm() + "_"
 					+ crdt_no_endStr + ".jpg";
 			setAttr("certificatePath", certificatePath);
 		}
@@ -561,10 +561,10 @@ public class T7CrclController extends BaseController {
 			renderJson(res);
 			return;
 		} else {
-			if (commimentNm.equals(t1.getUsr_nm())) {
-				LOG.debug("commimentNm= " + commimentNm + "用户姓名= " + t1.getUsr_nm() + "承诺人姓名无误.");
+			if (commimentNm.equals(t1.getNm())) {
+				LOG.debug("commimentNm= " + commimentNm + "用户姓名= " + t1.getNm() + "承诺人姓名无误.");
 			} else {
-				LOG.error("commimentNm= " + commimentNm + "用户姓名= " + t1.getUsr_nm() + "承诺人姓名与用户姓名不一致，无法提交考试成绩.");
+				LOG.error("commimentNm= " + commimentNm + "用户姓名= " + t1.getNm() + "承诺人姓名与用户姓名不一致，无法提交考试成绩.");
 				res = new ResultEntity("0002", "承诺人姓名与用户姓名不一致，无法提交考试成绩!");
 				renderJson(res);
 				return;
@@ -709,16 +709,16 @@ public class T7CrclController extends BaseController {
 				crdt_no_endStr = crdt_no.substring(0, 1)
 						+ crdt_no.substring(crdt_no.length() - 2, crdt_no.length() - 1);
 			}
-			certificatePath = "\\images_zhuchaobin\\certificates\\" + "省运会反兴奋剂教育准入合格证书_" + t1.getUsr_nm() + "_"
+			certificatePath = "\\images_zhuchaobin\\certificates\\" + "省运会反兴奋剂教育准入合格证书_" + t1.getNm() + "_"
 					+ crdt_no_endStr + ".jpg";
 			String dscImg = webContentPath + certificatePath;
 			LOG.info("srcImg=" + srcImg);
 			LOG.info("dscImg=" + dscImg);
 			LOG.info("certificatePath=" + certificatePath);
 			waterMark(totalScore.toString(), srcImg, dscImg, 212, 616);
-			waterMark(t1.getUsr_nm(), dscImg, dscImg, 212, 671);
+			waterMark(t1.getNm(), dscImg, dscImg, 212, 671);
 			waterMark(dataTime, dscImg, dscImg, 212, 731);
-			LOG.info(totalScore.toString() + t1.getUsr_nm() + dataTime);
+			LOG.info(totalScore.toString() + t1.getNm() + dataTime);
 		} else {
 			LOG.error("查不到用户信息！");
 		}
