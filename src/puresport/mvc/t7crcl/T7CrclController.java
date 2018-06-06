@@ -643,20 +643,30 @@ public class T7CrclController extends BaseController {
 		// 插入或者更新成绩统计表最后一次成绩
 		String sql = "select * from t11_exam_stat t where t.usrid = '" + t10.getUsrid() + "' and t.exam_st = '9'";
 		T11ExamStat t11Rlt = T11ExamStat.dao.findFirst(sql);
-		t11Rlt.setUsrid(usrid);// 用户id
-		t11Rlt.setExamid(Integer.parseInt(examid));// 考试id
-		t11Rlt.setExam_grd(totalScore);// 考试成绩
-		t11Rlt.setExam_st("1");// 考试状态
-		t11Rlt.setExam_channel("01");// 考试渠道,01:互联网站
-		t11Rlt.setExam_num(Integer.parseInt(examid));// 考试次数
-		t11Rlt.setTms(new Timestamp(System.currentTimeMillis()));// 维护时间
-		t11Rlt.setExam_nm("省运会");
-		t11Rlt.setExam_st("9");// 考试状态，9表示最终成绩
 		if (null == t11Rlt) {
+			t11Rlt = new T11ExamStat();
+			t11Rlt.setUsrid(usrid);// 用户id
+			t11Rlt.setExamid(Integer.parseInt(examid));// 考试id
+			t11Rlt.setExam_grd(totalScore);// 考试成绩
+			t11Rlt.setExam_st("1");// 考试状态
+			t11Rlt.setExam_channel("01");// 考试渠道,01:互联网站
+			t11Rlt.setExam_num(Integer.parseInt(examid));// 考试次数
+			t11Rlt.setTms(new Timestamp(System.currentTimeMillis()));// 维护时间
+			t11Rlt.setExam_nm("省运会");
+			t11Rlt.setExam_st("9");// 考试状态，9表示最终成绩
 			t11Rlt.saveGenIntId();
 		} else {
 /*			t11.setExam_st("9");// 考试状态，9表示最终成绩
 			t11.setId(Long.parseLong(t11Rlt.getId()));*/
+//			t11Rlt.setUsrid(usrid);// 用户id
+			t11Rlt.setExamid(Integer.parseInt(examid));// 考试id
+			t11Rlt.setExam_grd(totalScore);// 考试成绩
+			t11Rlt.setExam_st("1");// 考试状态
+			t11Rlt.setExam_channel("01");// 考试渠道,01:互联网站
+			t11Rlt.setExam_num(Integer.parseInt(examid));// 考试次数
+			t11Rlt.setTms(new Timestamp(System.currentTimeMillis()));// 维护时间
+			t11Rlt.setExam_nm("省运会");
+			t11Rlt.setExam_st("9");// 考试状态，9表示最终成绩
 			t11Rlt.update();
 		}
 		LOG.debug("totalScore=" + totalScore);
