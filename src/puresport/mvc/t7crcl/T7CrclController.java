@@ -170,7 +170,7 @@ public class T7CrclController extends BaseController {
 		}
 		setAttr("mingci", mingci);
 		setAttr("totalExamer", t11List.size());
-		double percent = (t11List.size() - mingci) * 1.0 / (t11List.size() - 1);
+		double percent = (t11List.size() + 1 - mingci) * 1.0 / (t11List.size());
 		NumberFormat nf = java.text.NumberFormat.getPercentInstance();
 		nf.setMinimumFractionDigits(1);// 小数点后保留几位
 		LOG.info(percent);
