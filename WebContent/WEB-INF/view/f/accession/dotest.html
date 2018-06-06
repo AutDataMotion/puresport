@@ -505,7 +505,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<%}%> <%for(y in examDeducList){ %>
 			<div>
 				<label>【判断题】 </label> </br> <label> 第${y.prblmno!''}题：
-					${y.ttl!''} &nbsp答案：${x.prblm_aswr!''}</label> </br> </br> <label for=${y.prblmid! ''}A class="prblSelect"
+					${y.ttl!''} &nbsp答案：${y.prblm_aswr!''}</label> </br> </br> <label for=${y.prblmid! ''}A class="prblSelect"
 					style="font-weight: lighter"> <input type="radio"
 					name=${y.prblmno! ''} value=A id=${y.prblmid! ''}A> 正 确<!-- ${y.prblmid!} -->
 				</label> </br> </br> <label for=${y.prblmid! ''}B class="prblSelect"
