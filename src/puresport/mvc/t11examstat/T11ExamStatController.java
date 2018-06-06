@@ -109,7 +109,7 @@ public class T11ExamStatController extends BaseController {
 		boolean flag = false;  
           
         String userID = getPara("userID");//获取表单数据，这里的参数就是页面表单中的name属性值  
-        List<T11ExamStat> itemlist = T11ExamStat.dao.find("select * from t11_exam_stat where usrid=?", userID);
+        List<T11ExamStat> itemlist = T11ExamStat.dao.find("select * from t11_exam_stat where usrid=? and exam_st = '1'", userID);
         if(itemlist!=null)
         {
         	flag = true;
