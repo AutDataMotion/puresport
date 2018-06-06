@@ -200,15 +200,7 @@ public class T7CrclController extends BaseController {
 		// 名次，名次缩略图赋值
 		for (int i = 0; i < 10; i++) {
 			T11ExamStat t11 = new T11ExamStat();
-			String rankImg = "";
-			if (0 == i)
-				rankImg = "rank1.png";
-			else if (1 == i)
-				rankImg = "rank2.png";
-			else if (2 == i)
-				rankImg = "rank3.png";
-			else
-				rankImg = "rank4.png";
+			String rankImg = "rank" + (i + 1) + ".png";
 			if(i < heroList.size()) {
 				t11 = heroList.get(i);
 			} else {
