@@ -7,7 +7,7 @@
 <meta name="keywords"
 	content="Skate Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
-
+<!-- 浏览器不缓存 -->
 <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
 <META HTTP-EQUIV="Expires" CONTENT="0">
@@ -42,10 +42,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	font-size: 20px;
 	padding-left: 5px;
 }
+
 .title {
 	font-family: "微软雅黑", "黑体", "宋体";
 	font-size: 25px;
 }
+
 .score {
 	padding-top: 130px;
 	padding-right: 250px;
@@ -119,36 +121,33 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="row">
 						<div class="col-md-3 myTest"></div>
 						<div class="col-md-6 myTest">
-<!-- 							<img src="/images_zhuchaobin/certificates/${crdt_no!''}.jpg" -->
-							<img src="${cxt!''}${certificatePath!'/images_zhuchaobin/certificates/certificateDefault.jpg'}"
+							<!-- 							<img src="/images_zhuchaobin/certificates/${crdt_no!''}.jpg" -->
+							<img
+								src="${cxt!''}${certificatePath!'/images_zhuchaobin/certificates/certificateDefault.jpg'}"
 								id="certificateImgId" class="img-thumbnail" height="400"
 								width="400">
 						</div>
 						<div class="col-md-3 myTest">
-							<div class="row" class="style pull-bottom">
-								<!--<div class="col-md-4 myTest"> -->
-								<!--<img id="erweima" src="http://qr.liantu.com/api.php?text=http://${hstAddr!''}/jf/puresport/t7Crcl/test2?crdt_no=${crdt_no!''}&rf=viewer_4&t=5&bg=ffffff&200" height="150" width="150" /> -->
-								<!--<img id="erweima" src="http://qr.liantu.com/api.php?text=${cxt!''}/images_zhuchaobin/certificates/${crdt_no!''}.jpg&rf=viewer_4&t=5&bg=ffffff&200" height="150" width="150" /> -->
-								</br> </br>
-								<div align="left" id="code"></div>
-								<!--</div>
-								<div class="col-md-4 myTest"></div>
-								<div class="col-md-4 myTest"></div> -->
-							</div>
-							<div class="row">
-								<div align="left">使用如下app扫描二维码分享</div>
-							</div>
-							<div class="row">
-								<div align="left">
-									<img src="/images_zhuchaobin/share.png" height="55" width="210">
+							<div style="display: ${shareDisplay!'none'};">
+									<div class="row" class="style pull-bottom">
+										</br> </br>
+										<div align="left" id="code"></div>
+									</div>
+									<div class="row">
+										<div align="left">使用如下app扫描二维码分享</div>
+									</div>
+									<div class="row">
+										<div align="left">
+											<img src="/images_zhuchaobin/share.png" height="55" width="210">
+										</div>
+									</div>
 								</div>
-							</div>
-							</br> 
-														<div class="row">
-														<div align="left">您在${totalExamer!''}名参考人员中排名第${mingci!''}，击败了全国${koPercent!''}的考生！</div>
-								
+							</br>
+							<div class="row" >
+								<div align="left" style="display: ${rankDisplay!'none'};">您在${totalExamer!''}名参考人员中排名第${mingci!''}，击败了全国${koPercent!''}的考生！</div>
 							</div>
 							<P>
+							<div style="display: ${disappointDisplay!'none'};">
 							<div class="row">
 								<div align="left">对成绩不满意？</div>
 							</div>
@@ -156,7 +155,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<div align="left">
 									<button
 										onclick="window.location.href='/jf/puresport/t7Crcl/study_notify_1'"
-										class="btn">重新学习</button>
+										class="btn">重新学习</button> 
 									<button
 										onclick="window.location.href='/jf/puresport/t7Crcl/generteTest'"
 										class="btn">重新考试</button>
@@ -164,6 +163,26 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										onclick="window.location.href='/jf/puresport/t7Crcl/heroList/'"
 										class="btn">英雄榜</button>
 								</div>
+							</div>
+							</div>
+							
+							<div style="display: ${startDisplay!'none'};">
+							<div class="row">
+								<div align="left">您尚未参加考试，请参加准入学习及考试。</div>
+							</div>
+							<div class="row">
+								<div align="left">
+									<button
+										onclick="window.location.href='/jf/puresport/t7Crcl/study_notify_1'"
+										class="btn">准入学习</button>
+									<button
+										onclick="window.location.href='/jf/puresport/t7Crcl/generteTest'"
+										class="btn">准入考试</button>
+									<button
+										onclick="window.location.href='/jf/puresport/t7Crcl/heroList/'"
+										class="btn">英雄榜</button>
+								</div>
+							</div>
 							</div>
 						</div>
 					</div>
