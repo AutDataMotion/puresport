@@ -27,7 +27,7 @@ import puresport.mvc.t6mgrahr.T6MgrSession;
 
 public class T1usrBscService extends BaseService {
 	private final static String tableName = "t1_usr_bsc";
-	private final static String tableKey = "usr_nm";
+	private final static String tableKey = "crdt_no";
 
 	@SuppressWarnings("unused")
 	private static Logger log = Logger.getLogger(T1usrBscService.class);
