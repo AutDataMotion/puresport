@@ -129,16 +129,12 @@ public class T1usrBscController extends BaseController {
 		UploadFile picFile = getFile("fileexcel");// 得到 文件对象
 		String fileName = picFile.getFileName();
 		String mimeType = picFile.getContentType();// 得到 上传文件的MIME类型:audio/mpeg
-
-		if (StringUtil.invalidateLength(mimeType, 6, 64)) {
-			log.error("message:上传文件类型错误！"+mimeType);
-			 renderJson("上传文件类型错误！");
-			 return ;
-		}
-		String mimeTypeSuffix = fileName.substring(mimeType.length() -4);
-		String mimeTypeSuffix2 = fileName.substring(mimeType.length() -5);
+		
+		String mimeTypeSuffix = fileName.substring(fileName.length() -4);
+		String mimeTypeSuffix2 = fileName.substring(fileName.length() -5);
+		log.info(mimeTypeSuffix + " " + mimeTypeSuffix2);
 		 if(!ExcelParseTool.SUFFIX_2003.equals(mimeTypeSuffix) && !ExcelParseTool.SUFFIX_2007.equals(mimeTypeSuffix2)){
-			 log.error("message:上传文件类型错误！！！"+mimeType);
+			 log.error("message:上传文件类型错误！！！"+fileName);
 			 renderJson("上传文件类型错误！！！");
 			 return ;
 		 }
