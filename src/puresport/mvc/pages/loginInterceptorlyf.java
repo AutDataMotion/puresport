@@ -46,7 +46,11 @@ public class loginInterceptorlyf implements Interceptor{
 				else {//远动员或者辅助人员
 					
 					T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", userID);//根据用户名查询数据库中的用户  
-					if((item.getProvince()!="--"&&item.getCity()!="--"&&item.getSpt_prj()!=null)||(item.getDepartment()!=null&&item.getPost()!=null))
+//					if((item.getProvince()!="--"&&item.getCity()!="--"&&item.getSpt_prj()!=null)||(item.getDepartment()!=null&&item.getPost()!=null))
+//                	{
+//						inv.invoke();
+//                	}
+					if((item.getSpt_prj()!=null)||(item.getDepartment()!=null&&item.getPost()!=null))
                 	{
 						inv.invoke();
                 	}	
