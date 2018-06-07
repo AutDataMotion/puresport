@@ -115,6 +115,14 @@ public class pagesController extends BaseController {
 		renderWithPath(pthv+"about.html");
 	}
 	@Clear
+	public void jiangzuo_videoplay() {
+		String videoid = getPara("video_id");
+		String videotitle = getPara("videotitle");
+		setAttr("videoid",videoid);
+		setAttr("videotitle",videotitle);
+		renderWithPath(pthv+"video/videoPlay.html");
+	}
+	@Clear
 	public void login() {
 		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
 		//renderWithPath(pthv+"list.html");

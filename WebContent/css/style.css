@@ -390,6 +390,19 @@ margin-bottom: 10px;
 	-moz-box-shadow: inset 0px -1px 1px rgb(216, 216, 216);
 	-o-box-shadow: inset 0px -1px 1px rgb(216, 216, 216);
 }
+.jiangzuo_list-group-item{
+	background-color:#000;
+	    border: 1px solid #000;
+	    cursor:pointer;
+}
+.jiangzuo_list-group-item:hover{
+	background-color:#0065ac;
+
+}
+.jiangzuo_list-group-item_active{
+	background-color:#0065ac;
+
+}
 .span4_of_list:hover.span4_of_list span i{
 	color: #dc5925;	
 	background: none;
