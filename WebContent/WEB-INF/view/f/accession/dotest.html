@@ -37,7 +37,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- 承诺书样式 -->
    <style type="text/css">
         *{margin:0px;padding:0px;}
-	.img_one{width:510px;height:687px;background:url(/images_zhuchaobin/comiment.png);}
+	.img_one{width:510px;height:687px;background:url(/images_zhuchaobin/comiment2.png);}
         .txt_pwd{padding-left:130px;padding-top:547px;width:200px;height:200px;}
    </style>
 <style>
@@ -66,7 +66,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	font-size: 20px;
 	padding-left: 5px;
 }
-
 .commiment {
 	text-indent: 2em;
 	font-family: "微软雅黑", "黑体", "宋体";
@@ -470,7 +469,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<%for(x in examSelectList){ %>
 			<div>
 				<label>【多项选择】 </label> </br> <label>第${x.prblmno!''}题：
-					${x.ttl!''}</label> </br> <label for=${x.prblmid! ''}A class="prblSelect"
+					${x.ttl!''} &nbsp答案：${x.prblm_aswr!''}</label> </br> <label for=${x.prblmid! ''}A class="prblSelect"
 					style="font-weight: lighter"> <input type="checkbox"
 					name=${x.prblmno! ''} value=A id=${x.prblmid! ''}A>
 					${x.optA!}
@@ -506,7 +505,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<%}%> <%for(y in examDeducList){ %>
 			<div>
 				<label>【判断题】 </label> </br> <label> 第${y.prblmno!''}题：
-					${y.ttl!''} </label> </br> </br> <label for=${y.prblmid! ''}A class="prblSelect"
+					${y.ttl!''} &nbsp答案：${y.prblm_aswr!''}</label> </br> </br> <label for=${y.prblmid! ''}A class="prblSelect"
 					style="font-weight: lighter"> <input type="radio"
 					name=${y.prblmno! ''} value=A id=${y.prblmid! ''}A> 正 确<!-- ${y.prblmid!} -->
 				</label> </br> </br> <label for=${y.prblmid! ''}B class="prblSelect"

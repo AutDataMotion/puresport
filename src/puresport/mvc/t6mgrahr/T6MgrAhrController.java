@@ -58,6 +58,7 @@ public class T6MgrAhrController extends BaseController {
 				getSession().setAttribute("usrid", item.getUsrid());// 设置session，保存登录用户的昵称
 				getSession().setAttribute("crdt_no", item.getCrdt_no());// 设置session，保存登录用户的昵称
 				getSession().setAttribute("pwd", item.getPswd());// 设置session，保存登录用户的昵称
+				getSession().setAttribute("usr_tp", item.getUsr_tp());//设置session，保存登录用户的昵称
 				
 				T6MgrSession mgrSession = new T6MgrSession(item);
 				setSessionAttr(T6MgrSession.KeyName, mgrSession);// 管理员session对象	

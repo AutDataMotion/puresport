@@ -8,6 +8,7 @@
 	content="Skate Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
 
+<!-- 浏览器不缓存 -->
 <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
 <META HTTP-EQUIV="Expires" CONTENT="0">
@@ -90,7 +91,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		return out;
 	}
 </script>
-
 <style type="text/css">
 .prblSelect {
 	width: 850px;
@@ -114,31 +114,29 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	</div>
 	<div class="main_btm1">
 	<div class="row">
-	<div class="col-md-3 "></div>
-	<div class="col-md-5 ">
-	<div class="span4_of_list" width="65%">
-	<table class="table table-striped" background="/images_zhuchaobin/tbl_bg.jpg">
+	<div class="col-md-4 "></div>
+	<div class="col-md-4 " align="center">
+	<div class="span4_of_list" width="100%">
+	<table class="table table-striped" background="/images_zhuchaobin/tbl_bg.jpg" align="center">
 	<thead>
 		<tr>
-			<th></th>
-			<th><h3>名次</h3></th>
-			<th><h3>分数</h3></th>
-			<th><h3>姓名</h3></th>
-			<th><h3>项目</h3></th>
-			<th><h3>地区</h3></th>
+			<th align="center"><h3>排名</h3></th>
+			<th align="center"><h3>分数</h3></th>
+			<th align="center"><h3>姓名</h3></th>
+			<th align="center"><h3>项目</h3></th>
+			<th align="center"><h3>地区</h3></th>
 		</tr>
 	</thead>
 	<tbody>
 			<%for(x in heroList){ %>
 			<tr>
 			<td>
-				<img src="/images_zhuchaobin/${x.rankImg!''}" width="60" height="39" >
-			</td>
-			<td><h4>${x.rank!''}</h4></td>			
-			<td><h4>${x.exam_grd!''}</h4></td>
-			<td><h4>${x.nm!''}</h4></td>
-			<td><h4>${x.spt_prj!''}</h4></td>
-			<td><h4>${x.province!''}${x.city!''}</h4></td>
+				<img src="/images_zhuchaobin/${x.rankImg!''}" width="35" height="40" >
+			</td>		
+			<td><div style="color:${x.rank!'#454545'}"><h5>${x.exam_grd!''}</h5></div></td>
+			<td><div style="color:${x.rank!'#454545'}"><h5>${x.nm!'虚位以待'}</h5></div></td>
+			<td><div style="color:${x.rank!'#454545'}"><h5>${x.spt_prj!''}</h5></div></td>
+			<td><div style="color:${x.rank!'#454545'}"><h5>${x.province!''}${x.city!''}</h5></div></td>		
 		</tr>
 		<%}%> 
 		
@@ -146,7 +144,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </table>
 </div>
 </div>
-<div class="col-md-3 "></div>
+<div class="col-md-4"></div>
 </div>
 
 <!-- 	<div class="row">
