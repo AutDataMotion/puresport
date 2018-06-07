@@ -1,8 +1,8 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE HTML>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-
+<title>学习</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- <meta name="keywords"
 	content="Skate Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
@@ -48,27 +48,10 @@ type="text/javascript"></script>
 				 $('#tip1Modal').modal('show');				
 			}
 		} */
-		var isFinishPlay = false;		
-		function do_next(){
-			var stdy_st = document.getElementById("stdy_st_hidden").value;
-			// 视频学习完成或者已经学习本课程的学习
-			if(isFinishPlay || ("1" == stdy_st)){
-					if(isFinishPlay){
-						recordCourse(1);// 记录课程学习记录
-					}
-					window.location.href='${action!}';// 进行下一步学习
-				} else {
-				 $('#tip1Modal').modal('show');				
-			}
-		}
-		//  返回上一页面
-		function do_pre(){
-/* 			window.location.href=document.referrer; */
-			window.location.href='${pre_action!}';
-		}	
 		
 		// 记录用户学习结果
-		function recordCourse(flag) {
+		function recordCourse() {
+			alert(test);
 			var url;
 			url = '/jf/puresport/t5CrclStdy/update';
 			var crclid = document.getElementById("crclid").value;
@@ -89,7 +72,53 @@ type="text/javascript"></script>
 				},
 				dataType : "json"
 			});
-		}		
+		}
+		
+		var isFinishPlay = false;		
+		function do_next(){
+			var stdy_st = document.getElementById("stdy_st_hidden").value;
+			// 视频学习完成或者已经学习本课程的学习
+			if(isFinishPlay || ("1" == stdy_st)){
+				alert(isFinishPlay);
+					if(isFinishPlay){
+						alert(isFinishPlay);
+						/* recordCourse();// 记录课程学习记录 */
+						{
+							var url;
+							url = '/jf/puresport/t5CrclStdy/update';
+							var crclid = document.getElementById("crclid").value;
+							alert();
+							$.ajax({
+								type : 'POST',
+								url : url,
+								dataType : "json",
+								traditional : true,
+								data : {
+									"userid" : ${session["usrid"]},"crclid":crclid
+								},
+								success : function(res) {
+									if (res.code == "0000") {
+										return true;
+									} else {
+										return false;
+									}
+								},
+								dataType : "json"
+							});														
+						}
+					}
+					window.location.href='${action!}';// 进行下一步学习
+				} else {
+				 $('#tip1Modal').modal('show');				
+			}
+		}
+		//  返回上一页面
+		function do_pre(){
+/* 			window.location.href=document.referrer; */
+			window.location.href='${pre_action!}';
+		}	
+		
+			
 	</script>
 </head>
 <body>
@@ -117,7 +146,7 @@ type="text/javascript"></script>
 			<div class="row">
 				<div class="row">
 					<div class="col-md-2 span1_of_2"></div>
-					<div class="col-md-8 span8_of_8">
+					<div class="col-md-8 span1_of_8">
 						<div class="span4_of_list" width="65%">
 							<div align="center">
 								<p class="res_pic_title" style="text-align: center;">
@@ -176,8 +205,8 @@ type="text/javascript"></script>
 		url: "",				// flash播放器地址,
     container : "myflashBox",	// 播放器初始化容器节点
     id: "myMovie",						// 播放器id
- 		width: '100%',								// 播放器宽度
-		height: '100%',							// 播放器高度 
+		width: 640,								// 播放器宽度
+		height: 516,							// 播放器高度
 		// flash播放器参数
 		params : {
 		 allowNetworking : "all",
@@ -188,9 +217,9 @@ type="text/javascript"></script>
 		},
 		attributes: {},
 		flashvars: {
-			autoPlay: 0,  				// 是否自动播放
+			autoPlay: 1,  				// 是否自动播放
 			loop: 0,							// 是否循环播放
-			autoLoad: 0,					// 是否自动加载资源
+			autoLoad: 1,					// 是否自动加载资源
 			thumbUrl: '',					// 封面图
 			tj: 1,								// 是否出现播后推荐
 			as: 1									// 是否前贴片广告
@@ -200,7 +229,7 @@ type="text/javascript"></script>
 			controls: true, 			// 是否显示控制条
 			loop: false,					// 是否循环播
 			poster: '', 					// 封面图
-			preload: 'none' 			// 是否预先加载资源
+			preload: 'auto' 			// 是否预先加载资源
 		}
 	};	
 	var $SCOPE = {}
