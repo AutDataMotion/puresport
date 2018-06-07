@@ -16,8 +16,10 @@ import com.platform.mvc.base.BaseController;
 import csuduc.platform.util.ComOutMdl;
 import csuduc.platform.util.JsonUtils;
 import csuduc.platform.util.StringUtil;
+import csuduc.platform.util.encrypt.DESUtil;
 import puresport.applicat.ExcelParseTool;
 import puresport.applicat.MdlExcelRow;
+import puresport.constant.ConstantInitMy;
 import puresport.constant.EnumStatus;
 import puresport.mvc.comm.ParamComm;
 import puresport.mvc.comm.ResTips;
@@ -51,36 +53,47 @@ public class T6MgrAhrController extends BaseController {
 
 		String crdt_no = getPara("account");// 获取表单数据，这里的参数就是页面表单中的name属性值
 		String password = getPara("pwd");
-		T6MgrAhr item = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where crdt_no=?", crdt_no);// 根据用户名查询数据库中的用户
-		if (item != null) {
-			if (password.equals(item.getPswd())) {// 判断数据库中的密码与用户输入的密码是否一致
-				flag = true;
-				getSession().setAttribute("usrid", item.getUsrid());// 设置session，保存登录用户的昵称
-				getSession().setAttribute("crdt_no", item.getCrdt_no());// 设置session，保存登录用户的昵称
-				getSession().setAttribute("pwd", item.getPswd());// 设置session，保存登录用户的昵称
-				getSession().setAttribute("usr_tp", item.getUsr_tp());//设置session，保存登录用户的昵称
-				
-				T6MgrSession mgrSession = new T6MgrSession(item);
-				setSessionAttr(T6MgrSession.KeyName, mgrSession);// 管理员session对象	
-				if(item.getWrk_unit()!=null&&item.getPost()!=null)
-            	{
-            		needImproveInfoOrNot  =false;
-            	}	
-            	else {
-            		needImproveInfoOrNot  =true;
-            	}
-				json.put("needImproveInfoOrNot", needImproveInfoOrNot); 
-				
+		
+		try {
+			String encryptpassword = DESUtil.encrypt(password, ConstantInitMy.SPKEY);
+			
+			T6MgrAhr item = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where crdt_no=?", crdt_no);// 根据用户名查询数据库中的用户
+			if (item != null) {
+				if (encryptpassword.equals(item.getPswd())) {// 判断数据库中的密码与用户输入的密码是否一致
+					flag = true;
+					getSession().setAttribute("usrid", item.getUsrid());// 设置session，保存登录用户的昵称
+					getSession().setAttribute("crdt_no", item.getCrdt_no());// 设置session，保存登录用户的昵称
+					getSession().setAttribute("pwd", item.getPswd());// 设置session，保存登录用户的昵称
+					getSession().setAttribute("usr_tp", item.getUsr_tp());//设置session，保存登录用户的昵称
+					
+					T6MgrSession mgrSession = new T6MgrSession(item);
+					setSessionAttr(T6MgrSession.KeyName, mgrSession);// 管理员session对象	
+					if(item.getWrk_unit()!=null&&item.getPost()!=null)
+	            	{
+	            		needImproveInfoOrNot  =false;
+	            	}	
+	            	else {
+	            		needImproveInfoOrNot  =true;
+	            	}
+					json.put("needImproveInfoOrNot", needImproveInfoOrNot); 
+					
+				} else {
+					msg = "密码不正确";
+				}
 			} else {
-				msg = "密码不正确";
+				msg = "帐号不存在";
 			}
-		} else {
-			msg = "帐号不存在";
+			json.put("flag", flag);
+			json.put("msg", msg);
+			json.put("url", getCxt() + "/jf/puresport/pagesController/admin");
+			renderJson(json);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		json.put("flag", flag);
-		json.put("msg", msg);
-		json.put("url", getCxt() + "/jf/puresport/pagesController/admin");
-		renderJson(json);
+		
+		
 	}
 
 	@Clear
@@ -172,8 +185,8 @@ public class T6MgrAhrController extends BaseController {
 			 renderJson("上传文件类型错误！");
 			 return ;
 		}
-		String mimeTypeSuffix = mimeType.substring(mimeType.length() -4);
-		String mimeTypeSuffix2 = mimeType.substring(mimeType.length() -5);
+		String mimeTypeSuffix = fileName.substring(mimeType.length() -4);
+		String mimeTypeSuffix2 = fileName.substring(mimeType.length() -5);
 		 if(!ExcelParseTool.SUFFIX_2003.equals(mimeTypeSuffix) && !ExcelParseTool.SUFFIX_2007.equals(mimeTypeSuffix2)){
 			 log.error("message:上传文件类型错误！！！"+mimeType);
 			 renderJson("上传文件类型错误！！！");

@@ -12,8 +12,10 @@ import com.jfinal.plugin.ehcache.CacheKit;
 import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
 
+import csuduc.platform.util.encrypt.DESUtil;
 import csuduc.platform.util.lyf.EmailUtils;
 import csuduc.platform.util.lyf.WebsiteSta;
+import puresport.constant.ConstantInitMy;
 import puresport.mvc.t1usrbsc.T1usrBsc;
 import puresport.mvc.t6mgrahr.T6MgrAhr;
 
@@ -257,34 +259,43 @@ public class pagesController extends BaseController {
         String userOradmin = getPara("userOradmin");
         String confrimcode = getPara("confrimcode");//获取表单数据，这里的参数就是页面表单中的name属性值  
         String newPwd = getPara("newPwd");
-        if(confrimcode.equals((String)getSession().getAttribute("emailConfirmCode")))
-        {
-        	if(userOradmin.equals("01"))//运动员及辅助人员
-            {
-        		int res = Db.update("update puresport.t1_usr_bsc set pswd=? where email=?",newPwd,email);
-                if(res>0)
-                {
-                	flag = true; 
-                	getSession().removeAttribute("emailConfirmCode");
-                }
-            }
-            else {
-            	int res = Db.update("update puresport.t6_mgr_ahr set pswd=? where email=?",newPwd,email);
-                if(res>0)
-                {
-                	flag = true; 
-                	getSession().removeAttribute("emailConfirmCode");
-                }
-            }
-        	
-        }
-        else {
-        	msg = "验证码输入错误";  
-        }
-        json.put("flag", flag);
-        json.put("msg", msg); 
-        json.put("url", getCxt()+"/jf/puresport/pagesController/login"); 
-        renderJson(json); 
+        
+        try {
+			String encryptpassword = DESUtil.encrypt(newPwd, ConstantInitMy.SPKEY);
+			
+			if(confrimcode.equals((String)getSession().getAttribute("emailConfirmCode")))
+	        {
+	        	if(userOradmin.equals("01"))//运动员及辅助人员
+	            {
+	        		int res = Db.update("update puresport.t1_usr_bsc set pswd=? where email=?",encryptpassword,email);
+	                if(res>0)
+	                {
+	                	flag = true; 
+	                	getSession().removeAttribute("emailConfirmCode");
+	                }
+	            }
+	            else {
+	            	int res = Db.update("update puresport.t6_mgr_ahr set pswd=? where email=?",encryptpassword,email);
+	                if(res>0)
+	                {
+	                	flag = true; 
+	                	getSession().removeAttribute("emailConfirmCode");
+	                }
+	            }
+	        	
+	        }
+	        else {
+	        	msg = "验证码输入错误";  
+	        }
+	        json.put("flag", flag);
+	        json.put("msg", msg); 
+	        json.put("url", getCxt()+"/jf/puresport/pagesController/login"); 
+	        renderJson(json); 
+	        
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
 	}
 	@Clear
@@ -295,58 +306,75 @@ public class pagesController extends BaseController {
         
         JSONObject json = new JSONObject();  
         
-        String oldPwd = getPara("oldPwd");//获取表单数据，这里的参数就是页面表单中的name属性值  
-        String newPwd = getPara("newPwd");
-        String userOradmin = getPara("userOradmin"); 
+        String beforeEncrypt_oldPwd = getPara("oldPwd");//获取表单数据，这里的参数就是页面表单中的name属性值  
+        String beforeEncrypt_newPwd = getPara("newPwd");
         
-        Long userID = Long.valueOf((String)getSession().getAttribute("usrid"));
-        if(userOradmin.equals("01"))
-        {
-        	
-        	T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", userID);
-        	if(item != null) {  
-                if(oldPwd.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
-                    //flag = true; 
-                    int res = Db.update("update puresport.t1_usr_bsc set pswd=? where usrid=?",newPwd,userID);
-                    if(res>0)
-                    {
-                    	flag = true; 
-                    	
-                    }
-                }  
-                else {  
-                    msg = "密码不正确";  
-                }  
-            }
-        	else {
-        		msg = "密码重置失败";  
-        	}
-        }
-        else {
-        	T6MgrAhr item = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where usrid=?", userID);
-        	if(item != null) {  
-                if(oldPwd.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
-                	int res = Db.update("update puresport.t6_mgr_ahr set pswd=? where usrid=?",newPwd,userID);
-//                    flag = true; 
-                	if(res>0)
-                    {
-                    	flag = true; 
-                    }
-                }  
-                else {  
-                    msg = "密码不正确";  
-                }  
-            } 
-        	else {
-        		msg = "密码重置失败";  
-        	}
-        }
+        
+		try {
+			String oldPwd = DESUtil.encrypt(beforeEncrypt_oldPwd, ConstantInitMy.SPKEY);
+			String newPwd = DESUtil.encrypt(beforeEncrypt_newPwd, ConstantInitMy.SPKEY);
+			
+			String userOradmin = getPara("userOradmin"); 
+	        
+	        Long userID = Long.valueOf((String)getSession().getAttribute("usrid"));
+	        if(userOradmin.equals("01"))
+	        {
+	        	
+	        	T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", userID);
+	        	if(item != null) {  
+	                if(oldPwd.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
+	                    //flag = true; 
+	                    int res = Db.update("update puresport.t1_usr_bsc set pswd=? where usrid=?",newPwd,userID);
+	                    if(res>0)
+	                    {
+	                    	flag = true; 
+	                    	
+	                    }
+	                }  
+	                else {  
+	                    msg = "密码不正确";  
+	                }  
+	            }
+	        	else {
+	        		msg = "密码重置失败";  
+	        	}
+	        }
+	        else {
+	        	T6MgrAhr item = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where usrid=?", userID);
+	        	if(item != null) {  
+	                if(oldPwd.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
+	                	int res = Db.update("update puresport.t6_mgr_ahr set pswd=? where usrid=?",newPwd,userID);
+//	                    flag = true; 
+	                	if(res>0)
+	                    {
+	                    	flag = true; 
+	                    }
+	                }  
+	                else {  
+	                    msg = "密码不正确";  
+	                }  
+	            } 
+	        	else {
+	        		msg = "密码重置失败";  
+	        	}
+	        }
+	       
+	        json.put("flag", flag); 
+	        //json.put("userType", userType); 
+	        json.put("msg", msg); 
+	        //json.put("url", getCxt()+"/jf/puresport/pagesController/selfcenter"); 
+	        renderJson(json); 
+	        
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
        
-        json.put("flag", flag); 
-        //json.put("userType", userType); 
-        json.put("msg", msg); 
-        //json.put("url", getCxt()+"/jf/puresport/pagesController/selfcenter"); 
-        renderJson(json); 
+        
+//        String oldPwd = getPara("oldPwd");//获取表单数据，这里的参数就是页面表单中的name属性值  
+//        String newPwd = getPara("newPwd");
+//        
+        
 	}
 	@Override
 	protected void setViewPath() {

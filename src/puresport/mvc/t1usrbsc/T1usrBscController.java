@@ -16,8 +16,10 @@ import com.platform.mvc.base.BaseController;
 
 import csuduc.platform.util.ComOutMdl;
 import csuduc.platform.util.StringUtil;
+import csuduc.platform.util.encrypt.DESUtil;
 import puresport.applicat.ExcelParseTool;
 import puresport.applicat.MdlExcelRow;
+import puresport.constant.ConstantInitMy;
 import puresport.constant.EnumStatus;
 import puresport.mvc.comm.ResTips;
 import puresport.mvc.t6mgrahr.T6MgrSession;
@@ -133,8 +135,8 @@ public class T1usrBscController extends BaseController {
 			 renderJson("上传文件类型错误！");
 			 return ;
 		}
-		String mimeTypeSuffix = mimeType.substring(mimeType.length() -4);
-		String mimeTypeSuffix2 = mimeType.substring(mimeType.length() -5);
+		String mimeTypeSuffix = fileName.substring(mimeType.length() -4);
+		String mimeTypeSuffix2 = fileName.substring(mimeType.length() -5);
 		 if(!ExcelParseTool.SUFFIX_2003.equals(mimeTypeSuffix) && !ExcelParseTool.SUFFIX_2007.equals(mimeTypeSuffix2)){
 			 log.error("message:上传文件类型错误！！！"+mimeType);
 			 renderJson("上传文件类型错误！！！");
@@ -178,59 +180,69 @@ public class T1usrBscController extends BaseController {
         JSONObject json = new JSONObject();  
         
         String crdt_no = getPara("account");//获取表单数据，这里的参数就是页面表单中的name属性值  
-        String password = getPara("pwd");  
-        T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where crdt_no=?", crdt_no);//根据用户名查询数据库中的用户  
-        if(item != null) {  
-            if(password.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
-                flag = true; 
-                userType = item.getUsr_tp();
-                getSession().setAttribute("usrid", item.getUsrid());//设置session，保存登录用户的昵称  
-                getSession().setAttribute("crdt_no", item.getCrdt_no());//设置session，保存登录用户的昵称  
-                getSession().setAttribute("pwd", item.getPswd());//设置session，保存登录用户的昵称  
-                getSession().setAttribute("usr_tp", item.getUsr_tp());//设置session，保存登录用户的昵称
-                if(userType.equals("运动员"))
-                {
-                	Object ss = item.getAdiv_cd();
-//                	if(item.getAdiv_cd()!=null&&item.getSpt_prj()!=null)
-                	if(item.getProvince()!=null&&item.getCity()!=null&&item.getSpt_prj()!=null)
-                	{
-                		needImproveInfoOrNot  =false;
-                	}	
-                	else {
-                		needImproveInfoOrNot  =true;
-                	}
-                }	
-                else {
-                	if(item.getDepartment()!=null&&item.getPost()!=null)
-                	{
-                		needImproveInfoOrNot  =false;
-                	}	
-                	else {
-                		needImproveInfoOrNot  =true;
-                	}
-                }
-                json.put("needImproveInfoOrNot", needImproveInfoOrNot); 
-            }  
-            else {  
-                msg = "密码不正确";  
-            }  
-        }  
-        else {  
-            msg = "帐号不存在";  
-        }  
-        json.put("flag", flag); 
-        json.put("userType", userType); 
-        json.put("msg", msg); 
-//        json.put("url", getCxt()+"/jf/puresport/pagesController/selfcenter"); 
-//        System.out.println("login----"+(String)getSession().getAttribute("RequestURL"));
-        if(getSession().getAttribute("RequestURL")!=null)
-        {
-        	json.put("url", (String)getSession().getAttribute("RequestURL")); 
-        }
-        else {
-        	json.put("url", getCxt()+"/jf/puresport/pagesController"); 
-        }
-        renderJson(json);  
+        String password = getPara("pwd");
+        try {
+			String encryptpassword = DESUtil.encrypt(password, ConstantInitMy.SPKEY);
+			
+			T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where crdt_no=?", crdt_no);//根据用户名查询数据库中的用户  
+	        if(item != null) {  
+	            if(encryptpassword.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
+	                flag = true; 
+	                userType = item.getUsr_tp();
+	                getSession().setAttribute("usrid", item.getUsrid());//设置session，保存登录用户的昵称  
+	                getSession().setAttribute("crdt_no", item.getCrdt_no());//设置session，保存登录用户的昵称  
+	                getSession().setAttribute("pwd", item.getPswd());//设置session，保存登录用户的昵称  
+	                getSession().setAttribute("usr_tp", item.getUsr_tp());//设置session，保存登录用户的昵称
+	                if(userType.equals("运动员"))
+	                {
+	                	Object ss = item.getAdiv_cd();
+//	                	if(item.getAdiv_cd()!=null&&item.getSpt_prj()!=null)
+	                	if(item.getProvince()!=null&&item.getCity()!=null&&item.getSpt_prj()!=null)
+	                	{
+	                		needImproveInfoOrNot  =false;
+	                	}	
+	                	else {
+	                		needImproveInfoOrNot  =true;
+	                	}
+	                }	
+	                else {
+	                	if(item.getDepartment()!=null&&item.getPost()!=null)
+	                	{
+	                		needImproveInfoOrNot  =false;
+	                	}	
+	                	else {
+	                		needImproveInfoOrNot  =true;
+	                	}
+	                }
+	                json.put("needImproveInfoOrNot", needImproveInfoOrNot); 
+	            }  
+	            else {  
+	                msg = "密码不正确";  
+	            }  
+	        }  
+	        else {  
+	            msg = "帐号不存在";  
+	        }  
+	        json.put("flag", flag); 
+	        json.put("userType", userType); 
+	        json.put("msg", msg); 
+//	        json.put("url", getCxt()+"/jf/puresport/pagesController/selfcenter"); 
+//	        System.out.println("login----"+(String)getSession().getAttribute("RequestURL"));
+	        if(getSession().getAttribute("RequestURL")!=null)
+	        {
+	        	json.put("url", (String)getSession().getAttribute("RequestURL")); 
+	        }
+	        else {
+	        	json.put("url", getCxt()+"/jf/puresport/pagesController"); 
+	        }
+	        renderJson(json);  
+	        
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+        
 	}
 	@Clear
 	public void ImproveUserInfo()
