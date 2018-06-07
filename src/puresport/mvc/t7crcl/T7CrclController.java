@@ -258,6 +258,7 @@ public class T7CrclController extends BaseController {
 	 * 
 	 * @author zhuchaobin 2018-05-09
 	 */
+	@Clear
 	public void video_play() {
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		System.out.println(usrid);
@@ -403,6 +404,17 @@ public class T7CrclController extends BaseController {
 			LOG.error("查询课程信息失败！");
 		}
 		return null;
+	}
+	
+	/**
+	 * 描述：新浪视频测试
+	 * 
+	 * @author zhuchaobin 2018-06-07
+	 */
+	@Clear
+	public void vodeoTest() {
+/*		renderWithPath("/f/accession/playertest.html");*/
+		renderWithPath("/f/accession/video_play.html");
 	}
 
 	/**
