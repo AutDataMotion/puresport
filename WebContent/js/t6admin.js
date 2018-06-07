@@ -137,7 +137,8 @@ $(document).ready(function() {
 		}, {
 			data : "city"
 		}, {
-			data : "institute"
+			data : "institute",
+			"visible": false
 		}, {
 			data : "mblph_no"
 		}, {
@@ -304,7 +305,7 @@ $(document).ready(function() {
 				if (data == "1") {
 					layer.msg("上传成功");
 				} else {
-					layer.msg("文件处理有点问题，信息如下：" + data);
+					layer.msg("文件处理有点问题，请您检查文件内容格式！" );
 				}
 				  $('#inputfileadmin').val(''); 
 				search("", "", "");

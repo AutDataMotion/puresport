@@ -40,7 +40,8 @@ $(document).ready(function() {
 		},{
 			data : "city"
 		}, {
-			data : "institute"
+			data : "institute",
+			"visible": false
 		}, {
 			data : "passed"
 		} , {
@@ -146,7 +147,7 @@ $("#citySelect_prj").append("<option value='"+obj[index].id+"'>"+obj[index].name
     });
 	
 	initProvince();
-	initInstitute();
+	// initInstitute();
 	initProject();
 	
 	search("","","");

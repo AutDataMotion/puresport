@@ -50,7 +50,8 @@ $(document).ready(function() {
 		}, {
 			data : "city"
 		}, {
-			data : "institute"
+			data : "institute",
+			"visible": false
 		}, {
 			data : "mblph_no"
 		}, {
@@ -145,6 +146,6 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
     });
 	
 	initProvince();
-	initInstitute();
+	// initInstitute();
 	search("","","");
 });
