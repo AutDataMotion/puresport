@@ -77,7 +77,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/excelpoi/poi-scratchpad-3.17.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/excelpoi/commons-collections4-4.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-collections4-4.1.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.8.0_161"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/UtilZW"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>

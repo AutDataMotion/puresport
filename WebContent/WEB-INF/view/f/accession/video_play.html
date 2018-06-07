@@ -117,7 +117,7 @@ type="text/javascript"></script>
 			<div class="row">
 				<div class="row">
 					<div class="col-md-2 span1_of_2"></div>
-					<div class="col-md-8 span1_of_8">
+					<div class="col-md-8 span8_of_8">
 						<div class="span4_of_list" width="65%">
 							<div align="center">
 								<p class="res_pic_title" style="text-align: center;">
@@ -176,8 +176,8 @@ type="text/javascript"></script>
 		url: "",				// flash播放器地址,
     container : "myflashBox",	// 播放器初始化容器节点
     id: "myMovie",						// 播放器id
-		width: 640,								// 播放器宽度
-		height: 516,							// 播放器高度
+ 		width: '100%',								// 播放器宽度
+		height: '100%',							// 播放器高度 
 		// flash播放器参数
 		params : {
 		 allowNetworking : "all",
@@ -188,9 +188,9 @@ type="text/javascript"></script>
 		},
 		attributes: {},
 		flashvars: {
-			autoPlay: 1,  				// 是否自动播放
+			autoPlay: 0,  				// 是否自动播放
 			loop: 0,							// 是否循环播放
-			autoLoad: 1,					// 是否自动加载资源
+			autoLoad: 0,					// 是否自动加载资源
 			thumbUrl: '',					// 封面图
 			tj: 1,								// 是否出现播后推荐
 			as: 1									// 是否前贴片广告
@@ -200,7 +200,7 @@ type="text/javascript"></script>
 			controls: true, 			// 是否显示控制条
 			loop: false,					// 是否循环播
 			poster: '', 					// 封面图
-			preload: 'auto' 			// 是否预先加载资源
+			preload: 'none' 			// 是否预先加载资源
 		}
 	};	
 	var $SCOPE = {}
