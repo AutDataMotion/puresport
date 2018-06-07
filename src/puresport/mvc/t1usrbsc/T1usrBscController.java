@@ -133,6 +133,7 @@ public class T1usrBscController extends BaseController {
 		String mimeTypeSuffix = fileName.substring(fileName.length() -4);
 		String mimeTypeSuffix2 = fileName.substring(fileName.length() -5);
 		log.info(mimeTypeSuffix + " " + mimeTypeSuffix2);
+		
 		 if(!ExcelParseTool.SUFFIX_2003.equals(mimeTypeSuffix) && !ExcelParseTool.SUFFIX_2007.equals(mimeTypeSuffix2)){
 			 log.error("message:上传文件类型错误！！！"+fileName);
 			 renderJson("上传文件类型错误！！！");

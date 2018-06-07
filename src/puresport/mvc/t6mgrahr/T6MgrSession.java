@@ -58,6 +58,23 @@ public class T6MgrSession implements Serializable{
 		return " 1=2 ";
 	}
 	
+	public String ggProvince(){
+		if (typeleve.equals(EnumTypeLevel.Country.getName())) {
+			// 国家级 全部可见
+			return " -- ";
+		}
+	    return province;
+	}
+	
+	public String ggCity(){
+		if (typeleve.equals(EnumTypeLevel.Country.getName())
+				||typeleve.equals(EnumTypeLevel.Province.getName()) ) {
+			// 国家级 全部可见
+			return " -- ";
+		} 
+	
+	    return city;
+	}
 	/**
 	 * @return the usrid
 	 */
