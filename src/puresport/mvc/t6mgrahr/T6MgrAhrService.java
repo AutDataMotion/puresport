@@ -26,7 +26,7 @@ import puresport.mvc.comm.ParamComm;
 public class T6MgrAhrService extends BaseService {
 
 	private final static String tableName = "t6_mgr_ahr";
-	private final static String tableKey = "usr_nm";
+	private final static String tableKey = "crdt_no";
 	@SuppressWarnings("unused")
 	private static Logger log = Logger.getLogger(T6MgrAhrService.class);
 
