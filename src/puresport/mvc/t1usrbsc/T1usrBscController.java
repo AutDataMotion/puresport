@@ -179,11 +179,12 @@ public class T1usrBscController extends BaseController {
         String crdt_no = getPara("account");//获取表单数据，这里的参数就是页面表单中的name属性值  
         String password = getPara("pwd");
         try {
-			String encryptpassword = DESUtil.encrypt(password, ConstantInitMy.SPKEY);
+//			String encryptpassword = DESUtil.encrypt(password, ConstantInitMy.SPKEY);
 			
 			T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where crdt_no=?", crdt_no);//根据用户名查询数据库中的用户  
 	        if(item != null) {  
-	            if(encryptpassword.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
+//	            if(encryptpassword.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
+	        	if(password.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
 	                flag = true; 
 	                userType = item.getUsr_tp();
 	                getSession().setAttribute("usrid", item.getUsrid());//设置session，保存登录用户的昵称  
