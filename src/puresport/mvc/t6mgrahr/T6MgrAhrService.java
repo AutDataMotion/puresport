@@ -135,10 +135,6 @@ public class T6MgrAhrService extends BaseService {
 			log.error("insertAdminToDb数据校验失败:" + excelRow);
 			return false;
 		}
-		if (StringUtil.invalidateLength(excelRow.getByIndex(12), 2, 128)) {
-			log.error("insertAdminToDb数据校验失败:" + excelRow);
-			return false;
-		}
 		// 根据手机号匹配，没有插入、已有更新
 		String crdt_number = excelRow.getByIndex(2);
 		if (crdt_number.length() < 18) {
@@ -147,9 +143,10 @@ public class T6MgrAhrService extends BaseService {
 		Record admin;
 		try {
 			admin = new Record().set(T6MgrAhr.column_usr_tp, EnumRoleType.Admin.getName())
-					.set(T6MgrAhr.column_usr_nm, excelRow.getByIndex(11))
+					.set(T6MgrAhr.column_usr_nm, excelRow.getByIndex(0))
 					.set(T6MgrAhr.column_nm, excelRow.getByIndex(0))
-					.set(T6MgrAhr.column_crdt_tp, excelRow.getByIndex(1)).set(T6MgrAhr.column_crdt_no, crdt_number)
+					.set(T6MgrAhr.column_crdt_tp, excelRow.getByIndex(1))
+					.set(T6MgrAhr.column_crdt_no, crdt_number)
 					.set(T6MgrAhr.column_gnd, excelRow.getByIndex(3))
 					.set(T6MgrAhr.column_brth_dt, excelRow.getByIndex(4))
 					.set(T6MgrAhr.column_wrk_unit, excelRow.getByIndex(5))
@@ -157,10 +154,10 @@ public class T6MgrAhrService extends BaseService {
 					.set(T6MgrAhr.column_typeleve, excelRow.getByIndex(7))
 					.set(T6MgrAhr.column_province, excelRow.getByIndex(8))
 					.set(T6MgrAhr.column_city, excelRow.getByIndex(9))
-					.set(T6MgrAhr.column_institute, excelRow.getByIndex(10))
+//					.set(T6MgrAhr.column_institute, excelRow.getByIndex(10))
 					.set(T6MgrAhr.column_pswd, DESUtil.encrypt(crdt_number.substring(crdt_number.length() - 6), ConstantInitMy.SPKEY))
-					.set(T6MgrAhr.column_mblph_no, excelRow.getByIndex(11))
-					.set(T6MgrAhr.column_email, excelRow.getByIndex(12));
+					.set(T6MgrAhr.column_mblph_no, excelRow.getByIndex(10))
+					.set(T6MgrAhr.column_email, excelRow.getByIndex(11));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
