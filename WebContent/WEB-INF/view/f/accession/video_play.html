@@ -79,15 +79,15 @@ type="text/javascript"></script>
 			var stdy_st = document.getElementById("stdy_st_hidden").value;
 			// 视频学习完成或者已经学习本课程的学习
 			if(isFinishPlay || ("1" == stdy_st)){
-				alert(isFinishPlay);
+			/* 	alert(isFinishPlay); */
 					if(isFinishPlay){
-						alert(isFinishPlay);
+			/* 			alert(isFinishPlay); */
 						/* recordCourse();// 记录课程学习记录 */
 						{
 							var url;
 							url = '/jf/puresport/t5CrclStdy/update';
 							var crclid = document.getElementById("crclid").value;
-							alert();
+						/* 	alert(); */
 							$.ajax({
 								type : 'POST',
 								url : url,
