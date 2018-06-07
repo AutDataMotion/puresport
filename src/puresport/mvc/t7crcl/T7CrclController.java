@@ -412,9 +412,9 @@ public class T7CrclController extends BaseController {
 	 * @author zhuchaobin 2018-06-07
 	 */
 	@Clear
-	public void vodeoTest() {
-/*		renderWithPath("/f/accession/playertest.html");*/
-		renderWithPath("/f/accession/video_play.html");
+	public void videoTest() {
+		renderWithPath("/f/accession/playertest.html");
+/*		renderWithPath("/f/accession/video_play.html");*/
 	}
 
 	/**
