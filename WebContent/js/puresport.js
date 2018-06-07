@@ -180,105 +180,70 @@ function Improve_user_info()
 {
 	if(app.userType=="运动员")//运动员
 	{
-//		alert(app.userType);
-		var group1=false;
-//		var code = "";
+
+//		var group1=false;
+
 		var group2=false;
-//		$().distpicker('getDistricts'); // 中国
-//		$().distpicker('getDistricts', 330000); // 浙江省
-	//console.log($("#getDist_user").distpicker('getDistricts', 330100)); // 杭州市
-		//console.log($("#getDist_user").distpicker('output',"province")); // 中国
-		var province = $('#getDist_user_province option:selected').val();
-		var city = $('#getDist_user_city option:selected').val();
-//		var district = $('#getDist_user_district option:selected').val();
-//		if(province||city||district)
+
+//		var province = $('#getDist_user_province option:selected').val();
+//		var city = $('#getDist_user_city option:selected').val();
+//
+//		if(province&&city)
 //		{
 //			group1=true;
-//			if(district)
-//			{
-//				code = district;
-//			}
-//			else if(city)
-//			{
-//				code = city;
-//			}
-//			else
-//			{
-//				code = province;
-//			}
 //			
 //		}
-		if(province&&city)
-		{
-			group1=true;
-			
-		}
-		else
-		{
-			group1=false;
-//			alert("请选择代表单位");
-//			$('#myModallyf_content').text("请选择代表单位");
-//	    	$('#myModallyf').modal('show');
-//			document.getElementById('myModallyf_content_user').style.display="block";
-//			$('#myModallyf_content_user').text("请选择代表单位");
-			Tips('myModallyf_content_user',"请选择代表单位!");
-			return;
-			
-		}
+//		else
+//		{
+//			group1=false;
+//
+//			Tips('myModallyf_content_user',"请选择代表单位!");
+//			return;
+//			
+//		}
 		var Competetion = $('#getSportItem_user_Competetion option:selected').val();
 		
 		var CompetetionItem = $('#getSportItem_user_CompetetionItem option:selected').val();
 		if(Competetion=="请选择赛事"||CompetetionItem=="请选择项目")
 		{
 			group2=false;
-//			alert("请选择运动项目");
-//			$('#myModallyf_content').text("请选择运动项目");
-//	    	$('#myModallyf').modal('show');
-//			$('#myModallyf_content_user').style.display="block";
-//			$('#myModallyf_content_user').text("请选择运动项目");
+
 			Tips('myModallyf_content_user',"请选择运动项目!");
 			return;
 		}
 		else{
 			group2=true;
 		}
-		if(group1&&group2)
-		{
-			//alert(code+","+Competetion+","+CompetetionItem);
+//		if(group1&&group2)
+//		{
+		if(group2)
+		{	
 			
 			$.ajax({
 			    url:'/jf/puresport/t1usrBsc/ImproveUserInfo',
 			    type:'POST', //GET
 			    async:true,    //或false,是否异步
 			    data:{
-//			    	userType:app.userType,
-//			    	code:code,
-			    	province:province,
-			    	city:city,
+
+//			    	province:province,
+//			    	city:city,
 			    	competetion:Competetion,
 			    	competetionitem:CompetetionItem
 			    },
 			    timeout:5000,    //超时时间
 			    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
 			    beforeSend:function(xhr){
-			        //console.log(xhr)
+			        
 			        console.log('发送前')
 			    },
 			    success:function(data,textStatus,jqXHR){
-			    	//console.log(data);
-			    	//window.location.href=data.reportUrl;
-			    	//alert(data.reportUrl);
-			    	//window.open(data.reportUrl,"_blank");
+			
 			    	if(data.flag) {  
 		                window.location=data.url;  
 			    		
 		            }  
 		            else {  
-//		                alert(data.msg);  
-//		                $('#myModallyf_content').text(data.msg);
-//		    	    	$('#myModallyf').modal('show');
-//		            	$('#myModallyf_content_user').style.display="block";
-//		    			$('#myModallyf_content_user').text(data.msg);
+
 		            	Tips('myModallyf_content_user',data.msg);
 		            }  
 			    },
