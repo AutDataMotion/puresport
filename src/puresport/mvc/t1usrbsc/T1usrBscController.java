@@ -194,7 +194,7 @@ public class T1usrBscController extends BaseController {
 	                {
 	                	Object ss = item.getAdiv_cd();
 //	                	if(item.getAdiv_cd()!=null&&item.getSpt_prj()!=null)
-	                	if(item.getProvince()!=null&&item.getCity()!=null&&item.getSpt_prj()!=null)
+	                	if(item.getProvince()!="--"&&item.getCity()!="--"&&item.getSpt_prj()!=null)
 	                	{
 	                		needImproveInfoOrNot  =false;
 	                	}	
