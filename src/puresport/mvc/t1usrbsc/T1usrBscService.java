@@ -334,8 +334,8 @@ public class T1usrBscService extends BaseService {
 
 					.set(T1usrBsc.column_cty_prov_city_mgrid, mgrSession.getUsrid())
 					.set(T1usrBsc.column_typelevel, mgrSession.getTypeleve())
-					.set(T1usrBsc.column_province, mgrSession.getProvince())
-					.set(T1usrBsc.column_city, mgrSession.getCity());
+					.set(T1usrBsc.column_province, mgrSession.ggProvince())
+					.set(T1usrBsc.column_city, mgrSession.ggCity());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
