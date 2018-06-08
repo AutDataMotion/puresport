@@ -15,7 +15,12 @@ public class T7CrclService extends BaseService {
 	
 	public T7Crcl SelectById(Integer id){
 		
-		T7Crcl mdl = T7Crcl.dao.findFirst("select * from t7Crcl where id=?", id);
+		T7Crcl mdl = T7Crcl.dao.findFirst("select * from t7_Crcl where crclid=?", id);
+		return mdl;
+	}
+	public T7Crcl SelectByVideoID(String videoid){
+		
+		T7Crcl mdl = T7Crcl.dao.findFirst("select * from t7_Crcl where crcl_file_rte=?", videoid);
 		return mdl;
 	}
 }

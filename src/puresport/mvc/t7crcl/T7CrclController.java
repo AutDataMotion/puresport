@@ -42,6 +42,7 @@ import puresport.entity.ResultEntity;
 import puresport.mvc.t10examgrd.T10ExamGrd;
 import puresport.mvc.t11examstat.T11ExamStat;
 import puresport.mvc.t1usrbsc.T1usrBsc;
+import puresport.mvc.t1usrbsc.T1usrBscService;
 import puresport.mvc.t5crclstdy.T5CrclStdy;
 import puresport.mvc.t5crclstdy.T5CrclStdyController;
 //import puresport.entity.ExamEntity;
@@ -202,6 +203,24 @@ public class T7CrclController extends BaseController {
 	}
 
 	/**
+	 * 描述：根据课程id，获取课程信息
+	 * 
+	 * @author zhuchaobin 2018-06-08
+	 * @throws 
+	 */
+	public T7Crcl getCrclInfo(String crclid) {
+		T7Crcl t7 = null;
+		if(StringUtils.isNotBlank(crclid)) {
+			t7 = T7CrclService.service.SelectById(Integer.parseInt(crclid));
+		} else {
+			LOG.error("课程编号为空，查询课程信息失败！");
+		}
+		if(null == t7) {
+			LOG.debug("根据课程id查询到课程信息为空，课程id=" + crclid);
+		}
+		return t7;		
+	}
+	/**
 	 * 描述：高分榜
 	 * 
 	 * @author zhuchaobin 2018-06-05
@@ -263,6 +282,7 @@ public class T7CrclController extends BaseController {
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		System.out.println(usrid);
 		String crcl_attr = getPara("crcl_attr");
+		String crclid = getPara("crclid");
 		String crcl_file_rte = getPara("crcl_file_rte");
 		// String stdy_st = getPara("stdy_st");
 		System.out.println(crcl_attr);
@@ -274,23 +294,22 @@ public class T7CrclController extends BaseController {
 			String sql = "select * from t7_crcl t where t.crclid='" + getPara("crclid") + "'";
 			List<T7Crcl> t7List = T7Crcl.dao.find(sql);
 			if ((t7List != null) && (t7List.size() > 0)) { // 去视频1
-				setAttr("crcl_nm", "必修课程一：" + t7List.get(0).getCrcl_nm());// 课程名称
+				setAttr("crcl_nm", "必修课程一：" + getCrclInfo(crclid).getCrcl_nm());// 课程名称
 				setAttr("crcl_brf", t7List.get(0).getCrcl_brf());// 课程简介
 			}
 			// setAttr("stdy_st", stdy_st);// 必修视频2
 		} else if ("2".equals(crcl_attr)) {// 去视频2
 			setAttr("action", "/jf/puresport/t7Crcl/video3_select_5");// 必修视频3
 			setAttr("pre_action", "/jf/puresport/t7Crcl/video2_select_3");// 必修视频2
-			setAttr("crcl_nm", "必修课程二：" + getPara("crcl_nm"));// 课程名称
+			setAttr("crcl_nm", "必修课程二：" + getCrclInfo(crclid).getCrcl_nm());// 课程名称
 		} else if ("3".equals(crcl_attr)) {// 去视频3
-			setAttr("crcl_nm", "必修课程三：" + getPara("crcl_nm"));// 课程名称
+			setAttr("crcl_nm", "必修课程三：" + getCrclInfo(crclid).getCrcl_nm());// 课程名称
 			setAttr("action", "/jf/puresport/t7Crcl/generteTest");// 生成考试
 			setAttr("pre_action", "/jf/puresport/t7Crcl/video3_select_5");// 必修视频3
 		}
 		setAttr("crcl_file_rte", crcl_file_rte);
 		setAttr("stdy_st_hidden", getPara("stdy_st_hidden"));// 本课程学习状态
-		String crclid = getPara("crclid");
-		setAttr("crclid", getPara("crclid"));// 课程id
+		setAttr("crclid", crclid);// 课程id
 		if (!("1".equals(crcl_attr))) {
 			setAttr("crcl_brf", getPara("crcl_brf"));// 课程简介
 		}

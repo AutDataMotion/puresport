@@ -86,78 +86,78 @@ public class T6MgrAhrService extends BaseService {
 
 	private boolean insertAdminToDb(MdlExcelRow excelRow) {
 		// 校验输入
-		if (StringUtil.invalidateLength(excelRow.getByIndex(0), 2, 64)) {
+		if (StringUtil.invalidateLength(StringUtil.replaceExcelBlank(excelRow.getByIndex(0)), 2, 64)) {
 			// 因为可能有空行，当姓名没有的时候，直接默认未空行
 			log.error("insertAdminToDb没有姓名，认为是空行:" + excelRow);
 			return true;
 		}
-		if (StringUtil.invalidateLength(excelRow.getByIndex(1), 1, 8)) {
+		if (StringUtil.invalidateLength(StringUtil.replaceExcelBlank(excelRow.getByIndex(1)), 1, 8)) {
 			log.error("insertAdminToDb数据校验失败:" + excelRow);
 			return false;
 		}
-		if (StringUtil.invalidateLength(excelRow.getByIndex(2), 2, 20)) {
+		if (StringUtil.invalidateLength(StringUtil.replaceExcelBlank(excelRow.getByIndex(2)), 2, 20)) {
 			log.error("insertAdminToDb数据校验失败:" + excelRow);
 			return false;
 		}
-		if (StringUtil.invalidateLength(excelRow.getByIndex(3), 1, 4)) {
+		if (StringUtil.invalidateLength(StringUtil.replaceExcelBlank(excelRow.getByIndex(3)), 1, 4)) {
 			log.error("insertAdminToDb数据校验失败:" + excelRow);
 			return false;
 		}
-		if (StringUtil.invalidateLength(excelRow.getByIndex(4), 2, 64)) {
+		if (StringUtil.invalidateLength(StringUtil.replaceExcelBlank(excelRow.getByIndex(4)), 2, 64)) {
 			log.error("insertAdminToDb数据校验失败:" + excelRow);
 			return false;
 		}
-		if (StringUtil.invalidateLength(excelRow.getByIndex(5), 2, 128)) {
+		if (StringUtil.invalidateLength(StringUtil.replaceExcelBlank(excelRow.getByIndex(5)), 2, 128)) {
 			log.error("insertAdminToDb数据校验失败:" + excelRow);
 			return false;
 		}
-		if (StringUtil.invalidateLength(excelRow.getByIndex(6), 2, 128)) {
+		if (StringUtil.invalidateLength(StringUtil.replaceExcelBlank(excelRow.getByIndex(6)), 2, 128)) {
 			log.error("insertAdminToDb数据校验失败:" + excelRow);
 			return false;
 		}
-		if (StringUtil.invalidateLength(excelRow.getByIndex(7), 2, 64)) {
+		if (StringUtil.invalidateLength(StringUtil.replaceExcelBlank(excelRow.getByIndex(7)), 2, 64)) {
 			log.error("insertAdminToDb数据校验失败:" + excelRow);
 			return false;
 		}
-		if (StringUtil.invalidateLength(excelRow.getByIndex(8), 2, 128)) {
+		if (StringUtil.invalidateLength(StringUtil.replaceExcelBlank(excelRow.getByIndex(8)), 2, 128)) {
 			log.error("insertAdminToDb数据校验失败:" + excelRow);
 			return false;
 		}
-		if (StringUtil.invalidateLength(excelRow.getByIndex(9), 2, 128)) {
+		if (StringUtil.invalidateLength(StringUtil.replaceExcelBlank(excelRow.getByIndex(9)), 2, 128)) {
 			log.error("insertAdminToDb数据校验失败:" + excelRow);
 			return false;
 		}
-		if (StringUtil.invalidateLength(excelRow.getByIndex(10), 2, 128)) {
+		if (StringUtil.invalidateLength(StringUtil.replaceExcelBlank(excelRow.getByIndex(10)), 2, 128)) {
 			log.error("insertAdminToDb数据校验失败:" + excelRow);
 			return false;
 		}
-		if (StringUtil.invalidateLength(excelRow.getByIndex(11), 2, 128)) {
+		if (StringUtil.invalidateLength(StringUtil.replaceExcelBlank(excelRow.getByIndex(11)), 2, 128)) {
 			log.error("insertAdminToDb数据校验失败:" + excelRow);
 			return false;
 		}
 		// 根据手机号匹配，没有插入、已有更新
-		String crdt_number = excelRow.getByIndex(2);
+		String crdt_number = StringUtil.replaceExcelBlank(excelRow.getByIndex(2));
 		if (crdt_number.length() < 18) {
 			return false;
 		}
 		Record admin;
 		try {
 			admin = new Record().set(T6MgrAhr.column_usr_tp, EnumRoleType.Admin.getName())
-					.set(T6MgrAhr.column_usr_nm, excelRow.getByIndex(0))
-					.set(T6MgrAhr.column_nm, excelRow.getByIndex(0))
-					.set(T6MgrAhr.column_crdt_tp, excelRow.getByIndex(1))
+					.set(T6MgrAhr.column_usr_nm, StringUtil.replaceExcelBlank(excelRow.getByIndex(0)))
+					.set(T6MgrAhr.column_nm, StringUtil.replaceExcelBlank(excelRow.getByIndex(0)))
+					.set(T6MgrAhr.column_crdt_tp, StringUtil.replaceExcelBlank(excelRow.getByIndex(1)))
 					.set(T6MgrAhr.column_crdt_no, crdt_number)
-					.set(T6MgrAhr.column_gnd, excelRow.getByIndex(3))
+					.set(T6MgrAhr.column_gnd, StringUtil.replaceExcelBlank(excelRow.getByIndex(3)))
 					.set(T6MgrAhr.column_brth_dt, excelRow.getByIndex(4))
-					.set(T6MgrAhr.column_wrk_unit, excelRow.getByIndex(5))
-					.set(T6MgrAhr.column_post, excelRow.getByIndex(6))
-					.set(T6MgrAhr.column_typeleve, excelRow.getByIndex(7))
-					.set(T6MgrAhr.column_province, excelRow.getByIndex(8))
-					.set(T6MgrAhr.column_city, excelRow.getByIndex(9))
+					.set(T6MgrAhr.column_wrk_unit, StringUtil.replaceExcelBlank(excelRow.getByIndex(5)))
+					.set(T6MgrAhr.column_post, StringUtil.replaceExcelBlank(excelRow.getByIndex(6)))
+					.set(T6MgrAhr.column_typeleve, StringUtil.replaceExcelBlank(excelRow.getByIndex(7)))
+					.set(T6MgrAhr.column_province, StringUtil.replaceExcelBlank(excelRow.getByIndex(8)))
+					.set(T6MgrAhr.column_city, StringUtil.replaceExcelBlank(excelRow.getByIndex(9)))
 //					.set(T6MgrAhr.column_institute, excelRow.getByIndex(10))
 					.set(T6MgrAhr.column_pswd, DESUtil.encrypt(crdt_number.substring(crdt_number.length() - 6), ConstantInitMy.SPKEY))
-					.set(T6MgrAhr.column_mblph_no, excelRow.getByIndex(10))
-					.set(T6MgrAhr.column_email, excelRow.getByIndex(11));
+					.set(T6MgrAhr.column_mblph_no, StringUtil.replaceExcelBlank(excelRow.getByIndex(10)))
+					.set(T6MgrAhr.column_email, StringUtil.replaceExcelBlank(excelRow.getByIndex(11)));
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
