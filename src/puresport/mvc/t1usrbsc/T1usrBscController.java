@@ -181,11 +181,12 @@ public class T1usrBscController extends BaseController {
         String crdt_no = getPara("account");//获取表单数据，这里的参数就是页面表单中的name属性值  
         String password = getPara("pwd");
         try {
-			String encryptpassword = DESUtil.encrypt(password, ConstantInitMy.SPKEY);
+//			String encryptpassword = DESUtil.encrypt(password, ConstantInitMy.SPKEY);
 			
 			T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where crdt_no=?", crdt_no);//根据用户名查询数据库中的用户  
 	        if(item != null) {  
-	            if(encryptpassword.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
+//	            if(encryptpassword.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
+	        	if(password.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
 	                flag = true; 
 	                userType = item.getUsr_tp();
 	                getSession().setAttribute("usrid", item.getUsrid());//设置session，保存登录用户的昵称  
@@ -196,10 +197,14 @@ public class T1usrBscController extends BaseController {
 	                {
 	                	Object ss = item.getAdiv_cd();
 //	                	if(item.getAdiv_cd()!=null&&item.getSpt_prj()!=null)
-	                	if(item.getProvince()!=null&&item.getCity()!=null&&item.getSpt_prj()!=null)
+//	                	if(item.getProvince()!="--"&&item.getCity()!="--"&&item.getSpt_prj()!=null)
+//	                	{
+//	                		needImproveInfoOrNot  =false;
+//	                	}	
+	                	if(item.getSpt_prj()!=null)
 	                	{
 	                		needImproveInfoOrNot  =false;
-	                	}	
+	                	}
 	                	else {
 	                		needImproveInfoOrNot  =true;
 	                	}
@@ -259,14 +264,14 @@ public class T1usrBscController extends BaseController {
             if(((String)item.getUsr_tp()).equals("运动员"))//运动员
             {
 
-//            	String code = getPara("code");//获取表单数据，这里的参数就是页面表单中的name属性值  
-            	String province = getPara("province");
-            	String city = getPara("city");
+
+//            	String province = getPara("province");
+//            	String city = getPara("city");
                 String competetion = getPara("competetion");
                 String competetionitem = getPara("competetionitem");
-//                item.setAdiv_cd(code);
-//                item.setSpt_prj(competetionitem);
-                int res = Db.update("update puresport.t1_usr_bsc set province=?,city=?,spt_prj=? where usrid=?",province,city,competetionitem,userID);
+
+//                int res = Db.update("update puresport.t1_usr_bsc set province=?,city=?,spt_prj=? where usrid=?",province,city,competetionitem,userID);
+                int res = Db.update("update puresport.t1_usr_bsc set spt_prj=? where usrid=?",competetionitem,userID);
                 if(res>0)
                 {
                 	flag = true; 
