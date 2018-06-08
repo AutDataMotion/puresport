@@ -277,9 +277,10 @@ public class T7CrclController extends BaseController {
 	 * 
 	 * @author zhuchaobin 2018-05-09
 	 */
-	@Clear
+/*	@Clear*/
 	public void video_play() {
-		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
+	/*	Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));*/
+		Integer usrid = 1;
 		System.out.println(usrid);
 		String crcl_attr = getPara("crcl_attr");
 		String crclid = getPara("crclid");
@@ -289,14 +290,17 @@ public class T7CrclController extends BaseController {
 		System.out.println(crcl_file_rte);
 		if ("1".equals(crcl_attr)) {
 			setAttr("action", "/jf/puresport/t7Crcl/video2_select_3");// 必修视频2
-			setAttr("pre_action", "/jf/puresport/t7Crcl/study_notify_1");// 必修课程1
-			// 必修课程1
+			setAttr("pre_action", "/jf/puresport/t7Crcl/study_notify_1");// 必修课程1			
+			setAttr("crcl_nm", "必修课程一：" + getCrclInfo(crclid).getCrcl_nm());// 课程名称
+			/*setAttr("crcl_brf", getCrclInfo(crclid).getCrcl_brf());// 课程简介
+*/			
+/*			// 必修课程1
 			String sql = "select * from t7_crcl t where t.crclid='" + getPara("crclid") + "'";
 			List<T7Crcl> t7List = T7Crcl.dao.find(sql);
 			if ((t7List != null) && (t7List.size() > 0)) { // 去视频1
 				setAttr("crcl_nm", "必修课程一：" + getCrclInfo(crclid).getCrcl_nm());// 课程名称
 				setAttr("crcl_brf", t7List.get(0).getCrcl_brf());// 课程简介
-			}
+			}*/
 			// setAttr("stdy_st", stdy_st);// 必修视频2
 		} else if ("2".equals(crcl_attr)) {// 去视频2
 			setAttr("action", "/jf/puresport/t7Crcl/video3_select_5");// 必修视频3
@@ -310,9 +314,9 @@ public class T7CrclController extends BaseController {
 		setAttr("crcl_file_rte", crcl_file_rte);
 		setAttr("stdy_st_hidden", getPara("stdy_st_hidden"));// 本课程学习状态
 		setAttr("crclid", crclid);// 课程id
-		if (!("1".equals(crcl_attr))) {
+/*		if (!("1".equals(crcl_attr))) {
 			setAttr("crcl_brf", getPara("crcl_brf"));// 课程简介
-		}
+		}*/
 		LOG.debug("crclid = " + crclid);
 		renderWithPath("/f/accession/video_play.html");
 	}
