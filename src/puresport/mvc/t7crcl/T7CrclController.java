@@ -254,6 +254,10 @@ public class T7CrclController extends BaseController {
 					t11.setRank("#FF0202");
 				}
 			}
+			// 默认city没有的话，默认值是“--”，特殊处理
+			if(("--".equals(t11.getCity())) || ("-".equals(t11.getCity()))) {
+				t11.setCity("");
+			}
 			heroListRlt.add(t11);
 		}
 		setAttr("heroList", heroListRlt);
