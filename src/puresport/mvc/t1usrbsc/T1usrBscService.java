@@ -41,8 +41,8 @@ public class T1usrBscService extends BaseService {
 	}
 
 	public boolean isExist(T1usrBsc mdl) {
-		Record sporter = ConfMain.db().findById(tableName, T1usrBsc.column_mblph_no,
-				(String) mdl.get(T1usrBsc.column_mblph_no));
+		Record sporter = ConfMain.db().findById(tableName, T1usrBsc.column_crdt_no,
+				(String) mdl.get(T1usrBsc.column_crdt_no));
 		if (null == sporter) {
 			return false;
 		}
@@ -71,7 +71,7 @@ public class T1usrBscService extends BaseService {
 	 * @return
 	 */
 	private static String sql_score = "select u.*, s.exam_nm as exam_nm, s.exam_grd as exam_grd, (CASE WHEN s.exam_grd >= 80 THEN '及格'  WHEN s.exam_grd is null THEN '未考试'  ELSE '不及格' END) as passed "
-			+ " from t1_usr_bsc u  left join t11_exam_stat s on u.usrid = s.usrid  where 1=1 ";
+			+ " from t1_usr_bsc u  left join t11_exam_stat s on u.usrid = s.usrid  where 1=1 and exam_st='1' ";
 
 	public List<Record> selectScoreByPage(T6MgrSession mgrSession, ParamComm paramMdl) {
 
@@ -79,7 +79,6 @@ public class T1usrBscService extends BaseService {
 		String whereSql = getProvinceWhere(mgrSession, paramMdl, listArgs);
 		Object[] listObjs = listArgs.toArray();
 		List<Record> userScoreRecords = ConfMain.db().find(sql_score + whereSql, listObjs);
-
 		return userScoreRecords;
 	}
 
@@ -245,6 +244,16 @@ public class T1usrBscService extends BaseService {
 			} else {
 				e.set("errorPercent", "--(0/0)");
 			}
+			if (e.getStr("prblm_tp").equals("02")) {
+				// 判断题
+				if (e.getStr("prblm_aswr").equals("A")) {
+					e.set("prblm_aswr", "正确");
+				} else {
+					e.set("prblm_aswr", "错误");
+				}
+			} else if (e.getStr("prblm_tp").equals("01")) {
+				// 选择题
+			}
 		});
 		return problemStatisRes;
 	}
@@ -324,8 +333,9 @@ public class T1usrBscService extends BaseService {
 		try {
 			dbRow = new Record().set(T1usrBsc.column_usr_tp, EnumRoleType.Sporter.getName())
 					.set(T1usrBsc.column_usr_nm, excelRow.getByIndex(5))// 用户账户名：手机号
-					.set(T1usrBsc.column_nm, excelRow.getByIndex(0)).set(T1usrBsc.column_crdt_tp, excelRow.getByIndex(1))
-					.set(T1usrBsc.column_crdt_no, crdt_number).set(T1usrBsc.column_gnd, excelRow.getByIndex(3))
+					.set(T1usrBsc.column_nm, excelRow.getByIndex(0))
+					.set(T1usrBsc.column_crdt_tp, excelRow.getByIndex(1)).set(T1usrBsc.column_crdt_no, crdt_number)
+					.set(T1usrBsc.column_gnd, excelRow.getByIndex(3))
 					.set(T1usrBsc.column_brth_dt, excelRow.getByIndex(4))
 					.set(T1usrBsc.column_pswd,
 							DESUtil.encrypt(crdt_number.substring(crdt_number.length() - 6), ConstantInitMy.SPKEY))// 密码默认身份证后6位
