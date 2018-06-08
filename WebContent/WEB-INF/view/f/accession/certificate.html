@@ -58,6 +58,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	font-size: 25px;
 	height: 600px；
 }
+
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -66,8 +67,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		/* 	$('#code').qrcode(str); */
 		$("#code").qrcode({
 			render : "table",
-			width : 130,
-			height : 130,
+			width : 100,
+			height : 100,
 			text : str
 		});
 	})
@@ -131,7 +132,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<div style="display: ${shareDisplay!'none'};">
 									<div class="row" class="style pull-bottom">
 										</br> </br>
-										<div align="left" id="code"></div>
+										<div align="left"><img src="http://qr.liantu.com/api.php?text=${cxt!''}${certificatePath!'/images_zhuchaobin/certificates/certificateDefault.jpg'}&fg=0065AD&w=190&inpt=000000&pt=DE6199&m=30"/></div>
+										<!-- <div style="width:100px; height:100px" id="code"></div> -->
 									</div>
 									<div class="row">
 										<div align="left">使用如下app扫描二维码分享</div>

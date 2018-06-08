@@ -39,8 +39,8 @@ public class T6MgrAhrService extends BaseService {
 	}
 
 	public boolean isExist(T6MgrAhr mdl) {
-		Record user = ConfMain.db().findById(tableName, T6MgrAhr.column_mblph_no,
-				(String) mdl.get(T6MgrAhr.column_mblph_no));
+		Record user = ConfMain.db().findById(tableName, T6MgrAhr.column_crdt_no,
+				(String) mdl.get(T6MgrAhr.column_crdt_no));
 		if (null == user) {
 			return false;
 		}
@@ -87,8 +87,8 @@ public class T6MgrAhrService extends BaseService {
 	private boolean insertAdminToDb(MdlExcelRow excelRow) {
 		// 校验输入
 		if (StringUtil.invalidateLength(excelRow.getByIndex(0), 2, 64)) {
-			log.error("insertAdminToDb数据校验失败:" + excelRow);
 			// 因为可能有空行，当姓名没有的时候，直接默认未空行
+			log.error("insertAdminToDb没有姓名，认为是空行:" + excelRow);
 			return true;
 		}
 		if (StringUtil.invalidateLength(excelRow.getByIndex(1), 1, 8)) {
