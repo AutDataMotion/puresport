@@ -10,7 +10,7 @@ package puresport.constant;
  *
  */
 public enum EnumStatus {
-	Failed(0, "操作失败"),
+	Failed(0, "操作失败,请检查数据格式后重试！"),
 	Success(1, "操作成功");
 	private int id;
 	private String name;

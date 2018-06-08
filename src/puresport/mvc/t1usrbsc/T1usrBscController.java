@@ -65,15 +65,17 @@ public class T1usrBscController extends BaseController {
 	    // 检查手机号的用户是否存在
 		if (T1usrBscService.service.isExist(mdl)) {
 			ResTips errorTips = ResTips.getFailRes()
-					.addErroFiled(T1usrBsc.column_mblph_no, "该手机号已存在");
+					.addErroFiled(T1usrBsc.column_crdt_no, "该证件号用户已存在");
 			renderJson(errorTips);
 			return ;
 		}
 		// 不存在则添加
-		// 用户名设置为手机号
-		mdl.set(T1usrBsc.column_usr_nm, mdl.get(T1usrBsc.column_mblph_no));
-		mdl.saveGenIntId();
-		renderJson(ResTips.getSuccRes());
+		mdl.set(T1usrBsc.column_usr_nm, mdl.get(T1usrBsc.column_nm));
+		if (mdl.saveGenIntId()) {
+			renderJson(ResTips.getSuccRes());
+		} else {
+			renderJson(ResTips.getFailRes());
+		}
 	}
 
 	@Clear
@@ -82,18 +84,19 @@ public class T1usrBscController extends BaseController {
 	    // 检查手机号的用户是否存在
 		if (!T1usrBscService.service.isExist(mdl)) {
 			// 不存在则不可以更新
-			ResTips errorTips =ResTips.getFailRes()
-					.addErroFiled(T1usrBsc.column_mblph_no, "该手机号不存在");
+			ResTips errorTips = ResTips.getFailRes()
+					.addErroFiled(T1usrBsc.column_crdt_no, "该证件号用户已存在");
 			renderJson(errorTips);
 			return ;
 		}
-		// 用户名设置为手机号
-		mdl.set(T1usrBsc.column_usr_nm, mdl.get(T1usrBsc.column_mblph_no));
-		mdl.update();
-		renderJson(ResTips.getSuccRes());
+		mdl.set(T1usrBsc.column_usr_nm, mdl.get(T1usrBsc.column_nm));
+		if (mdl.update()) {
+			renderJson(ResTips.getSuccRes());
+		} else {
+			renderJson(ResTips.getFailRes());
+		}
 	}
 	
-	@Clear
 	public void delSporter(){
 		Map<String, String[]> paramMap = getParaMap();
 		paramMap.entrySet().stream().forEach(e->{
@@ -179,12 +182,12 @@ public class T1usrBscController extends BaseController {
         String crdt_no = getPara("account");//获取表单数据，这里的参数就是页面表单中的name属性值  
         String password = getPara("pwd");
         try {
-//			String encryptpassword = DESUtil.encrypt(password, ConstantInitMy.SPKEY);
+			String encryptpassword = DESUtil.encrypt(password, ConstantInitMy.SPKEY);
 			
 			T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where crdt_no=?", crdt_no);//根据用户名查询数据库中的用户  
 	        if(item != null) {  
-//	            if(encryptpassword.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
-	        	if(password.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
+	            if(encryptpassword.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
+//	        	if(password.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
 	                flag = true; 
 	                userType = item.getUsr_tp();
 	                getSession().setAttribute("usrid", item.getUsrid());//设置session，保存登录用户的昵称  

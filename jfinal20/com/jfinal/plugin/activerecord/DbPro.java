@@ -31,6 +31,9 @@ import java.util.function.Supplier;
 import org.apache.commons.collections4.ListUtils;
 
 import com.jfinal.plugin.activerecord.cache.ICache;
+
+import sun.util.logging.resources.logging;
+
 import static com.jfinal.plugin.activerecord.DbKit.NULL_PARA_ARRAY;
 
 /**
@@ -312,14 +315,20 @@ public class DbPro {
 			return values;
 		}).orElseThrow(()->new IllegalArgumentException("primary key number must equals id value number") );
 		
-		Record existRecord = findById(tableName, primaryKey, keyValues);
-		if (null == existRecord) {
-			// 插入
-			return save(tableName, primaryKey, record);
-		} else {
-			// 更新
-			return update(tableName, primaryKey, record);
+		try{
+			Record existRecord = findById(tableName, primaryKey, keyValues);
+			if (null == existRecord) {
+				// 插入
+				return save(tableName, primaryKey, record);
+			} else {
+				// 更新
+				return update(tableName, primaryKey, record);
+			}
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
 		}
+		return false;
 	}
 	
 	List<Record> find(Config config, Connection conn, String sql, Object... paras) throws SQLException {
