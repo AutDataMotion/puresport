@@ -2,6 +2,7 @@ package puresport.mvc.pages;
 
 import java.util.Enumeration;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.alibaba.fastjson.JSONObject;
@@ -18,6 +19,8 @@ import csuduc.platform.util.lyf.WebsiteSta;
 import puresport.constant.ConstantInitMy;
 import puresport.mvc.t1usrbsc.T1usrBsc;
 import puresport.mvc.t6mgrahr.T6MgrAhr;
+import puresport.mvc.t7crcl.T7Crcl;
+import puresport.mvc.t7crcl.T7CrclService;
 
 
 public class pagesController extends BaseController {
@@ -119,9 +122,30 @@ public class pagesController extends BaseController {
 	@Clear
 	public void jiangzuo_videoplay() {
 		String videoid = getPara("video_id");
-		String videotitle = getPara("videotitle");
+		//String videotitle = getPara("videotitle");
+		T7Crcl t7 = null;
+		if(StringUtils.isNotBlank(videoid)) {
+			t7 = T7CrclService.service.SelectByVideoID(videoid);
+		} else {
+			log.error("课程编号为空，查询课程信息失败！");
+		}
+		if(null == t7) {
+			log.debug("根据课程id查询到课程信息为空，课程id=" + videoid);
+		}
+		
 		setAttr("videoid",videoid);
-		setAttr("videotitle",videotitle);
+		if(videoid.equals("258767799"))
+		{
+			setAttr("videotitle",t7.getCrcl_nm()+"(一)");
+		}
+		else if(videoid.equals("258768330"))
+		{
+			setAttr("videotitle",t7.getCrcl_nm()+"(二)");
+		}
+		else {
+			setAttr("videotitle",t7.getCrcl_nm());
+		}
+		
 		renderWithPath(pthv+"video/videoPlay.html");
 	}
 	@Clear

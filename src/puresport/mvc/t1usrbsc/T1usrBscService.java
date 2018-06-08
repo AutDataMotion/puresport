@@ -295,52 +295,54 @@ public class T1usrBscService extends BaseService {
 
 	private boolean insertRowToDb(T6MgrSession mgrSession, MdlExcelRow excelRow) {
 		// 校验输入
-		if (StringUtil.invalidateLength(excelRow.getByIndex(0), 2, 64)) {
+		if (StringUtil.invalidateLength(StringUtil.replaceExcelBlank(excelRow.getByIndex(0)), 2, 64)) {
 			log.error("insertRowToDb数据校验失败:" + excelRow);
 			// 因为可能有空行，当姓名没有的时候，直接默认未空行
 			return true;
 		}
-		if (StringUtil.invalidateLength(excelRow.getByIndex(1), 1, 8)) {
+		if (StringUtil.invalidateLength(StringUtil.replaceExcelBlank(excelRow.getByIndex(1)), 1, 8)) {
 			log.error("insertRowToDb数据校验失败:" + excelRow);
 			return false;
 		}
-		if (StringUtil.invalidateLength(excelRow.getByIndex(2), 2, 20)) {
+		if (StringUtil.invalidateLength(StringUtil.replaceExcelBlank(excelRow.getByIndex(2)), 2, 20)) {
 			log.error("insertRowToDb数据校验失败:" + excelRow);
 			return false;
 		}
-		if (StringUtil.invalidateLength(excelRow.getByIndex(3), 1, 4)) {
+		if (StringUtil.invalidateLength(StringUtil.replaceExcelBlank(excelRow.getByIndex(3)), 1, 4)) {
 			log.error("insertRowToDb数据校验失败:" + excelRow);
 			return false;
 		}
-		if (StringUtil.invalidateLength(excelRow.getByIndex(4), 2, 16)) {
+		if (StringUtil.invalidateLength(StringUtil.replaceExcelBlank(excelRow.getByIndex(4)), 2, 16)) {
 			log.error("insertRowToDb数据校验失败:" + excelRow);
 			return false;
 		}
-		if (StringUtil.invalidateLength(excelRow.getByIndex(5), 2, 16)) {
+		if (StringUtil.invalidateLength(StringUtil.replaceExcelBlank(excelRow.getByIndex(5)), 2, 16)) {
 			log.error("insertRowToDb数据校验失败:" + excelRow);
 			return false;
 		}
-		if (StringUtil.invalidateLength(excelRow.getByIndex(6), 2, 128)) {
+		if (StringUtil.invalidateLength(StringUtil.replaceExcelBlank(excelRow.getByIndex(6)), 2, 128)) {
 			log.error("insertRowToDb数据校验失败:" + excelRow);
 			return false;
 		}
 		// 根据手机号匹配，没有插入、已有更新
-		String crdt_number = excelRow.getByIndex(2);// 身份证号
+		String crdt_number = StringUtil.replaceExcelBlank(excelRow.getByIndex(2));// 身份证号
+//		String mblph_no = excelRow.getByIndex(5);// 身份证号
 		if (crdt_number.length() < 18) {
 			return false;
 		}
 		Record dbRow;
 		try {
 			dbRow = new Record().set(T1usrBsc.column_usr_tp, EnumRoleType.Sporter.getName())
-					.set(T1usrBsc.column_usr_nm, excelRow.getByIndex(5))// 用户账户名：手机号
-					.set(T1usrBsc.column_nm, excelRow.getByIndex(0))
-					.set(T1usrBsc.column_crdt_tp, excelRow.getByIndex(1)).set(T1usrBsc.column_crdt_no, crdt_number)
-					.set(T1usrBsc.column_gnd, excelRow.getByIndex(3))
+					.set(T1usrBsc.column_usr_nm, StringUtil.replaceExcelBlank(excelRow.getByIndex(5)))// 用户账户名：手机号
+					.set(T1usrBsc.column_nm, StringUtil.replaceExcelBlank(excelRow.getByIndex(0)))
+					.set(T1usrBsc.column_crdt_tp, StringUtil.replaceExcelBlank(excelRow.getByIndex(1)))
+					.set(T1usrBsc.column_crdt_no, crdt_number)
+					.set(T1usrBsc.column_gnd, StringUtil.replaceExcelBlank(excelRow.getByIndex(3)))
 					.set(T1usrBsc.column_brth_dt, excelRow.getByIndex(4))
 					.set(T1usrBsc.column_pswd,
 							DESUtil.encrypt(crdt_number.substring(crdt_number.length() - 6), ConstantInitMy.SPKEY))// 密码默认身份证后6位
-					.set(T1usrBsc.column_mblph_no, excelRow.getByIndex(5))
-					.set(T1usrBsc.column_email, excelRow.getByIndex(6))
+					.set(T1usrBsc.column_mblph_no, StringUtil.replaceExcelBlank(excelRow.getByIndex(5)))
+					.set(T1usrBsc.column_email, StringUtil.replaceExcelBlank(excelRow.getByIndex(6)))
 
 					.set(T1usrBsc.column_cty_prov_city_mgrid, mgrSession.getUsrid())
 					.set(T1usrBsc.column_typelevel, mgrSession.getTypeleve())

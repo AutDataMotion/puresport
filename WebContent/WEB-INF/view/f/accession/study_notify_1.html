@@ -2,7 +2,6 @@
 <html>
 <head>
 <title>学习</title>
-<link rel="shortcut icon" href="${cxt!}/images/favicon.ico" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords"
@@ -41,7 +40,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			$("tachu").show();
 		}
 </script>
-<script>
+<script type="text/javascript">
 $(document).ready(function(){
 	// 0.4代表遮罩的透明度
 	$('.banner div').css('opacity',0.2);
@@ -62,6 +61,36 @@ $(document).ready(function(){
 		window.open($(this).find('a').attr('href'));		
 	});
 });
+</script>
+<script type="text/javascript">
+function toUtf8(str) {
+	var out, i, len, c;
+	out = "";
+	len = str.length;
+	for (i = 0; i < len; i++) {
+		c = str.charCodeAt(i);
+		if ((c >= 0x0001) && (c <= 0x007F)) {
+			out += str.charAt(i);
+		} else if (c > 0x07FF) {
+			out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+			out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+			out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+		} else {
+			out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+			out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+		}
+	}
+	return out;
+}
+
+/* function test() {
+	url = "/jf/puresport/t7Crcl/video_play?crcl_attr=${t7.crcl_attr!''}&crcl_file_rte=${t7.crcl_file_rte!''}&stdy_st_hidden=${stdy_st_hidden!'0'}&crclid=${t7.crclid!'0'}";
+	alert(url);
+/* 	url = toUtf8(url); */
+/* 	alert(url); */
+	window.location.href=url;// 进行下一步学习
+} */
+
 </script>
 </head>
 <body>
@@ -112,9 +141,8 @@ $(document).ready(function(){
 				</div>
 			</div>
 			<div align="center">
-				<button
-					onclick="window.location.href='/jf/puresport/t7Crcl/video_play?crcl_attr=${t7.crcl_attr!''}&crcl_file_rte=${t7.crcl_file_rte!''}&stdy_st_hidden=${stdy_st_hidden!'0'}&crclid=${t7.crclid!'0'}&crcl_nm=${t7.crcl_nm!'0'}'"
-					class="btn">点击学习课程</button>
+				<!-- <button onclick="test()"  class="btn">点击学习课程</button> -->
+				<button onclick="window.location.href='/jf/puresport/t7Crcl/video_play?crcl_attr=${t7.crcl_attr!''}&crcl_file_rte=${t7.crcl_file_rte!''}&stdy_st_hidden=${stdy_st_hidden!'0'}&crclid=${t7.crclid!'0'}'" class="btn">点击学习课程</button>						
 			</div>
 			</br>
 		</div>

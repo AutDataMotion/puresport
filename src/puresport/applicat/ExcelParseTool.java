@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,6 +26,8 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import jxl.NumberCell;
 
 /**
  * @author zw 每一个Excel文件都将被解析成一个WorkBook对象； Excel的每一页都将被解析成一个Sheet对象；
@@ -112,10 +115,11 @@ public class ExcelParseTool {
 	}
 
 	private static String getStrValue(Cell cell) {
+		
 		if (cell.getCellType() == Cell.CELL_TYPE_BOOLEAN) {
 			return String.valueOf(cell.getBooleanCellValue());
 		}
-		if (cell.getCellType() == Cell.CELL_TYPE_NUMERIC) {
+		if ((cell.getCellType() == Cell.CELL_TYPE_NUMERIC)||(cell.getCellType() == Cell.CELL_TYPE_FORMULA)) {
 			// 判断是否为日期类型
 			if (DateUtil.isCellDateFormatted(cell)) {
 				// 用于转化为日期格式
@@ -123,11 +127,22 @@ public class ExcelParseTool {
 				DateFormat formater = new SimpleDateFormat("yyyy/MM/dd");
 				return formater.format(d);
 			}
-			return String.valueOf((int) cell.getNumericCellValue());
+			else {
+//				NumberCell nc = (NumberCell) cell;
+				double nc = cell.getNumericCellValue();
+                //  判断是否为科学计数法（包含E、e、+等符号）
+                if ((""+nc).indexOf("E")!=-1 || (""+nc).indexOf("e")!=-1 || (""+nc).indexOf("+")!=-1) {
+                    String bd = new BigDecimal(""+nc).stripTrailingZeros().toPlainString();
+                    return bd;
+                }else{
+                	return "" +  nc;
+                }
+			}
+			//return String.valueOf((int) cell.getNumericCellValue());
 		}
-		if (cell.getCellType() == Cell.CELL_TYPE_FORMULA) {
-			return cell.getCellFormula();
-		}
+//		if (cell.getCellType() == Cell.CELL_TYPE_FORMULA) {
+//			return cell.getCellFormula();
+//		}
 		
 		return cell.getStringCellValue();
 
