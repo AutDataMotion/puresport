@@ -127,7 +127,7 @@ public class T7CrclController extends BaseController {
 		T1usrBsc t1 = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", usrid);// 根据用户名查询数据库中的用户
 		if (t1 == null) {
 			LOG.error("查询用户信息失败.");
-			setAttr("certificatePath", "/images_zhuchaobin/certificates/certificateDefault.jpg");
+			setAttr("certificatePath", "/images_zcb/certificates/certificateDefault.jpg");
 			LOG.debug("certificatePath=" + certificatePath);
 			renderWithPath("/f/accession/certificate.html");
 			return;
@@ -139,7 +139,7 @@ public class T7CrclController extends BaseController {
 				crdt_no_endStr = crdt_no.substring(0, 1)
 						+ crdt_no.substring(crdt_no.length() - 2, crdt_no.length() - 1);
 			}*/
-			certificatePath = "/images_zhuchaobin/certificates/" + "省运会反兴奋剂教育准入合格证书_" + t1.getNm() + "_"
+			certificatePath = "/images_zcb/certificates/" + "省运会反兴奋剂教育准入合格证书_" + t1.getNm() + "_"
 					+ usrid + ".jpg";
 			setAttr("certificatePath", certificatePath);
 		}
@@ -151,7 +151,7 @@ public class T7CrclController extends BaseController {
 			String filepath = new File(path).getParentFile().getParentFile().getCanonicalPath();
 			File file = new File(filepath + certificatePath);
 			if (!judeFileExists(file)) {
-				setAttr("certificatePath", "/images_zhuchaobin/certificates/certificateDefault.jpg");
+				setAttr("certificatePath", "/images_zcb/certificates/certificateDefault.jpg");
 			} else {
 				isCertificated = true;
 			}
@@ -768,7 +768,7 @@ public class T7CrclController extends BaseController {
 			}
 			// DateFormat类的静态工厂方法
 			System.out.println(format.getInstance().format(date));
-			String srcImg = webContentPath + "\\images_zhuchaobin\\certificateTemp.jpg";
+			String srcImg = webContentPath + "\\images_zcb\\certificateTemp.jpg";
 //			// 取身份证号码第1位+ 最后1位
 //			String crdt_no = t1.getCrdt_no().toString();
 //			String crdt_no_endStr = "";
@@ -776,7 +776,7 @@ public class T7CrclController extends BaseController {
 //				crdt_no_endStr = crdt_no.substring(0, 1)
 //						+ crdt_no.substring(crdt_no.length() - 2, crdt_no.length() - 1);
 //			}
-			certificatePath = "\\images_zhuchaobin\\certificates\\" + "省运会反兴奋剂教育准入合格证书_" + t1.getNm() + "_"
+			certificatePath = "\\images_zcb\\certificates\\" + "省运会反兴奋剂教育准入合格证书_" + t1.getNm() + "_"
 					+ t1.getUsrid() + ".jpg";
 			String dscImg = webContentPath + certificatePath;
 			LOG.info("srcImg=" + srcImg);
