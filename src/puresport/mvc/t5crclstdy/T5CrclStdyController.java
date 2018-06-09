@@ -165,6 +165,7 @@ public class T5CrclStdyController extends BaseController {
 	public void delete() {
 		// T5CrclStdyService.service.delete("t5_crcl_stdy", getPara() == null ? ids :
 		// getPara()); //guuid
+		
 		T5CrclStdyService.service.deleteById("t5_crcl_stdy", getPara() == null ? ids : getPara()); // serial int id
 		redirect(pthc);
 	}
