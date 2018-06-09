@@ -97,7 +97,8 @@ public class T5CrclStdyController extends BaseController {
 	 * 2018-05-09
 	 */
 	public boolean isCanTest() {
-		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
+		return true;
+/*		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		ResultEntity res = null;
 		StringBuilder desc = new StringBuilder("");
 		boolean isCorse1Fnsh = false;
@@ -146,7 +147,7 @@ public class T5CrclStdyController extends BaseController {
 		if(isCorse1Fnsh && isCorse2Fnsh && isCorse3Fnsh)
 			return true;
 		else
-			return false;
+			return false;*/
 	}
 
 	/**

@@ -64,7 +64,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script>
 	//  返回上一页面
 	function do_pre(){
-		window.location.href=document.referrer;
+/* 		var str=document.referrer;
+		var pre_url = str.replace(/stdy_st=0/g, "stdy_st=1")
+		pre_url = pre_url.replace(/stdy_st_hidden=0/g, "stdy_st_hidden=1")		
+		window.location.href = pre_url; */
+		window.location.href='${pre_action!}';
 	}
 	function do_jump() {
 		var stdy_st_hidden = document.getElementById("stdy_st_hidden").value;
@@ -150,7 +154,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<!-- END_CONTAINER -->
 		</div>
 		<div align="center">
-			<!-- <button onclick="do_pre()" class="btn">上一步</button> -->
+			<button onclick="do_pre()" class="btn">上一步</button>
 			<button onclick="do_jump()" class="btn">下一步</button>
 		</div>
 		<br>

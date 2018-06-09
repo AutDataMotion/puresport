@@ -213,14 +213,9 @@ public class T11ExamStat extends BaseModel<T11ExamStat> {
 	public <T> T getProvince() {
 		return get(column_province);
 	}
-/*	public void setCity(String city){
-		set(column_city, city);
-	}
-	*/
 	public void setCity(String city){
-		this.city = city;
-	}
-	
+		set(column_city, city);
+	}	
 	public <T> T getCity() {
 		return get(column_city);
 	}
