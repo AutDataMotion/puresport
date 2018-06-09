@@ -40,9 +40,6 @@ $(document).ready(function() {
 		},{
 			data : "city"
 		}, {
-			data : "institute",
-			"visible": false
-		}, {
 			data : "passed"
 		} , {
 			data : "answered"
@@ -61,7 +58,7 @@ $(document).ready(function() {
 	function search(data, callback, settings) {
 		datasrch.name1 = $("#provSelect_prj option:selected").html();
 		datasrch.name2 = $("#citySelect_prj option:selected").html();
-		datasrch.name3 = $("#instituteSelect_prj option:selected").html();
+		//datasrch.name3 = $("#instituteSelect_prj option:selected").html();
 		datasrch.name4 = $("#prjSelect_prj option:selected").html();
 		datasrch.pageIndex = 0;
 		datasrch.pageSize = 2000;
