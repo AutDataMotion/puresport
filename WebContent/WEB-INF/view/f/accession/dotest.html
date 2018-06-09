@@ -138,7 +138,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script type="text/javascript">
 	//  返回上一页面
 	function do_pre() {
-		window.location.href = document.referrer;
+/* 		var str=document.referrer;
+		var pre_url = str.replace(/stdy_st=0/g, "stdy_st=1")
+		pre_url = pre_url.replace(/stdy_st_hidden=0/g, "stdy_st_hidden=1")	
+		window.location.href = pre_url; */
+		window.location.href='${pre_action!}';
 	}
 
 	//提交试卷操作确认
@@ -391,7 +395,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 
 				<div align="center">
-					<!-- <button onclick="do_pre()" class="btn">上一步</button> -->
+					<button onclick="do_pre()" class="btn">上一步</button>
 					<button onclick="isCanTest_yes(2)" class="btn">开始考试</button>
 				</div>
 				<p>
@@ -524,7 +528,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="col-md-2 myTest"></div>
 				</div>
 				<div align="center">
-					<!-- <button onclick="do_pre()" class="btn">上一步</button> -->
+					<button onclick="do_pre()" class="btn">上一步</button>
 					<button onclick="isCanTest_yes(2)" class="btn">开始考试</button>
 				</div>
 				<p>
