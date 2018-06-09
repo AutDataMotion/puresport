@@ -13,37 +13,39 @@ import puresport.constant.EnumTypeLevel;
  * @author zw
  *
  */
-public class T6MgrSession implements Serializable{
+public class T6MgrSession implements Serializable {
 
 	private static final long serialVersionUID = 2305013944330477412L;
 
 	public final static String KeyName = "_T6MgrSession_";
-	
+	public final static String Def_NullStr = "--";
+
 	private Long usrid;
 	private String typeleve;
 	private String province;
 	private String city;
 	private String institute;
-	
-	public T6MgrSession(){}
 
-	public T6MgrSession(Long ausrid, String atypeleve, String aprovince, String acity, String ainstitute){
+	public T6MgrSession() {
+	}
+
+	public T6MgrSession(Long ausrid, String atypeleve, String aprovince, String acity, String ainstitute) {
 		usrid = ausrid;
 		typeleve = atypeleve;
 		province = aprovince;
 		city = acity;
 		institute = ainstitute;
 	}
-	
-	public T6MgrSession(T6MgrAhr mdl){
-		usrid = Long.valueOf((String)mdl.getUsrid()) ;
+
+	public T6MgrSession(T6MgrAhr mdl) {
+		usrid = Long.valueOf((String) mdl.getUsrid());
 		typeleve = mdl.getTypeleve();
 		province = mdl.getProvince();
 		city = mdl.getCity();
 		institute = mdl.getInstitute();
 	}
-	
-	public String selectRoleStr(){
+
+	public String selectRoleStr() {
 		if (typeleve.equals(EnumTypeLevel.Country.getName())) {
 			// 国家级 全部可见
 			return " 1=1 ";
@@ -52,29 +54,29 @@ public class T6MgrSession implements Serializable{
 			return String.format(" province='%s' ", province);
 		} else if (typeleve.equals(EnumTypeLevel.City.getName())) {
 			// 市级 只可见属于该市的
-			return String.format(" city='%s' and province='%s' ", city , province);
+			return String.format(" city='%s' and province='%s' ", city, province);
 		}
 		// 未知的都不可见
 		return " 1=2 ";
 	}
-	
-	public String ggProvince(){
+
+	public String ggProvince() {
 		if (typeleve.equals(EnumTypeLevel.Country.getName())) {
 			// 国家级 全部可见
-			return " -- ";
+			return Def_NullStr;
 		}
-	    return province;
+		return province;
 	}
-	
-	public String ggCity(){
-		if (typeleve.equals(EnumTypeLevel.Country.getName())
-				||typeleve.equals(EnumTypeLevel.Province.getName()) ) {
+
+	public String ggCity() {
+		if (typeleve.equals(EnumTypeLevel.Country.getName()) || typeleve.equals(EnumTypeLevel.Province.getName())) {
 			// 国家级 全部可见
-			return " -- ";
-		} 
-	
-	    return city;
+			return Def_NullStr;
+		}
+
+		return city;
 	}
+
 	/**
 	 * @return the usrid
 	 */
@@ -83,7 +85,8 @@ public class T6MgrSession implements Serializable{
 	}
 
 	/**
-	 * @param usrid the usrid to set
+	 * @param usrid
+	 *            the usrid to set
 	 */
 	public void setUsrid(Long usrid) {
 		this.usrid = usrid;
@@ -97,7 +100,8 @@ public class T6MgrSession implements Serializable{
 	}
 
 	/**
-	 * @param typeleve the typeleve to set
+	 * @param typeleve
+	 *            the typeleve to set
 	 */
 	public void setTypeleve(String typeleve) {
 		this.typeleve = typeleve;
@@ -111,7 +115,8 @@ public class T6MgrSession implements Serializable{
 	}
 
 	/**
-	 * @param province the province to set
+	 * @param province
+	 *            the province to set
 	 */
 	public void setProvince(String province) {
 		this.province = province;
@@ -125,7 +130,8 @@ public class T6MgrSession implements Serializable{
 	}
 
 	/**
-	 * @param city the city to set
+	 * @param city
+	 *            the city to set
 	 */
 	public void setCity(String city) {
 		this.city = city;
@@ -139,10 +145,11 @@ public class T6MgrSession implements Serializable{
 	}
 
 	/**
-	 * @param institute the institute to set
+	 * @param institute
+	 *            the institute to set
 	 */
 	public void setInstitute(String institute) {
 		this.institute = institute;
 	}
-	
+
 }

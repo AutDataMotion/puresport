@@ -62,7 +62,7 @@ public class AreaService extends BaseService {
 	}
 	
 	public List<Record> getProject(){
-		return ConfMain.db().find(String.format("select spt_prj from t1_usr_bsc group by spt_prj "));
+		return ConfMain.db().find(String.format("select spt_prj from t1_usr_bsc where spt_prj is not null and spt_prj<>'' group by spt_prj "));
 	}
 
 	public List<Record> getQuestionType(){
