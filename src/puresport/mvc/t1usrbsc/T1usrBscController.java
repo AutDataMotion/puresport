@@ -139,18 +139,18 @@ public class T1usrBscController extends BaseController {
 		
 		 if(!ExcelParseTool.SUFFIX_2003.equals(mimeTypeSuffix) && !ExcelParseTool.SUFFIX_2007.equals(mimeTypeSuffix2)){
 			 log.error("message:上传文件类型错误！！！"+fileName);
-			 renderJson("上传文件类型错误！！！");
+			 renderText("上传文件类型错误!");
 			 return ;
 		 }
 
 		List<MdlExcelRow> table = null;
 		try {
 			table = ExcelParseTool.getWorkBookTable(picFile.getFile());
-		} catch (IllegalArgumentException | IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			log.error(e);
-			renderJson("解析文件内容错误，请检查内容格式！");
+			renderText("文件内容解析有误,请检查内容及格式!");
 			return ;
 		}
 		// 存入数据库
@@ -158,10 +158,10 @@ public class T1usrBscController extends BaseController {
 		
 		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
 		if (T1usrBscService.service.insertFromExcel(mgrSession, table, outFailedMdl)) {
-			renderText(String.valueOf(EnumStatus.Success.getId()));
+			renderText(EnumStatus.Success.getIdText());
 		} else {
 			log.error(outFailedMdl.get());
-			renderJson(outFailedMdl.get());
+			renderText("文件内容解析有误,请检查内容及格式!");
 		}
 		return;
 	}

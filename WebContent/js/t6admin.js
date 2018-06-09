@@ -301,10 +301,10 @@ $(document).ready(function() {
 			processData : false,
 			contentType : false,
 			success : function(data) {
-				if (data == "1") {
+				if (data== "1") {
 					layer.msg("上传成功");
 				} else {
-					layer.msg("文件处理有点问题，请您检查文件内容格式！" );
+					layer.msg(data);
 				}
 				  $('#inputfileadmin').val(''); 
 				search("", "", "");
@@ -313,4 +313,12 @@ $(document).ready(function() {
 	}
 	// ------------------上传 end
 	// search("","","");
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		// 获取已激活的标签页的名称
+		var activeTab = $(e.target).text(); 
+		console.log(activeTab);
+		// myTable.fnAdjustColumnSizing();
+		// 获取前一个激活的标签页的名称
+		// var previousTab = $(e.relatedTarget).text(); 
+	});
 });

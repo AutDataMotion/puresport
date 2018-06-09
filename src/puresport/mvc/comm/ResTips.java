@@ -41,6 +41,10 @@ public class ResTips implements Serializable{
 		return new ResTips(EnumStatus.Failed);
 	}
 	
+	public static ResTips newSimpleTips(String status, String tips) {
+		return new ResTips().setStatus(new TipMdl(status, tips));
+	}
+	
 	/**
 	 * @return the status
 	 */
@@ -51,8 +55,9 @@ public class ResTips implements Serializable{
 	/**
 	 * @param status the status to set
 	 */
-	public void setStatus(TipMdl status) {
+	public ResTips setStatus(TipMdl status) {
 		this.status = status;
+		return this;
 	}
 
 	/**
