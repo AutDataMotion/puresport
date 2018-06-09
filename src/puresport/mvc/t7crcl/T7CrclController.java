@@ -234,7 +234,7 @@ public class T7CrclController extends BaseController {
 		
 		String useridStr = (String) getSession().getAttribute("usrid");
 		// 插入或者更新成绩统计表最后一次成绩
-		String sql = "select t.*, r.nm, r.spt_prj, r.province, r.city from t11_exam_stat t "
+		String sql = "select t.*, r.nm, r.spt_prj, r.province, (case r.city when '--' then '' when '-' then '' else r.city end) as city from t11_exam_stat t "
 				+ "JOIN t1_usr_bsc r on t.exam_st = '9' and t.usrid = r.usrid order by exam_grd desc, tms asc limit 10 ";
 		List<T11ExamStat> heroList = T11ExamStat.dao.find(sql);
 		List<T11ExamStat> heroListRlt = new ArrayList<T11ExamStat>();
