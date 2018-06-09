@@ -256,7 +256,7 @@ public class T7CrclController extends BaseController {
 			}
 			
 			// 默认city没有的话，默认值是“--”，特殊处理
-			if(("--".equals(t11.getCity())) || ("-".equals(t11.getCity()))) {
+			if(t11.getCity().toString().contains("-")) {
 				t11.setCity("");
 			}
 			heroListRlt.add(t11);
