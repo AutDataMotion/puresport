@@ -120,11 +120,11 @@ public class T7CrclController extends BaseController {
 			renderWithPath("/f/accession/failed.html");
 			return;
 		}
-		String crdt_no = getPara("crdt_no");
-		setAttr("crdt_no", crdt_no);
+		String usrid = getPara("usrid");
+		setAttr("usrid", usrid);
 		String certificatePath = "";
 		// 查询用户信息
-		T1usrBsc t1 = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where crdt_no=?", crdt_no);// 根据用户名查询数据库中的用户
+		T1usrBsc t1 = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", usrid);// 根据用户名查询数据库中的用户
 		if (t1 == null) {
 			LOG.error("查询用户信息失败.");
 			setAttr("certificatePath", "/images_zhuchaobin/certificates/certificateDefault.jpg");
@@ -133,14 +133,14 @@ public class T7CrclController extends BaseController {
 			return;
 		} else {
 			setAttr("pageHead", "省运会反兴奋剂教育准入合格证书-" + t1.getNm());
-			// 取身份证号码第1位+ 最后1位
+/*			// 取身份证号码第1位+ 最后1位
 			String crdt_no_endStr = "";
 			if (!StringUtils.isBlank(crdt_no)) {
 				crdt_no_endStr = crdt_no.substring(0, 1)
 						+ crdt_no.substring(crdt_no.length() - 2, crdt_no.length() - 1);
-			}
+			}*/
 			certificatePath = "/images_zhuchaobin/certificates/" + "省运会反兴奋剂教育准入合格证书_" + t1.getNm() + "_"
-					+ crdt_no_endStr + ".jpg";
+					+ usrid + ".jpg";
 			setAttr("certificatePath", certificatePath);
 		}
 		// 判定证书文件是否存在,不存在则返回默认未取得证书路径
@@ -740,7 +740,7 @@ public class T7CrclController extends BaseController {
 		// 判断是否可以取得合格证书
 		if(totalScore >= 80) {
 		} else {
-			res = new ResultEntity("0003", "考试成绩不合格.", totalScore.toString(), "", t1.getCrdt_no());
+			res = new ResultEntity("0003", "考试成绩不合格.", totalScore.toString(), "", t1.getUsrid()+"");
 			// setAttr("certificatePath", certificatePath);
 			// renderWithPath("/f/accession/certificate.html");
 			renderJson(res);
@@ -769,15 +769,15 @@ public class T7CrclController extends BaseController {
 			// DateFormat类的静态工厂方法
 			System.out.println(format.getInstance().format(date));
 			String srcImg = webContentPath + "\\images_zhuchaobin\\certificateTemp.jpg";
-			// 取身份证号码第1位+ 最后1位
-			String crdt_no = t1.getCrdt_no().toString();
-			String crdt_no_endStr = "";
-			if (!StringUtils.isBlank(crdt_no)) {
-				crdt_no_endStr = crdt_no.substring(0, 1)
-						+ crdt_no.substring(crdt_no.length() - 2, crdt_no.length() - 1);
-			}
+//			// 取身份证号码第1位+ 最后1位
+//			String crdt_no = t1.getCrdt_no().toString();
+//			String crdt_no_endStr = "";
+//			if (!StringUtils.isBlank(crdt_no)) {
+//				crdt_no_endStr = crdt_no.substring(0, 1)
+//						+ crdt_no.substring(crdt_no.length() - 2, crdt_no.length() - 1);
+//			}
 			certificatePath = "\\images_zhuchaobin\\certificates\\" + "省运会反兴奋剂教育准入合格证书_" + t1.getNm() + "_"
-					+ crdt_no_endStr + ".jpg";
+					+ t1.getUsrid() + ".jpg";
 			String dscImg = webContentPath + certificatePath;
 			LOG.info("srcImg=" + srcImg);
 			LOG.info("dscImg=" + dscImg);
@@ -790,17 +790,17 @@ public class T7CrclController extends BaseController {
 			LOG.error("查不到用户信息！");
 		}
 		// 合格证书加水印
-		String hostAddress = "";
-		try {
-			InetAddress address = InetAddress.getLocalHost();// 获取的是本地的IP地址 //PC-20140317PXKX/192.168.0.121
-			hostAddress = address.getHostAddress();// 192.168.0.121
-
-		} catch (UnknownHostException e) {
-			e.printStackTrace();
-		}
+//		String hostAddress = "";
+//		try {
+//			InetAddress address = InetAddress.getLocalHost();// 获取的是本地的IP地址 //PC-20140317PXKX/192.168.0.121
+//			hostAddress = address.getHostAddress();// 192.168.0.121
+//
+//		} catch (UnknownHostException e) {
+//			e.printStackTrace();
+//		}
 		// res = new ResultEntity("0000", "考试成绩提交成功.", certificatePath, hostAddress,
 		// t1.getCrdt_no());
-		res = new ResultEntity("0000", "考试成绩提交成功.", "", "", t1.getCrdt_no());
+		res = new ResultEntity("0000", "考试成绩提交成功.", "", "", t1.getUsrid() +"");
 		// setAttr("certificatePath", certificatePath);
 		// renderWithPath("/f/accession/certificate.html");
 		renderJson(res);
