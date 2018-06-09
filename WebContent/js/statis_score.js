@@ -38,6 +38,12 @@ $(document).ready(function() {
 		},{
 			data : "nm"
 		}, {
+			data : "exam_nm"
+		}, {
+			data : "exam_grd"
+		}, {
+			data : "passed"
+		} , {
 			data : "crdt_tp"
 		}, {
 			data : "crdt_no"
@@ -56,13 +62,7 @@ $(document).ready(function() {
 			data : "mblph_no"
 		}, {
 			data : "email"
-		}, {
-			data : "exam_nm"
-		}, {
-			data : "exam_grd"
-		}, {
-			data : "passed"
-		} ]
+		}]
 	});
 
 	// 获取查询参数

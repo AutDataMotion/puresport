@@ -128,7 +128,6 @@ public class ExcelParseTool {
 				return formater.format(d);
 			}
 			else {
-//				NumberCell nc = (NumberCell) cell;
 				double nc = cell.getNumericCellValue();
                 //  判断是否为科学计数法（包含E、e、+等符号）
                 if ((""+nc).indexOf("E")!=-1 || (""+nc).indexOf("e")!=-1 || (""+nc).indexOf("+")!=-1) {
@@ -138,14 +137,8 @@ public class ExcelParseTool {
                 	return "" +  nc;
                 }
 			}
-			//return String.valueOf((int) cell.getNumericCellValue());
 		}
-//		if (cell.getCellType() == Cell.CELL_TYPE_FORMULA) {
-//			return cell.getCellFormula();
-//		}
-		
 		return cell.getStringCellValue();
-
 	}
 
 	/**

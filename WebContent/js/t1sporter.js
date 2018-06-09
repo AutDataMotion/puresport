@@ -292,17 +292,25 @@ $(document).ready(function() {
 			processData : false,
 			contentType : false,
 			success : function(data) {
-				if (data == "1") {
+				if (data== "1") {
 					layer.msg("上传成功");
 				} else {
-					layer.msg("文件处理有点问题，请您检查文件内容格式！");
+					layer.msg(data);
 				}
 				//并且清空原文件，不然选择相同文件不能再次传 
-		         $('#inputfilesporter').val(''); 
+		     $('#inputfilesporter').val(''); 
 				search("", "", "");
 			}
 		});
 	}
 	// ------------------上传 end
 	// search("", "", "");
+	$('#myTabs_1_1').on('show.bs.tab', function (e) {
+		// 获取已激活的标签页的名称
+		var activeTab = $(e.target).text(); 
+		console.log(activeTab);
+		// myTable.fnAdjustColumnSizing();
+		// 获取前一个激活的标签页的名称
+		// var previousTab = $(e.relatedTarget).text(); 
+	});
 });
