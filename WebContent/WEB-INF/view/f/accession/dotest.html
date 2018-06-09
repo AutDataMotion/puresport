@@ -51,10 +51,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 }
 
 .txt_pwd {
-	padding-left: 130px;
+	padding-left: 170px;
 	padding-top: 547px;
-	width: 200px;
-	height: 200px;
+	width: 270px;
+	height: 20px;
 }
 </style>
 <style>
@@ -316,6 +316,38 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			dataType : "json"
 		});
 	}
+	
+	// 判定用户是否有资格参加考试
+	function isCanTest_yes(flag) {
+		showDiv(3);
+/* 
+		var userid = "333";
+		var url;
+		url = '/jf/puresport/t5CrclStdy/isCanTest';
+		$.ajax({
+			type : 'POST',
+			url : url,
+			dataType : "json",
+			traditional : true,
+			data : {
+				userid : userid
+			},
+			success : function(res) {
+				if (res.code == "0000") {
+					if (flag == 2) {
+						showDiv(3);
+					} else if (flag == 1) {
+						showDiv(2);
+					}
+				} else {
+					showDiv(1);
+					var t2 = document.getElementById('cantTestDesc');
+					t2.innerText = res.desc;
+				}
+			},
+			dataType : "json"
+		}); */
+	}
 </script>
 <style type="text/css">
 .prblSelect {
@@ -360,7 +392,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 				<div align="center">
 					<!-- <button onclick="do_pre()" class="btn">上一步</button> -->
-					<button onclick="isCanTest(2)" class="btn">开始考试</button>
+					<button onclick="isCanTest_yes(2)" class="btn">开始考试</button>
 				</div>
 				<p>
 			</div>
@@ -493,7 +525,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 				<div align="center">
 					<!-- <button onclick="do_pre()" class="btn">上一步</button> -->
-					<button onclick="isCanTest(2)" class="btn">开始考试</button>
+					<button onclick="isCanTest_yes(2)" class="btn">开始考试</button>
 				</div>
 				<p>
 			</div>
