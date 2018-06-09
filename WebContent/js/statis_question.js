@@ -37,13 +37,13 @@ $(document).ready(
 				}, {
 					data : "ttl"
 				}, {
+					data : "errorPercent"
+				}, {
 					data : "opt"
 				}, {
 					data : "prblm_aswr"
 				}, {
 					data : "scor"
-				}, {
-					data : "errorPercent"
 				} ],
 				"columnDefs" : [ {
 					"targets" : [ 0 ], // 目标列位置，下标从0开始
@@ -68,7 +68,8 @@ $(document).ready(
 				pageSize : ''
 			};
 			function search(data, callback, settings) {
-				datasrch.name1 = $("#typeSelect_question option:selected").val();
+				datasrch.name1 = $("#typeSelect_question option:selected")
+						.val();
 				datasrch.pageIndex = 0;
 				datasrch.pageSize = 2000;
 				// 发送查询请求
@@ -114,5 +115,16 @@ $(document).ready(
 				search("", "", "");
 			});
 			// initQuestionType();
-			search("", "", "");
+			
+			
+			$('#myTabs_2_2').on('show.bs.tab', function (e) {
+				// 获取已激活的标签页的名称
+				var activeTab = $(e.target).text(); 
+				console.log(activeTab);
+				search("", "", "");
+				// myTable.fnAdjustColumnSizing();
+				// 获取前一个激活的标签页的名称
+				// var previousTab = $(e.relatedTarget).text(); 
+			});
+			
 		});

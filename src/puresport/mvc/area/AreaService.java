@@ -9,6 +9,7 @@ import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
 import com.platform.mvc.base.BaseService;
 
+import csuduc.platform.util.StringUtil;
 import puresport.config.ConfMain;
 import puresport.constant.ConstantInitMy;
 import puresport.constant.EnumTypeLevel;
@@ -61,8 +62,24 @@ public class AreaService extends BaseService {
 		return ConfMain.db().find(String.format("select institute from t1_usr_bsc group by institute "));
 	}
 	
-	public List<Record> getProject(){
-		return ConfMain.db().find(String.format("select spt_prj from t1_usr_bsc where spt_prj is not null and spt_prj<>'' group by spt_prj "));
+	public static String getProvinceWhere(T6MgrSession mgrSession) {
+		StringBuilder whereStr = new StringBuilder();
+		if (mgrSession.getTypeleve().equals(EnumTypeLevel.Country.getName())) {
+			// 国家级 全部可见
+			whereStr.append(" 1=1 ");
+		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.Province.getName())) {
+			// 省级 只可见属于该省的
+			whereStr.append(String.format(" province like '%s%%'  and typelevel ='省级' ", mgrSession.getProvince()));
+		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.City.getName())) {
+			// 市级 只可见属于该市的
+			whereStr.append(String.format(" city like ‘%s%%’  and province like '%s%%'  and typelevel ='市级' ",mgrSession.getCity(), mgrSession.getProvince()));
+		}else{
+			whereStr.append(" 1= 2 ");
+		}
+		return whereStr.toString();
+	}
+	public List<Record> getProject(T6MgrSession mgrSession){
+		return ConfMain.db().find(String.format("select spt_prj from t1_usr_bsc where  %s and spt_prj is not null and spt_prj<>'' group by spt_prj ", getProvinceWhere(mgrSession)));
 	}
 
 	public List<Record> getQuestionType(){

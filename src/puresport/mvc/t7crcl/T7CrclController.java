@@ -285,8 +285,10 @@ public class T7CrclController extends BaseController {
 /*	@Clear*/
 	public void video_play() {
 	/*	Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));*/
-		Integer usrid = 1;
-		System.out.println(usrid);
+		// 实时检查学习状态
+		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
+		Integer crcl_flag = 0;
+		
 		String crcl_attr = getPara("crcl_attr");
 		String crclid = getPara("crclid");
 		String crcl_file_rte = getPara("crcl_file_rte");
@@ -307,17 +309,33 @@ public class T7CrclController extends BaseController {
 				setAttr("crcl_brf", t7List.get(0).getCrcl_brf());// 课程简介
 			}*/
 			// setAttr("stdy_st", stdy_st);// 必修视频2
+			crcl_flag = 1;
 		} else if ("2".equals(crcl_attr)) {// 去视频2
 			setAttr("action", "/jf/puresport/t7Crcl/video3_select_5");// 必修视频3
 			setAttr("pre_action", "/jf/puresport/t7Crcl/video2_select_3");// 必修视频2
 			setAttr("crcl_nm", "必修课程二：" + getCrclInfo(crclid).getCrcl_nm());// 课程名称
+			crcl_flag = 2;
 		} else if ("3".equals(crcl_attr)) {// 去视频3
 			setAttr("crcl_nm", "必修课程三：" + getCrclInfo(crclid).getCrcl_nm());// 课程名称
 			setAttr("action", "/jf/puresport/t7Crcl/generteTest");// 生成考试
 			setAttr("pre_action", "/jf/puresport/t7Crcl/video3_select_5");// 必修视频3
+			crcl_flag = 3;
 		}
+		
+		List<T7Crcl> t7List = queryCrcl(crcl_flag, usrid);
+		setAttr("t7List", t7List);
+		setAttr("course_title", "案例篇选学（选择一篇完成观看）");// 课程标题
+		// 检查课程是否完成，只要有一门完成即可
+		for (T7Crcl t7 : t7List) {
+			if ("1".equals(t7.getStdy_st())) {
+				setAttr("stdy_st_hidden", "1");
+				// setAttr("action", "/jf/puresport/t7Crcl/video3_select_5");// 必修视频3
+				break;
+			}
+		}
+		
 		setAttr("crcl_file_rte", crcl_file_rte);
-		setAttr("stdy_st_hidden", getPara("stdy_st_hidden"));// 本课程学习状态
+//		setAttr("stdy_st_hidden", getPara("stdy_st_hidden"));// 本课程学习状态
 		setAttr("crclid", crclid);// 课程id
 /*		if (!("1".equals(crcl_attr))) {
 			setAttr("crcl_brf", getPara("crcl_brf"));// 课程简介
@@ -341,6 +359,7 @@ public class T7CrclController extends BaseController {
 			if ("1".equals(t7.getStdy_st())) {
 				setAttr("stdy_st_hidden", "1");
 				setAttr("action_hidden", "/jf/puresport/t7Crcl/video3_select_5");// 必修视频3
+				setAttr("pre_action", "/jf/puresport/t7Crcl/video_play?crcl_attr=1&crcl_file_rte=258767799&crclid=1");// 准入必修课程1				
 				// setAttr("action", "/jf/puresport/t7Crcl/video3_select_5");// 必修视频3
 				break;
 			}
@@ -367,6 +386,7 @@ public class T7CrclController extends BaseController {
 				break;
 			}
 		}
+		setAttr("pre_action", "/jf/puresport/t7Crcl/video2_select_3");// 准入学习说明页
 		renderWithPath("/f/accession/video2_select_3.html");
 	}
 
@@ -546,6 +566,7 @@ public class T7CrclController extends BaseController {
 		setAttr("examid", examid);
 		setAttr("examSelectList", examEntityList);
 		setAttr("examDeducList", examEntityList2);
+		setAttr("pre_action", "/jf/puresport/t7Crcl/video3_select_5");// 必修视频3选择
 		renderWithPath("/f/accession/dotest.html");
 	}
 

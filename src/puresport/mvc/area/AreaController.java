@@ -6,9 +6,11 @@ import org.apache.log4j.Logger;
 
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
+import com.mysql.fabric.xmlrpc.base.Array;
 import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
 import com.platform.mvc.base.BaseModel;
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
 import csuduc.platform.util.JsonUtils;
 import oracle.net.aso.e;
@@ -44,6 +46,10 @@ public class AreaController extends BaseController {
 	public void selectProvince(){
 		// 判断管理员级别，不同级别设置可见省份
 		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
+		if (null == mgrSession) {
+			renderJson(new Array());
+			return ;
+		}
 		renderJson(AreaService.service.getProvince(mgrSession));
 	}
 	
@@ -51,6 +57,10 @@ public class AreaController extends BaseController {
 	public void selectCity(){
 		// 获取检索条件
 		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
+		if (null == mgrSession) {
+			renderJson(new Array());
+			return ;
+		}
 		Integer provinceId = getParaToInt("provinceId");
 	 	renderJson(AreaService.service.getCityByProvince(mgrSession, provinceId));
 	}
@@ -63,7 +73,12 @@ public class AreaController extends BaseController {
 	
 	@Clear
 	public void selectProject(){
-		renderJson(AreaService.service.getProject());
+		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
+		if (null == mgrSession) {
+			renderJson(new Array());
+			return ;
+		}
+		renderJson(AreaService.service.getProject(mgrSession));
 	}
 	
 	@Clear
