@@ -255,10 +255,10 @@ public class T7CrclController extends BaseController {
 				}
 			}
 			
-			// 默认city没有的话，默认值是“--”，特殊处理
-			if(("--".equals(t11.getCity())) || ("-".equals(t11.getCity()))) {
-				t11.setCity("");
-			}
+//			// 默认city没有的话，默认值是“--”，特殊处理
+//			if(t11.getCity().toString().contains("-")) {
+//				t11.setCity(null);
+//			}
 			heroListRlt.add(t11);
 		}
 		setAttr("heroList", heroListRlt);
