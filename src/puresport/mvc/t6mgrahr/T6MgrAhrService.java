@@ -8,19 +8,16 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.log4j.Logger;
 
 import com.jfinal.aop.Enhancer;
-import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
 import com.platform.mvc.base.BaseService;
 
 import csuduc.platform.util.ComOutMdl;
 import csuduc.platform.util.StringUtil;
-import csuduc.platform.util.encrypt.CommDES;
 import csuduc.platform.util.encrypt.DESUtil;
 import puresport.applicat.MdlExcelRow;
 import puresport.config.ConfMain;
 import puresport.constant.ConstantInitMy;
 import puresport.constant.EnumRoleType;
-import puresport.constant.EnumTypeLevel;
 import puresport.mvc.comm.ParamComm;
 
 public class T6MgrAhrService extends BaseService {

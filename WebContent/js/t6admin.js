@@ -240,7 +240,6 @@ $(document).ready(function() {
 
 	// ===========搜索查询
 	function search(data, callback, settings) {
-		console.log("search");
 		// datasrch.userId = $('#userId').val();
 		// datasrch.dateTimeBeg = $('#datetimeBeg').val();
 		// datasrch.dateTimeEnd = $('#datetimeEnd').val();
