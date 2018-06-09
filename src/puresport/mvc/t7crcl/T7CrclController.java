@@ -451,8 +451,8 @@ public class T7CrclController extends BaseController {
 	 * @author zhuchaobin 2018-05-21
 	 */
 	public void generteTest() {
-		if (!isCanTest())
-			renderWithPath("/f/accession/dotest.html");
+/*		if (!isCanTest())
+			renderWithPath("/f/accession/dotest.html");*/
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		// 选择题
 		String sql = "select * from t9_tstlib t where t.prblm_tp ='01' order by rand() limit 10";
