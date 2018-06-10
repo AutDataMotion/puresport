@@ -57,10 +57,10 @@ $(document).ready(function() {
 		search : false,
 		"bProcessing" : true, // DataTables载入数据时，是否显示‘进度’提示
 		"sProcessing" : "加载中...",
-		"bFilter" : false, // 过滤功能
+		"bFilter" : true, // 过滤功能
 		"bPaginate" : true, // 翻页功能
 		"bLengthChange" : true, // 改变每页显示数据数量
-		"bFilter" : false, // 过滤功能
+		//"bFilter" : false, // 过滤功能
 		"bSort" : true, // 排序功能
 		"oLanguage" : {
 			"sLengthMenu" : "每页显示 _MENU_ 条记录",
@@ -110,7 +110,8 @@ $(document).ready(function() {
 		}, {
 			extend : 'collection',
 			text : '导出',
-			buttons : [ 'excel', 'print' ]
+			buttons : [ 'excel']
+			//buttons : [ 'excel', 'print' ]
 		} ],
 		columns : [ {
 			data : "usrid",
