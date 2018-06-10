@@ -50,17 +50,17 @@ $(document).ready(function() {
 	var myTable = $('#example1').DataTable({
 		dom : 'Bfrtip',
 		select : false,
-		searching:false,
 		serverSide : true,
 		scrollY : 400,
 		scrollX : true,
 		responsive : true,
+		"searching": false,
 		"bProcessing" : true, // DataTables载入数据时，是否显示‘进度’提示
 		"sProcessing" : "加载中...",
-		"bFilter" : true, // 过滤功能
+//		"bFilter" : true, // 过滤功能
 		"bPaginate" : true, // 翻页功能
 		"bLengthChange" : true, // 改变每页显示数据数量
-		//"bFilter" : false, // 过滤功能
+		"bFilter" : false, // 过滤功能
 		"bSort" : true, // 排序功能
 		"oLanguage" : {
 			"sLengthMenu" : "每页显示 _MENU_ 条记录",
