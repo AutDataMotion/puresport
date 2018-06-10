@@ -116,16 +116,7 @@ $(document).ready(
 				search("", "", "");
 			});
 			// initQuestionType();
-			
+			tableQuestion = myTable;
 			search("", "", "");
-			$('#myTabs_2_2').on('show.bs.tab', function (e) {
-				// 获取已激活的标签页的名称
-				var activeTab = $(e.target).text(); 
-				console.log(activeTab);
-				search("", "", "");
-				// myTable.fnAdjustColumnSizing();
-				// 获取前一个激活的标签页的名称
-				// var previousTab = $(e.relatedTarget).text(); 
-			});
 			
 		});

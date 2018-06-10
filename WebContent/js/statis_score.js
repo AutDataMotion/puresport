@@ -149,4 +149,5 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 	initProvince();
 	// initInstitute();
 	search("","","");
+	tableScore = myTable;
 });

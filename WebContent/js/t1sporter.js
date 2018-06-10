@@ -61,7 +61,8 @@ $(document).ready(function() {
 		"bPaginate" : true, // 翻页功能
 		"bLengthChange" : true, // 改变每页显示数据数量
 		"bFilter" : false, // 过滤功能
-		"bSort" : true, // 排序功能
+		"bSort" : false, // 排序功能
+		"bAutoWidth": false,
 		"oLanguage" : {
 			"sLengthMenu" : "每页显示 _MENU_ 条记录",
 			"sZeroRecords" : "抱歉， 没有找到",
@@ -306,12 +307,5 @@ $(document).ready(function() {
 	}
 	// ------------------上传 end
 	// search("", "", "");
-	$('#myTabs_1_1').on('show.bs.tab', function (e) {
-		// 获取已激活的标签页的名称
-		var activeTab = $(e.target).text(); 
-		console.log(activeTab);
-		// myTable.fnAdjustColumnSizing();
-		// 获取前一个激活的标签页的名称
-		// var previousTab = $(e.relatedTarget).text(); 
-	});
+	tableSporter = myTable;
 });

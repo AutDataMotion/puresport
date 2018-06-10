@@ -534,6 +534,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script type="text/javascript" src="${cxt!}/js/dataTables.select.min.js"></script>
 <script type="text/javascript"  src="${cxt!}/ui/layer3/layer.js"></script>
 
+<script>
+$(function(){
+	var tableAdmin;
+	var tableSporter;
+	var tablePassed;
+	var tableScore;
+	var tableQuestion;
+});
+</script>
 
 <script src="${cxt!}/js/t6admin.js"></script>
 <script src="${cxt!}/js/t1sporter.js"></script>
@@ -546,6 +555,38 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script type="text/javascript" src="${cxt!}/ui/DataTables/sport/vfs_fonts.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/DataTables/sport/buttons.html5.min.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/DataTables/sport/buttons.print.min.js"></script>
+
+<script>
+$(function(){
+	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+		// 获取已激活的标签页的名称
+		var activeTab = $(e.target).text(); 
+		console.log(activeTab);
+		// 获取前一个激活的标签页的名称
+		// var previousTab = $(e.relatedTarget).text(); 
+		var tabTable = null;
+		if(activeTab == '导入管理员'){
+			tabTable = tableAdmin;
+		} else if(activeTab == '导入运动员'){
+			tabTable = tableSporter;
+		}else if(activeTab == '成绩统计'){
+			tabTable = tableScore;
+		}else if(activeTab == '项目合格率统计'){
+			tabTable = tablePassed;
+		}else if(activeTab == '试题错误率统计'){
+			tabTable = tableQuestion;
+		} else {
+			tabTable == null
+		}
+		if (tabTable != null) { 
+		//	console.log(tabTable);
+			tabTable.columns.adjust();
+		　　} else {
+		　　}
+		
+	});
+});
+</script>
 
 </body>
 </html>

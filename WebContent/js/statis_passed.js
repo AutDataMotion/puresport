@@ -144,6 +144,8 @@ $("#citySelect_prj").append("<option value='"+obj[index].id+"'>"+obj[index].name
 		search("","","");
     });
 	
+	tablePassed = myTable;
+	
 	initProvince();
 	// initInstitute();
 	initProject();
