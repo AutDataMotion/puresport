@@ -12,7 +12,7 @@ $(document).ready(
 				scrollY : 400,
 				scrollX : true,
 				responsive : true,
-				search : false,
+				searching : false,
 				"bProcessing" : true, // DataTables载入数据时，是否显示‘进度’提示
 				"sProcessing" : "加载中...",
 				"bFilter" : true, // 过滤功能

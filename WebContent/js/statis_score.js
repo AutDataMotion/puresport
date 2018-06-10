@@ -11,7 +11,7 @@ $(document).ready(function() {
 		scrollY : 400,
 		scrollX : true,
 		responsive : true,
-		search : false,
+		searching : false,
 		"bProcessing" : true, // DataTables载入数据时，是否显示‘进度’提示
 		"sProcessing" : "加载中...",
 		"bFilter" : true, // 过滤功能
@@ -80,7 +80,7 @@ $(document).ready(function() {
 		datasrch.name2 = $("#citySelect_score option:selected").html();
 		datasrch.name3 = $("#instituteSelect_score option:selected").html();
 		datasrch.pageIndex = 0;
-		datasrch.pageSize = 2000;
+		datasrch.pageSize = 20000;
 		// 发送查询请求
 		$.ajax({
 			type : "get",

@@ -49,12 +49,12 @@ $(document).ready(function() {
 	var tableBtnType = 1;// 1:添加 2:编辑
 	var myTable = $('#example2').DataTable({
 		dom : 'Bfrtip',
-		select : true,
+		select : false,
+		searching: false,
 		serverSide : true,
 		scrollY : 400,
 		scrollX : true,
 		responsive : true,
-		search : false,
 		"bProcessing" : true, // DataTables载入数据时，是否显示‘进度’提示
 		"sProcessing" : "加载中...",
 		"bFilter" : true, // 过滤功能
@@ -97,7 +97,7 @@ $(document).ready(function() {
 			text : '编辑',
 			action : function(e, dt, node, config) {
 				if (null == tableRowSelect) {
-					alert('请先选择某行');
+					layer.msg('请先选择某行');
 					return;
 				}
 				// 给表单赋值
