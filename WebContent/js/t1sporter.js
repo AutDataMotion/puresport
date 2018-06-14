@@ -8,7 +8,7 @@ $(document).ready(function() {
 		gnd : '',
 		brth_dt : '',
 		spt_prj : '',
-		typeleve : '',
+		typelevel : '',
 		province : '',
 		city : '',
 		institute : '',
@@ -26,7 +26,7 @@ $(document).ready(function() {
 			gnd : $(':text[name="t1usrBsc.gnd"]'),
 			brth_dt : $(':text[name="t1usrBsc.brth_dt"]'),
 			spt_prj : $(':text[name="t1usrBsc.spt_prj"]'),
-			typeleve : $(':text[name="t1usrBsc.typeleve"]'),
+			typelevel : $(':text[name="t1usrBsc.typelevel"]'),
 			province : $(':text[name="t1usrBsc.province"]'),
 			city : $(':text[name="t1usrBsc.city"]'),
 			institute : $(':text[name="t1usrBsc.institute"]'),
@@ -84,17 +84,19 @@ $(document).ready(function() {
 				d.v = JSON.stringify(datasrch);
             }
 		},
-		buttons : [ {
-			text : '添加',
-			action : function(e, dt, node, config) {
-				// 清空表单赋值
-				selectRowToForm(null);
-				// 修改表单提示文字
-				$('#exampleModalLabelSporter').text('添加');
-				tableBtnType = 1;
-				$("#sporterModal").modal('show');
-			}
-		}, {
+		buttons : [ 
+//			{
+//			text : '添加',
+//			action : function(e, dt, node, config) {
+//				// 清空表单赋值
+//				selectRowToForm(null);
+//				// 修改表单提示文字
+//				$('#exampleModalLabelSporter').text('添加');
+//				tableBtnType = 1;
+//				$("#sporterModal").modal('show');
+//			}
+//		},
+		{
 			text : '编辑',
 			action : function(e, dt, node, config) {
 				if (null == tableRowSelect) {
@@ -169,7 +171,7 @@ $(document).ready(function() {
 			formMdl.gnd.val('');
 			formMdl.brth_dt.val('');
 			formMdl.spt_prj.val('');
-			formMdl.typeleve.val('');
+			formMdl.typelevel.val('');
 			formMdl.province.val('');
 			formMdl.city.val('');
 			formMdl.institute.val('');
@@ -184,7 +186,7 @@ $(document).ready(function() {
 		formMdl.gnd.val(row.gnd);
 		formMdl.brth_dt.val(row.brth_dt);
 		formMdl.spt_prj.val(row.spt_prj);
-		formMdl.typeleve.val(row.typeleve);
+		formMdl.typelevel.val(row.typelevel);
 		formMdl.province.val(row.province);
 		formMdl.city.val(row.city);
 		formMdl.institute.val(row.institute);
@@ -200,7 +202,7 @@ $(document).ready(function() {
 		dataMdl.gnd = formMdl.gnd.val();
 		dataMdl.brth_dt = formMdl.brth_dt.val();
 		dataMdl.spt_prj = formMdl.spt_prj.val();
-		dataMdl.typeleve = formMdl.typeleve.val();
+		dataMdl.typelevel = formMdl.typelevel.val();
 		dataMdl.province = formMdl.province.val();
 		dataMdl.city = formMdl.city.val();
 		dataMdl.institute = formMdl.institute.val();
@@ -297,7 +299,7 @@ $(document).ready(function() {
 				if (data== "1") {
 					layer.msg("上传成功");
 				} else {
-					layer.msg(data);
+					layer.alert(data);
 				}
 				//并且清空原文件，不然选择相同文件不能再次传 
 		     $('#inputfilesporter').val(''); 

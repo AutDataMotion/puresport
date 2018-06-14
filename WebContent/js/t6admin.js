@@ -83,17 +83,19 @@ $(document).ready(function() {
 				d.v = JSON.stringify(datasrch);
 			}
 		},
-		buttons : [ {
-			text : '添加',
-			action : function(e, dt, node, config) {
-				// 清空表单赋值
-				selectRowToForm(null);
-				// 修改表单提示文字
-				$('#exampleModalLabelAdmin').text('添加');
-				tableBtnType = 1;
-				$("#adminModal").modal('show');
-			}
-		}, {
+		buttons : [ 
+//			{
+//			text : '添加',
+//			action : function(e, dt, node, config) {
+//				// 清空表单赋值
+//				selectRowToForm(null);
+//				// 修改表单提示文字
+//				$('#exampleModalLabelAdmin').text('添加');
+//				tableBtnType = 1;
+//				$("#adminModal").modal('show');
+//			}
+//		},
+		{
 			text : '编辑',
 			action : function(e, dt, node, config) {
 				if (null == tableRowSelect) {
@@ -305,7 +307,7 @@ $(document).ready(function() {
 				if (data== "1") {
 					layer.msg("上传成功");
 				} else {
-					layer.msg(data);
+					layer.alert(data);
 				}
 				  $('#inputfileadmin').val(''); 
 				search("", "", "");

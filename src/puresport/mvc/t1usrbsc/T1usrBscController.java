@@ -17,6 +17,7 @@ import com.platform.mvc.base.BaseController;
 import csuduc.platform.util.ComOutMdl;
 import csuduc.platform.util.StringUtil;
 import csuduc.platform.util.encrypt.DESUtil;
+import csuduc.platform.util.tuple.Tuple2;
 import puresport.applicat.ExcelParseTool;
 import puresport.applicat.MdlExcelRow;
 import puresport.constant.ConstantInitMy;
@@ -59,23 +60,23 @@ public class T1usrBscController extends BaseController {
 		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
 		renderJsonForTable(T1usrBscService.service.selectByPage(mgrSession, getParamWithServerPage()));
 	}
-	@Clear
+	
 	public void addSporter(){
-		T1usrBsc mdl = getModel(T1usrBsc.class);
-	    // 检查手机号的用户是否存在
-		if (T1usrBscService.service.isExist(mdl)) {
-			ResTips errorTips = ResTips.getFailRes()
-					.addErroFiled(T1usrBsc.column_crdt_no, "该证件号用户已存在");
-			renderJson(errorTips);
-			return ;
-		}
-		// 不存在则添加
-		mdl.set(T1usrBsc.column_usr_nm, mdl.get(T1usrBsc.column_nm));
-		if (mdl.saveGenIntId()) {
-			renderJson(ResTips.getSuccRes());
-		} else {
-			renderJson(ResTips.getFailRes());
-		}
+//		T1usrBsc mdl = getModel(T1usrBsc.class);
+//	    // 检查手机号的用户是否存在
+//		if (T1usrBscService.service.isExist(mdl)) {
+//			ResTips errorTips = ResTips.getFailRes()
+//					.addErroFiled(T1usrBsc.column_crdt_no, "该证件号用户已存在");
+//			renderJson(errorTips);
+//			return ;
+//		}
+//		// 不存在则添加
+//		mdl.set(T1usrBsc.column_usr_nm, mdl.get(T1usrBsc.column_nm));
+//		if (mdl.saveGenIntId()) {
+//			renderJson(ResTips.getSuccRes());
+//		} else {
+//			renderJson(ResTips.getFailRes());
+//		}
 	}
 
 	@Clear
@@ -126,6 +127,11 @@ public class T1usrBscController extends BaseController {
 	
 	@Clear
 	public void inload() {
+		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
+		if (null == mgrSession) {
+			renderText("页面信息已过期，请刷新页面!");
+			 return ;
+		}
 		// 获取上传的excel文件
 		String path = "files/upload/".trim();
 		String base = this.getRequest().getContextPath().trim();// 应用路径
@@ -154,14 +160,13 @@ public class T1usrBscController extends BaseController {
 			return ;
 		}
 		// 存入数据库
-		ComOutMdl<List<MdlExcelRow>> outFailedMdl = new ComOutMdl<>();
+		Tuple2<Boolean, String> rt = T1usrBscService.service.insertFromExcel(mgrSession, table);
 		
-		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
-		if (T1usrBscService.service.insertFromExcel(mgrSession, table, outFailedMdl)) {
+		if (rt.first) {
 			renderText(EnumStatus.Success.getIdText());
 		} else {
-			log.error(outFailedMdl.get());
-			renderText("文件内容解析有误,请检查内容及格式!");
+			log.error(rt.second);
+			renderText(rt.second);
 		}
 		return;
 	}

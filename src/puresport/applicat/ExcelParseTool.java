@@ -27,6 +27,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import csuduc.platform.util.StringUtil;
 import jxl.NumberCell;
 
 /**
@@ -109,7 +110,7 @@ public class ExcelParseTool {
 		while (iterator.hasNext()) {
 			cell = iterator.next();
 			// 取出cell中的value
-			rst.add(getStrValue(cell));
+			rst.add(StringUtil.replaceExcelBlank(getStrValue(cell)));
 		}
 		return rst;
 	}
