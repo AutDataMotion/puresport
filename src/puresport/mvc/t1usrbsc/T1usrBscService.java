@@ -45,10 +45,10 @@ public class T1usrBscService extends BaseService {
 	public boolean isExist(T1usrBsc mdl) {
 		Record sporter = ConfMain.db().findById(tableName, T1usrBsc.column_crdt_no,
 				(String) mdl.get(T1usrBsc.column_crdt_no));
-		if (null == sporter) {
+		if (null == sporter || !mdl.getLong(T1usrBsc.column_usrid).equals(sporter.getLong(T1usrBsc.column_usrid))) {
 			return false;
 		}
-		mdl.set(T1usrBsc.column_usrid, sporter.get(T1usrBsc.column_usrid));
+		// mdl.set(T1usrBsc.column_usrid, sporter.get(T1usrBsc.column_usrid));
 		return true;
 	}
 

@@ -166,7 +166,7 @@ public class T6MgrAhrController extends BaseController {
 		if (!T6MgrAhrService.service.isExist(mdl)) {
 			// 不存在则不可以更新
 			ResTips errorTips = ResTips.getFailRes()
-					.addErroFiled(T6MgrAhr.column_crdt_no, "该证件号用户已存在");
+					.addErroFiled(T6MgrAhr.column_crdt_no, "该证件号用户不存在");
 			renderJson(errorTips);
 			return ;
 		}

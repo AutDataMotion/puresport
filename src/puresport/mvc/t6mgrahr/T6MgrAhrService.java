@@ -41,10 +41,10 @@ public class T6MgrAhrService extends BaseService {
 	public boolean isExist(T6MgrAhr mdl) {
 		Record user = ConfMain.db().findById(tableName, T6MgrAhr.column_crdt_no,
 				(String) mdl.get(T6MgrAhr.column_crdt_no));
-		if (null == user) {
+		if (null == user || !mdl.getLong(T6MgrAhr.column_usrid).equals(user.getLong(T6MgrAhr.column_usrid))) {
 			return false;
 		}
-		mdl.set(T6MgrAhr.column_usrid, user.get(T6MgrAhr.column_usrid));
+		// mdl.set(T6MgrAhr.column_usrid, user.get(T6MgrAhr.column_usrid));
 		return true;
 	}
 
