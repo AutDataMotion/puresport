@@ -36,8 +36,8 @@ public class pagesController extends BaseController {
 		//getSession().setAttribute("userid", "100");
 //		setSessionAttr("userID","10");
 		
-//		long count = WebsiteSta.countPeople();
-//		log.debug(count);
+		long count = WebsiteSta.countPeople();
+		log.debug(count);
 		renderWithPath(pthv+"index.html");
 		
 	}
