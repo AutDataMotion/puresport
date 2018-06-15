@@ -131,11 +131,13 @@ public class T6MgrAhrService extends BaseService {
 			log.error("insertAdminToDb数据校验失败:" + excelRow);
 			return TupleUtil.tuple(false, "管理员级别不符合要求");
 		}
-		if (StringUtil.invalidateLength(excelRow.getByIndex(8), 2, 128)) {
+		if (StringUtil.invalidateLength(excelRow.getByIndex(8), 2, 128)
+				|| ValidateComm.inv_column_province(mgrSession, excelRow.getByIndex(8))) {
 			log.error("insertAdminToDb数据校验失败:" + excelRow);
 			return TupleUtil.tuple(false, "省/直辖市不符合要求");
 		}
-		if (StringUtil.invalidateLength(excelRow.getByIndex(9), 2, 128)) {
+		if (StringUtil.invalidateLength(excelRow.getByIndex(9), 2, 128)
+				|| ValidateComm.inv_column_city(excelRow.getByIndex(8), excelRow.getByIndex(9))) {
 			log.error("insertAdminToDb数据校验失败:" + excelRow);
 			return TupleUtil.tuple(false, "市/区不符合要求");
 		}

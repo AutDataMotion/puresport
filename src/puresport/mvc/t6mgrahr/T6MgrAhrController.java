@@ -22,6 +22,7 @@ import puresport.applicat.ExcelParseTool;
 import puresport.applicat.MdlExcelRow;
 import puresport.constant.ConstantInitMy;
 import puresport.constant.EnumStatus;
+import puresport.constant.EnumTypeLevel;
 import puresport.mvc.comm.ParamComm;
 import puresport.mvc.comm.ResTips;
 
@@ -182,6 +183,11 @@ public class T6MgrAhrController extends BaseController {
 		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
 		if (null == mgrSession) {
 			renderText("页面信息已过期，请刷新页面!");
+			 return ;
+		}
+		// 市级管理员不可导入管理员
+		if (mgrSession.getTypeleve().equals(EnumTypeLevel.City.getName())) {
+			renderText("您没有该权限!");
 			 return ;
 		}
 		// 获取上传的excel文件
