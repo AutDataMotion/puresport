@@ -164,6 +164,17 @@ public class ParamComm implements Serializable{
 	public void setName4(String name4) {
 		this.name4 = name4;
 	}
+
+
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "ParamComm [id=" + id + ", name1=" + name1 + ", name2=" + name2 + ", name3=" + name3 + ", name4=" + name4
+				+ ", draw=" + draw + ", pageIndex=" + pageIndex + ", pageSize=" + pageSize + ", total=" + total + "]";
+	}
 	
 	
 }

@@ -51,10 +51,26 @@ public class T6MgrSession implements Serializable {
 			return " 1=1 ";
 		} else if (typeleve.equals(EnumTypeLevel.Province.getName())) {
 			// 省级 只可见属于该省的
-			return String.format(" province='%s' ", province);
+			return String.format(" province='%s' and typeleve in ('省级', '市级') ", province);
 		} else if (typeleve.equals(EnumTypeLevel.City.getName())) {
 			// 市级 只可见属于该市的
-			return String.format(" city='%s' and province='%s' ", city, province);
+			return String.format(" city='%s' and province='%s'  and typeleve in ('市级') ", city, province);
+		}
+		// 未知的都不可见
+		return " 1=2 ";
+	}
+	
+
+	public String selectRoleStr_UserBasic() {
+		if (typeleve.equals(EnumTypeLevel.Country.getName())) {
+			// 国家级 全部可见
+			return " 1=1 ";
+		} else if (typeleve.equals(EnumTypeLevel.Province.getName())) {
+			// 省级 只可见属于该省的
+			return String.format(" province='%s' and typelevel in ('省级', '市级') ", province);
+		} else if (typeleve.equals(EnumTypeLevel.City.getName())) {
+			// 市级 只可见属于该市的
+			return String.format(" city='%s' and province='%s'  and typelevel in ('市级') ", city, province);
 		}
 		// 未知的都不可见
 		return " 1=2 ";
@@ -151,5 +167,15 @@ public class T6MgrSession implements Serializable {
 	public void setInstitute(String institute) {
 		this.institute = institute;
 	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "T6MgrSession [usrid=" + usrid + ", typeleve=" + typeleve + ", province=" + province + ", city=" + city
+				+ ", institute=" + institute + "]";
+	}
+
 
 }
