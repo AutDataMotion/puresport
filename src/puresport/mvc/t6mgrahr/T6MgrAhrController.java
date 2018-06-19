@@ -2,6 +2,7 @@ package puresport.mvc.t6mgrahr;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.log4j.Logger;
 
@@ -22,6 +23,7 @@ import puresport.applicat.ExcelParseTool;
 import puresport.applicat.MdlExcelRow;
 import puresport.constant.ConstantInitMy;
 import puresport.constant.EnumStatus;
+import puresport.constant.EnumTypeLevel;
 import puresport.mvc.comm.ParamComm;
 import puresport.mvc.comm.ResTips;
 
@@ -137,10 +139,27 @@ public class T6MgrAhrController extends BaseController {
 	@Clear
 	public void getData() {
 		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
+		if (null == mgrSession) {
+			renderText("页面信息已过期，请刷新页面!");
+			 return ;
+		}
 		renderJsonForTable(T6MgrAhrService.service.selectByPage(mgrSession, getParamWithServerPage()));
 	}
 	
-
+	public void deleteManager(){
+		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
+		if (null == mgrSession) {
+			renderText("页面信息已过期，请刷新页面!");
+			 return ;
+		}
+		ParamComm paramComm = getParamCommDef();
+		if (Objects.isNull(paramComm)) {
+			log.error("deleteManager 参数解析失败");
+			renderText("参数解析失败!");
+			 return ;
+		}
+		renderText(T6MgrAhrService.service.delete(mgrSession, paramComm).second);
+	}
 	public void addTable(){
 //		T6MgrAhr mdl = getModel(T6MgrAhr.class);
 //	    // 检查手机号的用户是否存在
@@ -182,6 +201,11 @@ public class T6MgrAhrController extends BaseController {
 		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
 		if (null == mgrSession) {
 			renderText("页面信息已过期，请刷新页面!");
+			 return ;
+		}
+		// 市级管理员不可导入管理员
+		if (mgrSession.getTypeleve().equals(EnumTypeLevel.City.getName())) {
+			renderText("您没有该权限!");
 			 return ;
 		}
 		// 获取上传的excel文件

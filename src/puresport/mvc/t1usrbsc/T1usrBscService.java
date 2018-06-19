@@ -53,7 +53,7 @@ public class T1usrBscService extends BaseService {
 	}
 
 	public List<T1usrBsc> selectByPage(T6MgrSession mgrSession, ParamComm paramMdl) {
-		final String roleStr = mgrSession.selectRoleStr();
+		final String roleStr = mgrSession.selectRoleStr_UserBasic();
 		Long countTotal = ConfMain.db()
 				.queryLong(String.format("select count(1) from %s where %s ", tableName, roleStr));
 		paramMdl.setTotal(countTotal);

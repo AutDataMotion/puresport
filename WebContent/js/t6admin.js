@@ -110,6 +110,46 @@ $(document).ready(function() {
 				$("#adminModal").modal('show');
 			}
 		}, {
+			text : '删除',
+			action : function(e, dt, node, config) {
+				if (null == tableRowSelect) {
+					layer.msg('请先选择某行');
+					return;
+				}
+				// 确认删除
+				layer.confirm('确定删除吗？', {
+				  btn: ['删除','取消'] //按钮
+				}, function(){
+					// 删除操作
+					// 获取usrid
+					var delparam = {
+							id : tableRowSelect.usrid,
+							name1 : '',
+							name2 : '',
+							name3 : '',
+							pageIndex : '',
+							pageSize : ''
+						};
+					// 发送查询请求
+					$.ajax({
+						type : "get",
+						url : encodeURI(encodeURI(cxt + "/jf/puresport/t6MgrAhr/deleteManager")),
+						data : {
+							v : JSON.stringify(delparam)
+						},
+						contentType : "application/json",
+						success : function(response) {
+							layer.msg(response);
+							// 重新加载table数据
+							myTable.ajax.reload();
+						}
+					});
+				}, function(){
+					// 取消操作
+				});
+			
+			}
+		},{
 			extend : 'collection',
 			text : '导出',
 			buttons : [ 'excel']
@@ -307,7 +347,7 @@ $(document).ready(function() {
 				if (data== "1") {
 					layer.msg("上传成功");
 				} else {
-					layer.alert(data);
+					layer.msg(data);
 				}
 				  $('#inputfileadmin').val(''); 
 				search("", "", "");

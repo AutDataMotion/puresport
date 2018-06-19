@@ -2,6 +2,7 @@ package puresport.mvc.t6mgrahr;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -20,6 +21,7 @@ import puresport.applicat.MdlExcelRow;
 import puresport.config.ConfMain;
 import puresport.constant.ConstantInitMy;
 import puresport.constant.EnumRoleType;
+import puresport.constant.EnumTypeLevel;
 import puresport.mvc.comm.ParamComm;
 import puresport.mvc.comm.ValidateComm;
 
@@ -34,7 +36,7 @@ public class T6MgrAhrService extends BaseService {
 
 	public T6MgrAhr SelectById(Integer id) {
 
-		T6MgrAhr mdl = T6MgrAhr.dao.findFirst("select * from t6MgrAhr where id=?", id);
+		T6MgrAhr mdl = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where usrid=?", id);
 		return mdl;
 	}
 
@@ -46,6 +48,35 @@ public class T6MgrAhrService extends BaseService {
 		}
 		// mdl.set(T6MgrAhr.column_usrid, user.get(T6MgrAhr.column_usrid));
 		return true;
+	}
+	
+	public Tuple2<Boolean, String> delete(T6MgrSession mgrSession, ParamComm paramComm){
+		Integer usrId = paramComm.getId().intValue();
+		try {
+			// 查询待删除管理员信息
+			T6MgrAhr t6MgrAhr = SelectById(usrId);
+			if (Objects.isNull(t6MgrAhr)) {
+				log.error("delete manager not exist ,param:" +paramComm);
+				return TupleUtil.tuple(false, "该用户不存在");
+			}
+			// 比较级别是否可删
+			if (!EnumTypeLevel.higher(mgrSession.getTypeleve(), t6MgrAhr.getTypeleve())) {
+				log.error(String.format("delete manager not higherOrEqual param:%s  session:%s " , paramComm, mgrSession));
+				return TupleUtil.tuple(false, "您没有权限"); 
+			}
+			// 比较省市是否可删
+			if (ValidateComm.inv_deleteProvince(mgrSession, t6MgrAhr)) {
+				log.error(String.format("delete manager inv_deleteProvince param:%s  session:%s " , paramComm, mgrSession));
+				return TupleUtil.tuple(false, "您没有权限"); 
+			}
+			t6MgrAhr.delete();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			log.error(e);
+			return TupleUtil.tuple(false, "系统有误，请联系管理人员");
+		}
+		return TupleUtil.tuple(false, "删除成功");
 	}
 
 	public List<T6MgrAhr> selectByPage(T6MgrSession mgrSession, ParamComm paramMdl) {
@@ -131,11 +162,13 @@ public class T6MgrAhrService extends BaseService {
 			log.error("insertAdminToDb数据校验失败:" + excelRow);
 			return TupleUtil.tuple(false, "管理员级别不符合要求");
 		}
-		if (StringUtil.invalidateLength(excelRow.getByIndex(8), 2, 128)) {
+		if (StringUtil.invalidateLength(excelRow.getByIndex(8), 2, 128)
+				|| ValidateComm.inv_column_province(mgrSession, excelRow.getByIndex(8))) {
 			log.error("insertAdminToDb数据校验失败:" + excelRow);
 			return TupleUtil.tuple(false, "省/直辖市不符合要求");
 		}
-		if (StringUtil.invalidateLength(excelRow.getByIndex(9), 2, 128)) {
+		if (StringUtil.invalidateLength(excelRow.getByIndex(9), 2, 128)
+				|| ValidateComm.inv_column_city(excelRow.getByIndex(8), excelRow.getByIndex(9))) {
 			log.error("insertAdminToDb数据校验失败:" + excelRow);
 			return TupleUtil.tuple(false, "市/区不符合要求");
 		}
