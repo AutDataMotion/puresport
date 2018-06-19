@@ -262,12 +262,15 @@ public class T1usrBscController extends BaseController {
 //        String userType = "";
         JSONObject json = new JSONObject();  
         
+        String usertype = getPara("usertype");
+        
         Long userID = Long.valueOf((String)getSession().getAttribute("usrid"));
         T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", userID);//根据用户名查询数据库中的用户  
         if(item!=null)
         {
 //        	userType = getPara("userType");
-            if(((String)item.getUsr_tp()).equals("运动员"))//运动员
+//            if(((String)item.getUsr_tp()).equals("运动员"))//运动员
+        	if(usertype.equals("运动员"))//运动员
             {
 
 
@@ -277,19 +280,21 @@ public class T1usrBscController extends BaseController {
                 String competetionitem = getPara("competetionitem");
 
 //                int res = Db.update("update puresport.t1_usr_bsc set province=?,city=?,spt_prj=? where usrid=?",province,city,competetionitem,userID);
-                int res = Db.update("update puresport.t1_usr_bsc set spt_prj=? where usrid=?",competetionitem,userID);
+                int res = Db.update("update puresport.t1_usr_bsc set usr_tp=?,spt_prj=? where usrid=?",usertype,competetionitem,userID);
                 if(res>0)
                 {
                 	flag = true; 
+                	getSession().setAttribute("usr_tp", usertype);//设置session，保存登录用户的昵称
                 }
             }
             else {//辅助人员
             	String company = getPara("company");//获取表单数据，这里的参数就是页面表单中的name属性值  
                 String position = getPara("position");
-                int res = Db.update("update puresport.t1_usr_bsc set department=?,post=? where usrid=?",company,position,userID);
+                int res = Db.update("update puresport.t1_usr_bsc set usr_tp=?,department=?,post=? where usrid=?",usertype,company,position,userID);
                 if(res>0)
                 {
                 	flag = true; 
+                	getSession().setAttribute("usr_tp", usertype);//设置session，保存登录用户的昵称
                 }
             }
         }
