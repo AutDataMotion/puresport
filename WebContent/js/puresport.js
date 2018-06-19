@@ -93,16 +93,16 @@ function user_login()
 	    		{
 	    			$("#userLoginPanel_1").toggle();
 		    		$("#userLoginPanel_2").toggle();
-		    		if(data.userType == "运动员")//运动员
-	    			{
-		    			
-		    			$(".form-loginbox_user_2_1").toggle(true);
-		    			$(".form-loginbox_user_2_2").toggle(false);
-	    			}
-		    		else{//辅助人员
-		    			$(".form-loginbox_user_2_2").toggle(true);
-		    			$(".form-loginbox_user_2_1").toggle(false);
-		    		}
+//		    		if(data.userType == "运动员")//运动员
+//	    			{
+//		    			
+//		    			$(".form-loginbox_user_2_1").toggle(true);
+//		    			$(".form-loginbox_user_2_2").toggle(false);
+//	    			}
+//		    		else{//辅助人员
+//		    			$(".form-loginbox_user_2_2").toggle(true);
+//		    			$(".form-loginbox_user_2_1").toggle(false);
+//		    		}
 	    		}
 	    		else{
 	    			window.location=data.url;  
@@ -126,6 +126,28 @@ function user_login()
 	})
 	
 	
+}
+function user_ImproveType(user_type)
+{
+//	alert(user_type);
+	if(user_type == "0")//请选择人员类型
+	{
+//		alert(user_type);
+		app.userType = "请选择人员类型";
+		$(".form-loginbox_user_2_1").toggle(false);
+		$(".form-loginbox_user_2_2").toggle(false);
+	}
+	if(user_type == "1")//运动员
+	{
+		app.userType = "运动员";
+		$(".form-loginbox_user_2_1").toggle(true);
+		$(".form-loginbox_user_2_2").toggle(false);
+	}
+	else{//辅助人员
+		app.userType = "辅助人员";
+		$(".form-loginbox_user_2_2").toggle(true);
+		$(".form-loginbox_user_2_1").toggle(false);
+	}
 }
 function admin_login()
 {
@@ -229,6 +251,7 @@ function Improve_user_info()
 
 //			    	province:province,
 //			    	city:city,
+			    	usertype:app.userType,
 			    	competetion:Competetion,
 			    	competetionitem:CompetetionItem
 			    },
@@ -260,7 +283,7 @@ function Improve_user_info()
 			})
 		}
 	}
-	else{//辅助人员
+	if(app.userType=="辅助人员"){//辅助人员
 		var company = $('#form-company_assist').val();
 		var position = $('#form-position_assist').val();
 		if(company&&position)
@@ -270,7 +293,7 @@ function Improve_user_info()
 			    type:'POST', //GET
 			    async:true,    //或false,是否异步
 			    data:{
-//			    	userType:app.userType,
+			    	usertype:app.userType,
 			    	company:company,
 			    	position:position
 			    },
@@ -316,6 +339,9 @@ function Improve_user_info()
 			Tips('myModallyf_content_user',"请完善个人信息！");
 		}
 	}
+//	else{
+//		Tips('myModallyf_content_user',"请完善个人信息！");
+//	}
 	
 	
 }
