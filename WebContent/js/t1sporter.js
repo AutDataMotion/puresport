@@ -2,9 +2,12 @@ $(document).ready(function() {
 	// js 数据module
 	var dataMdl = {
 		id : '',
+		usr_tp:'',
 		nm : '',
 		crdt_tp : '',
 		crdt_no : '',
+		department:'',
+		post:'',
 		gnd : '',
 		brth_dt : '',
 		spt_prj : '',
@@ -20,9 +23,12 @@ $(document).ready(function() {
 	function  curFormMdl() {
 		return  {
 			usrid : $(':text[name="t1usrBsc.usrid"]'),
+			usr_tp : $(':text[name="t1usrBsc.usr_tp"]'),
 			nm : $(':text[name="t1usrBsc.nm"]'),
 			crdt_tp : $(':text[name="t1usrBsc.crdt_tp"]'),
 			crdt_no : $(':text[name="t1usrBsc.crdt_no"]'),
+			department : $(':text[name="t1usrBsc.department"]'),
+			post : $(':text[name="t1usrBsc.post"]'),
 			gnd : $(':text[name="t1usrBsc.gnd"]'),
 			brth_dt : $(':text[name="t1usrBsc.brth_dt"]'),
 			spt_prj : $(':text[name="t1usrBsc.spt_prj"]'),
@@ -120,11 +126,17 @@ $(document).ready(function() {
 			data : "usrid",
 			"visible": false
 		},{
+			data : "usr_tp"
+		},{
 			data : "nm"
 		}, {
 			data : "crdt_tp"
 		}, {
 			data : "crdt_no"
+		},{
+			data : "department"
+		},{
+			data : "post"
 		}, {
 			data : "gnd"
 		}, {
@@ -165,9 +177,12 @@ $(document).ready(function() {
 		var formMdl = curFormMdl();
 		if (null === row) {
 			formMdl.usrid.val('');
+			formMdl.usr_tp.val('');
 			formMdl.nm.val('');
 			formMdl.crdt_tp.val('');
 			formMdl.crdt_no.val('');
+			formMdl.department.val('');
+			formMdl.post.val('');
 			formMdl.gnd.val('');
 			formMdl.brth_dt.val('');
 			formMdl.spt_prj.val('');
@@ -180,9 +195,12 @@ $(document).ready(function() {
 			return;
 		}
 		formMdl.usrid.val(row.usrid);
+		formMdl.usr_tp.val(row.usr_tp);
 		formMdl.nm.val(row.nm);
 		formMdl.crdt_tp.val(row.crdt_tp);
 		formMdl.crdt_no.val(row.crdt_no);
+		formMdl.department.val(row.department);
+		formMdl.post.val(row.post);
 		formMdl.gnd.val(row.gnd);
 		formMdl.brth_dt.val(row.brth_dt);
 		formMdl.spt_prj.val(row.spt_prj);
@@ -196,9 +214,13 @@ $(document).ready(function() {
 
 	function FormToDataMdl() {
 		var formMdl = curFormMdl();
+		dataMdl.usr_tp = formMdl.usr_tp.val();
 		dataMdl.nm = formMdl.nm.val();
 		dataMdl.crdt_tp = formMdl.crdt_tp.val();
 		dataMdl.crdt_no = formMdl.crdt_no.val();
+		dataMdl.department = formMdl.department.val();
+		dataMdl.post = formMdl.post.val();
+		
 		dataMdl.gnd = formMdl.gnd.val();
 		dataMdl.brth_dt = formMdl.brth_dt.val();
 		dataMdl.spt_prj = formMdl.spt_prj.val();

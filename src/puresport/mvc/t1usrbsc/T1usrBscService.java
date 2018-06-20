@@ -60,7 +60,7 @@ public class T1usrBscService extends BaseService {
 		List<T1usrBsc> resList = new ArrayList<>();
 		if (countTotal > 0) {
 			resList = T1usrBsc.dao.find(String.format(
-					"select usrid,nm,crdt_tp, crdt_no, gnd,brth_dt,spt_prj, typelevel, province, city,institute, mblph_no, email  from %s where %s  limit ?,?",
+					"select usrid,usr_tp, nm,crdt_tp, crdt_no,department,post, gnd,brth_dt,spt_prj, typelevel, province, city,institute, mblph_no, email  from %s where %s  limit ?,?",
 					tableName, roleStr), paramMdl.getPageIndex(), paramMdl.getPageSize());
 		}
 		return resList;

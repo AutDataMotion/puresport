@@ -9,6 +9,16 @@
 </div>
 
 <div class="form-group col-sm-12  ">
+	<label class="col-sm-2 control-label">人员类型</label>
+	<div class="col-sm-7">
+		<input type="text" name="t1usrBsc.usr_tp" value="${escapeXml(t1usrBsc.usr_tp!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" disabled >
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> </span>
+</div>
+
+<div class="form-group col-sm-12  ">
 	<label class="col-sm-2 control-label">姓名</label>
 	<div class="col-sm-7">
 		<input type="text" name="t1usrBsc.nm" value="${escapeXml(t1usrBsc.nm!)}" 
@@ -33,6 +43,26 @@
 	<div class="col-sm-7">
 		<input type="text" name="t1usrBsc.crdt_no" value="${escapeXml(t1usrBsc.crdt_no!)}" 
 		class="form-control" maxlength="100" vMin="1" vType="length" style="background-color: #eee;border: 1px solid #ccc;" readonly>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> </span>
+</div>
+
+<div class="form-group col-sm-12  ">
+	<label class="col-sm-2 control-label">工作单位</label>
+	<div class="col-sm-7">
+		<input type="text" name="t1usrBsc.department" value="${escapeXml(t1usrBsc.department!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" >
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> </span>
+</div>
+
+<div class="form-group col-sm-12  ">
+	<label class="col-sm-2 control-label">职务</label>
+	<div class="col-sm-7">
+		<input type="text" name="t1usrBsc.post" value="${escapeXml(t1usrBsc.post!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" >
 		<span class="help-inline col-sm-2"></span>
 	</div>
 	<span class="help-inline col-sm-2"> </span>
