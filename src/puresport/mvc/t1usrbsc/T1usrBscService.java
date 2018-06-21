@@ -39,7 +39,7 @@ public class T1usrBscService extends BaseService {
 
 	public T1usrBsc SelectById(Integer id) {
 
-		T1usrBsc mdl = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where id=?", id);
+		T1usrBsc mdl = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where id=? limit 1 ", id);
 		return mdl;
 	}
 
@@ -52,17 +52,55 @@ public class T1usrBscService extends BaseService {
 		// mdl.set(T1usrBsc.column_usrid, sporter.get(T1usrBsc.column_usrid));
 		return true;
 	}
-
+	public Tuple2<Boolean, String> delete(T6MgrSession mgrSession, ParamComm paramComm){
+		Integer usrId = paramComm.getId().intValue();
+		try {
+			// 查询待删除管理员信息
+			T1usrBsc sporter = SelectById(usrId);
+			if (Objects.isNull(sporter)) {
+				log.error("delete sporter not exist ,param:" +paramComm);
+				return TupleUtil.tuple(false, "该用户不存在");
+			}
+			// 比较省市是否可删
+			if (ValidateComm.inv_deleteProvince_sporter(mgrSession, sporter)) {
+				log.error(String.format("delete sporter inv_deleteProvince param:%s  session:%s " , paramComm, mgrSession));
+				return TupleUtil.tuple(false, "您没有权限"); 
+			}
+			sporter.update();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			log.error(e);
+			return TupleUtil.tuple(false, "系统有误，请联系管理人员");
+		}
+		return TupleUtil.tuple(false, "删除成功");
+	}
+	public static String getSearchWhere(T6MgrSession mgrSession, ParamComm paramMdl, List<Object> listArgs) {
+		StringBuilder whereStr = new StringBuilder();
+			if (StringUtil.notEmpty(paramMdl.getName1())) {
+				whereStr.append(" and usr_nm like ? ");
+				listArgs.add(getStringLikeLeft(paramMdl.getName1()));
+			}
+			if (StringUtil.notEmpty(paramMdl.getName2())) {
+				whereStr.append(" and crdt_no like ? ");
+				listArgs.add(getStringLikeLeft(paramMdl.getName2()));
+			}
+			return whereStr.toString();
+	}
 	public List<T1usrBsc> selectByPage(T6MgrSession mgrSession, ParamComm paramMdl) {
 		final String roleStr = mgrSession.selectRoleStr_UserBasic();
+		List<Object> listArgs = new ArrayList<>();
+		final String searchStr = getSearchWhere(mgrSession, paramMdl, listArgs);
 		Long countTotal = ConfMain.db()
-				.queryLong(String.format("select count(1) from %s where %s ", tableName, roleStr));
+				.queryLong(String.format("select count(1) from %s where %s %s", tableName, roleStr, searchStr), listArgs);
 		paramMdl.setTotal(countTotal);
 		List<T1usrBsc> resList = new ArrayList<>();
 		if (countTotal > 0) {
+			listArgs.add(paramMdl.getPageIndex());
+			listArgs.add(paramMdl.getPageSize());
 			resList = T1usrBsc.dao.find(String.format(
-					"select usrid,usr_tp, nm,crdt_tp, crdt_no,department,post, gnd,brth_dt,spt_prj, typelevel, province, city,institute, mblph_no, email,levelprovince,levelcity  from %s where %s  limit ?,?",
-					tableName, roleStr), paramMdl.getPageIndex(), paramMdl.getPageSize());
+					"select usrid,usr_tp, nm,crdt_tp, crdt_no,department,post, gnd,brth_dt,spt_prj, typelevel, province, city,institute, mblph_no, email,levelprovince,levelcity  from %s where %s %s  limit ?,?",
+					tableName, roleStr, searchStr), listArgs.toArray());
 			resList.forEach(e->{
 				// 单独处理级别显示
 				String levelAll = "";

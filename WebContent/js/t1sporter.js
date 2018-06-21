@@ -117,6 +117,46 @@ $(document).ready(function() {
 				tableBtnType = 2;
 				$("#sporterModal").modal('show');
 			}
+		},{
+			text : '删除',
+			action : function(e, dt, node, config) {
+				if (null == tableRowSelect) {
+					layer.msg('请先选择某行');
+					return;
+				}
+				// 确认删除
+				layer.confirm('确定删除吗？', {
+				  btn: ['删除','取消'] //按钮
+				}, function(){
+					// 删除操作
+					// 获取usrid
+					var delparam = {
+							id : tableRowSelect.usrid,
+							name1 : '',
+							name2 : '',
+							name3 : '',
+							pageIndex : '',
+							pageSize : ''
+						};
+					// 发送查询请求
+					$.ajax({
+						type : "get",
+						url : encodeURI(encodeURI(cxt + "/jf/puresport/t1usrBsc/delSporter")),
+						data : {
+							v : JSON.stringify(delparam)
+						},
+						contentType : "application/json",
+						success : function(response) {
+							layer.msg(response);
+							// 重新加载table数据
+							myTable.ajax.reload();
+						}
+					});
+				}, function(){
+					// 取消操作
+				});
+			
+			}
 		}, {
 			extend : 'collection',
 			text : '导出',
@@ -261,30 +301,14 @@ $(document).ready(function() {
 	});
 	
 	// =============搜索查询
-	function search(data, callback, settings) {
-		// datasrch.userId = $('#userId').val();
-		// datasrch.dateTimeBeg = $('#datetimeBeg').val();
-		// datasrch.dateTimeEnd = $('#datetimeEnd').val();
-		datasrch.pageIndex = 0;
-		datasrch.pageSize = 200;
-		// 发送查询请求
-		$.ajax({
-			type : "get",
-			url : encodeURI(encodeURI(cxt + "/jf/puresport/t1usrBsc/getData")),
-			data : {
-				v : JSON.stringify(datasrch)
-			},
-			dataType : 'json',
-			contentType : "application/json",
-			success : function(response) {
-				myTable.clear().draw();
-				myTable.rows.add(response).draw();
-			}
-		});
-	}
-	;
-	// $('#btnSearch').click(search);
-	// $('#btnSearch').click();
+	function search() {
+		 datasrch.name1 = $('#s_t1usrBsc_nm').val();
+		 datasrch.name2 = $('#s_t1usrBsc_crdt_no').val();
+		// 重新加载table数据
+		myTable.ajax.reload();
+	};
+	
+	 $('#s.btn.spt').click(search);
 
 	// ------------------上传 start
 	function checktext(f) {
@@ -319,18 +343,19 @@ $(document).ready(function() {
 			processData : false,
 			contentType : false,
 			success : function(data) {
+				//并且清空原文件，不然选择相同文件不能再次传 
+			     $('#inputfilesporter').val(''); 
+			     // 重新加载table数据
+				myTable.ajax.reload();
 				if (data== "1") {
 					layer.msg("上传成功");
 				} else {
 					layer.alert(data);
 				}
-				//并且清空原文件，不然选择相同文件不能再次传 
-		     $('#inputfilesporter').val(''); 
-				search("", "", "");
+				
 			}
 		});
 	}
 	// ------------------上传 end
-	// search("", "", "");
 	tableSporter = myTable;
 });

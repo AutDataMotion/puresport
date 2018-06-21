@@ -11,6 +11,7 @@ import java.util.List;
 import net.sf.ehcache.hibernate.strategy.ReadOnlyEhcacheEntityRegionAccessStrategy;
 import puresport.constant.EnumTypeLevel;
 import puresport.mvc.area.Area;
+import puresport.mvc.t1usrbsc.T1usrBsc;
 import puresport.mvc.t6mgrahr.T6MgrAhr;
 import puresport.mvc.t6mgrahr.T6MgrSession;
 
@@ -121,6 +122,34 @@ public class ValidateComm {
 		}
 		return true;
 	}
+	
+
+	public static boolean inv_deleteProvince_sporter(T6MgrSession mgrSession, T1usrBsc sporter) {
+		// 国家级 都可以删除
+		if (mgrSession.getTypeleve().equals(EnumTypeLevel.Country.getName())) {
+			sporter.setTypelevel("0");
+			return false;
+		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.Province.getName())) {
+			// 省级只可删除其省级的
+			if (!mgrSession.getProvince().equals(sporter.getProvince())) {
+				return true;
+			} else {
+				sporter.setLevelprovince(0);
+				return false;
+			}
+		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.City.getName())) {
+			if (!mgrSession.getProvince().equals(sporter.getProvince())) {
+				return true;
+			} 
+			if (inv_column_city(mgrSession.getProvince(), sporter.getCity())) {
+				return 	true;
+			}
+			sporter.setLevelcity(0);
+			return false;
+		}
+		return true;
+	}
+	
 
 	public static void main(String[] args) {
 		System.out.println(inv_column_crdt_tp(new String("身份证")));
