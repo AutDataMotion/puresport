@@ -67,11 +67,13 @@ public class T6MgrSession implements Serializable {
 			return " 1=1 ";
 		} else if (typeleve.equals(EnumTypeLevel.Province.getName())) {
 			// 省级 只可见属于该省的
-			return String.format(" province='%s' and typelevel in ('省级', '市级') ", province);
+			return String.format(" province='%s' and (levelprovince=1 or levelcity=1) ", province);
 		} else if (typeleve.equals(EnumTypeLevel.City.getName())) {
 			// 市级 只可见属于该市的
-			return String.format(" city='%s' and province='%s'  and typelevel in ('市级') ", city, province);
+			return String.format(" city='%s' and province='%s'  and levelcity=1 ", city, province);
 		}
+		// todo 暂未考虑协会管理员
+		
 		// 未知的都不可见
 		return " 1=2 ";
 	}

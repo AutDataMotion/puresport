@@ -31,7 +31,7 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">用户类型 </label>
 							<div class="col-sm-7">
-							<input type="text" class="form-control" readonly="readonly" value="${t1usrBsc.usr_tp!}">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t1usrBsc.usr_tp!)}">
 							</div>
 						</div>
 						<div class="form-group">
@@ -182,6 +182,24 @@
 							<label class="col-sm-2 control-label">职务 </label>
 							<div class="col-sm-7">
 							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t1usrBsc.post!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">省级别 0不可见 1可见 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t1usrBsc.levelprovince!}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">市级别0不可见1可见 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t1usrBsc.levelcity!}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">协会级别0可见1不可见 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t1usrBsc.levelinstitute!}">
 							</div>
 						</div>
 				</form>

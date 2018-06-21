@@ -6,7 +6,7 @@
  * @version 1.0
  */
 package puresport.config;
-import puresport.mvc.t11_exam_stat.T11ExamStatController;
+import puresport.mvc.t1_usr_bsc.T1usrBscController;
 import com.jfinal.config.Routes;
 /**
  * 创建时间：2016年1月28日 下午2:15:23
@@ -30,6 +30,6 @@ import com.jfinal.config.Routes;
 public class RoutePlugins extends Routes {
 	@Override
 	public void config() {
-		add("/jf/puresport/T11ExamStat", T11ExamStatController.class);
+		add("/jf/puresport/T1usrBsc", T1usrBscController.class);
 	}
 }
