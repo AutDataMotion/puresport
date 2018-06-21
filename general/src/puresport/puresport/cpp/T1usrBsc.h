@@ -29,62 +29,62 @@ private:
 	long usrid;
 	/**
 	 * 字段描述：用户类型 
-	 * 字段类型：int  长度：null
+	 * 字段类型：varchar  长度：null
 	 */
-	int usr_tp;
+	string usr_tp;
 	/**
 	 * 字段描述：用户名 
-	 * 字段类型：varchar  长度：32
+	 * 字段类型：varchar  长度：null
 	 */
 	string usr_nm;
 	/**
 	 * 字段描述：姓名 
-	 * 字段类型：varchar  长度：32
+	 * 字段类型：varchar  长度：null
 	 */
 	string nm;
 	/**
 	 * 字段描述：证件类型 
-	 * 字段类型：char  长度：2
+	 * 字段类型：char  长度：null
 	 */
 	string crdt_tp;
 	/**
 	 * 字段描述：运动项目 
-	 * 字段类型：varchar  长度：512
+	 * 字段类型：varchar  长度：null
 	 */
 	string spt_prj;
 	/**
 	 * 字段描述：证件号 
-	 * 字段类型：varchar  长度：256
+	 * 字段类型：varchar  长度：null
 	 */
 	string crdt_no;
 	/**
 	 * 字段描述：性别 
-	 * 字段类型：char  长度：1
+	 * 字段类型：varchar  长度：null
 	 */
 	string gnd;
 	/**
 	 * 字段描述：密码 
-	 * 字段类型：varchar  长度：512
+	 * 字段类型：varchar  长度：null
 	 */
 	string pswd;
 	/**
 	 * 字段描述：出生日期 
-	 * 字段类型：char  长度：8
+	 * 字段类型：char  长度：null
 	 */
 	string brth_dt;
 	/**
 	 * 字段描述：行政区划代码 
-	 * 字段类型：char  长度：6
+	 * 字段类型：char  长度：null
 	 */
 	string adiv_cd;
 	/**
 	 * 字段描述：协会id 
-	 * 字段类型：char  长度：8
+	 * 字段类型：char  长度：null
 	 */
 	string asscid;
 	/**
 	 * 字段描述：手机号 
-	 * 字段类型：varchar  长度：256
+	 * 字段类型：varchar  长度：null
 	 */
 	string mblph_no;
 	/**
@@ -99,7 +99,7 @@ private:
 	long cty_prov_city_mgrid;
 	/**
 	 * 字段描述：备注 
-	 * 字段类型：varchar  长度：2048
+	 * 字段类型：varchar  长度：null
 	 */
 	string rmrk;
 	/**
@@ -109,54 +109,69 @@ private:
 	int assc_mgrid;
 	/**
 	 * 字段描述：邮箱 
-	 * 字段类型：varchar  长度：512
+	 * 字段类型：varchar  长度：null
 	 */
 	string email;
 	/**
 	 * 字段描述：血型 
-	 * 字段类型：char  长度：1
+	 * 字段类型：char  长度：null
 	 */
 	string bloodtp;
 	/**
 	 * 字段描述：民族 
-	 * 字段类型：varchar  长度：512
+	 * 字段类型：varchar  长度：null
 	 */
 	string ethnct;
 	/**
 	 * 字段描述：备注 
-	 * 字段类型：varchar  长度：512
+	 * 字段类型：varchar  长度：null
 	 */
 	string remark;
 	/**
 	 * 字段描述：类型级别 
-	 * 字段类型：varchar  长度：8
+	 * 字段类型：varchar  长度：null
 	 */
 	string typelevel;
 	/**
 	 * 字段描述：省份名称 
-	 * 字段类型：varchar  长度：128
+	 * 字段类型：varchar  长度：null
 	 */
 	string province;
 	/**
 	 * 字段描述：城市名称 
-	 * 字段类型：varchar  长度：128
+	 * 字段类型：varchar  长度：null
 	 */
 	string city;
 	/**
 	 * 字段描述：协会名称 
-	 * 字段类型：varchar  长度：512
+	 * 字段类型：varchar  长度：null
 	 */
 	string institute;
 	/**
 	 * 字段描述：工作单位 
-	 * 字段类型：varchar  长度：256
+	 * 字段类型：varchar  长度：null
 	 */
 	string department;
 	/**
 	 * 字段描述：职务 
-	 * 字段类型：varchar  长度：128
+	 * 字段类型：varchar  长度：null
 	 */
 	string post;
+	/**
+	 * 字段描述：省级别 0不可见 1可见 
+	 * 字段类型：int  长度：null
+	 */
+	int levelprovince;
+	/**
+	 * 字段描述：市级别0不可见1可见 
+	 * 字段类型：int  长度：null
+	 */
+	int levelcity;
+	/**
+	 * 字段描述：协会级别0可见1不可见 
+	 * 字段类型：int  长度：null
+	 */
+	int levelinstitute;
 public:
 	
 	
@@ -170,12 +185,13 @@ public:
 	}
 	
 	
-	T1usrBsc& setUsr_tp(int ausr_tp){
+	T1usrBsc& setUsr_tp(string ausr_tp){
 		usr_tp = ausr_tp;
-		mapSQLTokens["usr_tp"] = to_string(usr_tp);
+		
+		mapSQLTokens["usr_tp"] = "'"+usr_tp+"'";
 		return *this;
 	}
-	int getUsr_tp() {
+	string getUsr_tp() {
 		return usr_tp;
 	}
 	
@@ -450,6 +466,36 @@ public:
 	}
 	string getPost() {
 		return post;
+	}
+	
+	
+	T1usrBsc& setLevelprovince(int alevelprovince){
+		levelprovince = alevelprovince;
+		mapSQLTokens["levelprovince"] = to_string(levelprovince);
+		return *this;
+	}
+	int getLevelprovince() {
+		return levelprovince;
+	}
+	
+	
+	T1usrBsc& setLevelcity(int alevelcity){
+		levelcity = alevelcity;
+		mapSQLTokens["levelcity"] = to_string(levelcity);
+		return *this;
+	}
+	int getLevelcity() {
+		return levelcity;
+	}
+	
+	
+	T1usrBsc& setLevelinstitute(int alevelinstitute){
+		levelinstitute = alevelinstitute;
+		mapSQLTokens["levelinstitute"] = to_string(levelinstitute);
+		return *this;
+	}
+	int getLevelinstitute() {
+		return levelinstitute;
 	}
 	
 };

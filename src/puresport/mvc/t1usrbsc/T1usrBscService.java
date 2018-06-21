@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import com.jfinal.aop.Enhancer;
 import com.jfinal.plugin.activerecord.Record;
 import com.platform.mvc.base.BaseService;
+import com.sun.org.apache.xml.internal.security.keys.keyresolver.implementations.PrivateKeyResolver;
 
 import csuduc.platform.util.ComOutMdl;
 import csuduc.platform.util.ComUtil;
@@ -60,8 +61,23 @@ public class T1usrBscService extends BaseService {
 		List<T1usrBsc> resList = new ArrayList<>();
 		if (countTotal > 0) {
 			resList = T1usrBsc.dao.find(String.format(
-					"select usrid,usr_tp, nm,crdt_tp, crdt_no,department,post, gnd,brth_dt,spt_prj, typelevel, province, city,institute, mblph_no, email  from %s where %s  limit ?,?",
+					"select usrid,usr_tp, nm,crdt_tp, crdt_no,department,post, gnd,brth_dt,spt_prj, typelevel, province, city,institute, mblph_no, email,levelprovince,levelcity  from %s where %s  limit ?,?",
 					tableName, roleStr), paramMdl.getPageIndex(), paramMdl.getPageSize());
+			resList.forEach(e->{
+				// 单独处理级别显示
+				String levelAll = "";
+				if ( "1".equals((String)e.getTypelevel())) {
+					levelAll = "国家级 ";
+				}
+				if ("1".equals(e. getLevelprovince())) {
+					levelAll += " 省级 ";
+				}
+				if ("1".equals(e. getLevelcity())) {
+					levelAll += " 市级 ";
+				}
+				e.setTypelevel(levelAll);
+			});
+		
 		}
 		return resList;
 	}
@@ -290,18 +306,20 @@ public class T1usrBscService extends BaseService {
 		rowCnt.set(0);
 		StringBuilder resStr = new StringBuilder();
 		excelRows.forEach(e -> {
-			rowCnt.set(rowCnt.get()+1);
-			Tuple2<Boolean, String> r= insertRowToDb(mgrSession, e);
+			rowCnt.set(rowCnt.get() + 1);
+			Tuple2<Boolean, String> r = insertRowToDb(mgrSession, e);
 			if (!r.first) {
-				resBool.set(false);;
-				resStr.append(String.format("第%d行%s \\n", rowCnt.get(), r.second));
+				resBool.set(false);
+				;
+				resStr.append(String.format("第%d行%s \n", rowCnt.get(), r.second));
 			}
-			});
-		return TupleUtil.tuple(resBool.get(), resStr.toString()); 
+		});
+		return TupleUtil.tuple(resBool.get(), resStr.toString());
 	}
 
 	private Tuple2<Boolean, String> insertRowToDb(T6MgrSession mgrSession, MdlExcelRow excelRow) {
 		boolean res = false;
+		String resTips = "";
 		try {
 			// 校验输入
 			if (StringUtil.invalidateLength(excelRow.getByIndex(0), 2, 64)) {
@@ -336,26 +354,42 @@ public class T1usrBscService extends BaseService {
 			}
 			// 根据手机号匹配，没有插入、已有更新
 			String crdt_number = excelRow.getByIndex(2);// 身份证号
-			
+
 			Record dbRow;
 
-			dbRow = new Record().set(T1usrBsc.column_usr_tp, EnumRoleType.Sporter.getName())
-					.set(T1usrBsc.column_usr_nm, excelRow.getByIndex(5))// 用户账户名：手机号
-					.set(T1usrBsc.column_nm, excelRow.getByIndex(0))
-					.set(T1usrBsc.column_crdt_tp, excelRow.getByIndex(1))
-					.set(T1usrBsc.column_crdt_no, crdt_number)
-					.set(T1usrBsc.column_gnd, excelRow.getByIndex(3))
-					.set(T1usrBsc.column_brth_dt, excelRow.getByIndex(4))
-					.set(T1usrBsc.column_pswd,
-							DESUtil.encrypt(crdt_number.substring(crdt_number.length() - 6), ConstantInitMy.SPKEY))// 密码默认身份证后6位
-					.set(T1usrBsc.column_mblph_no, excelRow.getByIndex(5))
-					.set(T1usrBsc.column_email, excelRow.getByIndex(6))
-					.set(T1usrBsc.column_cty_prov_city_mgrid, mgrSession.getUsrid())
-					
-					.set(T1usrBsc.column_typelevel, mgrSession.getTypeleve())
-					.set(T1usrBsc.column_province, mgrSession.ggProvince())
-					.set(T1usrBsc.column_city, mgrSession.ggCity());
-			res = ConfMain.db().saveOtherwiseUpdate(tableName, tableKey, dbRow);
+			// 查询该运动员是否已经导入过
+			Record sporter = ConfMain.db().findById(tableName, T1usrBsc.column_crdt_no, crdt_number);
+			if (Objects.isNull(sporter)) {
+				// 不存在 则插入
+				dbRow = new Record()
+						.set(T1usrBsc.column_usr_nm, excelRow.getByIndex(5))// 用户账户名：手机号
+						.set(T1usrBsc.column_nm, excelRow.getByIndex(0))
+						.set(T1usrBsc.column_crdt_tp, excelRow.getByIndex(1)).set(T1usrBsc.column_crdt_no, crdt_number)
+						.set(T1usrBsc.column_gnd, excelRow.getByIndex(3))
+						.set(T1usrBsc.column_brth_dt, excelRow.getByIndex(4))
+						.set(T1usrBsc.column_pswd,
+								DESUtil.encrypt(crdt_number.substring(crdt_number.length() - 6), ConstantInitMy.SPKEY))// 密码默认身份证后6位
+						.set(T1usrBsc.column_mblph_no, excelRow.getByIndex(5))
+						.set(T1usrBsc.column_email, excelRow.getByIndex(6))
+						.set(T1usrBsc.column_cty_prov_city_mgrid, mgrSession.getUsrid())
+
+						// .set(T1usrBsc.column_typelevel,
+						// mgrSession.getTypeleve())
+						.set(T1usrBsc.column_province, mgrSession.ggProvince())
+						.set(T1usrBsc.column_city, mgrSession.ggCity());
+				
+				resolveLevelWithSession(dbRow, mgrSession);
+				
+				res = ConfMain.db().save(tableName, tableKey, dbRow);
+				resTips = " 导入成功";
+			} else {
+				// 已存在 则只更新级别标志
+				dbRow = new Record().set(T1usrBsc.column_usrid, sporter.get(T1usrBsc.column_usrid));
+				resolveLevelWithSession(dbRow, mgrSession);
+				res = ConfMain.db().update(tableName, T1usrBsc.column_usrid, dbRow);
+				resTips = " 运动员已存在，如需修改信息请进行编辑";
+			}
+
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -364,5 +398,23 @@ public class T1usrBscService extends BaseService {
 
 		}
 		return TupleUtil.tuple(res, "");
+	}
+	
+	private void resolveLevelWithSession(Record record,  T6MgrSession mgrSession){
+		if (mgrSession.getTypeleve().equals(EnumTypeLevel.Country.getName())) {
+			record.set(T1usrBsc.column_typelevel, "1");
+			
+		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.Province.getName())) {
+			record.set(T1usrBsc.column_levelprovince, 1)
+			.set(T1usrBsc.column_province, mgrSession.ggProvince());
+			
+		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.City.getName())) {
+			record.set(T1usrBsc.column_levelcity, 1)
+			.set(T1usrBsc.column_province, mgrSession.ggProvince())
+			.set(T1usrBsc.column_city, mgrSession.ggCity());
+		} else {
+			record.set(T1usrBsc.column_levelinstitute, 1);
+			record.set(T1usrBsc.column_remark, mgrSession);
+		}
 	}
 }

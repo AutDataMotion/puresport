@@ -198,6 +198,18 @@
 										'mainPanel', 'splitPage', 'post')">
 									职务	${orderBy("post")}
 								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'levelprovince')">
+									省级别 0不可见 1可见	${orderBy("levelprovince")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'levelcity')">
+									市级别0不可见1可见	${orderBy("levelcity")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'levelinstitute')">
+									协会级别0可见1不可见	${orderBy("levelinstitute")}
+								</th>
 								<th class="hidden-xs">
 									${i18nMap["admin.common.operation"]}
 								</th>
@@ -220,9 +232,10 @@
 								
 								<td>
 
-							${item["usr_tp"]!}
+								${escapeXml(item["usr_tp"]!)}
 
 								</td>
+							
 								
 								<td>
 
@@ -395,6 +408,24 @@
 
 								</td>
 							
+								
+								<td>
+
+							${item["levelprovince"]!}
+
+								</td>
+								
+								<td>
+
+							${item["levelcity"]!}
+
+								</td>
+								
+								<td>
+
+							${item["levelinstitute"]!}
+
+								</td>
 								
 								
 

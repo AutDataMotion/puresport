@@ -22,6 +22,7 @@ public class T1usrBsc extends BaseModel<T1usrBsc> {
 	
 	public static final T1usrBsc dao = new T1usrBsc();
 	
+	public static final String  tableName = "t1_usr_bsc";
 	/**
 	 * 字段描述：用户id 
 	 * 字段类型：bigint  长度：null
@@ -183,7 +184,24 @@ public class T1usrBsc extends BaseModel<T1usrBsc> {
 	 * 字段类型：varchar  长度：128
 	 */
 	public static final String column_post = "post";
+
+	/**
+	 * 字段描述：省级别 0不可见 1可见 
+	 * 字段类型：int  长度：null
+	 */
+	public static final String column_levelprovince = "levelprovince";
 	
+	/**
+	 * 字段描述：市级别0不可见1可见 
+	 * 字段类型：int  长度：null
+	 */
+	public static final String column_levelcity = "levelcity";
+	
+	/**
+	 * 字段描述：协会级别0可见1不可见 
+	 * 字段类型：int  长度：null
+	 */
+	public static final String column_levelinstitute = "levelinstitute";
 	
 	/**
 	 * sqlId : puresport.t1usrBsc.splitPageFrom
@@ -218,6 +236,9 @@ public class T1usrBsc extends BaseModel<T1usrBsc> {
 	protected String institute;
 	private String department;
 	private String post;
+	private Integer levelprovince;
+	private Integer levelcity;
+	private Integer levelinstitute;
 
 	public void setUsrid(Long usrid){
 		set(column_usrid, usrid);
@@ -381,5 +402,22 @@ public class T1usrBsc extends BaseModel<T1usrBsc> {
 	public <T> T getPost() {
 		return get(column_post);
 	}
-	
+	public void setLevelprovince(Integer levelprovince){
+		set(column_levelprovince, levelprovince);
+	}
+	public <T> T getLevelprovince() {
+		return get(column_levelprovince);
+	}
+	public void setLevelcity(Integer levelcity){
+		set(column_levelcity, levelcity);
+	}
+	public <T> T getLevelcity() {
+		return get(column_levelcity);
+	}
+	public void setLevelinstitute(Integer levelinstitute){
+		set(column_levelinstitute, levelinstitute);
+	}
+	public <T> T getLevelinstitute() {
+		return get(column_levelinstitute);
+	}
 }
