@@ -11,7 +11,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script type="application/x-javascript">
 	
 	
+	
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
+
 
 
 </script>
@@ -219,29 +223,32 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 								<div class="tab-pane fade in active" id="myTabs_1_0">
 
-									<div class="form-inline">
-										<div class="form-group">
-											<label for="name" class="control-label">姓名：</label> <input
-												type="text" id="s_t6MgrAhr_nm" class="col-sm-2"> <label
-												for="name" class="control-label">证件号：</label> <input
-												type="text" id="s_t6MgrAhr_crdt_no" class="col-sm-3">
-											<button type="submit" id="s.btn.adm"
-												class="btn col-sm-2 btn-default">查询</button>
+									<div class="row">
+										<div class="col-lg-2">
+											<input type="text" id="s_t6MgrAhr_nm" class="form-control"
+												placeholder="姓名">
+										</div>
+										<div class="col-lg-3">
+											<input type="text" id="s_t6MgrAhr_crdt_no"
+												class="form-control" placeholder="证件号">
+										</div>
+										<div class="col-lg-2">
+											<button type="submit" id="s_btn_adm" class="btn  btn-default">查询</button>
 										</div>
 
-										<div class="form-group">
-											<div style="opacity: 0; width: 0px">
-												<input id="inputfileadmin" type="file"
+										<div class="col-lg-4 pull-right">
+											<div style="opacity: 0; width: 0px;max-height: 0px;">
+												<input type="file" id="inputfileadmin"
 													style="opacity: 0; width: 0px">
 											</div>
-											<div class="col-sm-2">
+											<div class="col-lg-6">
 												<a href="${cxt!}/files/syh/excel_tem/管理员模板.xls"
 													style="padding: 10px 10px;" class="btn btn-info btn-lg">
 													<span class="glyphicon glyphicon-cloud-download"></span>管理员Excel模板
 												</a>
 
 											</div>
-											<div class="col-sm-2">
+											<div class="col-lg-4">
 												<a type="submit"
 													onclick="$('input[id=inputfileadmin]').click();"
 													style="padding: 10px 10px;" class="btn btn-info btn-lg">
@@ -275,28 +282,32 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								</div>
 
 								<div class="tab-pane fade" id="myTabs_1_1">
-									<div class="form-inline">
-										<div class="form-group">
-											<label for="name" class="control-label">姓名：</label> <input
-												type="text" id="s_t1usrBsc_nm" class="col-sm-2"> <label
-												for="name" class="control-label">证件号：</label> <input
-												type="text" id="s_t1usrBsc_crdt_no" class="col-sm-3">
-											<button type="submit" id="s.btn.spt"
-												class="btn col-sm-2 btn-default">查询</button>
+									<div class="row">
+										<div class="col-lg-2">
+											<input type="text" id="s_t1usrBsc_nm" class="form-control"
+												placeholder="姓名">
 										</div>
-										<div class="form-group">
-											<div style="opacity: 0; width: 0px">
+										<div class="col-lg-3">
+											<input type="text" id="s_t1usrBsc_crdt_no"
+												class="form-control" placeholder="证件号">
+										</div>
+										<div class="col-lg-2">
+											<button type="submit" id="s_btn_spt" class="btn  btn-default">查询</button>
+										</div>
+
+										<div class="col-lg-4 pull-right">
+											<div style="opacity: 0; width: 0px;max-height: 0px;">
 												<input type="file" id="inputfilesporter"
 													style="opacity: 0; width: 0px">
 											</div>
-											<div class="col-sm-2">
+											<div class="col-lg-6">
 												<a href="${cxt!}/files/syh/excel_tem/运动员模板.xls"
 													style="padding: 10px 10px;" class="btn btn-info btn-lg">
 													<span class="glyphicon glyphicon-cloud-download"></span>运动员Excel模板
 												</a>
 
 											</div>
-											<div class="col-sm-2">
+											<div class="col-lg-4">
 												<a type="submit"
 													onclick="$('input[id=inputfilesporter]').click();"
 													style="padding: 10px 10px;" class="btn btn-info btn-lg">

@@ -100,7 +100,7 @@ public class T6MgrAhrService extends BaseService {
 		List<Object> listArgs = new ArrayList<>();
 		final String searchStr = getSearchWhere(mgrSession, paramMdl, listArgs);
 		Long countTotal = ConfMain.db()
-				.queryLong(String.format("select count(1) from %s where %s ", tableName, roleStr, searchStr), listArgs);
+				.queryLong(String.format("select count(1) from %s where %s %s ", tableName, roleStr, searchStr), listArgs.toArray());
 		paramMdl.setTotal(countTotal);
 		List<T6MgrAhr> resList = new ArrayList<>();
 		if (countTotal > 0) {

@@ -39,7 +39,7 @@ public class T1usrBscService extends BaseService {
 
 	public T1usrBsc SelectById(Integer id) {
 
-		T1usrBsc mdl = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where id=? limit 1 ", id);
+		T1usrBsc mdl = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=? limit 1 ", id);
 		return mdl;
 	}
 
@@ -92,7 +92,7 @@ public class T1usrBscService extends BaseService {
 		List<Object> listArgs = new ArrayList<>();
 		final String searchStr = getSearchWhere(mgrSession, paramMdl, listArgs);
 		Long countTotal = ConfMain.db()
-				.queryLong(String.format("select count(1) from %s where %s %s", tableName, roleStr, searchStr), listArgs);
+				.queryLong(String.format("select count(1) from %s where %s %s", tableName, roleStr, searchStr), listArgs.toArray());
 		paramMdl.setTotal(countTotal);
 		List<T1usrBsc> resList = new ArrayList<>();
 		if (countTotal > 0) {
@@ -400,7 +400,7 @@ public class T1usrBscService extends BaseService {
 			if (Objects.isNull(sporter)) {
 				// 不存在 则插入
 				dbRow = new Record()
-						.set(T1usrBsc.column_usr_nm, excelRow.getByIndex(5))// 用户账户名：手机号
+						.set(T1usrBsc.column_usr_nm, excelRow.getByIndex(0))// 用户账户名：手机号
 						.set(T1usrBsc.column_nm, excelRow.getByIndex(0))
 						.set(T1usrBsc.column_crdt_tp, excelRow.getByIndex(1)).set(T1usrBsc.column_crdt_no, crdt_number)
 						.set(T1usrBsc.column_gnd, excelRow.getByIndex(3))
@@ -443,11 +443,14 @@ public class T1usrBscService extends BaseService {
 			record.set(T1usrBsc.column_typelevel, "1");
 			
 		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.Province.getName())) {
-			record.set(T1usrBsc.column_levelprovince, 1)
+			record.set(T1usrBsc.column_typelevel, "1")
+			.set(T1usrBsc.column_levelprovince, 1)
 			.set(T1usrBsc.column_province, mgrSession.ggProvince());
 			
 		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.City.getName())) {
-			record.set(T1usrBsc.column_levelcity, 1)
+			record.set(T1usrBsc.column_typelevel, "1")
+			.set(T1usrBsc.column_levelprovince, 1)
+			.set(T1usrBsc.column_levelcity, 1)
 			.set(T1usrBsc.column_province, mgrSession.ggProvince())
 			.set(T1usrBsc.column_city, mgrSession.ggCity());
 		} else {

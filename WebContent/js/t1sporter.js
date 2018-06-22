@@ -300,15 +300,13 @@ $(document).ready(function() {
 		});
 	});
 	
-	// =============搜索查询
-	function search() {
+	// =============搜索查询	
+	 $('#s_btn_spt').click( function() {
 		 datasrch.name1 = $('#s_t1usrBsc_nm').val();
 		 datasrch.name2 = $('#s_t1usrBsc_crdt_no').val();
 		// 重新加载table数据
 		myTable.ajax.reload();
-	};
-	
-	 $('#s.btn.spt').click(search);
+	 });
 
 	// ------------------上传 start
 	function checktext(f) {

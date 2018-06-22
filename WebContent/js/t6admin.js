@@ -283,14 +283,12 @@ $(document).ready(function() {
 	});
 
 	// ===========搜索查询
-	function search() {
+	$('#s_btn_adm').click( function() {
 		 datasrch.name1 = $('#s_t6MgrAhr_nm').val();
 		 datasrch.name2 = $('#s_t6MgrAhr_crdt_no').val();
 		// 重新加载table数据
 		myTable.ajax.reload();
-	};
-	
-	$('#s.btn.adm').click(search);
+	});
 
 	// ------------------上传 start
 	function checktext(f) {
