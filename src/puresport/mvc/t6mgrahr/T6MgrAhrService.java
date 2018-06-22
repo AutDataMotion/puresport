@@ -131,6 +131,7 @@ public class T6MgrAhrService extends BaseService {
 			log.error("insertAdminToDb没有姓名，认为是空行:" + excelRow);
 			return TupleUtil.tuple(true, "");
 		}
+		
 		if (StringUtil.invalidateLength(excelRow.getByIndex(1), 1, 8)
 				|| ValidateComm.inv_column_crdt_tp(excelRow.getByIndex(1))) {
 			log.error("insertAdminToDb数据校验失败:" + excelRow);

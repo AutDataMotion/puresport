@@ -10,7 +10,7 @@ package puresport.constant;
  *
  */
 public enum EnumTypeLevel {
-	Country(91, "国家级"), Province(81, "省级"), City(71, "市级"),;
+	Country(91, "国家级"), CenterInstitute(81, "中心协会级"), Province(71, "省级"), City(61, "市级"),;
 	private int id;
 	private String name;
 

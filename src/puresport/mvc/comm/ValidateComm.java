@@ -49,7 +49,7 @@ public class ValidateComm {
 	public static boolean v_column_typeleve(T6MgrSession mgrSession, String column_typeleve) {
 		if (mgrSession.getTypeleve().equals(EnumTypeLevel.Country.getName())) {
 			if (column_typeleve.equals(EnumTypeLevel.Country.getName())
-					|| column_typeleve.equals(EnumTypeLevel.Province.getName())) {
+					||column_typeleve.equals(EnumTypeLevel.CenterInstitute.getName())||column_typeleve.equals(EnumTypeLevel.Province.getName())) {
 				return true;
 			}
 		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.Province.getName())) {
