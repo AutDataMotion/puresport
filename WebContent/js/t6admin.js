@@ -283,30 +283,12 @@ $(document).ready(function() {
 	});
 
 	// ===========搜索查询
-	function search(data, callback, settings) {
-		// datasrch.userId = $('#userId').val();
-		// datasrch.dateTimeBeg = $('#datetimeBeg').val();
-		// datasrch.dateTimeEnd = $('#datetimeEnd').val();
-		datasrch.pageIndex = 0;
-		datasrch.pageSize = 200;
-		// 发送查询请求
-		$.ajax({
-			type : "get",
-			url : encodeURI(encodeURI(cxt + "/jf/puresport/t6MgrAhr/getData")),
-			data : {
-				v : JSON.stringify(datasrch)
-			},
-			dataType : 'json',
-			contentType : "application/json",
-			success : function(response) {
-				myTable.clear().draw();
-				myTable.rows.add(response).draw();
-			}
-		});
-	}
-	;
-	// $('#btnSearch').click(search);
-	// $('#btnSearch').click();
+	$('#s_btn_adm').click( function() {
+		 datasrch.name1 = $('#s_t6MgrAhr_nm').val();
+		 datasrch.name2 = $('#s_t6MgrAhr_crdt_no').val();
+		// 重新加载table数据
+		myTable.ajax.reload();
+	});
 
 	// ------------------上传 start
 	function checktext(f) {
@@ -345,17 +327,18 @@ $(document).ready(function() {
 			processData : false,
 			contentType : false,
 			success : function(data) {
+				$('#inputfileadmin').val(''); 
+				// 重新加载table数据
+				myTable.ajax.reload();
 				if (data== "1") {
 					layer.msg("上传成功");
 				} else {
-					layer.msg(data);
+					layer.alert(data);
 				}
-				  $('#inputfileadmin').val(''); 
-				search("", "", "");
+				  
 			}
 		});
 	}
 	// ------------------上传 end
-	// search("","","");
 	tableAdmin = myTable;
 });
