@@ -5,6 +5,10 @@
 var app={};
 function initlogin()
 {
+	app.arr_xiehuiItemName = ["请选择协会项目","射箭","田径","垒球",'棒球','羽毛球','篮球','沙滩排球','拳击','皮划艇','自行车','跳水','马术','击剑','足球','体操',
+		'手球','曲棍球','柔道','现代五项','艺术体操','赛艇','帆船','射击','游泳','花样游泳','乒乓球','跆拳道','网球','蹦床','铁人三项','排球','水球','举重','摔跤','高尔夫','七人制橄榄球',
+		'小轮车','滑板','冲浪','攀岩','空手道','三人篮球','轮滑','保龄球','卡巴迪','藤球','壁球','武术','桥牌','滑翔伞','水上摩托','电子竞技','花样滑冰','冰球','速度滑冰','跳台滑雪',
+		'北欧两项','越野滑雪','有舵雪橇','雪车','冬季两项','冰壶','俯式冰橇','无舵雪橇','高山滑雪','自由式滑雪','短道速滑','单板滑雪'];
 	
 	app.arr_Competetion = ["请选择赛事","省运会","亚运会","青奥会"];
 	app.arr_CompetetionItem = [
@@ -21,6 +25,16 @@ function initlogin()
 			"高尔夫球","橄榄球","体育舞蹈","空手道","运动攀登"]
 		
 	];
+	//协会
+	var XiehuiItemName = document.getElementById("getxiehuiItemName");
+	if(XiehuiItemName)
+	{
+		//循环将数组中的数据写入<option>标记中
+		for(var i=0;i<app.arr_xiehuiItemName.length;i++){
+			var op = new Option(app.arr_xiehuiItemName[i],app.arr_xiehuiItemName[i]);  
+			XiehuiItemName.options.add(op);  
+		}
+	}
 	
 	 //首先获取对象
 	var Competetion = document.getElementById("getSportItem_user_Competetion");
@@ -172,10 +186,30 @@ function admin_login()
 	    	//alert(data.reportUrl);
 	    	//window.open(data.reportUrl,"_blank");
 	    	if(data.flag) {  
+	    		console.log(data);
 	    		if(data.needImproveInfoOrNot)
 	    		{
 	    			$("#adminLoginPanel_1").toggle();
 		    		$("#adminLoginPanel_2").toggle();
+		    		app.needImproveInstituteOrNot = data.needImproveInstituteOrNot;
+		    		//app.needImproveWrk_unitAndPostOrNot = data.needImproveWrk_unitAndPostOrNot;
+		    		if(data.needImproveInstituteOrNot)
+		    		{
+		    			//alert(data.needImproveInstituteOrNot);
+		    			$(".form-loginbox_admin_1").toggle(true);
+		    		}
+		    		else{
+		    			$(".form-loginbox_admin_1").toggle(false);
+		    		}
+//		    		if(data.needImproveWrk_unitAndPostOrNot)
+//		    		{
+//		    			$(".form-loginbox_admin_2").toggle(true);
+//		    		}
+//		    		else{
+//		    			//alert(data.needImproveWrk_unitAndPostOrNot);
+//		    			$(".form-loginbox_admin_2").toggle(false);
+//		    		}
+		    		
 	    		}
 	    		else{
 	    			window.location=data.url;  
@@ -361,19 +395,45 @@ function Improve_user_info_selfcenter(usr_tp)
 function Improve_admin_info()
 {
 
-	var company = $('#form-company_admin').val();
-	var position = $('#form-position_admin').val();
+//	var company = $('#form-company_admin').val();
+//	var position = $('#form-position_admin').val();
+	var xiehuiItemName = $('#getxiehuiItemName option:selected').val();
 	
-	if(company&&position)
+	if(app.needImproveInstituteOrNot)
+	{
+		
+		if(xiehuiItemName == "请选择协会项目")
+		{
+			alert("请选择协会项目");
+			return;
+		}	
+	}
+//	if(app.needImproveWrk_unitAndPostOrNot)
+//	{
+//		
+//		
+//		if(!company&&!position)
+//		{
+//			alert("请完善个人信息");
+//			return;
+//		}
+//	}
+	
+	
+	
+	
+//	if(company&&position)
+	if(xiehuiItemName)
 	{
 		$.ajax({
 		    url:'/jf/puresport/t6MgrAhr/ImproveAdminInfo',
 		    type:'POST', //GET
 		    async:true,    //或false,是否异步
 		    data:{
-//		    	userType:app.userType,
-		    	company:company,
-		    	position:position
+
+//		    	company:company,
+//		    	position:position
+		    	xiehuiItemName:xiehuiItemName
 		    },
 		    timeout:5000,    //超时时间
 		    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text

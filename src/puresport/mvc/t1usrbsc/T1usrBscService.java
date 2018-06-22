@@ -99,11 +99,12 @@ public class T1usrBscService extends BaseService {
 			listArgs.add(paramMdl.getPageIndex());
 			listArgs.add(paramMdl.getPageSize());
 			resList = T1usrBsc.dao.find(String.format(
-					"select usrid,usr_tp, nm,crdt_tp, crdt_no,department,post, gnd,brth_dt,spt_prj, typelevel, province, city,institute, mblph_no, email,levelprovince,levelcity  from %s where %s %s  limit ?,?",
+					"select usrid,usr_tp, nm,crdt_tp, crdt_no,department,post, gnd,brth_dt,spt_prj, typelevel, province, city,institute, mblph_no, email,levelprovince,levelcity,levelinstitute  from %s where %s %s  limit ?,?",
 					tableName, roleStr, searchStr), listArgs.toArray());
 			resList.forEach(e->{
 				// 单独处理级别显示
 				String levelAll = "";
+				/*
 				if ( "1".equals((String)e.getTypelevel())) {
 					levelAll = "国家级 ";
 				}
@@ -111,6 +112,20 @@ public class T1usrBscService extends BaseService {
 					levelAll += " 省级 ";
 				}
 				if ("1".equals(e. getLevelcity())) {
+					levelAll += " 市级 ";
+				}
+				*/
+//				int s = e.getLevelinstitute();
+				
+				if (("1".equals((String)e.getTypelevel()))||("1".equals((String)e.getLevelinstitute()))) {
+					levelAll = "国家级 ";
+				}
+				if("1".equals((String)e.getLevelprovince()))
+				{
+					levelAll += " 省级 ";
+				}
+				if("1".equals((String)e.getLevelcity()))
+				{
 					levelAll += " 市级 ";
 				}
 				e.setTypelevel(levelAll);
@@ -439,21 +454,28 @@ public class T1usrBscService extends BaseService {
 	}
 	
 	private void resolveLevelWithSession(Record record,  T6MgrSession mgrSession){
+		String typeLevel = mgrSession.getTypeleve();
 		if (mgrSession.getTypeleve().equals(EnumTypeLevel.Country.getName())) {
 			record.set(T1usrBsc.column_typelevel, "1");
 			
 		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.Province.getName())) {
-			record.set(T1usrBsc.column_typelevel, "1")
-			.set(T1usrBsc.column_levelprovince, 1)
+			//record.set(T1usrBsc.column_typelevel, "1")
+			record.set(T1usrBsc.column_levelprovince, 1)
 			.set(T1usrBsc.column_province, mgrSession.ggProvince());
 			
 		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.City.getName())) {
-			record.set(T1usrBsc.column_typelevel, "1")
-			.set(T1usrBsc.column_levelprovince, 1)
+			//record.set(T1usrBsc.column_typelevel, "1")
+			record.set(T1usrBsc.column_levelprovince, 1)
 			.set(T1usrBsc.column_levelcity, 1)
 			.set(T1usrBsc.column_province, mgrSession.ggProvince())
 			.set(T1usrBsc.column_city, mgrSession.ggCity());
-		} else {
+		} else if(mgrSession.getTypeleve().equals(EnumTypeLevel.CenterInstitute.getName()))
+		{
+			//record.set(T1usrBsc.column_typelevel, "1")
+			record.set(T1usrBsc.column_institute, mgrSession.getInstitute())
+			.set(T1usrBsc.column_levelinstitute, 1);
+		}
+		else {
 			record.set(T1usrBsc.column_levelinstitute, 1);
 			record.set(T1usrBsc.column_remark, mgrSession);
 		}

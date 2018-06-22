@@ -68,16 +68,40 @@ public class T6MgrAhrController extends BaseController {
 					getSession().setAttribute("crdt_no", item.getCrdt_no());// 设置session，保存登录用户的昵称
 					getSession().setAttribute("pwd", item.getPswd());// 设置session，保存登录用户的昵称
 					getSession().setAttribute("usr_tp", item.getUsr_tp());//设置session，保存登录用户的昵称
-					
+					getSession().setAttribute("typeleve", item.getTypeleve());//设置session，保存登录用户的昵称
 					T6MgrSession mgrSession = new T6MgrSession(item);
 					setSessionAttr(T6MgrSession.KeyName, mgrSession);// 管理员session对象	
-					if(item.getWrk_unit()!=null&&item.getPost()!=null)
+					
+					/*if(item.getWrk_unit()!=null&&item.getPost()!=null&&item.getInstitute()!=null)
 	            	{
 	            		needImproveInfoOrNot  =false;
 	            	}	
 	            	else {
 	            		needImproveInfoOrNot  =true;
+	            		if(item.getWrk_unit()==null||item.getPost()==null)
+	            		{
+	            			json.put("needImproveWrk_unitAndPostOrNot", true); 
+	            		}
+	            		else {
+	            			json.put("needImproveWrk_unitAndPostOrNot", false); 
+	            		}
+	            		if(item.getInstitute()==null)
+	            		{
+	            			json.put("needImproveInstituteOrNot", true); 
+	            		}
+	            		else {
+	            			json.put("needImproveInstituteOrNot", false); 
+	            		}
 	            	}
+	            	*/	
+					if(item.getTypeleve().equals("中心协会级")&&item.getInstitute()==null)
+					{
+						needImproveInfoOrNot  =true;
+						json.put("needImproveInstituteOrNot", true); 
+					}
+					else {
+						needImproveInfoOrNot  = false;
+					}
 					json.put("needImproveInfoOrNot", needImproveInfoOrNot); 
 					
 				} else {
@@ -111,14 +135,20 @@ public class T6MgrAhrController extends BaseController {
 		if (item != null) {
 			//
 			// String code = getPara("code");//获取表单数据，这里的参数就是页面表单中的name属性值
-			String company = getPara("company");
-			String position = getPara("position");
+//			String company = getPara("company");
+//			String position = getPara("position");
+			String xiehuiItemName = getPara("xiehuiItemName");
 			// item.setAdiv_cd(code);
 			// item.setSpt_prj(competetionitem);
-			int res = Db.update("update puresport.t6_mgr_ahr set wrk_unit=?,post=? where usrid=?", company, position,
-					userID);
+			/*int res = Db.update("update puresport.t6_mgr_ahr set wrk_unit=?,post=? where usrid=?", company, position,
+					userID);*/
+			int res = Db.update("update puresport.t6_mgr_ahr set institute=? where usrid=?", xiehuiItemName,userID);
 			if (res > 0) {
 				flag = true;
+				
+				T6MgrAhr newitem = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where usrid=?", userID);// 根据用户名查询数据库中的用户
+				T6MgrSession mgrSession = new T6MgrSession(newitem);
+				setSessionAttr(T6MgrSession.KeyName, mgrSession);// 管理员session对象	
 			}
 		} else {
 			msg = "更新失败";

@@ -215,8 +215,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<div class="tab-pane fade in active" id="tab_one">
 							<div class="self_tablist">
 								<ul class="nav nav-pills myTabs_1">
-									<li class="active"><a href="#myTabs_1_0" data-toggle="tab">导入管理员</a></li>
-									<li><a href="#myTabs_1_1" data-toggle="tab">导入运动员</a></li>
+									<li id="importAdmin_btn" class="active"><a href="#myTabs_1_0" data-toggle="tab">导入管理员</a></li>
+									<li id="importSporter_btn" ><a href="#myTabs_1_1" data-toggle="tab">导入运动员</a></li>
 								</ul>
 							</div>
 							<div class="tab-content">
@@ -642,6 +642,14 @@ $(function(){
 
 	<script>
 $(function(){
+	if('${session["typeleve"]}'=='中心协会级')
+	{
+		$('#importAdmin_btn').remove();
+		$('#importSporter_btn').addClass('active');
+		$('#myTabs_1_0').remove();
+		$('#myTabs_1_1').addClass('in').addClass('active');
+	}
+	
 	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 		// 获取已激活的标签页的名称
 		var activeTab = $(e.target).text(); 

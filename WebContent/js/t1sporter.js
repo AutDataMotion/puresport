@@ -130,6 +130,7 @@ $(document).ready(function() {
 				}, function(){
 					// 删除操作
 					// 获取usrid
+					alert(tableRowSelect.usrid);
 					var delparam = {
 							id : tableRowSelect.usrid,
 							name1 : '',
@@ -302,6 +303,7 @@ $(document).ready(function() {
 	
 	// =============搜索查询	
 	 $('#s_btn_spt').click( function() {
+//		 alert($('#s_t1usrBsc_crdt_no').val());
 		 datasrch.name1 = $('#s_t1usrBsc_nm').val();
 		 datasrch.name2 = $('#s_t1usrBsc_crdt_no').val();
 		// 重新加载table数据
