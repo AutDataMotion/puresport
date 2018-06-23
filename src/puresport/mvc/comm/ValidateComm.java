@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.sf.ehcache.hibernate.strategy.ReadOnlyEhcacheEntityRegionAccessStrategy;
+import puresport.constant.EnumStatus;
 import puresport.constant.EnumTypeLevel;
 import puresport.mvc.area.Area;
 import puresport.mvc.t1usrbsc.T1usrBsc;
@@ -127,14 +128,14 @@ public class ValidateComm {
 	public static boolean inv_deleteProvince_sporter(T6MgrSession mgrSession, T1usrBsc sporter) {
 		// 国家级 都可以删除
 		if (mgrSession.getTypeleve().equals(EnumTypeLevel.Country.getName())) {
-			sporter.setTypelevel("0");
+			sporter.setTypelevel(EnumStatus.LevelDeleted.getIdStr());
 			return false;
 		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.Province.getName())) {
 			// 省级只可删除其省级的
 			if (!mgrSession.getProvince().equals(sporter.getProvince())) {
 				return true;
 			} else {
-				sporter.setLevelprovince(0);
+				sporter.setLevelprovince(EnumStatus.LevelDeleted.getId());
 				return false;
 			}
 		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.City.getName())) {
@@ -144,7 +145,7 @@ public class ValidateComm {
 			if (inv_column_city(mgrSession.getProvince(), sporter.getCity())) {
 				return 	true;
 			}
-			sporter.setLevelcity(0);
+			sporter.setLevelcity(EnumStatus.LevelDeleted.getId());
 			return false;
 		}
 		return true;
