@@ -66,7 +66,7 @@ public class T6MgrSession implements Serializable {
 			// 国家级 全部可见
 			return " levelinstitute >0 or typelevel > '0' ";
 		} else if(typeleve.equals(EnumTypeLevel.CenterInstitute.getName())) {
-			return String.format(" institute='%s' and levelinstitute>0 ", institute);
+			return String.format(" institute='%s' and levelinstitute >0 ", institute);
 		}
 		else if (typeleve.equals(EnumTypeLevel.Province.getName())) {
 			// 省级 只可见属于该省的

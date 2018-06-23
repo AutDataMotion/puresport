@@ -132,7 +132,9 @@ public class T1usrBscService extends BaseService {
 	 * @return
 	 */
 	private static String sql_score = "select u.*, s.exam_nm as exam_nm, s.exam_grd as exam_grd, (CASE WHEN s.exam_grd >= 80 THEN '及格'  WHEN s.exam_grd is null THEN '未考试'  ELSE '不及格' END) as passed "
-			+ " from t1_usr_bsc u  left join t11_exam_stat s on u.usrid = s.usrid  where 1=1 and exam_st='1' ";
+			+ " from t1_usr_bsc u  left join ("
+			+ " select usrid, exam_nm, max(exam_grd) as exam_grd from t11_exam_stat where exam_st='1' group by usrid, exam_nm "
+			+ " ) as s on u.usrid = s.usrid  where 1=1 ";
 
 	public List<Record> selectScoreByPage(T6MgrSession mgrSession, ParamComm paramMdl) {
 
