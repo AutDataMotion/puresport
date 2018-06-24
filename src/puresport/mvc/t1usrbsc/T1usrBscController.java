@@ -3,6 +3,7 @@ package puresport.mvc.t1usrbsc;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apache.log4j.Logger;
 
@@ -22,6 +23,7 @@ import puresport.applicat.ExcelParseTool;
 import puresport.applicat.MdlExcelRow;
 import puresport.constant.ConstantInitMy;
 import puresport.constant.EnumStatus;
+import puresport.mvc.comm.ParamComm;
 import puresport.mvc.comm.ResTips;
 import puresport.mvc.t6mgrahr.T6MgrSession;
 
@@ -99,10 +101,18 @@ public class T1usrBscController extends BaseController {
 	}
 	
 	public void delSporter(){
-		Map<String, String[]> paramMap = getParaMap();
-		paramMap.entrySet().stream().forEach(e->{
-			System.out.println(e.getKey()+"--"+e.getValue());
-		});
+		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
+		if (null == mgrSession) {
+			renderText("页面信息已过期，请刷新页面!");
+			 return ;
+		}
+		ParamComm paramComm = getParamCommDef();
+		if (Objects.isNull(paramComm)) {
+			log.error("delSporter 参数解析失败");
+			renderText("参数解析失败!");
+			 return ;
+		}
+		renderText(T1usrBscService.service.delete(mgrSession, paramComm).second);
 	}
 	
 	@Clear

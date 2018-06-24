@@ -69,10 +69,10 @@ public class AreaService extends BaseService {
 			whereStr.append(" 1=1 ");
 		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.Province.getName())) {
 			// 省级 只可见属于该省的
-			whereStr.append(String.format(" province like '%s%%'  and typelevel ='省级' ", mgrSession.getProvince()));
+			whereStr.append(String.format(" province like '%s%%'  and levelprovince =1 ", mgrSession.getProvince()));
 		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.City.getName())) {
 			// 市级 只可见属于该市的
-			whereStr.append(String.format(" city like ‘%s%%’  and province like '%s%%'  and typelevel ='市级' ",mgrSession.getCity(), mgrSession.getProvince()));
+			whereStr.append(String.format(" city like '%s%%'   and province like '%s%%'  and levelcity =1 ",mgrSession.getCity(), mgrSession.getProvince()));
 		}else{
 			whereStr.append(" 1= 2 ");
 		}

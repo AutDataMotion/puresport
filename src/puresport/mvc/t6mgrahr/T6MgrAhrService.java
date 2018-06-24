@@ -36,7 +36,7 @@ public class T6MgrAhrService extends BaseService {
 
 	public T6MgrAhr SelectById(Integer id) {
 
-		T6MgrAhr mdl = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where usrid=?", id);
+		T6MgrAhr mdl = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where usrid=? limit 1", id);
 		return mdl;
 	}
 
@@ -79,16 +79,36 @@ public class T6MgrAhrService extends BaseService {
 		return TupleUtil.tuple(false, "删除成功");
 	}
 
+	private final static String getStringLikeLeft(String s) {
+		return s + "%";
+	}
+	public static String getSearchWhere(T6MgrSession mgrSession, ParamComm paramMdl, List<Object> listArgs) {
+		StringBuilder whereStr = new StringBuilder();
+			if (StringUtil.notEmpty(paramMdl.getName1())) {
+				whereStr.append(" and usr_nm like ? ");
+				listArgs.add(getStringLikeLeft(paramMdl.getName1()));
+			}
+			if (StringUtil.notEmpty(paramMdl.getName2())) {
+				whereStr.append(" and crdt_no like ? ");
+				listArgs.add(getStringLikeLeft(paramMdl.getName2()));
+			}
+			return whereStr.toString();
+	}
+	
 	public List<T6MgrAhr> selectByPage(T6MgrSession mgrSession, ParamComm paramMdl) {
 		final String roleStr = mgrSession.selectRoleStr();
+		List<Object> listArgs = new ArrayList<>();
+		final String searchStr = getSearchWhere(mgrSession, paramMdl, listArgs);
 		Long countTotal = ConfMain.db()
-				.queryLong(String.format("select count(1) from %s where %s ", tableName, roleStr));
+				.queryLong(String.format("select count(1) from %s where %s %s ", tableName, roleStr, searchStr), listArgs.toArray());
 		paramMdl.setTotal(countTotal);
 		List<T6MgrAhr> resList = new ArrayList<>();
 		if (countTotal > 0) {
+			listArgs.add(paramMdl.getPageIndex());
+			listArgs.add(paramMdl.getPageSize());
 			resList = T6MgrAhr.dao.find(String.format(
-					"select usrid,nm,crdt_tp, crdt_no, gnd,brth_dt,wrk_unit, post,typeleve, province, city,institute, mblph_no, email  from %s where %s  limit ?,?",
-					tableName, roleStr), paramMdl.getPageIndex(), paramMdl.getPageSize());
+					"select usrid,nm,crdt_tp, crdt_no, gnd,brth_dt,wrk_unit, post,typeleve, province, city,institute, mblph_no, email  from %s where %s %s  limit ?,?",
+					tableName, roleStr, searchStr), listArgs.toArray());
 		}
 		return resList;
 	}
@@ -131,6 +151,7 @@ public class T6MgrAhrService extends BaseService {
 			log.error("insertAdminToDb没有姓名，认为是空行:" + excelRow);
 			return TupleUtil.tuple(true, "");
 		}
+		
 		if (StringUtil.invalidateLength(excelRow.getByIndex(1), 1, 8)
 				|| ValidateComm.inv_column_crdt_tp(excelRow.getByIndex(1))) {
 			log.error("insertAdminToDb数据校验失败:" + excelRow);

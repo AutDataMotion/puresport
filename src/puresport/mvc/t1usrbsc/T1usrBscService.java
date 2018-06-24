@@ -23,6 +23,7 @@ import puresport.applicat.MdlExcelRow;
 import puresport.config.ConfMain;
 import puresport.constant.ConstantInitMy;
 import puresport.constant.EnumRoleType;
+import puresport.constant.EnumStatus;
 import puresport.constant.EnumTypeLevel;
 import puresport.mvc.comm.ParamComm;
 import puresport.mvc.comm.ValidateComm;
@@ -39,7 +40,7 @@ public class T1usrBscService extends BaseService {
 
 	public T1usrBsc SelectById(Integer id) {
 
-		T1usrBsc mdl = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where id=?", id);
+		T1usrBsc mdl = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=? limit 1 ", id);
 		return mdl;
 	}
 
@@ -52,30 +53,72 @@ public class T1usrBscService extends BaseService {
 		// mdl.set(T1usrBsc.column_usrid, sporter.get(T1usrBsc.column_usrid));
 		return true;
 	}
-
+	public Tuple2<Boolean, String> delete(T6MgrSession mgrSession, ParamComm paramComm){
+		Integer usrId = paramComm.getId().intValue();
+		try {
+			// 查询待删除信息
+			T1usrBsc sporter = SelectById(usrId);
+			if (Objects.isNull(sporter)) {
+				log.error("delete sporter not exist ,param:" +paramComm);
+				return TupleUtil.tuple(false, "该用户不存在");
+			}
+			// 比较省市是否可删
+			if (ValidateComm.inv_deleteProvince_sporter(mgrSession, sporter)) {
+				log.error(String.format("delete sporter inv_deleteProvince param:%s  session:%s " , paramComm, mgrSession));
+				return TupleUtil.tuple(false, "您没有权限"); 
+			}
+			sporter.update();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			log.error(e);
+			return TupleUtil.tuple(false, "系统有误，请联系管理人员");
+		}
+		return TupleUtil.tuple(false, "删除成功");
+	}
+	public static String getSearchWhere(T6MgrSession mgrSession, ParamComm paramMdl, List<Object> listArgs) {
+		StringBuilder whereStr = new StringBuilder();
+			if (StringUtil.notEmpty(paramMdl.getName1())) {
+				whereStr.append(" and usr_nm like ? ");
+				listArgs.add(getStringLikeLeft(paramMdl.getName1()));
+			}
+			if (StringUtil.notEmpty(paramMdl.getName2())) {
+				whereStr.append(" and crdt_no like ? ");
+				listArgs.add(getStringLikeLeft(paramMdl.getName2()));
+			}
+			return whereStr.toString();
+	}
 	public List<T1usrBsc> selectByPage(T6MgrSession mgrSession, ParamComm paramMdl) {
 		final String roleStr = mgrSession.selectRoleStr_UserBasic();
+		List<Object> listArgs = new ArrayList<>();
+		final String searchStr = getSearchWhere(mgrSession, paramMdl, listArgs);
 		Long countTotal = ConfMain.db()
-				.queryLong(String.format("select count(1) from %s where %s ", tableName, roleStr));
+				.queryLong(String.format("select count(1) from %s where %s %s", tableName, roleStr, searchStr), listArgs.toArray());
 		paramMdl.setTotal(countTotal);
 		List<T1usrBsc> resList = new ArrayList<>();
 		if (countTotal > 0) {
+			listArgs.add(paramMdl.getPageIndex());
+			listArgs.add(paramMdl.getPageSize());
 			resList = T1usrBsc.dao.find(String.format(
-					"select usrid,usr_tp, nm,crdt_tp, crdt_no,department,post, gnd,brth_dt,spt_prj, typelevel, province, city,institute, mblph_no, email,levelprovince,levelcity  from %s where %s  limit ?,?",
-					tableName, roleStr), paramMdl.getPageIndex(), paramMdl.getPageSize());
+					"select usrid,usr_tp, nm,crdt_tp, crdt_no,department,post, gnd,brth_dt,spt_prj, typelevel, province, city,institute, mblph_no, email,levelprovince,levelcity,levelinstitute  from %s where %s %s  limit ?,?",
+					tableName, roleStr, searchStr), listArgs.toArray());
 			resList.forEach(e->{
 				// 单独处理级别显示
-				String levelAll = "";
-				if ( "1".equals((String)e.getTypelevel())) {
-					levelAll = "国家级 ";
+				StringBuilder levelAll = new StringBuilder();
+	
+				if ((EnumStatus.LevelShow.getIdStr().equals((String)e.getTypelevel()))
+						||(EnumStatus.LevelShow.getIdStr().equals((String)e.getLevelinstitute()))) {
+					levelAll.append( EnumTypeLevel.Country.getName()).append(" ");
 				}
-				if ("1".equals(e. getLevelprovince())) {
-					levelAll += " 省级 ";
+				if(EnumStatus.LevelShow.getIdStr().equals((String)e.getLevelprovince()))
+				{
+					levelAll.append( EnumTypeLevel.Province.getName()).append(" ");
 				}
-				if ("1".equals(e. getLevelcity())) {
-					levelAll += " 市级 ";
+				if(EnumStatus.LevelShow.getIdStr().equals((String)e.getLevelcity()))
+				{
+					levelAll.append( EnumTypeLevel.City.getName()).append(" ");
 				}
-				e.setTypelevel(levelAll);
+				e.setTypelevel(levelAll.toString());
 			});
 		
 		}
@@ -89,7 +132,9 @@ public class T1usrBscService extends BaseService {
 	 * @return
 	 */
 	private static String sql_score = "select u.*, s.exam_nm as exam_nm, s.exam_grd as exam_grd, (CASE WHEN s.exam_grd >= 80 THEN '及格'  WHEN s.exam_grd is null THEN '未考试'  ELSE '不及格' END) as passed "
-			+ " from t1_usr_bsc u  left join t11_exam_stat s on u.usrid = s.usrid  where 1=1 and exam_st='1' ";
+			+ " from t1_usr_bsc u  left join ("
+			+ " select usrid, exam_nm, max(exam_grd) as exam_grd from t11_exam_stat where exam_st='1' group by usrid, exam_nm "
+			+ " ) as s on u.usrid = s.usrid  where 1=1 ";
 
 	public List<Record> selectScoreByPage(T6MgrSession mgrSession, ParamComm paramMdl) {
 
@@ -362,7 +407,7 @@ public class T1usrBscService extends BaseService {
 			if (Objects.isNull(sporter)) {
 				// 不存在 则插入
 				dbRow = new Record()
-						.set(T1usrBsc.column_usr_nm, excelRow.getByIndex(5))// 用户账户名：手机号
+						.set(T1usrBsc.column_usr_nm, excelRow.getByIndex(0))// 用户账户名：手机号
 						.set(T1usrBsc.column_nm, excelRow.getByIndex(0))
 						.set(T1usrBsc.column_crdt_tp, excelRow.getByIndex(1)).set(T1usrBsc.column_crdt_no, crdt_number)
 						.set(T1usrBsc.column_gnd, excelRow.getByIndex(3))
@@ -378,14 +423,13 @@ public class T1usrBscService extends BaseService {
 						.set(T1usrBsc.column_province, mgrSession.ggProvince())
 						.set(T1usrBsc.column_city, mgrSession.ggCity());
 				
-				resolveLevelWithSession(dbRow, mgrSession);
-				
+				resolveLevelWithSession_Insert(dbRow, mgrSession);
 				res = ConfMain.db().save(tableName, tableKey, dbRow);
 				resTips = " 导入成功";
 			} else {
 				// 已存在 则只更新级别标志
 				dbRow = new Record().set(T1usrBsc.column_usrid, sporter.get(T1usrBsc.column_usrid));
-				resolveLevelWithSession(dbRow, mgrSession);
+				resolveLevelWithSession_Update(dbRow, mgrSession);
 				res = ConfMain.db().update(tableName, T1usrBsc.column_usrid, dbRow);
 				resTips = " 运动员已存在，如需修改信息请进行编辑";
 			}
@@ -400,20 +444,62 @@ public class T1usrBscService extends BaseService {
 		return TupleUtil.tuple(res, "");
 	}
 	
-	private void resolveLevelWithSession(Record record,  T6MgrSession mgrSession){
-		if (mgrSession.getTypeleve().equals(EnumTypeLevel.Country.getName())) {
-			record.set(T1usrBsc.column_typelevel, "1");
+	/**
+	 * level的处理逻辑
+	 * 0：不可见 删除
+	 * 1：可见
+	 * 2：具有该级别
+	 * @param record
+	 * @param mgrSession
+	 */
+	private void resolveLevelWithSession_Insert(Record record,  T6MgrSession mgrSession){
+		String typeLevel = mgrSession.getTypeleve();
+		if (typeLevel.equals(EnumTypeLevel.Country.getName())) {
+			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelShow.getIdStr());
 			
-		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.Province.getName())) {
-			record.set(T1usrBsc.column_levelprovince, 1)
+		} else if (typeLevel.equals(EnumTypeLevel.Province.getName())) {
+			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelView.getIdStr())
+			.set(T1usrBsc.column_levelprovince, EnumStatus.LevelShow.getId())
 			.set(T1usrBsc.column_province, mgrSession.ggProvince());
 			
-		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.City.getName())) {
-			record.set(T1usrBsc.column_levelcity, 1)
+		} else if (typeLevel.equals(EnumTypeLevel.City.getName())) {
+			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelView.getIdStr())
+			.set(T1usrBsc.column_levelprovince, EnumStatus.LevelView.getId())
+			.set(T1usrBsc.column_levelcity, EnumStatus.LevelShow.getId())
 			.set(T1usrBsc.column_province, mgrSession.ggProvince())
 			.set(T1usrBsc.column_city, mgrSession.ggCity());
-		} else {
-			record.set(T1usrBsc.column_levelinstitute, 1);
+		} else if(typeLevel.equals(EnumTypeLevel.CenterInstitute.getName()))
+		{
+			//record.set(T1usrBsc.column_typelevel, "1")
+			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelView.getIdStr())
+			.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelShow.getId())
+			.set(T1usrBsc.column_institute, mgrSession.getInstitute());
+		}
+		else {
+			record.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelUnknown.getId());
+			record.set(T1usrBsc.column_remark, mgrSession);
+		}
+	}
+	private void resolveLevelWithSession_Update(Record record,  T6MgrSession mgrSession){
+		String typeLevel = mgrSession.getTypeleve();
+		if (typeLevel.equals(EnumTypeLevel.Country.getName())) {
+			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelShow.getIdStr());
+			
+		} else if (typeLevel.equals(EnumTypeLevel.Province.getName())) {
+			record.set(T1usrBsc.column_levelprovince, EnumStatus.LevelShow.getId())
+			.set(T1usrBsc.column_province, mgrSession.ggProvince());
+			
+		} else if (typeLevel.equals(EnumTypeLevel.City.getName())) {
+			record.set(T1usrBsc.column_levelcity, EnumStatus.LevelShow.getId())
+			.set(T1usrBsc.column_province, mgrSession.ggProvince())
+			.set(T1usrBsc.column_city, mgrSession.ggCity());
+		} else if(typeLevel.equals(EnumTypeLevel.CenterInstitute.getName()))
+		{
+			record.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelShow.getId())
+			.set(T1usrBsc.column_institute, mgrSession.getInstitute());
+		}
+		else {
+			record.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelUnknown.getId());
 			record.set(T1usrBsc.column_remark, mgrSession);
 		}
 	}

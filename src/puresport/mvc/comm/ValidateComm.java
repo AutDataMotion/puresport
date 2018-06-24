@@ -9,8 +9,10 @@ import java.util.Arrays;
 import java.util.List;
 
 import net.sf.ehcache.hibernate.strategy.ReadOnlyEhcacheEntityRegionAccessStrategy;
+import puresport.constant.EnumStatus;
 import puresport.constant.EnumTypeLevel;
 import puresport.mvc.area.Area;
+import puresport.mvc.t1usrbsc.T1usrBsc;
 import puresport.mvc.t6mgrahr.T6MgrAhr;
 import puresport.mvc.t6mgrahr.T6MgrSession;
 
@@ -49,7 +51,7 @@ public class ValidateComm {
 	public static boolean v_column_typeleve(T6MgrSession mgrSession, String column_typeleve) {
 		if (mgrSession.getTypeleve().equals(EnumTypeLevel.Country.getName())) {
 			if (column_typeleve.equals(EnumTypeLevel.Country.getName())
-					|| column_typeleve.equals(EnumTypeLevel.Province.getName())) {
+					||column_typeleve.equals(EnumTypeLevel.CenterInstitute.getName())||column_typeleve.equals(EnumTypeLevel.Province.getName())) {
 				return true;
 			}
 		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.Province.getName())) {
@@ -121,6 +123,34 @@ public class ValidateComm {
 		}
 		return true;
 	}
+	
+
+	public static boolean inv_deleteProvince_sporter(T6MgrSession mgrSession, T1usrBsc sporter) {
+		// 国家级 都可以删除
+		if (mgrSession.getTypeleve().equals(EnumTypeLevel.Country.getName())) {
+			sporter.setTypelevel(EnumStatus.LevelDeleted.getIdStr());
+			return false;
+		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.Province.getName())) {
+			// 省级只可删除其省级的
+			if (!mgrSession.getProvince().equals(sporter.getProvince())) {
+				return true;
+			} else {
+				sporter.setLevelprovince(EnumStatus.LevelDeleted.getId());
+				return false;
+			}
+		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.City.getName())) {
+			if (!mgrSession.getProvince().equals(sporter.getProvince())) {
+				return true;
+			} 
+			if (inv_column_city(mgrSession.getProvince(), sporter.getCity())) {
+				return 	true;
+			}
+			sporter.setLevelcity(EnumStatus.LevelDeleted.getId());
+			return false;
+		}
+		return true;
+	}
+	
 
 	public static void main(String[] args) {
 		System.out.println(inv_column_crdt_tp(new String("身份证")));
