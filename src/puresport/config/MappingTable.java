@@ -24,6 +24,7 @@ import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
  */
 
 import puresport.mvc.area.Area;
+import puresport.mvc.sport_item.Sport_Item;
 import puresport.mvc.t10examgrd.T10ExamGrd;
 import puresport.mvc.t11examstat.T11ExamStat;
 import puresport.mvc.t1usrbsc.T1usrBsc;
@@ -52,6 +53,7 @@ public class MappingTable {
 	public static void mapping(ActiveRecordPlugin arp) {
 		log.info("puresport MappingTable 表手工注册-----begin");
 		arp.addMapping("dt_area", "id", Area.class);
+		arp.addMapping("sport_item", "id", Sport_Item.class);
 		arp.addMapping("t1_usr_bsc", "usrid", T1usrBsc.class);
 		arp.addMapping("t2_adiv", "id", T2Adiv.class);
 		arp.addMapping("t3_stat", "id", T3Statl.class);

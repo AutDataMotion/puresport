@@ -8,7 +8,7 @@
 package puresport.config;
 
 import org.apache.log4j.Logger;
-import puresport.mvc.t1_usr_bsc.T1usrBsc;
+import puresport.mvc.sport_item.Sport_Item;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 /**
  * 创建时间：2016年3月12日 上午10:11:42
@@ -34,7 +34,7 @@ public class MappingTable {
 	private static Logger log = Logger.getLogger(MappingTable.class);
 	public static void mapping(ActiveRecordPlugin arp){
 		log.info("puresport MappingTable 表手工注册-----begin");
-		arp.addMapping("t1_usr_bsc", "id", T1usrBsc.class);
+		arp.addMapping("sport_item", "id", Sport_Item.class);
 		log.info("puresport MappingTable 表手工注册-----end");
 		
 	}

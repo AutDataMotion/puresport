@@ -1,6 +1,7 @@
 package puresport.mvc.pages;
 
 import java.util.Enumeration;
+import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -17,6 +18,8 @@ import csuduc.platform.util.encrypt.DESUtil;
 import csuduc.platform.util.lyf.EmailUtils;
 import csuduc.platform.util.lyf.WebsiteSta;
 import puresport.constant.ConstantInitMy;
+import puresport.mvc.sport_item.Sport_Item;
+import puresport.mvc.sport_item.Sport_ItemService;
 import puresport.mvc.t1usrbsc.T1usrBsc;
 import puresport.mvc.t6mgrahr.T6MgrAhr;
 import puresport.mvc.t7crcl.T7Crcl;
@@ -152,7 +155,11 @@ public class pagesController extends BaseController {
 	public void login() {
 		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
 		//renderWithPath(pthv+"list.html");
-		
+		List<Sport_Item> sport_items_of_institute = Sport_ItemService.service.SelectByItemId(1);
+//		
+		List<Sport_Item> sport_items_of_shengyunhui = Sport_ItemService.service.SelectByItemId(2);
+		setAttr("sport_items_of_institute",sport_items_of_institute);
+		setAttr("sport_items_of_shengyunhui",sport_items_of_shengyunhui);
 		renderWithPath(pthv+"login.html");
 	}
 	@Clear
@@ -164,7 +171,11 @@ public class pagesController extends BaseController {
 		while (em.hasMoreElements()) {
 			getSession().removeAttribute(em.nextElement().toString());
 		}
-
+		List<Sport_Item> sport_items_of_institute = Sport_ItemService.service.SelectByItemId(1);
+//		
+		List<Sport_Item> sport_items_of_shengyunhui = Sport_ItemService.service.SelectByItemId(2);
+		setAttr("sport_items_of_institute",sport_items_of_institute);
+		setAttr("sport_items_of_shengyunhui",sport_items_of_shengyunhui);
 		renderWithPath(pthv+"login.html");
 	}
 //	@Clear
@@ -172,6 +183,12 @@ public class pagesController extends BaseController {
 	public void selfcenter() {
 		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
 		//renderWithPath(pthv+"list.html");
+		List<Sport_Item> sport_items_of_institute = Sport_ItemService.service.SelectByItemId(1);
+//		
+		List<Sport_Item> sport_items_of_shengyunhui = Sport_ItemService.service.SelectByItemId(2);
+		setAttr("sport_items_of_institute",sport_items_of_institute);
+		setAttr("sport_items_of_shengyunhui",sport_items_of_shengyunhui);
+		
 		Long userID = Long.valueOf((String)getSession().getAttribute("usrid"));
 		String crdt_no = (String)getSession().getAttribute("crdt_no");
 		String pwd = (String)getSession().getAttribute("pwd");
@@ -406,5 +423,11 @@ public class pagesController extends BaseController {
 		setAttr(ConstantRender.PATH_CTL_NAME, pthc);
 		setAttr(ConstantRender.PATH_VIEW_NAME, pthv);
 	}
-
+//	@Clear
+//	public void getSportItems()
+//	{
+//		List<Sport_Item> sport_items_of_institute = Sport_ItemService.service.SelectByItemId(1);
+//		
+//		List<Sport_Item> sport_items_of_shengyunhui = Sport_ItemService.service.SelectByItemId(2);
+//	}
 }

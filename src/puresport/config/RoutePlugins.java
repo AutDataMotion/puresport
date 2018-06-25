@@ -26,6 +26,7 @@ import puresport.mvc.area.AreaController;
 
 
 import puresport.mvc.pages.pagesController;
+import puresport.mvc.sport_item.Sport_ItemController;
 import puresport.mvc.t10examgrd.T10ExamGrdController;
 import puresport.mvc.t11examstat.T11ExamStatController;
 import puresport.mvc.t1usrbsc.T1usrBscController;
@@ -54,6 +55,7 @@ public class RoutePlugins extends Routes {
 //		add("/", pagesController.class);
 		add("/jf/puresport/pagesController", pagesController.class);
 		add("/jf/puresport/area", AreaController.class);
+		add("/jf/puresport/sport_Item", Sport_ItemController.class);
 		add("/jf/puresport/t1usrBsc", T1usrBscController.class);
 		add("/jf/puresport/t2Adiv", T2AdivController.class);
 		add("/jf/puresport/t3Statl", T3StatlController.class);
