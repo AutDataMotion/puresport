@@ -214,9 +214,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 														</div-->
 														<div id="getSportItem_user">
 														<h4><strong>运动项目</strong></h4>
-														  <select class="improveinfo_select" id="getSportItem_user_Competetion" onchange="changeSelect_user_Competetion(this.selectedIndex)"></select>
-														  <select class="improveinfo_select" id="getSportItem_user_CompetetionItem"></select>
-														  
+														  <!--select class="improveinfo_select" id="getSportItem_user_Competetion" onchange="changeSelect_user_Competetion(this.selectedIndex)"></select>
+														  <select class="improveinfo_select" id="getSportItem_user_CompetetionItem"></select-->
+														  <select class="improveinfo_select" id="getSportItem_user_Competetion">
+														  	<option value="省运会" selected>省运会</option>
+														  </select>
+														  <select class="improveinfo_select" id="getSportItem_user_CompetetionItem">
+														  	<option value="请选择项目" selected>请选择项目</option>
+														  	<%for (item in sport_items_of_shengyunhui){%>
+														  		<option value=${item.name!}>${item.name!}</option>
+														  	<%}%>
+														  </select>
 														</div>
 														
 														<div><a id="back2loginBtn_user_2">返回登录</a></div>
@@ -345,7 +353,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					                            <div class="form-bottom">
 								                    	<div id="getxiehuiItem">
 															<h4><strong>协会项目</strong></h4>
-														  	<select class="improveinfo_select" id="getxiehuiItemName"></select>
+														  	<!--select class="improveinfo_select" id="getxiehuiItemName"></select-->
+														  	<select class="improveinfo_select" id="getxiehuiItemName">
+														  		<option value="请选择协会项目" selected>请请选择协会项目</option>
+														  		<%for(institute in sport_items_of_institute){%>
+														  			<option value=${institute.name!}>${institute.name!}</option>
+														  		<%}%>
+														  	</select>
 														</div>
 												</div>
 					                        </div>
@@ -603,7 +617,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 			$(function() {
 				
-				initlogin();
+				//initlogin();
 				
 				$("#userLoginPanel_btn").click(function(){
 					$("#adminLoginPanel_btn").removeClass("login_tab_active");

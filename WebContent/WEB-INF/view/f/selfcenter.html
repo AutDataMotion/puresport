@@ -298,8 +298,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	          <div class="form-group">
 	            <label class="col-sm-3 control-label">运动项目</label>
 	            <div class="col-sm-9">
-	              <select class="improveinfo_select" id="getSportItem_user_Competetion" onchange="changeSelect_user_Competetion(this.selectedIndex)"></select>
-				  <select class="improveinfo_select" id="getSportItem_user_CompetetionItem"></select>
+	              <!--select class="improveinfo_select" id="getSportItem_user_Competetion" onchange="changeSelect_user_Competetion(this.selectedIndex)"></select>
+				  <select class="improveinfo_select" id="getSportItem_user_CompetetionItem"></select-->
+				  <select class="improveinfo_select" id="getSportItem_user_Competetion">
+				  	<option value="省运会" selected>省运会</option>
+				  </select>
+				  <select class="improveinfo_select" id="getSportItem_user_CompetetionItem">
+				  	<option value="请选择项目" selected>请选择项目</option>
+				  	<%for (item in sport_items_of_shengyunhui){%>
+				  		<option value=${item.name!}>${item.name!}</option>
+				  	<%}%>
+				  </select>
 	            </div>
 	          </div>
           </div>
@@ -354,7 +363,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				
 				if(usrid=="运动员")//运动员
 				{
-					initlogin();
+					//initlogin();
 					document.getElementById("user_Athlete").style.display = "block";
 					document.getElementById("user_Assistant").style.display = "none";
 					

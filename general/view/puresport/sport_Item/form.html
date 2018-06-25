@@ -1,0 +1,21 @@
+
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">项目名称</label>
+	<div class="col-sm-7">
+		<input type="text" name="sport_Item.name" value="${escapeXml(sport_Item.name!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label"></label>
+	<div class="col-sm-7">
+		<input type="text" name="sport_Item.parentid" value="${sport_Item.parentid!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>

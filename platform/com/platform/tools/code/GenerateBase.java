@@ -43,8 +43,9 @@ public abstract class GenerateBase {
 	 */
 
 	public static String[][] tableArr = {
+			{ null, "sport_item", null, "Sport_Item", "运动项目表" },
 //			{ null, "dt_area", null, "Area", "全国省市表" },
-			{ null, "t1_usr_bsc", null, "T1usrBsc", "用户基本信息表" }
+//			{ null, "t1_usr_bsc", null, "T1usrBsc", "用户基本信息表" }
 //			{ null, "t2_adiv", null, "T2Adiv", "行政区划信息表" },
 //			{ null, "t3_stat", null, "T3Statl", "统计信息" }, 
 //			{ null, "t4_assc", null, "T4Assc", "协会信息表" },
