@@ -41,6 +41,7 @@ import puresport.entity.ExamEntity;
 import puresport.entity.ResultEntity;
 import puresport.mvc.t10examgrd.T10ExamGrd;
 import puresport.mvc.t11examstat.T11ExamStat;
+import puresport.mvc.t11examstat.T11ExamStatService;
 import puresport.mvc.t1usrbsc.T1usrBsc;
 import puresport.mvc.t1usrbsc.T1usrBscService;
 import puresport.mvc.t5crclstdy.T5CrclStdy;
@@ -475,6 +476,15 @@ public class T7CrclController extends BaseController {
 /*		if (!isCanTest())
 			renderWithPath("/f/accession/dotest.html");*/
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
+		//查询当天已经考试了几次
+		List<T11ExamStat> T11ExamStat_num = T11ExamStatService.service.SelectByUserIdAndTime(usrid);
+		if(T11ExamStat_num.size()>=4)
+		{
+			LOG.debug("generteTest----"+"今日答题次数已满！！");
+			renderWithPath("/f/tips.html");
+		}
+		else 
+		{
 		// 选择题
 		String sql = "select * from t9_tstlib t where t.prblm_tp ='01' order by rand() limit 10";
 		List<T9Tstlib> t9List = T9Tstlib.dao.find(sql);
@@ -569,6 +579,7 @@ public class T7CrclController extends BaseController {
 		setAttr("examDeducList", examEntityList2);
 		setAttr("pre_action", "/jf/puresport/t7Crcl/video3_select_5");// 必修视频3选择
 		renderWithPath("/f/accession/dotest.html");
+		}
 	}
 
 	/**
@@ -636,9 +647,20 @@ public class T7CrclController extends BaseController {
 	 */
 	@Before(FunctionInterceptor.class)
 	public void submitExam() {
+		
 		// // 处理结果
 		ResultEntity res = null;
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
+		
+		//查询当天已经考试了几次
+		List<T11ExamStat> T11ExamStat_num = T11ExamStatService.service.SelectByUserIdAndTime(usrid);
+		if(T11ExamStat_num.size()>=4)
+		{
+			LOG.debug("submitExam----"+"今日答题次数已满！！");
+			renderWithPath("/f/tips.html");
+		}
+		else {
+			
 		String examid = getPara("examid");
 		String[] ds = getParaValues("dataSet");
 		// 承诺人姓名
@@ -827,6 +849,7 @@ public class T7CrclController extends BaseController {
 		// setAttr("certificatePath", certificatePath);
 		// renderWithPath("/f/accession/certificate.html");
 		renderJson(res);
+		}
 	}
 
 	/**
