@@ -634,7 +634,7 @@ public class T7CrclController extends BaseController {
 	 * 
 	 * @author zhuchaobin 2018-05-25
 	 */
-//	@Before(FunctionInterceptor.class)
+	@Before(FunctionInterceptor.class)
 	public void submitExam() {
 		// // 处理结果
 		ResultEntity res = null;

@@ -25,6 +25,7 @@ public class FunctionInterceptor implements Interceptor{
 			if(time <60000)
 			{
 				LOG.debug("频繁访问");
+				inv.getController().redirect(pthc+"tips");
 			}
 			else {
 				inv.invoke();
