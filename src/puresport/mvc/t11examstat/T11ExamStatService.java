@@ -1,5 +1,7 @@
 package puresport.mvc.t11examstat;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 import com.jfinal.aop.Enhancer;
@@ -16,6 +18,11 @@ public class T11ExamStatService extends BaseService {
 	public T11ExamStat SelectById(Integer id){
 		
 		T11ExamStat mdl = T11ExamStat.dao.findFirst("select * from t11ExamStat where id=?", id);
+		return mdl;
+	}
+	public List<T11ExamStat> SelectByUserIdAndTime(Integer userid){
+		
+		List<T11ExamStat> mdl = T11ExamStat.dao.find("select * from t11_exam_stat where usrid=? and to_days(tms) = to_days(now())", userid);
 		return mdl;
 	}
 }
