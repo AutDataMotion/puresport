@@ -123,6 +123,12 @@ public class pagesController extends BaseController {
 		renderWithPath(pthv+"about.html");
 	}
 	@Clear
+	public void tips() {
+		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
+		//renderWithPath(pthv+"list.html");
+		renderWithPath(pthv+"tips.html");
+	}
+	@Clear
 	public void jiangzuo_videoplay() {
 		String videoid = getPara("video_id");
 		//String videotitle = getPara("videotitle");
