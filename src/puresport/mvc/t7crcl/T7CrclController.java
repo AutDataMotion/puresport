@@ -47,7 +47,7 @@ import puresport.mvc.t5crclstdy.T5CrclStdy;
 import puresport.mvc.t5crclstdy.T5CrclStdyController;
 //import puresport.entity.ExamEntity;
 import puresport.mvc.t9tstlib.T9Tstlib;
-
+import puresport.mvc.pages.FunctionInterceptor;
 /**
  * XXX 管理 描述：
  * 
@@ -470,6 +470,7 @@ public class T7CrclController extends BaseController {
 	 * 
 	 * @author zhuchaobin 2018-05-21
 	 */
+	@Before(FunctionInterceptor.class)  
 	public void generteTest() {
 /*		if (!isCanTest())
 			renderWithPath("/f/accession/dotest.html");*/
@@ -633,6 +634,7 @@ public class T7CrclController extends BaseController {
 	 * 
 	 * @author zhuchaobin 2018-05-25
 	 */
+//	@Before(FunctionInterceptor.class)
 	public void submitExam() {
 		// // 处理结果
 		ResultEntity res = null;

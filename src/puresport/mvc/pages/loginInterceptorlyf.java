@@ -3,17 +3,24 @@ package puresport.mvc.pages;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.log4j.Logger;
+
 import com.jfinal.aop.Interceptor;
 import com.jfinal.aop.Invocation;
 
 import puresport.mvc.t1usrbsc.T1usrBsc;
 import puresport.mvc.t6mgrahr.T6MgrAhr;
+import puresport.mvc.t7crcl.T7CrclController;
 
 public class loginInterceptorlyf implements Interceptor{
+	private static Logger LOG = Logger.getLogger(loginInterceptorlyf.class);
 	public static final String pthc = "/jf/puresport/pagesController/";
 	@Override
 	public void intercept(Invocation inv) {
+		
 		HttpServletRequest request = inv.getController().getRequest();
+		String ip = request.getRemoteAddr();
+		LOG.debug("intercept---"+ip);
 		String RequestURL =request.getRequestURL().toString();
 		// TODO Auto-generated method stub
 		HttpSession session = inv.getController().getSession();
