@@ -193,56 +193,64 @@ public class T1usrBscController extends BaseController {
         String msg = "";  
         String userType = "";
         JSONObject json = new JSONObject();  
+        boolean authCode = authCode();
         
         String crdt_no = getPara("account");//获取表单数据，这里的参数就是页面表单中的name属性值  
         String password = getPara("pwd");
         try {
-			String encryptpassword = DESUtil.encrypt(password, ConstantInitMy.SPKEY);
-			
-			T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where crdt_no=?", crdt_no);//根据用户名查询数据库中的用户  
-	        if(item != null) {  
-	            if(encryptpassword.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
-//	        	if(password.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
-	                flag = true; 
-	                userType = item.getUsr_tp();
-	                getSession().setAttribute("usrid", item.getUsrid());//设置session，保存登录用户的昵称  
-	                getSession().setAttribute("crdt_no", item.getCrdt_no());//设置session，保存登录用户的昵称  
-	                getSession().setAttribute("pwd", item.getPswd());//设置session，保存登录用户的昵称  
-	                getSession().setAttribute("usr_tp", item.getUsr_tp());//设置session，保存登录用户的昵称
-	                if(userType.equals("运动员"))
-	                {
-	                	Object ss = item.getAdiv_cd();
-//	                	if(item.getAdiv_cd()!=null&&item.getSpt_prj()!=null)
-//	                	if(item.getProvince()!="--"&&item.getCity()!="--"&&item.getSpt_prj()!=null)
-//	                	{
-//	                		needImproveInfoOrNot  =false;
-//	                	}	
-	                	if(item.getSpt_prj()!=null)
-	                	{
-	                		needImproveInfoOrNot  =false;
-	                	}
-	                	else {
-	                		needImproveInfoOrNot  =true;
-	                	}
-	                }	
-	                else {
-	                	if(item.getDepartment()!=null&&item.getPost()!=null)
-	                	{
-	                		needImproveInfoOrNot  =false;
-	                	}	
-	                	else {
-	                		needImproveInfoOrNot  =true;
-	                	}
-	                }
-	                json.put("needImproveInfoOrNot", needImproveInfoOrNot); 
-	            }  
-	            else {  
-	                msg = "密码不正确";  
-	            }  
-	        }  
-	        else {  
-	            msg = "帐号不存在";  
-	        }  
+        	if(authCode)
+            {
+        		String encryptpassword = DESUtil.encrypt(password, ConstantInitMy.SPKEY);
+    			
+    			T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where crdt_no=?", crdt_no);//根据用户名查询数据库中的用户  
+    	        if(item != null) {  
+    	            if(encryptpassword.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
+//    	        	if(password.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
+    	                flag = true; 
+    	                userType = item.getUsr_tp();
+    	                getSession().setAttribute("usrid", item.getUsrid());//设置session，保存登录用户的昵称  
+    	                getSession().setAttribute("crdt_no", item.getCrdt_no());//设置session，保存登录用户的昵称  
+    	                getSession().setAttribute("pwd", item.getPswd());//设置session，保存登录用户的昵称  
+    	                getSession().setAttribute("usr_tp", item.getUsr_tp());//设置session，保存登录用户的昵称
+    	                if(userType.equals("运动员"))
+    	                {
+    	                	Object ss = item.getAdiv_cd();
+//    	                	if(item.getAdiv_cd()!=null&&item.getSpt_prj()!=null)
+//    	                	if(item.getProvince()!="--"&&item.getCity()!="--"&&item.getSpt_prj()!=null)
+//    	                	{
+//    	                		needImproveInfoOrNot  =false;
+//    	                	}	
+    	                	if(item.getSpt_prj()!=null)
+    	                	{
+    	                		needImproveInfoOrNot  =false;
+    	                	}
+    	                	else {
+    	                		needImproveInfoOrNot  =true;
+    	                	}
+    	                }	
+    	                else {
+    	                	if(item.getDepartment()!=null&&item.getPost()!=null)
+    	                	{
+    	                		needImproveInfoOrNot  =false;
+    	                	}	
+    	                	else {
+    	                		needImproveInfoOrNot  =true;
+    	                	}
+    	                }
+    	                json.put("needImproveInfoOrNot", needImproveInfoOrNot); 
+    	            }  
+    	            else {  
+    	                msg = "密码不正确";  
+    	            }  
+    	        }  
+    	        else {  
+    	            msg = "帐号不存在";  
+    	        }
+            }
+            else {
+            	msg = "验证码错误";  
+            }
+			  
 	        json.put("flag", flag); 
 	        json.put("userType", userType); 
 	        json.put("msg", msg); 

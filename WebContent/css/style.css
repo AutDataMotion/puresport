@@ -11,6 +11,14 @@
 .self_info{
 	 margin-bottom: 10px;
 }
+.checkcode_text {
+    font-size: 14px;
+    color: #00b4ff;
+    cursor: pointer;
+    text-decoration: underline;
+    height: 38px;
+    line-height: 38px;
+}
 .get_email_confirmcode {
     position: absolute;
     right: 0px;
