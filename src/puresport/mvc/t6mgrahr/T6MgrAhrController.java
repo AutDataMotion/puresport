@@ -53,63 +53,70 @@ public class T6MgrAhrController extends BaseController {
 		boolean needImproveInfoOrNot = false;
 		String msg = "";
 		JSONObject json = new JSONObject();
-
+		boolean authCode = authCode();
 		String crdt_no = getPara("account");// 获取表单数据，这里的参数就是页面表单中的name属性值
 		String password = getPara("pwd");
 		
 		try {
-			String encryptpassword = DESUtil.encrypt(password, ConstantInitMy.SPKEY);
-			
-			T6MgrAhr item = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where crdt_no=?", crdt_no);// 根据用户名查询数据库中的用户
-			if (item != null) {
-				if (encryptpassword.equals(item.getPswd())) {// 判断数据库中的密码与用户输入的密码是否一致
-					flag = true;
-					getSession().setAttribute("usrid", item.getUsrid());// 设置session，保存登录用户的昵称
-					getSession().setAttribute("crdt_no", item.getCrdt_no());// 设置session，保存登录用户的昵称
-					getSession().setAttribute("pwd", item.getPswd());// 设置session，保存登录用户的昵称
-					getSession().setAttribute("usr_tp", item.getUsr_tp());//设置session，保存登录用户的昵称
-					getSession().setAttribute("typeleve", item.getTypeleve());//设置session，保存登录用户的昵称
-					T6MgrSession mgrSession = new T6MgrSession(item);
-					setSessionAttr(T6MgrSession.KeyName, mgrSession);// 管理员session对象	
-					
-					/*if(item.getWrk_unit()!=null&&item.getPost()!=null&&item.getInstitute()!=null)
-	            	{
-	            		needImproveInfoOrNot  =false;
-	            	}	
-	            	else {
-	            		needImproveInfoOrNot  =true;
-	            		if(item.getWrk_unit()==null||item.getPost()==null)
-	            		{
-	            			json.put("needImproveWrk_unitAndPostOrNot", true); 
-	            		}
-	            		else {
-	            			json.put("needImproveWrk_unitAndPostOrNot", false); 
-	            		}
-	            		if(item.getInstitute()==null)
-	            		{
-	            			json.put("needImproveInstituteOrNot", true); 
-	            		}
-	            		else {
-	            			json.put("needImproveInstituteOrNot", false); 
-	            		}
-	            	}
-	            	*/	
-					if(item.getTypeleve().equals("中心协会级")&&item.getInstitute()==null)
-					{
-						needImproveInfoOrNot  =true;
-						json.put("needImproveInstituteOrNot", true); 
+			if(authCode)
+            {
+				String encryptpassword = DESUtil.encrypt(password, ConstantInitMy.SPKEY);
+				
+				T6MgrAhr item = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where crdt_no=?", crdt_no);// 根据用户名查询数据库中的用户
+				if (item != null) {
+					if (encryptpassword.equals(item.getPswd())) {// 判断数据库中的密码与用户输入的密码是否一致
+						flag = true;
+						getSession().setAttribute("usrid", item.getUsrid());// 设置session，保存登录用户的昵称
+						getSession().setAttribute("crdt_no", item.getCrdt_no());// 设置session，保存登录用户的昵称
+						getSession().setAttribute("pwd", item.getPswd());// 设置session，保存登录用户的昵称
+						getSession().setAttribute("usr_tp", item.getUsr_tp());//设置session，保存登录用户的昵称
+						getSession().setAttribute("typeleve", item.getTypeleve());//设置session，保存登录用户的昵称
+						T6MgrSession mgrSession = new T6MgrSession(item);
+						setSessionAttr(T6MgrSession.KeyName, mgrSession);// 管理员session对象	
+						
+						/*if(item.getWrk_unit()!=null&&item.getPost()!=null&&item.getInstitute()!=null)
+		            	{
+		            		needImproveInfoOrNot  =false;
+		            	}	
+		            	else {
+		            		needImproveInfoOrNot  =true;
+		            		if(item.getWrk_unit()==null||item.getPost()==null)
+		            		{
+		            			json.put("needImproveWrk_unitAndPostOrNot", true); 
+		            		}
+		            		else {
+		            			json.put("needImproveWrk_unitAndPostOrNot", false); 
+		            		}
+		            		if(item.getInstitute()==null)
+		            		{
+		            			json.put("needImproveInstituteOrNot", true); 
+		            		}
+		            		else {
+		            			json.put("needImproveInstituteOrNot", false); 
+		            		}
+		            	}
+		            	*/	
+						if(item.getTypeleve().equals("中心协会级")&&item.getInstitute()==null)
+						{
+							needImproveInfoOrNot  =true;
+							json.put("needImproveInstituteOrNot", true); 
+						}
+						else {
+							needImproveInfoOrNot  = false;
+						}
+						json.put("needImproveInfoOrNot", needImproveInfoOrNot); 
+						
+					} else {
+						msg = "密码不正确";
 					}
-					else {
-						needImproveInfoOrNot  = false;
-					}
-					json.put("needImproveInfoOrNot", needImproveInfoOrNot); 
-					
 				} else {
-					msg = "密码不正确";
+					msg = "帐号不存在";
 				}
-			} else {
-				msg = "帐号不存在";
+            }
+			else {
+				msg = "验证码错误";
 			}
+			
 			json.put("flag", flag);
 			json.put("msg", msg);
 			json.put("url", getCxt() + "/jf/puresport/pagesController/admin");

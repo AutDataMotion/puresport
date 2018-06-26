@@ -63,6 +63,7 @@ function initlogin()
 		CompetetionItem.options.add(op);
 	}
 }
+
 function  changeSelect_user_Competetion(index){
 	//选择对象
 	var CompetetionItem =document.getElementById("getSportItem_user_CompetetionItem");
@@ -89,6 +90,7 @@ function user_login()
 	    data:{
 	    	account:$("#form-phone_user").val(),
 	    	pwd:$("#form-pwd_user").val(),
+	    	authCode:$("#authCode_user").val()
 	    },
 	    timeout:5000,    //超时时间
 	    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
@@ -173,6 +175,7 @@ function admin_login()
 	    data:{
 	    	account:$("#form-phone_admin").val(),
 	    	pwd:$("#form-pwd_admin").val(),
+	    	authCode:$("#authCode_admin").val()
 	    },
 	    timeout:5000,    //超时时间
 	    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
