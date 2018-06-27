@@ -109,6 +109,11 @@ function user_login()
 	    		{
 	    			$("#userLoginPanel_1").toggle();
 		    		$("#userLoginPanel_2").toggle();
+		    		if(data.belongToInstitute)
+		    		{
+		    			app.belongToInstitute = data.belongToInstitute;
+		    			$("#getSportItem_user_assist").toggle();
+		    		}
 //		    		if(data.userType == "运动员")//运动员
 //	    			{
 //		    			
@@ -321,6 +326,15 @@ function Improve_user_info()
 		}
 	}
 	if(app.userType=="辅助人员"){//辅助人员
+		var CompetetionItem_user_assist = $('#getSportItem_user_assist_CompetetionItem option:selected').val();
+		if(app.belongToInstitute)
+		{
+			if(CompetetionItem_user_assist=="请选择项目")
+			{
+				Tips('myModallyf_content_user',"请选择项目!");
+				return;
+			}
+		}
 		var company = $('#form-company_assist').val();
 		var position = $('#form-position_assist').val();
 		if(company&&position)
@@ -331,6 +345,8 @@ function Improve_user_info()
 			    async:true,    //或false,是否异步
 			    data:{
 			    	usertype:app.userType,
+			    	belongToInstitute:app.belongToInstitute,
+			    	CompetetionItem_user_assist:CompetetionItem_user_assist,
 			    	company:company,
 			    	position:position
 			    },
