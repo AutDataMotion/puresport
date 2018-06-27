@@ -37,6 +37,7 @@ import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageDecoder;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
+import puresport.constant.EnumCompetition;
 import puresport.entity.ExamEntity;
 import puresport.entity.ResultEntity;
 import puresport.mvc.t10examgrd.T10ExamGrd;
@@ -91,6 +92,20 @@ public class T7CrclController extends BaseController {
 	 * @author zhuchaobin 2018-06-03
 	 */
 	public void study_notify_1() {
+		//判断是省运会、亚运会、青奥会
+		String which_competition = getPara("which_competition");
+		if(which_competition.equals(EnumCompetition.ShengYunHui.getIndex_str()))
+		{
+			getSession().setAttribute("which_competition", EnumCompetition.ShengYunHui.getCompetitionName());
+		}else if(which_competition.equals(EnumCompetition.YaYunHui.getIndex_str()))
+		{
+			getSession().setAttribute("which_competition", EnumCompetition.YaYunHui.getCompetitionName());
+		}else if(which_competition.equals(EnumCompetition.QingAoHui.getIndex_str()))
+		{
+			getSession().setAttribute("which_competition", EnumCompetition.QingAoHui.getCompetitionName());
+		}
+		
+		
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		System.out.println(usrid);
 		List<T7Crcl> t7List = queryCrcl(1, usrid);
@@ -651,6 +666,7 @@ public class T7CrclController extends BaseController {
 		// // 处理结果
 		ResultEntity res = null;
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
+		
 		
 		//查询当天已经考试了几次
 		List<T11ExamStat> T11ExamStat_num = T11ExamStatService.service.SelectByUserIdAndTime(usrid);
