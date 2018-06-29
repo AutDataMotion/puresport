@@ -117,7 +117,7 @@ function toUtf8(str) {
 		<div class="container">
 			<div class="main_grid1">
 				<h3 class="style pull-left">学习</h3>
-				<h3 class="style pull-right">省运会</h3>
+				<h3 class="style pull-right">${session['which_competition']}</h3>
 			</div>
 		</div>
 	</div>
@@ -132,7 +132,7 @@ function toUtf8(str) {
 					<div class="col-md-1 myTest"></div>
 					<div class="col-md-10 myTest">
 						<ul>
-							<li>1.本次准入学习共分为三个部分，准入对象须观看省运会反兴奋剂六项规定视频，案例篇视频选学，流程篇视频选学后，方可进入考试页面。</li>
+							<li>1.本次准入学习共分为三个部分，准入对象须观看${session['which_competition']}反兴奋剂六项规定视频，案例篇视频选学，流程篇视频选学后，方可进入考试页面。</li>
 							</br>
 							<li>2.考试过程中请注意保持浏览器客户端在线状态，不要强制刷新或者断开网络，否则学习记录将会丢失。</li>
 						</ul>
