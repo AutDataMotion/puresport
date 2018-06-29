@@ -153,7 +153,7 @@ $(document).ready(function() {
 		},{
 			extend : 'collection',
 			text : '导出',
-			buttons : [ 'excel']
+			buttons : [ 'excel','csv']
 			//buttons : [ 'excel', 'print' ]
 		} ],
 
