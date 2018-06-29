@@ -151,14 +151,14 @@ public class T7CrclController extends BaseController {
 			renderWithPath("/f/accession/certificate.html");
 			return;
 		} else {
-			setAttr("pageHead", "省运会反兴奋剂教育准入合格证书-" + t1.getNm());
+			setAttr("pageHead", "反兴奋剂教育准入合格证书-" + t1.getNm());
 /*			// 取身份证号码第1位+ 最后1位
 			String crdt_no_endStr = "";
 			if (!StringUtils.isBlank(crdt_no)) {
 				crdt_no_endStr = crdt_no.substring(0, 1)
 						+ crdt_no.substring(crdt_no.length() - 2, crdt_no.length() - 1);
 			}*/
-			certificatePath = "/images_zcb/certificates/" + "省运会反兴奋剂教育准入合格证书_" + t1.getNm() + "_"
+			certificatePath = "/images_zcb/certificates/" + "反兴奋剂教育准入合格证书_" + t1.getNm() + "_"
 					+ usrid + ".jpg";
 			setAttr("certificatePath", certificatePath);
 		}
@@ -780,10 +780,11 @@ public class T7CrclController extends BaseController {
 		String which_competition = (String) getSession().getAttribute("which_competition");	
 		if(StringUtils.isBlank(which_competition)) {
 			LOG.error("获取赛事名称失败！");
+			which_competition = "";
 		} else {
 			LOG.debug("赛事名称：" + which_competition);
-			t11.setExam_nm(which_competition);
-		}		
+		}	
+		t11.setExam_nm(which_competition);
 		t11.saveGenIntId();
 		// 插入或者更新成绩统计表最后一次成绩
 		String sql = "select * from t11_exam_stat t where t.usrid = '" + t10.getUsrid() + "' and t.exam_st = '9'";
@@ -797,7 +798,7 @@ public class T7CrclController extends BaseController {
 			t11Rlt.setExam_channel("01");// 考试渠道,01:互联网站
 			t11Rlt.setExam_num(Integer.parseInt(examid));// 考试次数
 			t11Rlt.setTms(new Timestamp(System.currentTimeMillis()));// 维护时间
-			t11Rlt.setExam_nm("省运会");
+			t11Rlt.setExam_nm(which_competition);
 			t11Rlt.setExam_st("9");// 考试状态，9表示最终成绩
 			t11Rlt.saveGenIntId();
 		} else {
@@ -810,7 +811,7 @@ public class T7CrclController extends BaseController {
 			t11Rlt.setExam_channel("01");// 考试渠道,01:互联网站
 			t11Rlt.setExam_num(Integer.parseInt(examid));// 考试次数
 			t11Rlt.setTms(new Timestamp(System.currentTimeMillis()));// 维护时间
-			t11Rlt.setExam_nm("省运会");
+			t11Rlt.setExam_nm(which_competition);
 			t11Rlt.setExam_st("9");// 考试状态，9表示最终成绩
 			t11Rlt.update();
 		}
@@ -854,7 +855,7 @@ public class T7CrclController extends BaseController {
 //				crdt_no_endStr = crdt_no.substring(0, 1)
 //						+ crdt_no.substring(crdt_no.length() - 2, crdt_no.length() - 1);
 //			}
-			certificatePath = "\\images_zcb\\certificates\\" + "省运会反兴奋剂教育准入合格证书_" + t1.getNm() + "_"
+			certificatePath = "\\images_zcb\\certificates\\" + "反兴奋剂教育准入合格证书_" + t1.getNm() + "_"
 					+ t1.getUsrid() + ".jpg";
 			String dscImg = webContentPath + certificatePath;
 			LOG.info("srcImg=" + srcImg);
