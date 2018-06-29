@@ -94,6 +94,10 @@ public class T7CrclController extends BaseController {
 	public void study_notify_1() {
 		//判断是省运会、亚运会、青奥会
 		String which_competition = getPara("which_competition");
+		if(StringUtils.isBlank(which_competition)) {			
+			renderWithPath("/f/zhunru_index.html");
+			return;
+		}
 		if(which_competition.equals(EnumCompetition.ShengYunHui.getIndex_str()))
 		{
 			getSession().setAttribute("which_competition", EnumCompetition.ShengYunHui.getCompetitionName());
@@ -104,8 +108,7 @@ public class T7CrclController extends BaseController {
 		{
 			getSession().setAttribute("which_competition", EnumCompetition.QingAoHui.getCompetitionName());
 		}
-		
-		
+			
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		System.out.println(usrid);
 		List<T7Crcl> t7List = queryCrcl(1, usrid);
@@ -487,7 +490,16 @@ public class T7CrclController extends BaseController {
 	 * @author zhuchaobin 2018-05-21
 	 */
 	@Before(FunctionInterceptor.class)  
-	public void generteTest() {
+	public void generteTest() {		
+		//判断赛事类型是否为空
+		String which_competition = (String) getSession().getAttribute("which_competition");	
+		if(StringUtils.isBlank(which_competition)) {
+			LOG.error("session中获取赛事名称获取为空");
+			renderWithPath("/f/zhunru_index.html");
+			return;
+		}  else {
+			setAttr("which_competition", which_competition);
+		}
 /*		if (!isCanTest())
 			renderWithPath("/f/accession/dotest.html");*/
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
@@ -497,9 +509,7 @@ public class T7CrclController extends BaseController {
 		{
 			LOG.debug("generteTest----"+"今日答题次数已满！！");
 			renderWithPath("/f/tips.html");
-		}
-		else 
-		{
+		} else {
 		// 选择题
 		String sql = "select * from t9_tstlib t where t.prblm_tp ='01' order by rand() limit 10";
 		List<T9Tstlib> t9List = T9Tstlib.dao.find(sql);
@@ -766,7 +776,14 @@ public class T7CrclController extends BaseController {
 		t11.setExam_channel("01");// 考试渠道,01:互联网站
 		t11.setExam_num(Integer.parseInt(examid));// 考试次数
 		t11.setTms(new Timestamp(System.currentTimeMillis()));// 维护时间
-		t11.setExam_nm("省运会");
+		// 从session中获取赛事名称
+		String which_competition = (String) getSession().getAttribute("which_competition");	
+		if(StringUtils.isBlank(which_competition)) {
+			LOG.error("获取赛事名称失败！");
+		} else {
+			LOG.debug("赛事名称：" + which_competition);
+			t11.setExam_nm(which_competition);
+		}		
 		t11.saveGenIntId();
 		// 插入或者更新成绩统计表最后一次成绩
 		String sql = "select * from t11_exam_stat t where t.usrid = '" + t10.getUsrid() + "' and t.exam_st = '9'";
