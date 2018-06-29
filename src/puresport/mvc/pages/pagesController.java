@@ -277,7 +277,10 @@ public class pagesController extends BaseController {
 				if(flag)
 				{
 					getSession().setAttribute("emailConfirmCode", confirmCode);//设置session，保存登录用户的昵称
-				}	
+				}
+				else {
+					msg = "邮件发送失败";  
+				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				log.debug("--------发送验证码到邮箱失败！！");

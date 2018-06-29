@@ -190,6 +190,7 @@ public class T1usrBscController extends BaseController {
 	{
 		boolean flag = false;  
 		boolean needImproveInfoOrNot = false;
+		boolean belongToInstitute = false;
         String msg = "";  
         String userType = "";
         JSONObject json = new JSONObject();  
@@ -212,7 +213,13 @@ public class T1usrBscController extends BaseController {
     	                getSession().setAttribute("crdt_no", item.getCrdt_no());//设置session，保存登录用户的昵称  
     	                getSession().setAttribute("pwd", item.getPswd());//设置session，保存登录用户的昵称  
     	                getSession().setAttribute("usr_tp", item.getUsr_tp());//设置session，保存登录用户的昵称
-    	                if(userType.equals("运动员"))
+    	                
+    	                if(item.getInstitute()!=null)
+    	                {
+    	                	belongToInstitute = true;
+    	                }
+    	                json.put("belongToInstitute", belongToInstitute); 
+    	                if(userType.equals("运动员"))//运动员表 这个字段的初始值为运动员！
     	                {
     	                	Object ss = item.getAdiv_cd();
 //    	                	if(item.getAdiv_cd()!=null&&item.getSpt_prj()!=null)
@@ -306,9 +313,22 @@ public class T1usrBscController extends BaseController {
                 }
             }
             else {//辅助人员
-            	String company = getPara("company");//获取表单数据，这里的参数就是页面表单中的name属性值  
-                String position = getPara("position");
-                int res = Db.update("update puresport.t1_usr_bsc set usr_tp=?,department=?,post=? where usrid=?",usertype,company,position,userID);
+            	String belongToInstitute =getPara("belongToInstitute");
+            	int res = 0;
+            	if(StringUtil.notEmpty(belongToInstitute)&&belongToInstitute.equals("true"))
+            	{
+            		String company = getPara("company");//获取表单数据，这里的参数就是页面表单中的name属性值  
+                    String position = getPara("position");
+                    String spt_prj = getPara("CompetetionItem_user_assist");
+                    
+                    res = Db.update("update puresport.t1_usr_bsc set usr_tp=?,spt_prj=?,department=?,post=? where usrid=?",usertype,spt_prj,company,position,userID);
+            	}
+            	else {
+            		String company = getPara("company");//获取表单数据，这里的参数就是页面表单中的name属性值  
+                    String position = getPara("position");
+                    res = Db.update("update puresport.t1_usr_bsc set usr_tp=?,department=?,post=? where usrid=?",usertype,company,position,userID);
+            	}
+            	
                 if(res>0)
                 {
                 	flag = true; 
