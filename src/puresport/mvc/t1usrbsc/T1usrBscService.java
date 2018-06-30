@@ -138,9 +138,9 @@ public class T1usrBscService extends BaseService {
 	public List<Record> selectScoreByPage(T6MgrSession mgrSession, ParamComm paramMdl) {
 
 		List<Object> listArgs = new ArrayList<>();
-		String whereSql = getProvinceWhere(mgrSession, paramMdl, listArgs);
+		String whereSql = getProvinceWhere(mgrSession, paramMdl, listArgs, true);
 		Object[] listObjs = listArgs.toArray();
-		List<Record> userScoreRecords = ConfMain.db().find(sql_score + whereSql, listObjs);
+		List<Record> userScoreRecords = ConfMain.db().find(sql_score + whereSql , listObjs);
 		return userScoreRecords;
 	}
 
@@ -150,11 +150,10 @@ public class T1usrBscService extends BaseService {
 		return s + "%";
 	}
 
-	public static String getProvinceWhere(T6MgrSession mgrSession, ParamComm paramMdl, List<Object> listArgs) {
+	public static String getProvinceWhere(T6MgrSession mgrSession, ParamComm paramMdl, List<Object> listArgs, boolean isAddRoleWhere) {
 		StringBuilder whereStr = new StringBuilder();
 		if (mgrSession.getTypeleve().equals(EnumTypeLevel.Country.getName())) {
 			// 国家级 全部可见
-			whereStr.append(" and levelinstitute >0 or typelevel > '0' ");
 			if (StringUtil.notEmptyOrDefault(paramMdl.getName1(), defSelect)) {
 				whereStr.append(" and province like ? ");
 				listArgs.add(getStringLikeLeft(paramMdl.getName1()));
@@ -165,7 +164,6 @@ public class T1usrBscService extends BaseService {
 			}
 		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.Province.getName())) {
 			// 省级 只可见属于该省的
-			whereStr.append(" and province like ?  and levelprovince>0 ");
 			listArgs.add(getStringLikeLeft(mgrSession.getProvince()));
 
 			if (StringUtil.notEmptyOrDefault(paramMdl.getName2(), defSelect)) {
@@ -176,12 +174,10 @@ public class T1usrBscService extends BaseService {
 			// 市级 只可见属于该市的
 			whereStr.append(" and province like ? ");
 			listArgs.add(getStringLikeLeft(mgrSession.getProvince()));
-			whereStr.append(" and city like ? and levelcity>0 ");
+			whereStr.append(" and city like ? ");
 			listArgs.add(getStringLikeLeft(mgrSession.getCity()));
 
-		} else if(mgrSession.getTypeleve().equals(EnumTypeLevel.CenterInstitute.getName())) {
-			whereStr.append(String.format(" and levelinstitute >0 and  institute='%s' ", mgrSession.getInstitute()));
-		}
+		} 
 		if (StringUtil.notEmptyOrDefault(paramMdl.getName3(), defSelect)) {
 			whereStr.append(" and institute like ? ");
 			listArgs.add(getStringLikeLeft(paramMdl.getName3()));
@@ -190,32 +186,15 @@ public class T1usrBscService extends BaseService {
 			whereStr.append(" and spt_prj like ? ");
 			listArgs.add(getStringLikeLeft(paramMdl.getName4()));
 		}
+		if (isAddRoleWhere) {
+			whereStr.append(" and ")
+			.append(mgrSession.selectRoleStr_UserBasic());
+		}
 		// 分页必须加
 		whereStr.append(" limit ?,?");
 		listArgs.add(paramMdl.getPageIndex());
 		listArgs.add(paramMdl.getPageSize());
 		return whereStr.toString();
-	}
-
-	public ResUserScore getUserScore(T1usrBsc user) {
-		ResUserScore userScore = new ResUserScore();
-		userScore.setUsr_tp(user.getUsr_tp());
-		userScore.setUsr_nm(user.getUsr_nm());
-		userScore.setNm(user.getNm());
-		userScore.setCrdt_tp(user.getCrdt_tp());
-		userScore.setCrdt_no(user.getCrdt_no());
-		userScore.setSpt_prj(user.getSpt_prj());
-		userScore.setGnd(user.getGnd());
-		userScore.setBrth_dt(user.getBrth_dt());
-		userScore.setMblph_no(user.getMblph_no());
-		userScore.setEmail(user.getEmail());
-		userScore.setProvince(user.getProvince());
-		userScore.setCity(user.getCity());
-		userScore.setInstitute(user.getInstitute());
-		userScore.setCourse("田径100米");
-		userScore.setScore(90);
-		userScore.setPassed("合格");
-		return userScore;
 	}
 
 	private static String sql_prj = "select * from prjGroupStatis where 1=1 ";
@@ -228,7 +207,7 @@ public class T1usrBscService extends BaseService {
 	 */
 	public List<Record> selectPassedPercent(T6MgrSession mgrSession, ParamComm paramMdl) {
 		List<Object> listArgs = new ArrayList<>();
-		String whereSql = getProvinceWhere(mgrSession, paramMdl, listArgs);
+		String whereSql = getProvinceWhere(mgrSession, paramMdl, listArgs, false);
 		Object[] listObjs = listArgs.toArray();
 		List<Record> prjStatisticsRes = ConfMain.db().find(sql_prj + whereSql, listObjs);
 

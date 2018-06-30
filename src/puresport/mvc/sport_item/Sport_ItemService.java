@@ -17,12 +17,12 @@ public class Sport_ItemService extends BaseService {
 	
 	public Sport_Item SelectById(Integer id){
 		
-		Sport_Item mdl = Sport_Item.dao.findFirst("select * from sport_Item where id=?", id);
+		Sport_Item mdl = Sport_Item.dao.findFirst("select * from sport_item where id=?", id);
 		return mdl;
 	}
 	public List<Sport_Item> SelectByItemId(Integer id){
 		
-		List<Sport_Item> mdl = Sport_Item.dao.find("select * from sport_Item where parentid=?", id);
+		List<Sport_Item> mdl = Sport_Item.dao.find("select * from sport_item where parentid=?", id);
 		return mdl;
 	}
 }
