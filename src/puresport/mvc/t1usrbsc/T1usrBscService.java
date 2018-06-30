@@ -50,7 +50,6 @@ public class T1usrBscService extends BaseService {
 		if (null == sporter || !mdl.getLong(T1usrBsc.column_usrid).equals(sporter.getLong(T1usrBsc.column_usrid))) {
 			return false;
 		}
-		// mdl.set(T1usrBsc.column_usrid, sporter.get(T1usrBsc.column_usrid));
 		return true;
 	}
 	public Tuple2<Boolean, String> delete(T6MgrSession mgrSession, ParamComm paramComm){
@@ -79,7 +78,7 @@ public class T1usrBscService extends BaseService {
 	public static String getSearchWhere(T6MgrSession mgrSession, ParamComm paramMdl, List<Object> listArgs) {
 		StringBuilder whereStr = new StringBuilder();
 			if (StringUtil.notEmpty(paramMdl.getName1())) {
-				whereStr.append(" and usr_nm like ? ");
+				whereStr.append(" and nm like ? ");
 				listArgs.add(getStringLikeLeft(paramMdl.getName1()));
 			}
 			if (StringUtil.notEmpty(paramMdl.getName2())) {
