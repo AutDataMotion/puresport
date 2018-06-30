@@ -154,6 +154,7 @@ public class T1usrBscService extends BaseService {
 		StringBuilder whereStr = new StringBuilder();
 		if (mgrSession.getTypeleve().equals(EnumTypeLevel.Country.getName())) {
 			// 国家级 全部可见
+			whereStr.append(" and levelinstitute >0 or typelevel > '0' ");
 			if (StringUtil.notEmptyOrDefault(paramMdl.getName1(), defSelect)) {
 				whereStr.append(" and province like ? ");
 				listArgs.add(getStringLikeLeft(paramMdl.getName1()));
@@ -164,7 +165,7 @@ public class T1usrBscService extends BaseService {
 			}
 		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.Province.getName())) {
 			// 省级 只可见属于该省的
-			whereStr.append(" and province like ? ");
+			whereStr.append(" and province like ?  and levelprovince>0 ");
 			listArgs.add(getStringLikeLeft(mgrSession.getProvince()));
 
 			if (StringUtil.notEmptyOrDefault(paramMdl.getName2(), defSelect)) {
@@ -175,9 +176,11 @@ public class T1usrBscService extends BaseService {
 			// 市级 只可见属于该市的
 			whereStr.append(" and province like ? ");
 			listArgs.add(getStringLikeLeft(mgrSession.getProvince()));
-			whereStr.append(" and city like ? ");
+			whereStr.append(" and city like ? and levelcity>0 ");
 			listArgs.add(getStringLikeLeft(mgrSession.getCity()));
 
+		} else if(mgrSession.getTypeleve().equals(EnumTypeLevel.CenterInstitute.getName())) {
+			whereStr.append(String.format(" and levelinstitute >0 and  institute='%s' ", mgrSession.getInstitute()));
 		}
 		if (StringUtil.notEmptyOrDefault(paramMdl.getName3(), defSelect)) {
 			whereStr.append(" and institute like ? ");
