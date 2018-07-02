@@ -73,7 +73,7 @@ public class T6MgrSession implements Serializable {
 			return String.format(" province='%s' and levelprovince>0 ", province);
 		} else if (typeleve.equals(EnumTypeLevel.City.getName())) {
 			// 市级 只可见属于该市的
-			return String.format(" province='%s' and city='%s' and levelcity>0 ", city, province);
+			return String.format(" city='%s' and province='%s' and levelcity>0 ", city, province);
 		}
 		// todo 暂未考虑协会管理员
 		
