@@ -64,6 +64,13 @@ public class pagesController extends BaseController {
 	public void jiangzuo_index() {
 		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
 		//renderWithPath(pthv+"list.html");
+		//反兴奋剂教育准入讲座
+		List<T7Crcl> mains = T7CrclService.service.SelectBycrcl_attr("1");
+//		List<T7Crcl> anlis = T7CrclService.service.SelectBycrcl_attr("2");
+//		List<T7Crcl> liuchengs = T7CrclService.service.SelectBycrcl_attr("3");
+		setAttr("mains",mains);
+//		setAttr("anlis",anlis);
+//		setAttr("liuchengs",liuchengs);
 		renderWithPath(pthv+"jiangzuo_index.html");
 	}
 	@Clear

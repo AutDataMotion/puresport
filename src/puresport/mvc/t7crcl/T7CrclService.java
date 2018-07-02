@@ -1,5 +1,7 @@
 package puresport.mvc.t7crcl;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 
 import com.jfinal.aop.Enhancer;
@@ -21,6 +23,11 @@ public class T7CrclService extends BaseService {
 	public T7Crcl SelectByVideoID(String videoid){
 		
 		T7Crcl mdl = T7Crcl.dao.findFirst("select * from t7_Crcl where crcl_file_rte=?", videoid);
+		return mdl;
+	}
+	public List<T7Crcl> SelectBycrcl_attr(String crcl_attr){
+		
+		List<T7Crcl> mdl = T7Crcl.dao.find("select * from t7_Crcl where crcl_attr=?", crcl_attr);
 		return mdl;
 	}
 }
