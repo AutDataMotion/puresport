@@ -19,7 +19,7 @@ import com.platform.mvc.base.BaseModel;
  * @author zw
  *
  */
-public class ResListPageComm<T extends BaseModel> implements Serializable{
+public class ResListPageComm<T> implements Serializable{
 	private List<T> data;
 	private List<String> options = new ArrayList<>();
 	private List<String> files = new ArrayList<>();
@@ -29,7 +29,7 @@ public class ResListPageComm<T extends BaseModel> implements Serializable{
 	
 	public ResListPageComm(){}
 	
-	public ResListPageComm(List<? extends BaseModel>  tableList){
+	public ResListPageComm(List<T>  tableList){
 		
 		data = CollectionUtils.isEmpty(tableList)?Collections.EMPTY_LIST:(List) tableList;
 

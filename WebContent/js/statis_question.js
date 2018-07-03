@@ -1,25 +1,55 @@
 $(document).ready(
 		function() {
+
+			// 获取试题类型
+			function initQuestionType() {
+				// 发送查询请求e
+				$.ajax({
+					type : "get",
+					url : encodeURI(encodeURI(cxt
+							+ "/jf/puresport/area/selectQuestionType")),
+					success : function(obj) {
+						$("#typeSelect_question option:not(:first)").remove();
+						$.each(obj, function(index, item) {
+							$("#typeSelect_question").append(
+									"<option value='" + obj[index].prblm_tp
+											+ "'>" + obj[index].prblm_tp
+											+ "</option>");
+						});
+					}
+				});
+			};
+			// initQuestionType();
+			// =========================
+			// 获取查询参数
+			var datasrch = {
+				id : '',
+				name1 : '',
+				name2 : '',
+				name3 : '',
+				pageIndex : '',
+				pageSize : ''
+			};
+
+			function getSearchParam() {
+				datasrch.name1 = $("#typeSelect_question option:selected").val();
+			};
+
 			var myTable = $('#example5').DataTable({
 				dom : 'Bfrtip',
-				buttons : [ {
-					extend : 'collection',
-					text : '导出',
-					buttons : [ 'excel']
-//					buttons : [ 'excel', 'print' ]
-				} ],
 				select : true,
+				serverSide : true,
 				scrollY : 400,
 				scrollX : true,
 				responsive : true,
-				"searching": true,
+				"searching" : true,
 				"bProcessing" : true, // DataTables载入数据时，是否显示‘进度’提示
 				"sProcessing" : "加载中...",
-//				"bFilter" : true, // 过滤功能
+				// "bFilter" : true, // 过滤功能
 				"bPaginate" : true, // 翻页功能
 				"bLengthChange" : true, // 改变每页显示数据数量
 				"bFilter" : false, // 过滤功能
-				"bSort" : true, // 排序功能
+				"bSort" : false, // 排序功能
 				"oLanguage" : {
 					"sLengthMenu" : "每页显示 _MENU_ 条记录",
 					"sZeroRecords" : "抱歉， 没有找到",
@@ -33,6 +63,19 @@ $(document).ready(
 					},
 					"sZeroRecords" : "没有检索到数据",
 				},
+				ajax : {
+					type : "POST",
+					url : encodeURI(encodeURI(cxt + "/jf/puresport/t1usrBsc/getDataExamQues")),
+					data : function ( d ) {
+						d.columns=null;
+						getSearchParam();
+						d.v = JSON.stringify(datasrch);
+		            }
+				},buttons : [ {
+					extend : 'collection',
+					text : '导出',
+					buttons : [ 'excel' ]
+				} ],
 				columns : [ {
 					data : "prblm_tp"
 				}, {
@@ -59,64 +102,11 @@ $(document).ready(
 				} ]
 			});
 
-			// 获取查询参数
-			var datasrch = {
-				id : '',
-				name1 : '',
-				name2 : '',
-				name3 : '',
-				pageIndex : '',
-				pageSize : ''
-			};
-			function search(data, callback, settings) {
-				datasrch.name1 = $("#typeSelect_question option:selected")
-						.val();
-				datasrch.pageIndex = 0;
-				datasrch.pageSize = 2000;
-				// 发送查询请求
-				$.ajax({
-					type : "get",
-					url : encodeURI(encodeURI(cxt
-							+ "/jf/puresport/t1usrBsc/getDataExamQues")),
-					data : {
-						v : JSON.stringify(datasrch)
-					},
-					dataType : 'json',
-					contentType : "application/json",
-					success : function(response) {
-						myTable.clear().draw();
-						myTable.rows.add(response).draw();
-					}
-				});
-			}
-			;
-
-			// 获取试题类型
-			function initQuestionType() {
-				// 发送查询请求e
-				$.ajax({
-					type : "get",
-					url : encodeURI(encodeURI(cxt
-							+ "/jf/puresport/area/selectQuestionType")),
-					success : function(obj) {
-						$("#typeSelect_question option:not(:first)").remove();
-						$.each(obj, function(index, item) {
-							$("#typeSelect_question").append(
-									"<option value='" + obj[index].prblm_tp
-											+ "'>" + obj[index].prblm_tp
-											+ "</option>");
-						});
-					}
-				});
-			}
-			;
-
 			// 查询按钮
 			$("#selectBtn_question").click(function() {
-				search("", "", "");
+				// 重新加载table数据
+				myTable.ajax.reload();
 			});
-			// initQuestionType();
-			tableQuestion = myTable;
-			search("", "", "");
 			
+			tableQuestion = myTable;
 		});

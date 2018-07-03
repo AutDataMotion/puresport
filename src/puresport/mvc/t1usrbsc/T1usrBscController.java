@@ -119,20 +119,20 @@ public class T1usrBscController extends BaseController {
 	public void getDataScore(){
 		// 成绩统计
 		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
-		renderJson(T1usrBscService.service.selectScoreByPage(mgrSession, getParamComm()));
+		renderJsonForTable(T1usrBscService.service.selectScoreByPage(mgrSession, getParamWithServerPage()));
 	}
 	
 	@Clear
 	public void getDataPrjStatis(){
 		// 项目合格率统计
 		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
-		renderJson(T1usrBscService.service.selectPassedPercent(mgrSession, getParamComm()));
+		renderJsonForTable(T1usrBscService.service.selectPassedPercent(mgrSession, getParamWithServerPage()));
 	}
 	
 	@Clear
 	public void getDataExamQues(){
 		// 试题错误率统计
-		renderJson(T1usrBscService.service.selectExamQuestion(getParamComm()));
+		renderJsonForTable(T1usrBscService.service.selectExamQuestion(getParamWithServerPage()));
 	}
 	
 	@Clear

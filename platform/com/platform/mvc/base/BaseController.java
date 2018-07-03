@@ -175,7 +175,7 @@ public abstract class BaseController extends Controller {
 	 * @param object
 	 */
 	@SuppressWarnings("rawtypes")
-	public <T extends BaseModel> void renderJsonForTable(List<? extends BaseModel> tableList){
+	public <T> void renderJsonForTable(List<T> tableList){
 		ResListPageComm<T>  resListPageComm = new ResListPageComm<T>(tableList);
 		// 修改draw值
 		ParamComm paramComm = getAttr(ConstantWebContext.table_paraComm);
