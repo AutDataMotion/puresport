@@ -24,6 +24,7 @@ import puresport.applicat.MdlExcelRow;
 import puresport.constant.ConstantInitMy;
 import puresport.constant.EnumStatus;
 import puresport.constant.EnumTypeLevel;
+import puresport.mvc.comm.PageViewSta;
 import puresport.mvc.comm.ParamComm;
 import puresport.mvc.comm.ResTips;
 
@@ -65,6 +66,7 @@ public class T6MgrAhrController extends BaseController {
 				T6MgrAhr item = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where crdt_no=?", crdt_no);// 根据用户名查询数据库中的用户
 				if (item != null) {
 					if (encryptpassword.equals(item.getPswd())) {// 判断数据库中的密码与用户输入的密码是否一致
+						PageViewSta.StaLoginPeopleCountByDay();
 						flag = true;
 						getSession().setAttribute("usrid", item.getUsrid());// 设置session，保存登录用户的昵称
 						getSession().setAttribute("crdt_no", item.getCrdt_no());// 设置session，保存登录用户的昵称

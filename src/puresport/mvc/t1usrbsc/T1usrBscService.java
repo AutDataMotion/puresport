@@ -136,14 +136,28 @@ public class T1usrBscService extends BaseService {
 	private static String sql_score = "select u.*, s.exam_nm as exam_nm, s.exam_grd as exam_grd, (CASE WHEN s.exam_grd >= 80 THEN '及格'  WHEN s.exam_grd is null THEN '未考试'  ELSE '不及格' END) as passed "
 			+ " from t1_usr_bsc u  left join ("
 			+ " select usrid, exam_nm, max(exam_grd) as exam_grd from t11_exam_stat where exam_st='1' group by usrid, exam_nm "
-			+ " ) as s on u.usrid = s.usrid  where 1=1 ";
+			+ " ) as s on u.usrid = s.usrid  where 1=1 %s  limit ?,?";
+	
+	private static String sql_score_total = "select count(1) "
+			+ " from t1_usr_bsc u  left join ("
+			+ " select usrid, exam_nm, max(exam_grd) as exam_grd from t11_exam_stat where exam_st='1' group by usrid, exam_nm "
+			+ " ) as s on u.usrid = s.usrid  where 1=1  %s ";
 
 	public List<Record> selectScoreByPage(T6MgrSession mgrSession, ParamComm paramMdl) {
-
+		
 		List<Object> listArgs = new ArrayList<>();
 		String whereSql = getProvinceWhere(mgrSession, paramMdl, listArgs, true);
-		Object[] listObjs = listArgs.toArray();
-		List<Record> userScoreRecords = ConfMain.db().find(sql_score + whereSql , listObjs);
+		Long countTotal = ConfMain.db().queryLong(String.format(sql_score_total, whereSql), listArgs.toArray());
+		paramMdl.setTotal(countTotal);
+		List<Record> userScoreRecords = null;
+		if (countTotal > 0) {
+			listArgs.add(paramMdl.getPageIndex());
+			listArgs.add(paramMdl.getPageSize());
+			userScoreRecords = ConfMain.db().find(String.format(sql_score, whereSql) , listArgs.toArray());
+		} else {
+			userScoreRecords = new ArrayList<>();
+		}
+		
 		return userScoreRecords;
 	}
 
@@ -193,14 +207,11 @@ public class T1usrBscService extends BaseService {
 			whereStr.append(" and ")
 			.append(mgrSession.selectRoleStr_UserBasic());
 		}
-		// 分页必须加
-		whereStr.append(" limit ?,?");
-		listArgs.add(paramMdl.getPageIndex());
-		listArgs.add(paramMdl.getPageSize());
 		return whereStr.toString();
 	}
 
-	private static String sql_prj = "select * from prjGroupStatis where 1=1 ";
+	private static String sql_prj = "select * from prjGroupStatis where 1=1 %s limit ?,?";
+	private static String sql_prj_total = "select count(1) from prjGroupStatis where 1=1 %s ";
 
 	/**
 	 * 统计-项目合格率
@@ -211,13 +222,20 @@ public class T1usrBscService extends BaseService {
 	public List<Record> selectPassedPercent(T6MgrSession mgrSession, ParamComm paramMdl) {
 		List<Object> listArgs = new ArrayList<>();
 		String whereSql = getProvinceWhere(mgrSession, paramMdl, listArgs, false);
-		Object[] listObjs = listArgs.toArray();
-		List<Record> prjStatisticsRes = ConfMain.db().find(sql_prj + whereSql, listObjs);
-
-		if (CollectionUtils.isEmpty(prjStatisticsRes))
+		Long countTotal = ConfMain.db().queryLong(String.format(sql_prj_total, whereSql), listArgs.toArray());
+		paramMdl.setTotal(countTotal);
+		List<Record> records = null;
+		if (countTotal <= 0) {
 			return new ArrayList<>();
+		} else {
+			listArgs.add(paramMdl.getPageIndex());
+			listArgs.add(paramMdl.getPageSize());
+			records = ConfMain.db().find(String.format(sql_prj, whereSql) , listArgs.toArray());
+		} 
+		
+		if (CollectionUtils.isEmpty(records)) return new ArrayList<>();
 
-		prjStatisticsRes.stream().forEach(e -> {
+		records.stream().forEach(e -> {
 			Long cntTotal = e.getLong("cnt_total");
 			Long cntAnswered = e.getLong("cnt_answered");
 			Long cntPassed = e.getLong("cnt_passed");
@@ -236,21 +254,11 @@ public class T1usrBscService extends BaseService {
 				e.set("passed", "0%%(0/0)");
 			}
 		});
-		return prjStatisticsRes;
+		return records;
 	}
 
-	public ResPrjStatis getPrjStatisMdl(Record record) {
-		ResPrjStatis prjStatis = new ResPrjStatis();
-		prjStatis.setSpt_prj(record.getStr("spt_prj"));
-		prjStatis.setProvince(record.getStr("province"));
-		prjStatis.setCity(record.getStr("city"));
-		prjStatis.setInstitute(record.getStr("institute"));
-		prjStatis.setAnswered("100%(30/30)");
-		prjStatis.setPassed("80%(40/50)");
-		return prjStatis;
-	}
-
-	private static String sql_problem = "select * from problemStatis where 1=1 ";
+	private static String sql_problem = "select * from problemStatis where 1=1 %s limit ?,? ";
+	private static String sql_problem_total = "select count(1) from problemStatis where 1=1 %s ";
 
 	public static String getQuestionWhere(ParamComm paramMdl, List<Object> listArgs) {
 		StringBuilder whereStr = new StringBuilder();
@@ -258,10 +266,6 @@ public class T1usrBscService extends BaseService {
 			whereStr.append(" and prblm_tp like ? ");
 			listArgs.add(getStringLikeLeft(paramMdl.getName1()));
 		}
-		// 分页必须加
-		whereStr.append(" limit ?,?");
-		listArgs.add(paramMdl.getPageIndex());
-		listArgs.add(paramMdl.getPageSize());
 		return whereStr.toString();
 	}
 
@@ -275,13 +279,20 @@ public class T1usrBscService extends BaseService {
 
 		List<Object> listArgs = new ArrayList<>();
 		String whereSql = getQuestionWhere(paramMdl, listArgs);
-		Object[] listObjs = listArgs.toArray();
-		List<Record> problemStatisRes = ConfMain.db().find(sql_problem + whereSql, listObjs);
-
-		if (CollectionUtils.isEmpty(problemStatisRes))
+		Long countTotal = ConfMain.db().queryLong(String.format(sql_problem_total, whereSql), listArgs.toArray());
+		paramMdl.setTotal(countTotal);
+		List<Record> records = null;
+		if (countTotal <= 0) {
 			return new ArrayList<>();
+		} else {
+			listArgs.add(paramMdl.getPageIndex());
+			listArgs.add(paramMdl.getPageSize());
+			records = ConfMain.db().find(String.format(sql_problem, whereSql) , listArgs.toArray());
+		} 
+		
+		if (CollectionUtils.isEmpty(records)) return new ArrayList<>();
 
-		problemStatisRes.stream().forEach(e -> {
+		records.stream().forEach(e -> {
 			Long cntTotal = e.getLong("cntall");
 			Long cntWrong = e.getLong("cntwrong");
 			if (ComUtil.notNullAndZero(cntTotal) && ComUtil.notNullAndZero(cntWrong)) {
@@ -302,18 +313,7 @@ public class T1usrBscService extends BaseService {
 				// 选择题
 			}
 		});
-		return problemStatisRes;
-	}
-
-	public ResExamQuestion getExamQuestionMdl(Record record) {
-		ResExamQuestion item = new ResExamQuestion();
-		item.setType(record.getStr("prblm_tp"));
-		item.setTitle(record.getStr("ttl"));
-		item.setContent(record.getStr("opt"));
-		item.setAnswer(record.getStr("prblm_aswr"));
-		item.setScore(record.getInt("scor"));
-		item.setErrorPercent("10%(10/100)");
-		return item;
+		return records;
 	}
 
 	/**

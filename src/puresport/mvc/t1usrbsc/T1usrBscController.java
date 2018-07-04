@@ -23,6 +23,7 @@ import puresport.applicat.ExcelParseTool;
 import puresport.applicat.MdlExcelRow;
 import puresport.constant.ConstantInitMy;
 import puresport.constant.EnumStatus;
+import puresport.mvc.comm.PageViewSta;
 import puresport.mvc.comm.ParamComm;
 import puresport.mvc.comm.ResTips;
 import puresport.mvc.t6mgrahr.T6MgrSession;
@@ -119,20 +120,20 @@ public class T1usrBscController extends BaseController {
 	public void getDataScore(){
 		// 成绩统计
 		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
-		renderJson(T1usrBscService.service.selectScoreByPage(mgrSession, getParamComm()));
+		renderJsonForTable(T1usrBscService.service.selectScoreByPage(mgrSession, getParamWithServerPage()));
 	}
 	
 	@Clear
 	public void getDataPrjStatis(){
 		// 项目合格率统计
 		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
-		renderJson(T1usrBscService.service.selectPassedPercent(mgrSession, getParamComm()));
+		renderJsonForTable(T1usrBscService.service.selectPassedPercent(mgrSession, getParamWithServerPage()));
 	}
 	
 	@Clear
 	public void getDataExamQues(){
 		// 试题错误率统计
-		renderJson(T1usrBscService.service.selectExamQuestion(getParamComm()));
+		renderJsonForTable(T1usrBscService.service.selectExamQuestion(getParamWithServerPage()));
 	}
 	
 	@Clear
@@ -207,7 +208,8 @@ public class T1usrBscController extends BaseController {
     	        if(item != null) {  
     	            if(encryptpassword.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
 //    	        	if(password.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
-    	                flag = true; 
+    	            	PageViewSta.StaLoginPeopleCountByDay();
+    	            	flag = true; 
     	                userType = item.getUsr_tp();
     	                getSession().setAttribute("usrid", item.getUsrid());//设置session，保存登录用户的昵称  
     	                getSession().setAttribute("crdt_no", item.getCrdt_no());//设置session，保存登录用户的昵称  

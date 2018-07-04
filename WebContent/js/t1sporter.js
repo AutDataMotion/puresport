@@ -198,7 +198,14 @@ $(document).ready(function() {
 			data : "mblph_no"
 		}, {
 			data : "email"
-		} ]
+		} ],
+	    columnDefs: [{
+	        targets:[4],// 目标列位置，下标从0开始
+	        data : "crdt_no", // 数据列名
+	        render: function(data,type, full){ // 返回自定义内容
+	                return "\u200C" + data ; 
+	          }
+	     }]
 	});
 
 
