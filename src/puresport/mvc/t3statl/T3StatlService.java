@@ -15,7 +15,12 @@ public class T3StatlService extends BaseService {
 	
 	public T3Statl SelectById(Integer id){
 		
-		T3Statl mdl = T3Statl.dao.findFirst("select * from t3Statl where id=?", id);
+		T3Statl mdl = T3Statl.dao.findFirst("select * from t3_stat where id=?", id);
+		return mdl;
+	}
+	public T3Statl SelectByDate(){
+		
+		T3Statl mdl = T3Statl.dao.findFirst("select * from t3_stat where to_days(tms) = to_days(now())");
 		return mdl;
 	}
 }
