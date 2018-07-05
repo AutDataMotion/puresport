@@ -222,9 +222,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<div class="tab-content">
 
 								<div class="tab-pane fade in active" id="myTabs_1_0">
-
 									<div class="row">
 										<div class="col-lg-2">
+											<h4>个人信息：</h4>
+										</div>
+										<div class="col-lg-3">
 											<input type="text" id="s_t6MgrAhr_nm" class="form-control"
 												placeholder="姓名">
 										</div>
@@ -232,10 +234,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<input type="text" id="s_t6MgrAhr_crdt_no"
 												class="form-control" placeholder="证件号">
 										</div>
-										<div class="col-lg-2">
-											<button type="submit" id="s_btn_adm" class="btn  btn-default">查询</button>
-										</div>
-
 										<div class="col-lg-4 pull-right">
 											<div style="opacity: 0; width: 0px;max-height: 0px;">
 												<input type="file" id="inputfileadmin"
@@ -256,8 +254,36 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												</a>
 											</div>
 										</div>
-
+										
 									</div>
+									<div class="row">
+										<div class="col-lg-2">
+											<h4>区域信息：</h4>
+										</div>
+										<div class="col-lg-3">
+											<input type="text" id="s_t6MgrAhr_province" class="form-control"
+												placeholder="所属省">
+										</div>
+										<div class="col-lg-3">
+											<input type="text" id="s_t6MgrAhr_city"
+												class="form-control" placeholder="所属市">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-2">
+											<h4>管理员级别：</h4>
+										</div>
+										<div class="col-lg-3">
+											<input type="text" id="s_t6MgrAhr_typeleve" class="form-control"
+												placeholder="管理员级别">
+										</div>
+										<div class="col-lg-2">
+											<button type="submit" id="s_btn_adm" class="btn  btn-info btn-lg">
+												<span class="glyphicon glyphicon-search"></span>查询
+											</button>
+										</div>
+									</div>
+									
 									<table id="example1" class="display nowrap"
 										style="width: 1000px;">
 										<thead>
@@ -284,6 +310,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								<div class="tab-pane fade" id="myTabs_1_1">
 									<div class="row">
 										<div class="col-lg-2">
+											<h4>个人信息：</h4>
+										</div>
+										<div class="col-lg-3">
 											<input type="text" id="s_t1usrBsc_nm" class="form-control"
 												placeholder="姓名">
 										</div>
@@ -291,10 +320,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<input type="text" id="s_t1usrBsc_crdt_no"
 												class="form-control" placeholder="证件号">
 										</div>
-										<div class="col-lg-2">
-											<button type="submit" id="s_btn_spt" class="btn  btn-default">查询</button>
-										</div>
-
 										<div class="col-lg-4 pull-right">
 											<div style="opacity: 0; width: 0px;max-height: 0px;">
 												<input type="file" id="inputfilesporter"
@@ -316,6 +341,46 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											</div>
 										</div>
 									</div>
+									<div class="row">
+										<div class="col-lg-2">
+											<h4>区域信息：</h4>
+										</div>
+										<div class="col-lg-3">
+											<input type="text" id="s_t1usrBsc_province" class="form-control"
+												placeholder="所属省">
+										</div>
+										<div class="col-lg-3">
+											<input type="text" id="s_t1usrBsc_city"
+												class="form-control" placeholder="所属市">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-2">
+											<h4>其它信息：</h4>
+										</div>
+										<div class="col-lg-2">
+											<input type="text" id="s_t1usrBsc_usr_tp" class="form-control"
+												placeholder="人员类型">
+										</div>
+										<div class="col-lg-2">
+											<input type="text" id="s_t1usrBsc_spt_prj"
+												class="form-control" placeholder="运动项目">
+										</div>
+										<div class="col-lg-2">
+											<input type="text" id="s_t1usrBsc_typelevel"
+												class="form-control" placeholder="级别">
+										</div>
+										<div class="col-lg-2">
+											<input type="text" id="s_t1usrBsc_gnd"
+												class="form-control" placeholder="性别">
+										</div>
+										<div class="col-lg-2">
+											<button type="submit" id="s_btn_spt" class="btn btn-info btn-sm">
+												<span class="glyphicon glyphicon-search"></span>查询
+											</button>
+										</div>
+									</div>
+								
 
 									<table id="example2" class="display nowrap"
 										style="width: 1000px">
@@ -368,6 +433,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												<option name="city_9999" value="9999">全部</option>
 											</select>
 										</div>
+										
 										<div class="form-group hide">
 											<label for="name" class="control-label">协会：</label> <select
 												id="instituteSelect_score" class="form-control selectmy">
@@ -376,9 +442,53 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										</div>
 										<div class="form-group">
 											<button type="submit" id="selectBtn_score"
-												class="btn col-sm-2 btn-default">查询</button>
+												class="btn btn-info btn-default">
+												<span class="glyphicon glyphicon-search"></span>查询
+											</button>
 										</div>
 
+									</div>
+									<div class="row">
+										
+											<div class="col-lg-2">
+												<input type="text" id="sta_t1usrBsc_nm"
+												class="form-control" placeholder="姓名">
+											</div>
+										
+										
+											<div class="col-lg-3">
+												<input type="text" id="sta_t1usrBsc_crdt_no"
+												class="form-control" placeholder="证件号码">
+											</div>
+											<div class="col-lg-3">
+												<input type="text" id="sta_t1usrBsc_usr_tp"
+												class="form-control" placeholder="用户类型">
+											</div>
+											<div class="col-lg-3">
+												<input type="text" id="sta_t1usrBsc_spt_prj"
+												class="form-control" placeholder="运动项目">
+											</div>
+									</div>
+									<div class="row">
+										
+											<div class="col-lg-2">
+												<input type="text" id="sta_t1usrBsc_exam_nm"
+												class="form-control" placeholder="考试名称">
+											</div>
+										
+										
+											<div class="col-lg-3">
+												<input type="text" id="sta_t1usrBsc_exam_grd"
+												class="form-control" placeholder="考试成绩">
+											</div>
+											<div class="col-lg-3">
+												<input type="text" id="sta_t1usrBsc_passOrnot"
+												class="form-control" placeholder="合格与否">
+											</div>
+											<div class="col-lg-3">
+												<input type="text" id="sta_t1usrBsc_gnd"
+												class="form-control" placeholder="性别">
+											</div>
 									</div>
 									<table id="example3" class="display nowrap" style="width: 100%">
 										<thead>
