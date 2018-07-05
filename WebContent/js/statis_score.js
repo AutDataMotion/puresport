@@ -53,13 +53,31 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 		name1 : '',
 		name2 : '',
 		name3 : '',
+		name4 : '',
+		name5 : '',
+		name6 : '',
+		name7 : '',
+		name8 : '',
+		name9 : '',
+		name10 : '',
+		name11 : '',
 		pageIndex : '',
 		pageSize : ''
 	};
 	function getSearchParam() {
-		datasrch.name1 = $("#provSelect_score option:selected").html();
+		datasrch.name1 = $("#provSelect_score option:selected").html().trim();
 		datasrch.name2 = $("#citySelect_score option:selected").html();
 		datasrch.name3 = $("#instituteSelect_score option:selected").html();
+		
+		datasrch.name4 = $("#sta_t1usrBsc_nm").val();
+		datasrch.name5 = $("#sta_t1usrBsc_crdt_no").val();
+		datasrch.name6 = $("#sta_t1usrBsc_usr_tp option:selected").html();
+		datasrch.name7 = $("#sta_t1usrBsc_spt_prj").val();
+		
+		datasrch.name8 = $("#sta_t1usrBsc_exam_nm option:selected").html();
+		// datasrch.name9 = $("#sta_t1usrBsc_exam_grd").val();
+		datasrch.name10 = $("#sta_t1usrBsc_passOrnot option:selected").html();
+		datasrch.name11 = $("#sta_t1usrBsc_gnd option:selected").html();
 	};
 	var myTable = $('#example3').DataTable({
 		dom: 'Bfrtip',
@@ -68,7 +86,11 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 		scrollY : 400,
 		scrollX : true,
 		responsive : true,
-		"searching": true,
+		"searching": false,
+		lengthMenu: [
+            [ 10, 100, 1000, 5000,10000 ],
+            [ '10 行', '100 行', '1000 行', '5000行' , '10000行']
+        ],
 		"bProcessing" : true, // DataTables载入数据时，是否显示‘进度’提示
 		"sProcessing" : "加载中...",
 //		"bFilter" : true, // 过滤功能
@@ -80,6 +102,7 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 		"oLanguage" : {
 			"sLengthMenu" : "每页显示 _MENU_ 条记录",
 			"sZeroRecords" : "抱歉， 没有找到",
+			"sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
 			"sInfoEmpty" : "没有数据",
 			"sInfoFiltered" : "(从 _MAX_ 条数据中检索)",
 			"oPaginate" : {
@@ -99,6 +122,9 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 				d.v = JSON.stringify(datasrch);
             }
 		},buttons : [{
+			extend : 'pageLength',
+			text : '每页行数'
+		},{
 			extend : 'collection',
 			text : '导出',
 			buttons : [ 'excel']

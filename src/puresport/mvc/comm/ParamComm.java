@@ -21,6 +21,16 @@ public class ParamComm implements Serializable{
 	private String name3;
 	private String name4;
 	
+	private String name5;
+	private String name6;
+	private String name7;
+	private String name8;
+	
+	private String name9;
+	private String name10;
+	private String name11;
+	private String name12;
+	
 	
 	private Integer draw;
 	private Integer pageIndex;
@@ -165,16 +175,149 @@ public class ParamComm implements Serializable{
 		this.name4 = name4;
 	}
 
+	
 
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
+	/**
+	 * @return the name5
 	 */
-	@Override
-	public String toString() {
-		return "ParamComm [id=" + id + ", name1=" + name1 + ", name2=" + name2 + ", name3=" + name3 + ", name4=" + name4
-				+ ", draw=" + draw + ", pageIndex=" + pageIndex + ", pageSize=" + pageSize + ", total=" + total + "]";
+	public String getName5() {
+		return name5;
 	}
-	
-	
+
+
+
+	/**
+	 * @param name5 the name5 to set
+	 */
+	public void setName5(String name5) {
+		this.name5 = name5;
+	}
+
+
+
+	/**
+	 * @return the name6
+	 */
+	public String getName6() {
+		return name6;
+	}
+
+
+
+	/**
+	 * @param name6 the name6 to set
+	 */
+	public void setName6(String name6) {
+		this.name6 = name6;
+	}
+
+
+
+	/**
+	 * @return the name7
+	 */
+	public String getName7() {
+		return name7;
+	}
+
+
+
+	/**
+	 * @param name7 the name7 to set
+	 */
+	public void setName7(String name7) {
+		this.name7 = name7;
+	}
+
+
+
+	/**
+	 * @return the name8
+	 */
+	public String getName8() {
+		return name8;
+	}
+
+
+
+	/**
+	 * @param name8 the name8 to set
+	 */
+	public void setName8(String name8) {
+		this.name8 = name8;
+	}
+
+
+
+	/**
+	 * @return the name9
+	 */
+	public String getName9() {
+		return name9;
+	}
+
+
+
+	/**
+	 * @param name9 the name9 to set
+	 */
+	public void setName9(String name9) {
+		this.name9 = name9;
+	}
+
+
+
+	/**
+	 * @return the name10
+	 */
+	public String getName10() {
+		return name10;
+	}
+
+
+
+	/**
+	 * @param name10 the name10 to set
+	 */
+	public void setName10(String name10) {
+		this.name10 = name10;
+	}
+
+
+
+	/**
+	 * @return the name11
+	 */
+	public String getName11() {
+		return name11;
+	}
+
+
+
+	/**
+	 * @param name11 the name11 to set
+	 */
+	public void setName11(String name11) {
+		this.name11 = name11;
+	}
+
+
+
+	/**
+	 * @return the name12
+	 */
+	public String getName12() {
+		return name12;
+	}
+
+
+
+	/**
+	 * @param name12 the name12 to set
+	 */
+	public void setName12(String name12) {
+		this.name12 = name12;
+	}
+
 }

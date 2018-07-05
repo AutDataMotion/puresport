@@ -90,7 +90,11 @@ $("#citySelect_prj").append("<option value='"+obj[index].id+"'>"+obj[index].name
 		scrollY : 400,
 		scrollX : true,
 		responsive : true,
-		"searching": true,
+		"searching": false,
+		lengthMenu: [
+            [ 10, 100, 1000, 5000,10000 ],
+            [ '10 行', '100 行', '1000 行', '5000行' , '10000行']
+        ],
 		"bProcessing" : true, // DataTables载入数据时，是否显示‘进度’提示
 		"sProcessing" : "加载中...",
 //		"bFilter" : true, // 过滤功能
@@ -119,8 +123,10 @@ $("#citySelect_prj").append("<option value='"+obj[index].id+"'>"+obj[index].name
 				getSearchParam();
 				d.v = JSON.stringify(datasrch);
             }
-		},buttons: [
-            {
+		},buttons: [{
+			extend : 'pageLength',
+			text : '每页行数'
+		},{
                 extend: 'collection',
                 text: '导出',
                 buttons : [ 'excel']

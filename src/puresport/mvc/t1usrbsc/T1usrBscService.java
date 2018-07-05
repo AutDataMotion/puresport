@@ -148,17 +148,13 @@ public class T1usrBscService extends BaseService {
 		
 		List<Object> listArgs = new ArrayList<>();
 		String whereSql = getProvinceWhere(mgrSession, paramMdl, listArgs, true);
-		String test = String.format(sql_score_total, whereSql);
-		log.debug("selectScoreByPage----"+test);
 		Long countTotal = ConfMain.db().queryLong(String.format(sql_score_total, whereSql), listArgs.toArray());
-//		Long countTotal = ConfMain.db().queryLong(String.format(sql_score_total, whereSql));
 		paramMdl.setTotal(countTotal);
 		List<Record> userScoreRecords = null;
 		if (countTotal > 0) {
 			listArgs.add(paramMdl.getPageIndex());
 			listArgs.add(paramMdl.getPageSize());
 			userScoreRecords = ConfMain.db().find(String.format(sql_score, whereSql) , listArgs.toArray());
-//			userScoreRecords = ConfMain.db().find(String.format(sql_score, whereSql));
 		} else {
 			userScoreRecords = new ArrayList<>();
 		}
