@@ -1,6 +1,9 @@
 package puresport.mvc.comm;
 
+import java.util.Date;
+
 import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Record;
 
 import puresport.config.ConfMain;
 import puresport.mvc.t3statl.T3Statl;
@@ -16,12 +19,16 @@ public class PageViewSta {
 			if(mdl!=null)
 			{
 				int count = Integer.valueOf(mdl.getLogin_cnt());
-				
-				int res = Db.update("update puresport.t3_stat set login_cnt=?",count+1);
+				Long id = Long.valueOf(mdl.getId());
+				int res = Db.update("update puresport.t3_stat set login_cnt=? where id=?",count+1,id);
 			}
 			else {
-				T3Statl newRecord =new T3Statl().set(T3Statl.column_login_cnt, 1);
-				newRecord.saveGenIntId();
+				Date dt  = new Date();
+				Record newRecord =new Record()
+//						.set(T3Statl.column_tms, dt)
+						.set(T3Statl.column_login_cnt, 1);
+				ConfMain.db().save(tableName,tableKey,newRecord);
+//				Db.save("puresport.t3_stat",newRecord);
 			}
 			return true;
 		}catch(Exception e) {
