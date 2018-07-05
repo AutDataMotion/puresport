@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.log4j.Logger;
+import org.eclipse.jetty.util.log.Log;
 
 import com.jfinal.aop.Enhancer;
 import com.jfinal.plugin.activerecord.Record;
@@ -147,13 +148,17 @@ public class T1usrBscService extends BaseService {
 		
 		List<Object> listArgs = new ArrayList<>();
 		String whereSql = getProvinceWhere(mgrSession, paramMdl, listArgs, true);
+		String test = String.format(sql_score_total, whereSql);
+		log.debug("selectScoreByPage----"+test);
 		Long countTotal = ConfMain.db().queryLong(String.format(sql_score_total, whereSql), listArgs.toArray());
+//		Long countTotal = ConfMain.db().queryLong(String.format(sql_score_total, whereSql));
 		paramMdl.setTotal(countTotal);
 		List<Record> userScoreRecords = null;
 		if (countTotal > 0) {
 			listArgs.add(paramMdl.getPageIndex());
 			listArgs.add(paramMdl.getPageSize());
 			userScoreRecords = ConfMain.db().find(String.format(sql_score, whereSql) , listArgs.toArray());
+//			userScoreRecords = ConfMain.db().find(String.format(sql_score, whereSql));
 		} else {
 			userScoreRecords = new ArrayList<>();
 		}
@@ -181,18 +186,30 @@ public class T1usrBscService extends BaseService {
 			}
 		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.Province.getName())) {
 			// 省级 只可见属于该省的
-			listArgs.add(getStringLikeLeft(mgrSession.getProvince()));
-
+//			whereStr.append(" and province like ? ");
+//			listArgs.add(getStringLikeLeft(mgrSession.getProvince()));
+			if (StringUtil.notEmptyOrDefault(paramMdl.getName1(), defSelect)) {
+				whereStr.append(" and province like ? ");
+				listArgs.add(getStringLikeLeft(paramMdl.getName1()));
+			}
 			if (StringUtil.notEmptyOrDefault(paramMdl.getName2(), defSelect)) {
 				whereStr.append(" and city like ? ");
 				listArgs.add(getStringLikeLeft(paramMdl.getName2()));
 			}
 		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.City.getName())) {
 			// 市级 只可见属于该市的
-			whereStr.append(" and province like ? ");
-			listArgs.add(getStringLikeLeft(mgrSession.getProvince()));
-			whereStr.append(" and city like ? ");
-			listArgs.add(getStringLikeLeft(mgrSession.getCity()));
+//			whereStr.append(" and province like ? ");
+//			listArgs.add(getStringLikeLeft(mgrSession.getProvince()));
+//			whereStr.append(" and city like ? ");
+//			listArgs.add(getStringLikeLeft(mgrSession.getCity()));
+			if (StringUtil.notEmptyOrDefault(paramMdl.getName1(), defSelect)) {
+				whereStr.append(" and province like ? ");
+				listArgs.add(getStringLikeLeft(paramMdl.getName1()));
+			}
+			if (StringUtil.notEmptyOrDefault(paramMdl.getName2(), defSelect)) {
+				whereStr.append(" and city like ? ");
+				listArgs.add(getStringLikeLeft(paramMdl.getName2()));
+			}
 
 		} 
 		if (StringUtil.notEmptyOrDefault(paramMdl.getName3(), defSelect)) {
