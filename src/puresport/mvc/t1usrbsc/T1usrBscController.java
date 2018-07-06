@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Objects;
 
 import org.apache.log4j.Logger;
+import org.eclipse.jetty.util.log.Log;
 
 import com.alibaba.fastjson.JSONObject;
 import com.jfinal.aop.Before;
@@ -23,6 +24,7 @@ import puresport.applicat.ExcelParseTool;
 import puresport.applicat.MdlExcelRow;
 import puresport.constant.ConstantInitMy;
 import puresport.constant.EnumStatus;
+import puresport.mvc.comm.ExportData2Excel;
 import puresport.mvc.comm.PageViewSta;
 import puresport.mvc.comm.ParamComm;
 import puresport.mvc.comm.ResTips;
@@ -51,7 +53,8 @@ public class T1usrBscController extends BaseController {
 	public static final String pthc = "/jf/puresport/t1usrBsc/";
 	public static final String pthv = "/f/";
 
-
+	public static final String aboutsporterDir = "files/querydata/aboutsporter/";
+	public static final String aboutsporterFileName = "运动员.xls";
 	@Clear
 	public void index() {
 		setAttr("username", "test");
@@ -62,6 +65,21 @@ public class T1usrBscController extends BaseController {
 	public void getData() {
 		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
 		renderJsonForTable(T1usrBscService.service.selectByPage(mgrSession, getParamWithServerPage()));
+	}
+	@Clear
+	public void getAllData() throws Exception {
+		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
+		List<T1usrBsc> resList= T1usrBscService.service.selectByPage(mgrSession, getParamWithServerPage());
+		log.debug("getAllData-----"+resList.size()+"");
+		String usrid = getSessionAttr("usrid");
+		
+		boolean result = ExportData2Excel.downLoadSporterExcel(resList,aboutsporterDir,usrid,aboutsporterFileName);
+		JSONObject res = new JSONObject();
+		res.put("flag",result);
+		String fileUrl = getCxt()+"/"+aboutsporterDir+usrid+"/"+aboutsporterFileName;
+		res.put("fileUrl",fileUrl);
+//		renderText("getAllData-----"+resList.size()+"");
+		renderJson(res);
 	}
 	
 	public void addSporter(){
