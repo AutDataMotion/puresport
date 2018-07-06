@@ -183,7 +183,10 @@ $(document).ready(function() {
 					    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
 					    beforeSend:function(xhr){
 					        //console.log(xhr)
-					        console.log('发送前')
+					        console.log('发送前');
+					        $("#example2").busyLoad("show", { text: "LOADING ...",
+					    		textPosition: "top"
+					    	});
 					    },
 					    success:function(data,textStatus,jqXHR){
 					    	datasrch.exportall = '0';
@@ -203,6 +206,7 @@ $(document).ready(function() {
 					        console.log(textStatus)
 					    },
 					    complete:function(){
+					    	$("#example2").busyLoad("hide");
 					    	datasrch.exportall = '0';
 					        console.log('结束')
 					    }
