@@ -19,6 +19,8 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import puresport.mvc.t1usrbsc.T1usrBsc;
 
 public class ExportData2Excel {
+	public HSSFCellStyle cellstyle;
+	
 //	public static final String aboutsporter = "files/querydata/aboutsporter/";
 	/**
 	 * 
@@ -98,7 +100,7 @@ class POIS {
 			HSSFWorkbook wb = new HSSFWorkbook();
 			// 在工作薄上建一张工作表
 			HSSFSheet sheet = wb.createSheet();
-			HSSFRow row = sheet.createRow((short) 0);
+			HSSFRow row = sheet.createRow((int) 0);
 			sheet.createFreezePane(0, 1);
 			cteateCell(wb, row, (short) 0, "人员类型");
 			cteateCell(wb, row, (short) 1, "姓名");
@@ -114,6 +116,9 @@ class POIS {
 			cteateCell(wb, row, (short) 11, "所属市");
 			cteateCell(wb, row, (short) 12, "手机号");
 			cteateCell(wb, row, (short) 13, "邮箱");
+			
+			cellstyle = wb.createCellStyle();
+			cellstyle.setAlignment(HSSFCellStyle.ALIGN_CENTER_SELECTION);
 //			int i = 0;
 //			Set<Student> keySet = student.keySet();
 //			Iterator<Student> iterator = keySet.iterator();
@@ -122,7 +127,7 @@ class POIS {
 //				Student student2 = iterator.next();
 			for(int i =0;i<list.size();i++) {
 				T1usrBsc usr = list.get(i);
-				HSSFRow rowi = sheet.createRow((short) (i+1));
+				HSSFRow rowi = sheet.createRow((int) (i+1));
 				
 				for (int j = 0; j < 4; j++) {
 					cteateCell(wb, rowi, (short) 0, usr.getUsr_tp());
@@ -153,8 +158,8 @@ class POIS {
 				String val) {
 			HSSFCell cell = row.createCell(col);
 			cell.setCellValue(val);
-			HSSFCellStyle cellstyle = wb.createCellStyle();
-			cellstyle.setAlignment(HSSFCellStyle.ALIGN_CENTER_SELECTION);
+//			HSSFCellStyle cellstyle = wb.createCellStyle();
+//			cellstyle.setAlignment(HSSFCellStyle.ALIGN_CENTER_SELECTION);
 			cell.setCellStyle(cellstyle);
 		}
 
