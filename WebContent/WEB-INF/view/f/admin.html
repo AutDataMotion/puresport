@@ -454,15 +454,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												<input type="text" id="sta_t1usrBsc_nm"
 												class="form-control" placeholder="姓名">
 											</div>
-										
-										
 											<div class="col-lg-3">
 												<input type="text" id="sta_t1usrBsc_crdt_no"
 												class="form-control" placeholder="证件号码">
 											</div>
 											<div class="col-lg-3">
-												<input type="text" id="sta_t1usrBsc_usr_tp"
-												class="form-control" placeholder="用户类型">
+												 <select id="sta_t1usrBsc_usr_tp" class="form-control selectmy">
+												<option  value="9999">用户类型/全部</option>
+												<option  value="合格">运动员</option>
+												<option  value="不合格">辅助人员</option>
+											</select>
 											</div>
 											<div class="col-lg-3">
 												<input type="text" id="sta_t1usrBsc_spt_prj"
@@ -472,22 +473,30 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<div class="row">
 										
 											<div class="col-lg-2">
-												<input type="text" id="sta_t1usrBsc_exam_nm"
-												class="form-control" placeholder="考试名称">
+												 <select id="sta_t1usrBsc_exam_nm" class="form-control selectmy">
+												<option  value="9999">考试名称/全部</option>
+												<option  value="省运会">省运会</option>
+												<option  value="亚运会">亚运会</option>
+											</select>
 											</div>
-										
-										
-											<div class="col-lg-3">
-												<input type="text" id="sta_t1usrBsc_exam_grd"
+										<!-- <div class="col-lg-3">
+											<input type="text" id="sta_t1usrBsc_exam_grd"
 												class="form-control" placeholder="考试成绩">
+										</div> -->
+										<div class="col-lg-3">
+												 <select id="sta_t1usrBsc_passOrnot" class="form-control selectmy">
+												<option  value="9999">合格与否/全部</option>
+												<option  value="合格">合格</option>
+												<option  value="不合格">不合格</option>
+												<option  value="未考试">未考试</option>
+											</select>
 											</div>
 											<div class="col-lg-3">
-												<input type="text" id="sta_t1usrBsc_passOrnot"
-												class="form-control" placeholder="合格与否">
-											</div>
-											<div class="col-lg-3">
-												<input type="text" id="sta_t1usrBsc_gnd"
-												class="form-control" placeholder="性别">
+												 <select id="sta_t1usrBsc_gnd" class="form-control selectmy">
+												<option  value="9999">性别/全部</option>
+												<option  value="男">男</option>
+												<option  value="女">女</option>
+											</select>
 											</div>
 									</div>
 									<table id="example3" class="display nowrap" style="width: 100%">

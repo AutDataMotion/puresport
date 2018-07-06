@@ -194,18 +194,14 @@ public class T1usrBscService extends BaseService {
 	public List<Record> selectScoreByPage(T6MgrSession mgrSession, ParamComm paramMdl) {
 		
 		List<Object> listArgs = new ArrayList<>();
-		String whereSql = getProvinceWhere(mgrSession, paramMdl, listArgs, true);
-		String test = String.format(sql_score_total, whereSql);
-		log.debug("selectScoreByPage----"+test);
+		String whereSql = getSearchWhereSta(mgrSession, paramMdl, listArgs, true);
 		Long countTotal = ConfMain.db().queryLong(String.format(sql_score_total, whereSql), listArgs.toArray());
-//		Long countTotal = ConfMain.db().queryLong(String.format(sql_score_total, whereSql));
 		paramMdl.setTotal(countTotal);
 		List<Record> userScoreRecords = null;
 		if (countTotal > 0) {
 			listArgs.add(paramMdl.getPageIndex());
 			listArgs.add(paramMdl.getPageSize());
 			userScoreRecords = ConfMain.db().find(String.format(sql_score, whereSql) , listArgs.toArray());
-//			userScoreRecords = ConfMain.db().find(String.format(sql_score, whereSql));
 		} else {
 			userScoreRecords = new ArrayList<>();
 		}
@@ -219,54 +215,58 @@ public class T1usrBscService extends BaseService {
 		return s + "%";
 	}
 
-	public static String getProvinceWhere(T6MgrSession mgrSession, ParamComm paramMdl, List<Object> listArgs, boolean isAddRoleWhere) {
+	public static String getSearchWhereSta(T6MgrSession mgrSession, ParamComm paramMdl, List<Object> listArgs, boolean isAddRoleWhere) {
 		StringBuilder whereStr = new StringBuilder();
-		if (mgrSession.getTypeleve().equals(EnumTypeLevel.Country.getName())) {
-			// 国家级 全部可见
-			if (StringUtil.notEmptyOrDefault(paramMdl.getName1(), defSelect)) {
-				whereStr.append(" and province like ? ");
-				listArgs.add(getStringLikeLeft(paramMdl.getName1()));
-			}
-			if (StringUtil.notEmptyOrDefault(paramMdl.getName2(), defSelect)) {
-				whereStr.append(" and city like ? ");
-				listArgs.add(getStringLikeLeft(paramMdl.getName2()));
-			}
-		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.Province.getName())) {
-			// 省级 只可见属于该省的
-//			whereStr.append(" and province like ? ");
-//			listArgs.add(getStringLikeLeft(mgrSession.getProvince()));
-			if (StringUtil.notEmptyOrDefault(paramMdl.getName1(), defSelect)) {
-				whereStr.append(" and province like ? ");
-				listArgs.add(getStringLikeLeft(paramMdl.getName1()));
-			}
-			if (StringUtil.notEmptyOrDefault(paramMdl.getName2(), defSelect)) {
-				whereStr.append(" and city like ? ");
-				listArgs.add(getStringLikeLeft(paramMdl.getName2()));
-			}
-		} else if (mgrSession.getTypeleve().equals(EnumTypeLevel.City.getName())) {
-			// 市级 只可见属于该市的
-//			whereStr.append(" and province like ? ");
-//			listArgs.add(getStringLikeLeft(mgrSession.getProvince()));
-//			whereStr.append(" and city like ? ");
-//			listArgs.add(getStringLikeLeft(mgrSession.getCity()));
-			if (StringUtil.notEmptyOrDefault(paramMdl.getName1(), defSelect)) {
-				whereStr.append(" and province like ? ");
-				listArgs.add(getStringLikeLeft(paramMdl.getName1()));
-			}
-			if (StringUtil.notEmptyOrDefault(paramMdl.getName2(), defSelect)) {
-				whereStr.append(" and city like ? ");
-				listArgs.add(getStringLikeLeft(paramMdl.getName2()));
-			}
-
-		} 
+		if (StringUtil.notEmptyOrDefault(paramMdl.getName1(), defSelect)) {
+			whereStr.append(" and province like ? ");
+			listArgs.add(getStringLikeLeft(paramMdl.getName1()));
+		}
+		if (StringUtil.notEmptyOrDefault(paramMdl.getName2(), defSelect)) {
+			whereStr.append(" and city like ? ");
+			listArgs.add(getStringLikeLeft(paramMdl.getName2()));
+		}
 		if (StringUtil.notEmptyOrDefault(paramMdl.getName3(), defSelect)) {
 			whereStr.append(" and institute like ? ");
 			listArgs.add(getStringLikeLeft(paramMdl.getName3()));
 		}
 		if (StringUtil.notEmptyOrDefault(paramMdl.getName4(), defSelect)) {
-			whereStr.append(" and spt_prj like ? ");
+			whereStr.append(" and nm like ? ");
 			listArgs.add(getStringLikeLeft(paramMdl.getName4()));
 		}
+		if (StringUtil.notEmptyOrDefault(paramMdl.getName5(), defSelect)) {
+			whereStr.append(" and crdt_no like ? ");
+			listArgs.add(getStringLikeLeft(paramMdl.getName5()));
+		}
+		if (StringUtil.notEmptyOrLikeDefault(paramMdl.getName6(), defSelect)) {
+			whereStr.append(" and usr_tp like ? ");
+			listArgs.add(getStringLikeLeft(paramMdl.getName6()));
+		}
+		if (StringUtil.notEmptyOrDefault(paramMdl.getName7(), defSelect)) {
+			whereStr.append(" and spt_prj like ? ");
+			listArgs.add(getStringLikeLeft(paramMdl.getName7()));
+		}
+		if (StringUtil.notEmptyOrLikeDefault(paramMdl.getName8(), defSelect)) {
+			whereStr.append(" and exam_nm like ? ");
+			listArgs.add(getStringLikeLeft(paramMdl.getName8()));
+		}
+		/*if (StringUtil.notEmptyOrDefault(paramMdl.getName9(), defSelect)) {
+			whereStr.append(" and exam_grd > ? ");
+			listArgs.add(paramMdl.getName9());
+		}*/
+		if (StringUtil.notEmptyOrLikeDefault(paramMdl.getName10(), defSelect)) {
+			if (paramMdl.getName10().equals("合格")) {
+				whereStr.append(" and exam_grd >= 80 ");
+			}else if (paramMdl.getName10().equals("不合格")){
+				whereStr.append(" and exam_grd < 80 and exam_grd>=0 ");
+			} else {
+				whereStr.append(" and exam_grd is  null ");
+			}
+		}
+		if (StringUtil.notEmptyOrLikeDefault(paramMdl.getName11(), defSelect)) {
+			whereStr.append(" and gnd like ? ");
+			listArgs.add(getStringLikeLeft(paramMdl.getName11()));
+		}
+		
 		if (isAddRoleWhere) {
 			whereStr.append(" and ")
 			.append(mgrSession.selectRoleStr_UserBasic());
@@ -285,7 +285,7 @@ public class T1usrBscService extends BaseService {
 	 */
 	public List<Record> selectPassedPercent(T6MgrSession mgrSession, ParamComm paramMdl) {
 		List<Object> listArgs = new ArrayList<>();
-		String whereSql = getProvinceWhere(mgrSession, paramMdl, listArgs, false);
+		String whereSql = getSearchWhereSta(mgrSession, paramMdl, listArgs, false);
 		Long countTotal = ConfMain.db().queryLong(String.format(sql_prj_total, whereSql), listArgs.toArray());
 		paramMdl.setTotal(countTotal);
 		List<Record> records = null;
