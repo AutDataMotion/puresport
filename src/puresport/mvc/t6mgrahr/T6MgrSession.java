@@ -66,14 +66,14 @@ public class T6MgrSession implements Serializable {
 			// 国家级 全部可见
 			return " (levelinstitute >0 or typelevel > '0') ";
 		} else if(typeleve.equals(EnumTypeLevel.CenterInstitute.getName())) {
-			return String.format(" levelinstitute >0 and  institute='%s' ", institute);
+			return String.format(" institute='%s' and levelinstitute >0  ", institute);
 		}
 		else if (typeleve.equals(EnumTypeLevel.Province.getName())) {
 			// 省级 只可见属于该省的
 			return String.format(" province='%s' and levelprovince>0 ", province);
 		} else if (typeleve.equals(EnumTypeLevel.City.getName())) {
 			// 市级 只可见属于该市的
-			return String.format(" city='%s' and province='%s' and levelcity>0 ", city, province);
+			return String.format(" province='%s' and  city='%s' and levelcity>0 ", province, city);
 		}
 		// todo 暂未考虑协会管理员
 		

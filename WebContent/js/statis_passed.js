@@ -79,7 +79,7 @@ $("#citySelect_prj").append("<option value='"+obj[index].id+"'>"+obj[index].name
 		datasrch.name1 = $("#provSelect_prj option:selected").html();
 		datasrch.name2 = $("#citySelect_prj option:selected").html();
 		//datasrch.name3 = $("#instituteSelect_prj option:selected").html();
-		datasrch.name4 = $("#prjSelect_prj option:selected").html();
+		datasrch.name7 = $("#prjSelect_prj option:selected").html();
 	};
 	
 	
