@@ -44,9 +44,15 @@ $(document).ready(function() {
 	// 获取查询参数
 	var datasrch = {
 		id : '',
-		name1 : '',
-		name2 : '',
-		name3 : '',
+		name1 : '',//姓名
+		name2 : '',//证件号
+		name3 : '',//所属省
+		name4 : '',//所属市
+		name5 : '',//人员类型
+		name6 : '',//运动项目
+		name7 : '',//级别
+		name8 : '',//性别
+		exportall : '',
 		pageIndex : '',
 		pageSize : ''
 	};
@@ -161,7 +167,56 @@ $(document).ready(function() {
 		}, {
 			extend : 'collection',
 			text : '导出',
-			buttons : [ 'excel','csv']
+//			buttons : [ 'excel','csv']
+			buttons : [
+				{ text: 'excel',action: function () {
+					datasrch.exportall = '1';
+//					alert("excel");
+					$.ajax({
+					    url:"/jf/puresport/t1usrBsc/getAllData",
+					    type:'POST', //GET
+//					    async:false,    //或false,是否异步
+					    data : {
+							v : JSON.stringify(datasrch)
+						},
+					    timeout:5000,    //超时时间
+					    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+					    beforeSend:function(xhr){
+					        //console.log(xhr)
+					        console.log('发送前');
+					        $("#example2").busyLoad("show", { text: "LOADING ...",
+					    		textPosition: "top"
+					    	});
+					    },
+					    success:function(data,textStatus,jqXHR){
+					    	datasrch.exportall = '0';
+					    	if(data.flag)
+					    	{
+					    		window.location.href=data.fileUrl;
+					    	}
+					    	else{
+					    		layer.msg("文件下载失败！");
+					    	}
+					    	
+					    },
+					    error:function(xhr,textStatus){
+					    	datasrch.exportall = '0';
+					        console.log('错误')
+					        console.log(xhr)
+					        console.log(textStatus)
+					    },
+					    complete:function(){
+					    	$("#example2").busyLoad("hide");
+					    	datasrch.exportall = '0';
+					        console.log('结束')
+					    }
+					})
+				} }
+//				,
+//                { text: 'csv', action: function () {
+//                	
+//                } }
+			]
 			//buttons : [ 'excel', 'print' ]
 		} ],
 		columns : [ {
@@ -313,6 +368,12 @@ $(document).ready(function() {
 //		 alert($('#s_t1usrBsc_crdt_no').val());
 		 datasrch.name1 = $('#s_t1usrBsc_nm').val();
 		 datasrch.name2 = $('#s_t1usrBsc_crdt_no').val();
+		 datasrch.name3 = $('#s_t1usrBsc_province').val();
+		 datasrch.name4 = $('#s_t1usrBsc_city').val();
+		 datasrch.name5 = $('#s_t1usrBsc_usr_tp').val();
+		 datasrch.name6 = $('#s_t1usrBsc_spt_prj').val();
+		 datasrch.name7 = $('#s_t1usrBsc_typelevel').val();
+		 datasrch.name8 = $('#s_t1usrBsc_gnd').val();
 		// 重新加载table数据
 		myTable.ajax.reload();
 	 });

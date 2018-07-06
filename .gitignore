@@ -1,7 +1,8 @@
 # Compiled class file
 *.class
-init.properties
-init_sport.properties
+*/init.properties
+*/init_sport.properties
+querydata/*
 *.xls
 *.xlsx
 

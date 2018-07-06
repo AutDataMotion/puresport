@@ -148,6 +148,15 @@ public class ValidateComm {
 			sporter.setLevelcity(EnumStatus.LevelDeleted.getId());
 			return false;
 		}
+		else if(mgrSession.getTypeleve().equals(EnumTypeLevel.CenterInstitute.getName()))
+		{
+			if(mgrSession.getInstitute().equals(sporter.getInstitute()))
+			{
+				sporter.setTypelevel(String.valueOf(EnumStatus.LevelDeleted.getId()));
+				sporter.setLevelinstitute(EnumStatus.LevelDeleted.getId());
+				return false;
+			}
+		}
 		return true;
 	}
 	

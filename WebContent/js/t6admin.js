@@ -55,6 +55,10 @@ $(document).ready(function() {
 		scrollX : true,
 		responsive : true,
 		"searching": false,
+		lengthMenu: [
+            [ 10, 100, 1000, 5000,10000 ],
+            [ '10 行', '100 行', '1000 行', '2000行' ]
+        ],
 		"ordering": false,
 		"bProcessing" : true, // DataTables载入数据时，是否显示‘进度’提示
 		"sProcessing" : "加载中...",
@@ -96,6 +100,11 @@ $(document).ready(function() {
 //				$("#adminModal").modal('show');
 //			}
 //		},
+			
+			{
+				extend : 'pageLength',
+				text : '每页行数'
+			},
 		{
 			text : '编辑',
 			action : function(e, dt, node, config) {
@@ -293,6 +302,10 @@ $(document).ready(function() {
 	$('#s_btn_adm').click( function() {
 		 datasrch.name1 = $('#s_t6MgrAhr_nm').val();
 		 datasrch.name2 = $('#s_t6MgrAhr_crdt_no').val();
+		 // added by zhuchaobin，20180706
+		 datasrch.name3 = $('#s_t6MgrAhr_province').val();
+		 datasrch.name4 = $('#s_t6MgrAhr_city').val();
+		 datasrch.name5 = $('#s_t6MgrAhr_typeleve').val();
 		// 重新加载table数据
 		myTable.ajax.reload();
 	});

@@ -82,15 +82,38 @@ public class T6MgrAhrService extends BaseService {
 	private final static String getStringLikeLeft(String s) {
 		return s + "%";
 	}
+	
+	private final static String getStringLikeAll(String s) {
+		return "%" + s + "%";
+	}
+	
 	public static String getSearchWhere(T6MgrSession mgrSession, ParamComm paramMdl, List<Object> listArgs) {
+		System.out.println("name1=" + paramMdl.getName1());
+		System.out.println("name2=" + paramMdl.getName2());
+		System.out.println("name3=" + paramMdl.getName3());
+		System.out.println("name4=" + paramMdl.getName4());
+		System.out.println("name5=" + paramMdl.getName5());
+		
 		StringBuilder whereStr = new StringBuilder();
 			if (StringUtil.notEmpty(paramMdl.getName1())) {
-				whereStr.append(" and usr_nm like ? ");
-				listArgs.add(getStringLikeLeft(paramMdl.getName1()));
+				whereStr.append(" and nm like ? ");
+				listArgs.add(getStringLikeAll(paramMdl.getName1()));
 			}
 			if (StringUtil.notEmpty(paramMdl.getName2())) {
 				whereStr.append(" and crdt_no like ? ");
-				listArgs.add(getStringLikeLeft(paramMdl.getName2()));
+				listArgs.add(getStringLikeAll(paramMdl.getName2()));
+			}
+			if (StringUtil.notEmpty(paramMdl.getName3())) {
+				whereStr.append(" and province like ? ");
+				listArgs.add(getStringLikeAll(paramMdl.getName3()));
+			}
+			if (StringUtil.notEmpty(paramMdl.getName4())) {
+				whereStr.append(" and city like ? ");
+				listArgs.add(getStringLikeAll(paramMdl.getName4()));
+			}
+			if (StringUtil.notEmpty(paramMdl.getName5())) {
+				whereStr.append(" and typeleve like ? ");
+				listArgs.add(getStringLikeAll(paramMdl.getName5()));
 			}
 			return whereStr.toString();
 	}
