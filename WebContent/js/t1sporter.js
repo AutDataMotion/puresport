@@ -197,11 +197,13 @@ $(document).ready(function() {
 					    	
 					    },
 					    error:function(xhr,textStatus){
+					    	datasrch.exportall = '0';
 					        console.log('错误')
 					        console.log(xhr)
 					        console.log(textStatus)
 					    },
 					    complete:function(){
+					    	datasrch.exportall = '0';
 					        console.log('结束')
 					    }
 					})
