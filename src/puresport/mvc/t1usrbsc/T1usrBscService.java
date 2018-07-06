@@ -86,6 +86,43 @@ public class T1usrBscService extends BaseService {
 				whereStr.append(" and crdt_no like ? ");
 				listArgs.add(getStringLikeLeft(paramMdl.getName2()));
 			}
+			if (StringUtil.notEmpty(paramMdl.getName3())) {
+				whereStr.append(" and province like ? ");
+				listArgs.add(getStringLikeLeft(paramMdl.getName3()));
+			}
+			if (StringUtil.notEmpty(paramMdl.getName4())) {
+				whereStr.append(" and city like ? ");
+				listArgs.add(getStringLikeLeft(paramMdl.getName4()));
+			}
+			if (StringUtil.notEmpty(paramMdl.getName5())) {
+				whereStr.append(" and usr_tp like ? ");
+				listArgs.add(getStringLikeLeft(paramMdl.getName5()));
+			}
+			if (StringUtil.notEmpty(paramMdl.getName6())) {
+				whereStr.append(" and spt_prj like ? ");
+				listArgs.add(getStringLikeLeft(paramMdl.getName6()));
+			}
+			if (StringUtil.notEmpty(paramMdl.getName7())) {
+				if("国家级".equals(paramMdl.getName7()))
+				{
+					whereStr.append(" and (levelinstitute = 2 or typelevel = '2') ");
+				}
+				if("省级".equals(paramMdl.getName7()))
+				{
+					whereStr.append(" and levelprovince = 2 ");
+//					listArgs.add(getStringLikeLeft(paramMdl.getName7()));
+				}
+				if("市级".equals(paramMdl.getName7()))
+				{
+					whereStr.append(" and levelcity = 2 ");
+				}
+//				whereStr.append(" and typelevel like ? ");
+//				listArgs.add(getStringLikeLeft(paramMdl.getName7()));
+			}
+			if (StringUtil.notEmpty(paramMdl.getName8())) {
+				whereStr.append(" and gnd like ? ");
+				listArgs.add(getStringLikeLeft(paramMdl.getName8()));
+			}
 			return whereStr.toString();
 	}
 	public List<T1usrBsc> selectByPage(T6MgrSession mgrSession, ParamComm paramMdl) {
@@ -94,11 +131,21 @@ public class T1usrBscService extends BaseService {
 		final String searchStr = getSearchWhere(mgrSession, paramMdl, listArgs);
 		Long countTotal = ConfMain.db()
 				.queryLong(String.format("select count(1) from %s where %s %s", tableName, roleStr, searchStr), listArgs.toArray());
+		log.debug("selectByPage----"+countTotal+","+paramMdl.getDraw());
+		
 		paramMdl.setTotal(countTotal);
 		List<T1usrBsc> resList = new ArrayList<>();
 		if (countTotal > 0) {
-			listArgs.add(paramMdl.getPageIndex());
-			listArgs.add(paramMdl.getPageSize());
+			if(paramMdl.getExportall().equals("1"))//全量导出
+			{
+				listArgs.add(0);
+				listArgs.add(countTotal);
+			}
+			else {
+				listArgs.add(paramMdl.getPageIndex());
+				listArgs.add(paramMdl.getPageSize());
+			}
+			
 //			String test = String.format(
 //					"select usrid,usr_tp, nm,crdt_tp, crdt_no,department,post, gnd,brth_dt,spt_prj, typelevel, province, city,institute, mblph_no, email,levelprovince,levelcity,levelinstitute  from %s where %s %s  limit ?,?",
 //					tableName, roleStr, searchStr);
