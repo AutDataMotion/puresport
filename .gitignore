@@ -2,6 +2,7 @@
 *.class
 */init.properties
 */init_sport.properties
+querydata/*
 *.xls
 *.xlsx
 
