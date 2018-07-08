@@ -38,5 +38,5 @@ hs_err_pid*
 /gen/
 /out/
 .mp4
-*/certificates/*.jpg
+certificates/*
 count.txt
