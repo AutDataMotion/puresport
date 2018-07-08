@@ -183,6 +183,4 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 		// 重新加载table数据
 		myTable.ajax.reload();
     });
-	
-	tableScore = myTable;
 });

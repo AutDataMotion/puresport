@@ -151,7 +151,4 @@ $("#citySelect_prj").append("<option value='"+obj[index].id+"'>"+obj[index].name
 		// 重新加载table数据
 		myTable.ajax.reload();
     });
-	
-	tablePassed = myTable;
-	
 });
