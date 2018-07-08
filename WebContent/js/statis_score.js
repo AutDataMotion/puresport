@@ -100,18 +100,20 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 		"bSort" : false, // 排序功能
 		"bAutoWidth": false,
 		"oLanguage" : {
-			"sLengthMenu" : "每页显示 _MENU_ 条记录",
-			"sZeroRecords" : "抱歉， 没有找到",
-			"sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条数据",
+			"sProcessing" : "加载中...",
+			"sLoadingRecords" : "载入中...",
 			"sInfoEmpty" : "没有数据",
+			"sEmptyTable" : "表中数据为空",
+			"sZeroRecords" : "没有找到数据",
+			"sLengthMenu" : "显示 _MENU_ 条记录",
+			"sInfo": "从 _START_ 到 _END_ /共 _TOTAL_ 条",
 			"sInfoFiltered" : "(从 _MAX_ 条数据中检索)",
 			"oPaginate" : {
 				"sFirst" : "首页",
-				"sPrevious" : "前一页",
-				"sNext" : "后一页",
-				"sLast" : "尾页"
-			},
-			"sZeroRecords" : "没有检索到数据",
+				"sPrevious" : "上页",
+				"sNext" : "下页",
+				"sLast" : "末页"
+			}
 		},
 		ajax : {
 			type : "POST",
@@ -120,7 +122,12 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 				d.columns=null;
 				getSearchParam();
 				d.v = JSON.stringify(datasrch);
-            }
+				layer.load(1);
+        },
+        dataSrc: function ( json ) {  
+        			layer.closeAll('loading');
+                return json.data;  
+        }  
 		},buttons : [{
 			extend : 'pageLength',
 			text : '每页行数'

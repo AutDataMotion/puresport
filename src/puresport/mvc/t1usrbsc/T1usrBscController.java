@@ -135,9 +135,10 @@ public class T1usrBscController extends BaseController {
 	}
 	
 	@Clear
-	public void getDataScore(){
+	public void getDataScore() throws InterruptedException{
 		// 成绩统计
 		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
+		Thread.sleep(1000L*5);
 		renderJsonForTable(T1usrBscService.service.selectScoreByPage(mgrSession, getParamWithServerPage()));
 	}
 	
