@@ -43,6 +43,12 @@
 		</filter-class>
 		<async-supported>true</async-supported>
 	</filter>
+	<listener>
+        <listener-class>puresport.mvc.pages.SessionListernerlyf</listener-class>
+    </listener>
+    <listener>
+        <listener-class>puresport.mvc.pages.ServletRequestListenerlyf</listener-class>
+    </listener>
 	<filter-mapping>
 		<filter-name>pageCacheFilter</filter-name>
 		<url-pattern>/jf/ca/*</url-pattern>
