@@ -28,9 +28,9 @@ public class SessionListernerlyf implements HttpSessionListener{
 		arg0.getSession().getServletContext().setAttribute("userCounts", count);
 //		arg0.getSession().setMaxInactiveInterval(30);
 		
-		
-		LOG.debug("sessionCreated---"+arg0.getSession().getServletContext().getAttribute("userCounts"));
-		LOG.debug("sessionCreated---"+count);
+//		
+//		LOG.debug("sessionCreated---"+arg0.getSession().getServletContext().getAttribute("userCounts"));
+//		LOG.debug("sessionCreated---"+count);
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class SessionListernerlyf implements HttpSessionListener{
 		count--;
 		arg0.getSession().getServletContext().setAttribute("userCounts", count);
 		
-		LOG.debug("sessionDestroyed---"+count);
+//		LOG.debug("sessionDestroyed---"+count);
 	}
 
 }
