@@ -41,6 +41,7 @@ public class pagesController extends BaseController {
 		
 //		long count = WebsiteSta.countPeople();
 //		log.debug(count);
+//		setAttr("userCounts",getSession().getAttribute("userCounts"));
 		renderWithPath(pthv+"index.html");
 		
 	}

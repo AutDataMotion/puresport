@@ -13,12 +13,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	
 	
 	
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
 
 
 
 
+
 </script>
+<!--script type="text/javascript" src="${cxt!}/js/jquery-1.12.4.js"></script-->
 <!-- Bootstrap -->
 <link type="text/css" rel="stylesheet"
 	href="${cxt!}/ui/bootstrap-3.3.7-dist/css/bootstrap.min.css">
@@ -38,7 +41,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- start plugins -->
 <link href="${cxt!}/css/owl.carousel.css" rel="stylesheet">
 <link href="${cxt!}/css/owl.theme.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css" href="${cxt!}/ui/loading/app.min.css" />
+<link rel="stylesheet" type="text/css"
+	href="${cxt!}/ui/loading/app.min.css" />
 <script type="text/javascript">
 	var cxt = '${cxt!}';
 </script>
@@ -215,8 +219,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<div class="tab-pane fade in active" id="tab_one">
 							<div class="self_tablist">
 								<ul class="nav nav-pills myTabs_1">
-									<li id="importAdmin_btn" class="active"><a href="#myTabs_1_0" data-toggle="tab">导入管理员</a></li>
-									<li id="importSporter_btn" ><a href="#myTabs_1_1" data-toggle="tab">导入运动员</a></li>
+									<li id="importAdmin_btn" class="active"><a
+										href="#myTabs_1_0" data-toggle="tab">导入管理员</a></li>
+									<li id="importSporter_btn"><a href="#myTabs_1_1"
+										data-toggle="tab">导入运动员</a></li>
 								</ul>
 							</div>
 							<div class="tab-content">
@@ -235,7 +241,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												class="form-control" placeholder="证件号">
 										</div>
 										<div class="col-lg-4 pull-right">
-											<div style="opacity: 0; width: 0px;max-height: 0px;">
+											<div style="opacity: 0; width: 0px; max-height: 0px;">
 												<input type="file" id="inputfileadmin"
 													style="opacity: 0; width: 0px">
 											</div>
@@ -254,19 +260,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												</a>
 											</div>
 										</div>
-										
+
 									</div>
 									<div class="row">
 										<div class="col-lg-2">
 											<h4>区域信息：</h4>
 										</div>
 										<div class="col-lg-3">
-											<input type="text" id="s_t6MgrAhr_province" class="form-control"
-												placeholder="所属省">
+											<input type="text" id="s_t6MgrAhr_province"
+												class="form-control" placeholder="所属省">
 										</div>
 										<div class="col-lg-3">
-											<input type="text" id="s_t6MgrAhr_city"
-												class="form-control" placeholder="所属市">
+											<input type="text" id="s_t6MgrAhr_city" class="form-control"
+												placeholder="所属市">
 										</div>
 									</div>
 									<div class="row">
@@ -274,16 +280,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<h4>管理员级别：</h4>
 										</div>
 										<div class="col-lg-3">
-											<input type="text" id="s_t6MgrAhr_typeleve" class="form-control"
-												placeholder="管理员级别">
+											<input type="text" id="s_t6MgrAhr_typeleve"
+												class="form-control" placeholder="管理员级别">
 										</div>
 										<div class="col-lg-2">
-											<button type="submit" id="s_btn_adm" class="btn  btn-info btn-lg">
+											<button type="submit" id="s_btn_adm"
+												class="btn  btn-info btn-lg">
 												<span class="glyphicon glyphicon-search"></span>查询
 											</button>
 										</div>
 									</div>
-									
+
 									<table id="example1" class="display nowrap"
 										style="width: 1000px;">
 										<thead>
@@ -321,7 +328,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												class="form-control" placeholder="证件号">
 										</div>
 										<div class="col-lg-4 pull-right">
-											<div style="opacity: 0; width: 0px;max-height: 0px;">
+											<div style="opacity: 0; width: 0px; max-height: 0px;">
 												<input type="file" id="inputfilesporter"
 													style="opacity: 0; width: 0px">
 											</div>
@@ -346,12 +353,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<h4>区域信息：</h4>
 										</div>
 										<div class="col-lg-3">
-											<input type="text" id="s_t1usrBsc_province" class="form-control"
-												placeholder="所属省">
+											<input type="text" id="s_t1usrBsc_province"
+												class="form-control" placeholder="所属省">
 										</div>
 										<div class="col-lg-3">
-											<input type="text" id="s_t1usrBsc_city"
-												class="form-control" placeholder="所属市">
+											<input type="text" id="s_t1usrBsc_city" class="form-control"
+												placeholder="所属市">
 										</div>
 									</div>
 									<div class="row">
@@ -359,8 +366,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<h4>其它信息：</h4>
 										</div>
 										<div class="col-lg-2">
-											<input type="text" id="s_t1usrBsc_usr_tp" class="form-control"
-												placeholder="人员类型">
+											<input type="text" id="s_t1usrBsc_usr_tp"
+												class="form-control" placeholder="人员类型">
 										</div>
 										<div class="col-lg-2">
 											<input type="text" id="s_t1usrBsc_spt_prj"
@@ -371,16 +378,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												class="form-control" placeholder="级别">
 										</div>
 										<div class="col-lg-2">
-											<input type="text" id="s_t1usrBsc_gnd"
-												class="form-control" placeholder="性别">
+											<input type="text" id="s_t1usrBsc_gnd" class="form-control"
+												placeholder="性别">
 										</div>
 										<div class="col-lg-2">
-											<button type="submit" id="s_btn_spt" class="btn btn-info btn-sm">
+											<button type="submit" id="s_btn_spt"
+												class="btn btn-info btn-sm">
 												<span class="glyphicon glyphicon-search"></span>查询
 											</button>
 										</div>
 									</div>
-								
+
 
 									<table id="example2" class="display nowrap"
 										style="width: 1000px">
@@ -433,7 +441,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												<option name="city_9999" value="9999">全部</option>
 											</select>
 										</div>
-										
+
 										<div class="form-group hide">
 											<label for="name" class="control-label">协会：</label> <select
 												id="instituteSelect_score" class="form-control selectmy">
@@ -449,55 +457,58 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 									</div>
 									<div class="row">
-										
-											<div class="col-lg-2">
-												<input type="text" id="sta_t1usrBsc_nm"
-												class="form-control" placeholder="姓名">
-											</div>
-											<div class="col-lg-3">
-												<input type="text" id="sta_t1usrBsc_crdt_no"
+
+										<div class="col-lg-2">
+											<input type="text" id="sta_t1usrBsc_nm" class="form-control"
+												placeholder="姓名">
+										</div>
+										<div class="col-lg-3">
+											<input type="text" id="sta_t1usrBsc_crdt_no"
 												class="form-control" placeholder="证件号码">
-											</div>
-											<div class="col-lg-3">
-												 <select id="sta_t1usrBsc_usr_tp" class="form-control selectmy">
-												<option  value="9999">用户类型/全部</option>
-												<option  value="合格">运动员</option>
-												<option  value="不合格">辅助人员</option>
+										</div>
+										<div class="col-lg-3">
+											<select id="sta_t1usrBsc_usr_tp"
+												class="form-control selectmy">
+												<option value="9999">用户类型/全部</option>
+												<option value="合格">运动员</option>
+												<option value="不合格">辅助人员</option>
 											</select>
-											</div>
-											<div class="col-lg-3">
-												<input type="text" id="sta_t1usrBsc_spt_prj"
+										</div>
+										<div class="col-lg-3">
+											<input type="text" id="sta_t1usrBsc_spt_prj"
 												class="form-control" placeholder="运动项目">
-											</div>
+										</div>
 									</div>
 									<div class="row">
-										
-											<div class="col-lg-2">
-												 <select id="sta_t1usrBsc_exam_nm" class="form-control selectmy">
-												<option  value="9999">考试名称/全部</option>
-												<option  value="省运会">省运会</option>
-												<option  value="亚运会">亚运会</option>
+
+										<div class="col-lg-2">
+											<select id="sta_t1usrBsc_exam_nm"
+												class="form-control selectmy">
+												<option value="9999">考试名称/全部</option>
+												<option value="省运会">省运会</option>
+												<option value="亚运会">亚运会</option>
 											</select>
-											</div>
+										</div>
 										<!-- <div class="col-lg-3">
 											<input type="text" id="sta_t1usrBsc_exam_grd"
 												class="form-control" placeholder="考试成绩">
 										</div> -->
 										<div class="col-lg-3">
-												 <select id="sta_t1usrBsc_passOrnot" class="form-control selectmy">
-												<option  value="9999">合格与否/全部</option>
-												<option  value="合格">合格</option>
-												<option  value="不合格">不合格</option>
-												<option  value="未考试">未考试</option>
+											<select id="sta_t1usrBsc_passOrnot"
+												class="form-control selectmy">
+												<option value="9999">合格与否/全部</option>
+												<option value="合格">合格</option>
+												<option value="不合格">不合格</option>
+												<option value="未考试">未考试</option>
 											</select>
-											</div>
-											<div class="col-lg-3">
-												 <select id="sta_t1usrBsc_gnd" class="form-control selectmy">
-												<option  value="9999">性别/全部</option>
-												<option  value="男">男</option>
-												<option  value="女">女</option>
+										</div>
+										<div class="col-lg-3">
+											<select id="sta_t1usrBsc_gnd" class="form-control selectmy">
+												<option value="9999">性别/全部</option>
+												<option value="男">男</option>
+												<option value="女">女</option>
 											</select>
-											</div>
+										</div>
 									</div>
 									<table id="example3" class="display nowrap" style="width: 100%">
 										<thead>
@@ -507,13 +518,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												<th>姓名</th>
 												<th>考试名称</th>
 												<th>考试成绩</th>
-												
+
 												<th>合格与否</th>
 												<th>证件类型</th>
 												<th>证件号</th>
 												<th>性别</th>
 												<th>出生日期</th>
-												
+
 												<th>所属省</th>
 												<th>所属市</th>
 												<th>所属协会</th>
@@ -735,41 +746,61 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<script type="text/javascript" src="${cxt!}/ui/layer3/layer.js"></script>
 
 	<script>
-$(function(){
-	var tableAdmin;
-	var tableSporter;
-	var tablePassed;
-	var tableScore;
-	var tableQuestion;
-});
+	function loadScriptMy(url, callback) {
+	    var script = document.createElement("script");
+	    script.type = "text/javascript";
+	    if (typeof(callback) != "undefined") {
+	        if (script.readyState) {
+	            script.onreadystatechange = function() {
+	                if (script.readyState == "loaded" || script.readyState == "complete") {
+	                    script.onreadystatechange = null;
+	                    callback();
+	                }
+	            };
+	        } else {
+	            script.onload = function() {
+	                callback();
+	            };
+	        }
+	    };
+	    script.src = url;
+	    document.body.appendChild(script);
+	}
+	function lazyLoadMy(flag, url){
+		if(flag == 0){
+			loadScriptMy(url, function(){flag = 1});
+		}
+	}
+//初始化懒加载标志
+var flagInit_admin = 1;// 最开始就加载
+var flagInit_sport = 0;
+var flagInit_staScore = 0;
+var flagInit_staPrj = 0;
+var flagInit_staQue = 0;
 </script>
 	<script src="${cxt!}/ui/loading/app.min.js"></script>
 	<script src="${cxt!}/js/t6admin.js"></script>
-	<script src="${cxt!}/js/t1sporter.js"></script>
-	<script src="${cxt!}/js/statis_passed.js"></script>
-	<script src="${cxt!}/js/statis_score.js"></script>
-	<script src="${cxt!}/js/statis_question.js"></script>
 
 	<script type="text/javascript"
 		src="${cxt!}/ui/DataTables/sport/jszip.min.js"></script>
-	<script type="text/javascript"
-		src="${cxt!}/ui/DataTables/sport/pdfmake.min.js"></script>
+<!-- 	<script type="text/javascript" -->
+<!-- 		src="${cxt!}/ui/DataTables/sport/pdfmake.min.js"></script> -->
 	<script type="text/javascript"
 		src="${cxt!}/ui/DataTables/sport/vfs_fonts.js"></script>
 	<script type="text/javascript"
 		src="${cxt!}/ui/DataTables/sport/buttons.html5.min.js"></script>
-	<script type="text/javascript"
-		src="${cxt!}/ui/DataTables/sport/buttons.print.min.js"></script>
+<!-- 	<script type="text/javascript" -->
+<!-- 		src="${cxt!}/ui/DataTables/sport/buttons.print.min.js"></script> -->
 
 	<script>
 $(function(){
-	if('${session["typeleve"]}'=='中心协会级')
-	{
-		$('#importAdmin_btn').remove();
-		$('#importSporter_btn').addClass('active');
-		$('#myTabs_1_0').remove();
-		$('#myTabs_1_1').addClass('in').addClass('active');
-	}
+			if('${session["typeleve"]}'=='中心协会级')
+			{
+				$('#importAdmin_btn').remove();
+				$('#importSporter_btn').addClass('active');
+				$('#myTabs_1_0').remove();
+				$('#myTabs_1_1').addClass('in').addClass('active');
+			}
 	
 	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
 		// 获取已激活的标签页的名称
@@ -777,26 +808,21 @@ $(function(){
 		console.log(activeTab);
 		// 获取前一个激活的标签页的名称
 		// var previousTab = $(e.relatedTarget).text(); 
-		var tabTable = null;
+
 		if(activeTab == '导入管理员'){
-			tabTable = tableAdmin;
 		} else if(activeTab == '导入运动员'){
-			tabTable = tableSporter;
-		}else if(activeTab == '成绩统计'){
-			tabTable = tableScore;
+			lazyLoadMy(flagInit_sport, cxt + "/js/t1sporter.js");
+			flagInit_sport = 1;
+		}else if(activeTab == '成绩统计' || activeTab == '统计'){
+			lazyLoadMy(flagInit_staScore, cxt + "/js/statis_score.js");
+			flagInit_staScore = 1;
 		}else if(activeTab == '项目合格率统计'){
-			tabTable = tablePassed;
+			lazyLoadMy(flagInit_staPrj, cxt + "/js/statis_passed.js");
+			flagInit_staPrj = 1;
 		}else if(activeTab == '试题错误率统计'){
-			tabTable = tableQuestion;
-		} else {
-			tabTable == null
-		}
-		if (tabTable != null) { 
-		//	console.log(tabTable);
-			tabTable.columns.adjust();
-		　　} else {
-		　　}
-		
+			lazyLoadMy(flagInit_staQue, cxt + "/js/statis_question.js");
+			flagInit_staQue = 1;
+		} 
 	});
 });
 </script>

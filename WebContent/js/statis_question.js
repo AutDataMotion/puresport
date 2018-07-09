@@ -114,6 +114,4 @@ $(document).ready(
 				// 重新加载table数据
 				myTable.ajax.reload();
 			});
-			
-			tableQuestion = myTable;
 		});
