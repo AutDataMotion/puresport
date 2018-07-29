@@ -27,6 +27,8 @@ import puresport.mvc.area.Area;
 import puresport.mvc.sport_item.Sport_Item;
 import puresport.mvc.t10examgrd.T10ExamGrd;
 import puresport.mvc.t11examstat.T11ExamStat;
+import puresport.mvc.t12highestscore.T12HighestScore;
+import puresport.mvc.t13tststat.T13TstStat;
 import puresport.mvc.t1usrbsc.T1usrBsc;
 import puresport.mvc.t2adiv.T2Adiv;
 import puresport.mvc.t3statl.T3Statl;
@@ -65,6 +67,8 @@ public class MappingTable {
 		arp.addMapping("t9_tstlib", "prblmid", T9Tstlib.class);
 		arp.addMapping("t10_exam_grd", "id", T10ExamGrd.class);
 		arp.addMapping("t11_exam_stat", "id", T11ExamStat.class);
+		arp.addMapping("t12_highest_score", "id", T12HighestScore.class);
+		arp.addMapping("t13_tst_stat", "id", T13TstStat.class);
 		log.info("puresport MappingTable 表手工注册-----end");
 
 	}
