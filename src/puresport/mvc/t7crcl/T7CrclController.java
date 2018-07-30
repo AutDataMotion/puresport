@@ -511,6 +511,7 @@ public class T7CrclController extends BaseController {
 		if(T11ExamStat_num.size()>=4)
 		{
 			LOG.debug("generteTest----"+"今日答题次数已满！！");
+			setAttr("tpsMsg", "对不起，每日最多只能答题三次。您今天已答题三次，请明日再答。");
 			renderWithPath("/f/tips.html");
 		} else {
 		// 选择题
@@ -686,6 +687,7 @@ public class T7CrclController extends BaseController {
 		if(T11ExamStat_num.size()>=4)
 		{
 			LOG.debug("submitExam----"+"今日答题次数已满！！");
+			setAttr("tpsMsg", "对不起，每日最多只能答题三次。您今天已答题三次，请明日再答。");
 			renderWithPath("/f/tips.html");
 		}
 		else {
@@ -848,8 +850,8 @@ public class T7CrclController extends BaseController {
 			// 如果本次成绩高于已有最高成绩，则更新最高成绩
 			if(totalScore > Integer.parseInt(t12.getExam_grd())) {
 				// 转入操作
-				Db.update("update t12_highest_score t set t.exam_grd = ? , t.tms = ? where usrid = ? and t.exam_nm = ?",
-						new Timestamp(System.currentTimeMillis()),totalScore, t10.getUsrid(), which_competition );
+				Db.update("update puresport.t12_highest_score t set t.exam_grd = ? , t.tms = ? where usrid = ? and t.exam_nm = ?",
+						totalScore, new Timestamp(System.currentTimeMillis()),t10.getUsrid(), which_competition );
 			}
 		}
 		
