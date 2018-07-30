@@ -29,6 +29,7 @@ import org.apache.log4j.Logger;
 
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
+import com.jfinal.plugin.activerecord.Db;
 import com.platform.annotation.Controller;
 import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
@@ -43,12 +44,14 @@ import puresport.entity.ResultEntity;
 import puresport.mvc.t10examgrd.T10ExamGrd;
 import puresport.mvc.t11examstat.T11ExamStat;
 import puresport.mvc.t11examstat.T11ExamStatService;
+import puresport.mvc.t12highestscore.T12HighestScore;
 import puresport.mvc.t1usrbsc.T1usrBsc;
 import puresport.mvc.t1usrbsc.T1usrBscService;
 import puresport.mvc.t5crclstdy.T5CrclStdy;
 import puresport.mvc.t5crclstdy.T5CrclStdyController;
 //import puresport.entity.ExamEntity;
 import puresport.mvc.t9tstlib.T9Tstlib;
+import puresport.mvc.t13tststat.T13TstStat;
 import puresport.mvc.pages.FunctionInterceptor;
 /**
  * XXX 管理 描述：
@@ -726,6 +729,7 @@ public class T7CrclController extends BaseController {
 			String sql = "select * from t10_exam_grd t where t.usrid = '" + t10.getUsrid() + "' and t.examid ='"
 					+ t10.getExamid() + "' and t.prblmno = '" + t10.getPrblmno() + "'";
 			List<T10ExamGrd> t10List = T10ExamGrd.dao.find(sql);
+			
 			if ((null == t10List) || (0 == t10List.size())) {
 				LOG.error("试题不在成绩表中，请确认");
 			} else {
@@ -752,13 +756,20 @@ public class T7CrclController extends BaseController {
 				} else {
 					LOG.error("查询不到答案，无法比对是否正确");
 				}
+				int prblmId = Integer.parseInt(t10Data.getPrblmid());
+				System.out.println("prblmId=" + prblmId);
 				if (isRight) {
 					score++;
 					t10Data.setExam_grd(5);
 					t10Data.setResult("正确");
+					// 更新答对次数
+					Db.update("update puresport.t13_tst_stat t set t.right_num = t.right_num + 1 where prblmid =" +  prblmId);
 				} else {
 					t10Data.setExam_grd(0);
 					t10Data.setResult("错误");
+					// 更新答对次数
+					
+					Db.update("update puresport.t13_tst_stat t set t.wrong_num = t.wrong_num + 1 where prblmid =" +  prblmId);
 				}
 				t10Data.setUsr_aswr(usr_aswr);
 				t10Data.setExam_st("1");
@@ -815,6 +826,33 @@ public class T7CrclController extends BaseController {
 			t11Rlt.setExam_st("9");// 考试状态，9表示最终成绩
 			t11Rlt.update();
 		}
+		// 更新最高成绩
+		// 插入或者更新成绩统计表最后一次成绩
+		String sql_highest_score = "select * from t12_highest_score t where t.usrid = '" + t10.getUsrid() + "' and t.exam_nm = '" + which_competition + "'";
+		T12HighestScore t12 = T12HighestScore.dao.findFirst(sql_highest_score);
+		if (null == t12) {
+			t12 = new T12HighestScore();
+			t12.setUsrid(usrid);// 用户id
+			t12.setExamid(Integer.parseInt(examid));// 考试id
+			t12.setExam_grd(totalScore);// 考试成绩
+			t12.setExam_st("1");// 考试状态
+			t12.setExam_channel("01");// 考试渠道,01:互联网站
+			t12.setExam_num(Integer.parseInt(examid));// 考试次数
+			t12.setTms(new Timestamp(System.currentTimeMillis()));// 维护时间
+			t12.setExam_nm(which_competition);
+			t12.saveGenIntId();
+		} else {
+/*			t11.setExam_st("9");// 考试状态，9表示最终成绩
+			t11.setId(Long.parseLong(t11Rlt.getId()));*/
+//			t11Rlt.setUsrid(usrid);// 用户id
+			// 如果本次成绩高于已有最高成绩，则更新最高成绩
+			if(totalScore > Integer.parseInt(t12.getExam_grd())) {
+				// 转入操作
+				Db.update("update t12_highest_score t set t.exam_grd = ? , t.tms = ? where usrid = ? and t.exam_nm = ?",
+						new Timestamp(System.currentTimeMillis()),totalScore, t10.getUsrid(), which_competition );
+			}
+		}
+		
 		LOG.debug("totalScore=" + totalScore);
 		// 判断是否可以取得合格证书
 		if(totalScore >= 80) {
