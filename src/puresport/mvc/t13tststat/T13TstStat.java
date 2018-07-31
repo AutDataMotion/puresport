@@ -65,8 +65,8 @@ public class T13TstStat extends BaseModel<T13TstStat> {
 	private Long id;
 	private Integer prblmid;
 	private Timestamp tms;
-	private BigInteger right_num;
-	private BigInteger wrong_num;
+	private Long right_num;
+	private Long wrong_num;
 
 	public void setId(Long id){
 		set(column_id, id);
@@ -86,13 +86,13 @@ public class T13TstStat extends BaseModel<T13TstStat> {
 	public <T> T getTms() {
 		return get(column_tms);
 	}
-	public void setRight_num(BigInteger right_num){
+	public void setRight_num(Long right_num){
 		set(column_right_num, right_num);
 	}
 	public <T> T getRight_num() {
 		return get(column_right_num);
 	}
-	public void setWrong_num(BigInteger wrong_num){
+	public void setWrong_num(Long wrong_num){
 		set(column_wrong_num, wrong_num);
 	}
 	public <T> T getWrong_num() {
