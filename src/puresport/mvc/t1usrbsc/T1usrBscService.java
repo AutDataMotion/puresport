@@ -367,8 +367,8 @@ public class T1usrBscService extends BaseService {
 		if (CollectionUtils.isEmpty(records)) return new ArrayList<>();
 
 		records.stream().forEach(e -> {
-			Long cntTotal = e.getLong("cntall");
-			Long cntWrong = e.getLong("cntwrong");
+			Long cntTotal = e.getBigInteger("cntall").longValue();
+			Long cntWrong = e.getBigInteger("cntwrong").longValue();
 			if (ComUtil.notNullAndZero(cntTotal) && ComUtil.notNullAndZero(cntWrong)) {
 				e.set("errorPercent", String.format("%d%%(%d/%d)", cntWrong * 100 / cntTotal, cntWrong, cntTotal));
 			} else if (ComUtil.notNullAndZero(cntTotal)) {
