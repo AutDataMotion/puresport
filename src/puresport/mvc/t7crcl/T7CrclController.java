@@ -506,8 +506,8 @@ public class T7CrclController extends BaseController {
 /*		if (!isCanTest())
 			renderWithPath("/f/accession/dotest.html");*/
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
-		// 查询一共考了多少次
-		List<T11ExamStat> T11ExamStat_num = T11ExamStat.dao.find("select count(*) from t11_exam_stat t where t.exam_st = '1' and t.usrid='" + usrid + "'");
+		// 查询一共考了多少次，规则修改为所有赛事都考试次数不能超过3次，2018-09-04
+		List<T11ExamStat> T11ExamStat_num = T11ExamStat.dao.find("select * from t11_exam_stat t where t.exam_st = '1' and t.usrid='" + usrid + "'");
 		if(T11ExamStat_num.size()>=3)
 		{
 			LOG.debug("generteTest----"+"总答题次数已满3次！！");
@@ -545,7 +545,7 @@ public class T7CrclController extends BaseController {
 				examEntity.setOptB(optionList[1]);
 			}
 			// 答案
-			examEntity.setPrblm_aswr((String) t9Tstlib.getPrblm_aswr());
+//			examEntity.setPrblm_aswr((String) t9Tstlib.getPrblm_aswr());
 			// 题号
 			questionNum++;
 			examEntity.setPrblmno(questionNum);
@@ -561,7 +561,7 @@ public class T7CrclController extends BaseController {
 			examEntity.setTtl((String) t9Tstlib.getTtl());
 			examEntity.setPrblmid(Integer.parseInt((String) t9Tstlib.getPrblmid()));
 			// 答案
-			examEntity.setPrblm_aswr((String) t9Tstlib.getPrblm_aswr());
+//			examEntity.setPrblm_aswr((String) t9Tstlib.getPrblm_aswr());
 			// 题号
 			questionNum++;
 			examEntity.setPrblmno((Integer) questionNum);
