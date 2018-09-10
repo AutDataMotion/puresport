@@ -16,9 +16,11 @@ import com.sun.org.apache.xml.internal.security.keys.keyresolver.implementations
 
 import csuduc.platform.util.ComOutMdl;
 import csuduc.platform.util.ComUtil;
+import csuduc.platform.util.RegexUtils;
 import csuduc.platform.util.StringUtil;
 import csuduc.platform.util.encrypt.DESUtil;
 import csuduc.platform.util.tuple.Tuple2;
+import csuduc.platform.util.tuple.Tuple3;
 import csuduc.platform.util.tuple.TupleUtil;
 import puresport.applicat.MdlExcelRow;
 import puresport.config.ConfMain;
@@ -410,17 +412,16 @@ public class T1usrBscService extends BaseService {
 		StringBuilder resStr = new StringBuilder();
 		excelRows.forEach(e -> {
 			rowCnt.set(rowCnt.get() + 1);
-			Tuple2<Boolean, String> r = insertRowToDb(mgrSession, e);
+			Tuple3<Boolean, Integer, String> r = insertRowToDb(mgrSession, e);
 			if (!r.first) {
 				resBool.set(false);
-				;
-				resStr.append(String.format("第%d行%s \n", rowCnt.get(), r.second));
+				resStr.append(String.format("第%d行第%d列 %s \n", rowCnt.get(), r.second, r.third));
 			}
 		});
 		return TupleUtil.tuple(resBool.get(), resStr.toString());
 	}
 
-	private Tuple2<Boolean, String> insertRowToDb(T6MgrSession mgrSession, MdlExcelRow excelRow) {
+	private Tuple3<Boolean,Integer, String> insertRowToDb(T6MgrSession mgrSession, MdlExcelRow excelRow) {
 		boolean res = false;
 		String resTips = "";
 		try {
@@ -428,32 +429,33 @@ public class T1usrBscService extends BaseService {
 			if (StringUtil.invalidateLength(excelRow.getByIndex(0), 2, 64)) {
 				log.error("insertRowToDb数据校验失败:" + excelRow);
 				// 因为可能有空行，当姓名没有的时候，直接默认未空行
-				return TupleUtil.tuple(true, "");
+				return TupleUtil.tuple(true, 0, "");
 			}
 			if (StringUtil.invalidateLength(excelRow.getByIndex(1), 1, 8)
 					|| ValidateComm.inv_column_crdt_tp(excelRow.getByIndex(1))) {
 				log.error("insertRowToDb数据校验失败:" + excelRow);
-				return TupleUtil.tuple(false, "证件类型不符合要求");
+				return TupleUtil.tuple(false, 2, "证件类型不符合要求");
 			}
-			if (StringUtil.invalidateLength(excelRow.getByIndex(2), 8, 20)) {
+			if (StringUtil.invalidateLength(excelRow.getByIndex(2), 8, 20)
+					|| !RegexUtils.checkDigitAlpha(excelRow.getByIndex(2))) {
 				log.error("insertRowToDb数据校验失败:" + excelRow);
-				return TupleUtil.tuple(false, "证件号不符合要求");
+				return TupleUtil.tuple(false,3,  "证件号不符合要求");
 			}
 			if (StringUtil.invalidateLength(excelRow.getByIndex(3), 1, 4)) {
 				log.error("insertRowToDb数据校验失败:" + excelRow);
-				return TupleUtil.tuple(false, "性别不符合要求");
+				return TupleUtil.tuple(false, 4, "性别不符合要求");
 			}
 			if (StringUtil.invalidateLength(excelRow.getByIndex(4), 2, 10)) {
 				log.error("insertRowToDb数据校验失败:" + excelRow);
-				return TupleUtil.tuple(false, "出生日期不符合要求");
+				return TupleUtil.tuple(false, 5, "出生日期不符合要求");
 			}
 			if (StringUtil.invalidateLength(excelRow.getByIndex(5), 2, 18)) {
 				log.error("insertRowToDb数据校验失败:" + excelRow);
-				return TupleUtil.tuple(false, "手机号不符合要求");
+				return TupleUtil.tuple(false, 6, "手机号不符合要求");
 			}
 			if (StringUtil.invalidateLength(excelRow.getByIndex(6), 2, 128)) {
 				log.error("insertRowToDb数据校验失败:" + excelRow);
-				return TupleUtil.tuple(false, "邮箱不符合要求");
+				return TupleUtil.tuple(false, 7,  "邮箱不符合要求");
 			}
 			// 根据手机号匹配，没有插入、已有更新
 			String crdt_number = excelRow.getByIndex(2);// 身份证号
@@ -496,10 +498,10 @@ public class T1usrBscService extends BaseService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			log.error(e);
-			return TupleUtil.tuple(false, "有失败情况，请您检查数据后重试");
+			return TupleUtil.tuple(false, 0, "有失败情况，请您检查数据后重试");
 
 		}
-		return TupleUtil.tuple(res, "");
+		return TupleUtil.tuple(res, 0, "");
 	}
 	
 	/**

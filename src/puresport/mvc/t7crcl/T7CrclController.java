@@ -506,14 +506,22 @@ public class T7CrclController extends BaseController {
 /*		if (!isCanTest())
 			renderWithPath("/f/accession/dotest.html");*/
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
-		//查询当天已经考试了几次
+		// 查询一共考了多少次，规则修改为所有赛事都考试次数不能超过3次，2018-09-04
+		List<T11ExamStat> T11ExamStat_num = T11ExamStat.dao.find("select * from t11_exam_stat t where t.exam_st = '1' and t.usrid='" + usrid + "'");
+		if(T11ExamStat_num.size()>=3)
+		{
+			LOG.debug("generteTest----"+"总答题次数已满3次！！");
+			setAttr("tpsMsg", "对不起，每人最多只能答题三次。您已答题三次，不能再参加考试。");
+			renderWithPath("/f/tips.html");
+		}
+/*		//查询当天已经考试了几次
 		List<T11ExamStat> T11ExamStat_num = T11ExamStatService.service.SelectByUserIdAndTime(usrid);
 		if(T11ExamStat_num.size()>=4)
 		{
 			LOG.debug("generteTest----"+"今日答题次数已满！！");
 			setAttr("tpsMsg", "对不起，每日最多只能答题三次。您今天已答题三次，请明日再答。");
 			renderWithPath("/f/tips.html");
-		} else {
+		}*/ else {
 		// 选择题
 		String sql = "select * from t9_tstlib t where t.prblm_tp ='01' order by rand() limit 10";
 		List<T9Tstlib> t9List = T9Tstlib.dao.find(sql);
@@ -537,7 +545,7 @@ public class T7CrclController extends BaseController {
 				examEntity.setOptB(optionList[1]);
 			}
 			// 答案
-			examEntity.setPrblm_aswr((String) t9Tstlib.getPrblm_aswr());
+//			examEntity.setPrblm_aswr((String) t9Tstlib.getPrblm_aswr());
 			// 题号
 			questionNum++;
 			examEntity.setPrblmno(questionNum);
@@ -553,7 +561,7 @@ public class T7CrclController extends BaseController {
 			examEntity.setTtl((String) t9Tstlib.getTtl());
 			examEntity.setPrblmid(Integer.parseInt((String) t9Tstlib.getPrblmid()));
 			// 答案
-			examEntity.setPrblm_aswr((String) t9Tstlib.getPrblm_aswr());
+//			examEntity.setPrblm_aswr((String) t9Tstlib.getPrblm_aswr());
 			// 题号
 			questionNum++;
 			examEntity.setPrblmno((Integer) questionNum);
@@ -681,15 +689,22 @@ public class T7CrclController extends BaseController {
 		ResultEntity res = null;
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		
-		
+		// 查询一共考了多少次，规则修改为所有赛事都考试次数不能超过3次，2018-09-04
+		List<T11ExamStat> T11ExamStat_num = T11ExamStat.dao.find("select * from t11_exam_stat t where t.exam_st = '1' and t.usrid='" + usrid + "'");
+		if(T11ExamStat_num.size()>=3)
+		{
+			LOG.debug("generteTest----"+"总答题次数已满3次！！");
+			setAttr("tpsMsg", "对不起，每人最多只能答题三次。您已答题三次，不能再参加考试。");
+			renderWithPath("/f/tips.html");
+		}
 		//查询当天已经考试了几次
-		List<T11ExamStat> T11ExamStat_num = T11ExamStatService.service.SelectByUserIdAndTime(usrid);
+/*		List<T11ExamStat> T11ExamStat_num = T11ExamStatService.service.SelectByUserIdAndTime(usrid);
 		if(T11ExamStat_num.size()>=4)
 		{
 			LOG.debug("submitExam----"+"今日答题次数已满！！");
 			setAttr("tpsMsg", "对不起，每日最多只能答题三次。您今天已答题三次，请明日再答。");
 			renderWithPath("/f/tips.html");
-		}
+		}*/
 		else {
 			
 		String examid = getPara("examid");

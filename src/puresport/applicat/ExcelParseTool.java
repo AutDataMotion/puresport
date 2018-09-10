@@ -139,7 +139,7 @@ public class ExcelParseTool {
                 }
 			}
 		}
-		return cell.getStringCellValue();
+		return cell.getStringCellValue().trim();
 	}
 
 	/**

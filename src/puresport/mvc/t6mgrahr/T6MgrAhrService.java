@@ -13,6 +13,7 @@ import com.jfinal.plugin.activerecord.Record;
 import com.platform.mvc.base.BaseService;
 
 import csuduc.platform.util.ComOutMdl;
+import csuduc.platform.util.RegexUtils;
 import csuduc.platform.util.StringUtil;
 import csuduc.platform.util.encrypt.DESUtil;
 import csuduc.platform.util.tuple.Tuple2;
@@ -180,7 +181,8 @@ public class T6MgrAhrService extends BaseService {
 			log.error("insertAdminToDb数据校验失败:" + excelRow);
 			return TupleUtil.tuple(false, "证件类型不符合要求");
 		}
-		if (StringUtil.invalidateLength(excelRow.getByIndex(2), 2, 20)) {
+		if (StringUtil.invalidateLength(excelRow.getByIndex(2), 2, 20)
+				|| !RegexUtils.checkDigitAlpha(excelRow.getByIndex(2))) {
 			log.error("insertAdminToDb数据校验失败:" + excelRow);
 			return TupleUtil.tuple(false, "证件号不符合要求");
 		}
