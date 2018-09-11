@@ -86,8 +86,8 @@ function toUtf8(str) {
 /* function test() {
 	url = "/jf/puresport/t7Crcl/video_play?crcl_attr=${t7.crcl_attr!''}&crcl_file_rte=${t7.crcl_file_rte!''}&stdy_st_hidden=${stdy_st_hidden!'0'}&crclid=${t7.crclid!'0'}";
 	alert(url);
-/* 	url = toUtf8(url); */
-/* 	alert(url); */
+ 	url = toUtf8(url); 
+ 	alert(url); 
 	window.location.href=url;// 进行下一步学习
 } */
 
@@ -131,12 +131,24 @@ function toUtf8(str) {
 				<div class="row">
 					<div class="col-md-1 myTest"></div>
 					<div class="col-md-10 myTest">
-						<ul>
-							<li>1.本次准入学习共分为三个部分，准入对象须观看${session['which_competition']}反兴奋剂六项规定视频，案例篇视频选学，流程篇视频选学后，方可进入考试页面;</li>
-							</br>
-							<li>2.考试过程中请注意保持浏览器客户端在线状态，不要强制刷新或者断开网络，否则学习记录将会丢失;</li>
-							</br>
-							<li>3.每个账号最多可以答题3次，如答题次数达到上限，不能再进行答题。</li>
+						<ul id="study_entrance">
+							<script>
+								var which_competition ='${session["which_competition"]}';
+								
+								if(which_competition == '青奥会')//
+								{
+									$("#study_entrance").html(
+											"<li>1.本次准入学习共分为三个部分，准入对象须观看${session['which_competition']}反兴奋剂六项规定视频，案例篇视频选学，流程篇视频选学后，方可进入考试页面;</li>"
+									+"<li>2.考试过程中请注意保持浏览器客户端在线状态，不要强制刷新或者断开网络，否则学习记录将会丢失;</li>"
+									+"<li>3.每个账号最多可以答题3次，如答题次数达到上限，不能再进行答题。</li>");
+								}
+								else{
+									$("#study_entrance").html("<li>1.本次准入学习共分为三个部分，准入对象须观看${session['which_competition']}反兴奋剂六项规定视频，案例篇视频选学，流程篇视频选学后，方可进入考试页面;</li>"
+											+"<li>2.考试过程中请注意保持浏览器客户端在线状态，不要强制刷新或者断开网络，否则学习记录将会丢失;</li>"
+											+"<li>3.每个账号每天（00:00-24:00）答题次数不超过3次，如答题次数达到上限，需待次日进行答题。</li>");
+								}
+							</script>
+							
 						</ul>
 					</div>
 					<div class="col-md-2 myTest"></div>
