@@ -506,22 +506,39 @@ public class T7CrclController extends BaseController {
 /*		if (!isCanTest())
 			renderWithPath("/f/accession/dotest.html");*/
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
-		// 查询一共考了多少次，规则修改为所有赛事都考试次数不能超过3次，2018-09-04
-		List<T11ExamStat> T11ExamStat_num = T11ExamStat.dao.find("select * from t11_exam_stat t where t.exam_st = '1' and t.usrid='" + usrid + "'");
-		if(T11ExamStat_num.size()>=3)
+//		List<T11ExamStat> T11ExamStat_num = null;
+		if(which_competition.equals("青奥会"))
 		{
-			LOG.debug("generteTest----"+"总答题次数已满3次！！");
-			setAttr("tpsMsg", "对不起，每人最多只能答题三次。您已答题三次，不能再参加考试。");
-			renderWithPath("/f/tips.html");
+			// 查询一共考了多少次，规则修改为青奥会考试次数不能超过3次，2018-09-04
+			List<T11ExamStat> T11ExamStat_num = T11ExamStat.dao.find("select * from t11_exam_stat t where t.exam_st = '1' and t.exam_nm = '青奥会' and t.usrid='" + usrid + "'");
+			if(T11ExamStat_num.size()>=3)
+			{
+				LOG.debug("generteTest----"+"总答题次数已满3次！！");
+				setAttr("tpsMsg", "对不起，每人最多只能答题三次。您已答题三次，不能再参加考试。");
+				renderWithPath("/f/tips.html");
+				return;
+			}
 		}
-/*		//查询当天已经考试了几次
-		List<T11ExamStat> T11ExamStat_num = T11ExamStatService.service.SelectByUserIdAndTime(usrid);
-		if(T11ExamStat_num.size()>=4)
-		{
-			LOG.debug("generteTest----"+"今日答题次数已满！！");
-			setAttr("tpsMsg", "对不起，每日最多只能答题三次。您今天已答题三次，请明日再答。");
-			renderWithPath("/f/tips.html");
-		}*/ else {
+		else {//省运会、亚运会
+			//查询当天已经考试了几次
+			List<T11ExamStat> T11ExamStat_num = T11ExamStatService.service.SelectByUserIdAndTime(usrid,which_competition);
+			if(T11ExamStat_num.size()>=3)
+			{
+				LOG.debug("generteTest----"+"今日答题次数已满！！");
+				setAttr("tpsMsg", "对不起，每日最多只能答题三次。您今天已答题三次，请明日再答。");
+				renderWithPath("/f/tips.html");
+				return;
+			} 
+		}
+		
+		//查询当天已经考试了几次
+//		List<T11ExamStat> T11ExamStat_num = T11ExamStatService.service.SelectByUserIdAndTime(usrid);
+//		if(T11ExamStat_num.size()>=4)
+//		{
+//			LOG.debug("generteTest----"+"今日答题次数已满！！");
+//			setAttr("tpsMsg", "对不起，每日最多只能答题三次。您今天已答题三次，请明日再答。");
+//			renderWithPath("/f/tips.html");
+//		} else {
 		// 选择题
 		String sql = "select * from t9_tstlib t where t.prblm_tp ='01' order by rand() limit 10";
 		List<T9Tstlib> t9List = T9Tstlib.dao.find(sql);
@@ -616,7 +633,7 @@ public class T7CrclController extends BaseController {
 		setAttr("examDeducList", examEntityList2);
 		setAttr("pre_action", "/jf/puresport/t7Crcl/video3_select_5");// 必修视频3选择
 		renderWithPath("/f/accession/dotest.html");
-		}
+//		}
 	}
 
 	/**
@@ -684,19 +701,43 @@ public class T7CrclController extends BaseController {
 	 */
 	@Before(FunctionInterceptor.class)
 	public void submitExam() {
-		
+		String which_competition = (String) getSession().getAttribute("which_competition");	
 		// // 处理结果
 		ResultEntity res = null;
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 		
-		// 查询一共考了多少次，规则修改为所有赛事都考试次数不能超过3次，2018-09-04
-		List<T11ExamStat> T11ExamStat_num = T11ExamStat.dao.find("select * from t11_exam_stat t where t.exam_st = '1' and t.usrid='" + usrid + "'");
-		if(T11ExamStat_num.size()>=3)
+		if(which_competition.equals("青奥会"))
 		{
-			LOG.debug("generteTest----"+"总答题次数已满3次！！");
-			setAttr("tpsMsg", "对不起，每人最多只能答题三次。您已答题三次，不能再参加考试。");
-			renderWithPath("/f/tips.html");
+			// 查询一共考了多少次，规则修改为青奥会考试次数不能超过3次，2018-09-04
+			List<T11ExamStat> T11ExamStat_num = T11ExamStat.dao.find("select * from t11_exam_stat t where t.exam_st = '1' and t.exam_nm = '青奥会' and t.usrid='" + usrid + "'");
+			if(T11ExamStat_num.size()>=3)
+			{
+				LOG.debug("generteTest----"+"总答题次数已满3次！！");
+				setAttr("tpsMsg", "对不起，每人最多只能答题三次。您已答题三次，不能再参加考试。");
+				renderWithPath("/f/tips.html");
+				return;
+			}
 		}
+		else {//省运会、亚运会
+			//查询当天已经考试了几次
+			List<T11ExamStat> T11ExamStat_num = T11ExamStatService.service.SelectByUserIdAndTime(usrid,which_competition);
+			if(T11ExamStat_num.size()>=3)
+			{
+				LOG.debug("generteTest----"+"今日答题次数已满！！");
+				setAttr("tpsMsg", "对不起，每日最多只能答题三次。您今天已答题三次，请明日再答。");
+				renderWithPath("/f/tips.html");
+				return;
+			} 
+		}
+		
+		// 查询一共考了多少次，规则修改为所有赛事都考试次数不能超过3次，2018-09-04
+//		List<T11ExamStat> T11ExamStat_num = T11ExamStat.dao.find("select * from t11_exam_stat t where t.exam_st = '1' and t.usrid='" + usrid + "'");
+//		if(T11ExamStat_num.size()>=3)
+//		{
+//			LOG.debug("generteTest----"+"总答题次数已满3次！！");
+//			setAttr("tpsMsg", "对不起，每人最多只能答题三次。您已答题三次，不能再参加考试。");
+//			renderWithPath("/f/tips.html");
+//		}
 		//查询当天已经考试了几次
 /*		List<T11ExamStat> T11ExamStat_num = T11ExamStatService.service.SelectByUserIdAndTime(usrid);
 		if(T11ExamStat_num.size()>=4)
@@ -705,7 +746,7 @@ public class T7CrclController extends BaseController {
 			setAttr("tpsMsg", "对不起，每日最多只能答题三次。您今天已答题三次，请明日再答。");
 			renderWithPath("/f/tips.html");
 		}*/
-		else {
+//		else {
 			
 		String examid = getPara("examid");
 		String[] ds = getParaValues("dataSet");
@@ -805,7 +846,7 @@ public class T7CrclController extends BaseController {
 		t11.setExam_num(Integer.parseInt(examid));// 考试次数
 		t11.setTms(new Timestamp(System.currentTimeMillis()));// 维护时间
 		// 从session中获取赛事名称
-		String which_competition = (String) getSession().getAttribute("which_competition");	
+//		String which_competition = (String) getSession().getAttribute("which_competition");	
 		if(StringUtils.isBlank(which_competition)) {
 			LOG.error("获取赛事名称失败！");
 			which_competition = "";
@@ -938,7 +979,7 @@ public class T7CrclController extends BaseController {
 		// setAttr("certificatePath", certificatePath);
 		// renderWithPath("/f/accession/certificate.html");
 		renderJson(res);
-		}
+//		}
 	}
 
 	/**

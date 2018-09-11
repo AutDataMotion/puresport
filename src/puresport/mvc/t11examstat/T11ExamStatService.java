@@ -20,9 +20,9 @@ public class T11ExamStatService extends BaseService {
 		T11ExamStat mdl = T11ExamStat.dao.findFirst("select * from t11ExamStat where id=?", id);
 		return mdl;
 	}
-	public List<T11ExamStat> SelectByUserIdAndTime(Integer userid){
+	public List<T11ExamStat> SelectByUserIdAndTime(Integer userid,String which_competition){
 		
-		List<T11ExamStat> mdl = T11ExamStat.dao.find("select * from t11_exam_stat where usrid=? and to_days(tms) = to_days(now())", userid);
+		List<T11ExamStat> mdl = T11ExamStat.dao.find("select * from t11_exam_stat where usrid=? and exam_st='1' and exam_nm=? and to_days(tms) = to_days(now())", userid,which_competition);
 		return mdl;
 	}
 }
