@@ -564,7 +564,7 @@ public class T7CrclController extends BaseController {
 				examEntity.setOptB(optionList[1]);
 			}
 			// 答案
-//			examEntity.setPrblm_aswr((String) t9Tstlib.getPrblm_aswr());
+			examEntity.setPrblm_aswr((String) t9Tstlib.getPrblm_aswr());
 			// 题号
 			questionNum++;
 			examEntity.setPrblmno(questionNum);
@@ -580,7 +580,7 @@ public class T7CrclController extends BaseController {
 			examEntity.setTtl((String) t9Tstlib.getTtl());
 			examEntity.setPrblmid(Integer.parseInt((String) t9Tstlib.getPrblmid()));
 			// 答案
-//			examEntity.setPrblm_aswr((String) t9Tstlib.getPrblm_aswr());
+			examEntity.setPrblm_aswr((String) t9Tstlib.getPrblm_aswr());
 			// 题号
 			questionNum++;
 			examEntity.setPrblmno((Integer) questionNum);
