@@ -221,9 +221,10 @@ public class T1usrBscController extends BaseController {
         	if(authCode)
             {
         		String encryptpassword = DESUtil.encrypt(password, ConstantInitMy.SPKEY);
-    			
+        		
     			T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where crdt_no=?", crdt_no);//根据用户名查询数据库中的用户  
     	        if(item != null) {  
+    	        	String pwddd = item.getPswd();
     	            if(encryptpassword.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
 //    	        	if(password.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
     	            	PageViewSta.StaLoginPeopleCountByDay();
