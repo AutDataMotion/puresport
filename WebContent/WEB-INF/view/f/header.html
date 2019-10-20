@@ -44,7 +44,7 @@
 						<div>
 							<ul class="menu_left nav navbar-nav">
 				           
-							<li id = "menu_zhunru"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/zhunru_index"><img src="${cxt!}/images/zhunrubtn.png" class="img-responsive"></a></li>
+							<li id = "menu_zhunru"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController"><img src="${cxt!}/images/zhunrubtn.png" class="img-responsive"></a></li>
 							<li id = "menu_tuozhan"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/tuozhan_index"><img src="${cxt!}/images/tuozhanbtn.png" class="img-responsive"></a></li>
 							<li id = "menu_jiangzuo"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/jiangzuo_index"><img src="${cxt!}/images/jiangzuobtn.png" class="img-responsive"></a></li>
 				            <li id = "menu_ziyuan"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/resource_index"><img src="${cxt!}/images/ziyuanbtn.png" class="img-responsive"></a></li>
@@ -69,8 +69,12 @@
 										var usrid ='${session["usrid"]}';
 										if(usrid)//已登陆
 										{
-											$("#selfcenterbtn_id").html("<li><a href='${cxt!}/jf/puresport/pagesController/selfcenter'>个人中心</a></li>"
+											var which_competition ='${session["which_competition"]}';
+											if(which_competition)											
+												$("#selfcenterbtn_id").html("<li><a href='${cxt!}/jf/puresport/pagesController/selfcenter'>个人中心</a></li>"
 											+"<li><a href='${cxt!}/jf/puresport/pagesController/loginout'>注销</a></li>");
+											else
+												$("#selfcenterbtn_id").html("<li><a href='${cxt!}/jf/puresport/pagesController/loginout'>注销</a></li>");
 										}
 										else{
 											$("#selfcenterbtn_id").html("<li><a href='${cxt!}/jf/puresport/pagesController/login'>登录</a></li>");
@@ -122,7 +126,7 @@
 						<div>
 							<ul class="menu_left nav navbar-nav">
 				           
-							<li id = "menu_zhunru"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/zhunru_index"><img src="${cxt!}/images/zhunrubtn.png" class="img-responsive"></a></li>
+							<li id = "menu_zhunru"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController"><img src="${cxt!}/images/zhunrubtn.png" class="img-responsive"></a></li>
 							<li id = "menu_tuozhan"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/tuozhan_index"><img src="${cxt!}/images/tuozhanbtn.png" class="img-responsive"></a></li>
 							<li id = "menu_jiangzuo"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/jiangzuo_index"><img src="${cxt!}/images/jiangzuobtn.png" class="img-responsive"></a></li>
 				            <li id = "menu_ziyuan"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/resource_index"><img src="${cxt!}/images/ziyuanbtn.png" class="img-responsive"></a></li>
