@@ -192,6 +192,12 @@ public class pagesController extends BaseController {
 		setAttr("sport_items_of_shengyunhui",sport_items_of_shengyunhui);
 		renderWithPath(pthv+"login.html");
 	}
+	
+	@Clear
+	public void regist() {
+		renderWithPath(pthv+"regist.html");
+	}
+	
 //	@Clear
 //	@Before(loginInterceptorlyf.class)  
 	public void selfcenter() {

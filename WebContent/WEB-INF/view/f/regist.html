@@ -1,0 +1,443 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>登录</title>
+<link rel="shortcut icon" href="${cxt!}/images/favicon.ico" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords" content="Skate Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- Bootstrap -->
+<link href="${cxt!}/ui/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+<link href="${cxt!}/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<!-- link rel="stylesheet" href="${cxt!}/ui/pickarea/css/pick-pcc.min.1.0.1.css"--> 
+
+<!----font-Awesome----->
+
+<!----font-Awesome----->
+<!-- start plugins -->
+<script type="text/javascript" src="${cxt!}/js/puresport.js"></script>
+<script type="text/javascript" src="${cxt!}/jsFile/md5.js"></script>
+<script type="text/javascript" src="${cxt!}/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/distpicker/distpicker-custom.js"></script>
+<!--script type="text/javascript" src="${cxt!}/ui/pickarea/js/pick-pcc.min.1.0.1.js"></script-->
+<script src="${cxt!}/js/menu.js" type="text/javascript"></script>
+		
+		<script type="text/javascript" src="${cxt!}/js/jquery.easing.min.js"></script>
+		<script type="text/javascript" src="${cxt!}/js/jquery.mixitup.min.js"></script>
+		<script type="text/javascript" src="${cxt!}/ui/laydate/laydate.js"></script>
+		<script type="text/javascript" src="${cxt!}/ui/validate/js/validate.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.2/underscore-min.js"></script>
+	  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment.min.js"></script>
+	  <script type="text/javascript" src="${cxt!}/ui/distpicker/distpicker-custom.js"></script>
+</head>
+<body>
+
+<% include("/f/header.html"){} %>
+<!--div class="main_bg">
+<div class="container">
+	<div class="main_grid1">
+		<h3 class="style pull-left"><a style="color: #6cb16c;" href="${cxt!}/jf/puresport/pagesController">返回首页</a></h3>
+		
+		<div class="clearfix"></div>
+	</div>
+</div>
+</div-->
+
+<!-- start main_btm -->
+<div class="main_btm1"><!-- start main_btm -->
+	
+                <div class="container">
+				    
+				    <div class="row" style="margin: 10px;">
+				    <!--form id="main"  novalidate>
+				    	<div class="form-group row">
+							<label for="name" class="col-sm-2 col-md-2 col-lg-2 control-label cotrol-label-cus">姓名</label>
+							<div class="col-sm-8 col-md-8 col-lg-8">
+								<input type="text" class="form-control" id="name" 
+									   placeholder="请输入姓名">
+							</div>
+							<div class="col-sm-2 col-md-2 col-lg-2 messages"></div>
+						</div>
+						<div class="form-group row">
+							<label for="crdt_no" class="col-sm-2 col-md-2 col-lg-2 control-label cotrol-label-cus">证件号</label>
+							<div class="col-sm-8 col-md-8 col-lg-8">
+								<input type="text" class="form-control" id="crdt_no" 
+									   placeholder="请输入证件号">
+							</div>
+							<div class="col-sm-2 col-md-2 col-lg-2 messages"></div>
+						</div>
+						<div class="form-group row">
+							<label for="gender" class="col-sm-2 col-md-2 col-lg-2 control-label cotrol-label-cus">性别</label>
+							<div class="col-sm-10 col-md-10 col-lg-10" id="gender">
+								<label class="radio-inline">
+									<input type="radio" name="optionsRadiosinline" id="optionsRadios3" value="男" checked> 男
+								</label>
+								<label class="radio-inline">
+									<input type="radio" name="optionsRadiosinline" id="optionsRadios4"  value="女"> 女
+								</label>
+							</div>
+						
+						</div>
+						<div class="form-group row">
+							<label for="birthday" class="col-sm-2 col-md-2 col-lg-2 control-label cotrol-label-cus">出生日期</label>
+							<div class="col-sm-10 col-md-10 col-lg-10">
+								<input type="text" class="form-control" id="birthday" 
+									   placeholder="请选择">
+							</div>
+							
+						</div>	
+						<div class="form-group row">
+							<label for="phoneNum" class="col-sm-2 col-md-2 col-lg-2 control-label cotrol-label-cus">手机号</label>
+							<div class="col-sm-10 col-md-10 col-lg-10">
+								<input type="text" class="form-control" id="phoneNum" 
+									   placeholder="请输入手机号">
+							</div>
+							<div class="col-sm-2 col-md-2 col-lg-2 messages"></div>
+						</div>
+						<div class="form-group row">
+							<label for="email" class="col-sm-2 col-md-2 col-lg-2 control-label cotrol-label-cus">邮箱</label>
+							<div class="col-sm-10 col-md-10 col-lg-10">
+								<input type="text" class="form-control" id="email" 
+									   placeholder="请输入邮箱">
+							</div>
+							<div class="col-sm-2 col-md-2 col-lg-2 messages"></div>
+						</div>
+						
+						<div class="form-group row">
+							<label for="email" class="col-sm-2 col-md-2 col-lg-2 control-label cotrol-label-cus">验证码</label>
+							<div class="col-sm-10 col-md-10 col-lg-10">
+								<input type="text"  id="authCode_user"  name="authCode" class="form-control" style="width:100px; float:left; margin-top:0;" placeholder="验证码"> 
+	                        	<img id="autoCode_user" onclick="refresh('user')" style="width: 75px;border-radius: 3px;height: 32px;margin-left: 10px;cursor: pointer;" src="${cxt!}/jf/platform/authImg"/>
+	                        	<span class="checkcode_text"  style="margin-left: 10px;" onclick="refresh('user')">刷新</span>
+							</div>
+                        	
+    					</div>
+    					<div class="form-group row">
+							
+							<div class="col-sm-12 col-md-12 col-lg-12" style="    text-align: center;">
+								<button class="btn btn-info btn-sm" type="submit" style="background-color: #5bc0de;">注册</button>
+							</div>
+                        	
+    					</div>
+    					</form-->
+    					<form id="main" class="form-horizontal" novalidate>
+    						  <div class="form-group">
+						        <label class="col-sm-2 control-label" for="name">姓名</label>
+						        <div class="col-sm-5">
+						          <input id="name" class="form-control" type="text" placeholder="姓名" name="name">
+						        </div>
+						        <div class="col-sm-5 messages"></div>
+						      </div>
+						      <div class="form-group">
+						        <label class="col-sm-2 control-label" for="crdt_no">证件号</label>
+						        <div class="col-sm-5">
+						          <input id="crdt_no" class="form-control" type="text" placeholder="身份证号" name="crdt_no">
+						        </div>
+						        <div class="col-sm-5 messages"></div>
+						      </div>
+						      <div class="form-group">
+								<label for="gender" class="col-sm-2 col-md-2 col-lg-2 control-label">性别</label>
+								<div class="col-sm-10 col-md-10 col-lg-10" id="gender">
+									<label class="radio-inline">
+										<input type="radio" name="genderRadios" id="gender1" value="男" checked> 男
+									</label>
+									<label class="radio-inline">
+										<input type="radio" name="genderRadios" id="gender2"  value="女"> 女
+									</label>
+								</div>
+							
+							  </div>
+							  <div class="form-group">
+								<label for="birthday" class="col-sm-2 col-md-2 col-lg-2 control-label">出生日期</label>
+								<div class="col-sm-5 col-md-5 col-lg-5">
+									<input type="text" class="form-control" id="birthday" 
+										   placeholder="请选择">
+								</div>
+							    <div class="col-sm-5 messages"></div>
+							  </div>
+							  <div class="form-group">
+								<label for="province-city" class="col-sm-2 col-md-2 col-lg-2 control-label">所在省市</label>
+								<div class="col-sm-5 col-md-5 col-lg-5" id="province-city">
+									<div data-toggle="distpicker">
+									  <select id="province"></select>
+									  <select id="city"></select>
+									</div>
+								</div>
+							    <div class="col-sm-5 messages"></div>
+							  </div>
+							  <div class="form-group">
+						        <label class="col-sm-2 control-label" for="phonenum">手机号</label>
+						        <div class="col-sm-5">
+						          <input id="phonenum" class="form-control control-input-60" type="text" placeholder="手机号" name="phonenum">
+						          <span class="btn-sm btn_validate_email" >点击验证</span>
+						        </div>
+						        <div class="col-sm-5 messages"></div>
+						      </div>	
+						      <div class="form-group">
+						        <label class="col-sm-2 control-label" for="email">邮箱</label>
+						        <div class="col-sm-5">
+						          <input id="email" class="form-control control-input-60" type="email" placeholder="邮箱" name="email">
+						           <span class="btn-sm btn_validate_email" >点击验证</span>
+						        </div>
+						        <div class="col-sm-5 messages"></div>
+						      </div>
+						      <div class="form-group row">
+									<label for="email" class="col-sm-2 col-md-2 col-lg-2 control-label">验证码</label>
+									<div class="col-sm-5 col-md-5 col-lg-5">
+										<input type="text"  id="authCode_phone"  name="authCode" class="form-control" style="width:38%; float:left; margin-right: 5px;" placeholder="手机验证码"> 
+			                        	<input type="text"  id="authCode_email"  name="authCode" class="form-control" style="width:38%; float:left; margin-right: 5px;" placeholder="邮箱验证码"> 
+			                        	<span style="float: right;" >至少验证一个</span>
+									</div>
+		                        	<div class="col-sm-5 messages"></div>
+		    				  </div>
+						      
+						      <div class="form-group">
+						        <div class="col-sm-offset-2 col-sm-10">
+						        	
+						         <button class="btn btn-info btn-sm" type="submit" style="background-color: #5bc0de;">注册</button>
+						        </div>
+						      </div>
+						    </form>
+				    </div>
+				         
+				</div>
+</div>
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="myModallyf" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+					&times;
+				</button>
+				<h4 class="modal-title" id="myModalLabel">
+					信息提示
+				</h4>
+			</div>
+			<div class="modal-body" id="myModallyf_content">
+				
+			</div>
+			<div class="modal-footer">
+				<button type="button" id="myModallyf_btn" class="btn btn-default" data-dismiss="modal">确定
+				</button>
+				
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal -->
+</div>
+
+<!-- start footer -->
+<% include("/f/footer.html"){} %>
+<!-- start footer1 -->
+<!--div class="footer1_bg">
+<div class="container">
+	<div class="footer1">
+		<div class="copy pull-left">
+			<p class="link"><span>Copyright &copy; 2015.Company name All rights reserved.<a target="_blank" href="http://www.cssmoban.com/">&#x7F51;&#x9875;&#x6A21;&#x677F;</a> - Collect from <a href="http://www.cssmoban.com/" >企业网站模板</a></span></p>
+		</div>
+		<div class="soc_icons pull-right">
+			<ul class="list-unstyled text-center">
+				<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+				<li><a href="#"><i class="fa fa-facebook"></i></a></li>
+				<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+				<li><a href="#"><i class="fa fa-rss"></i></a></li>
+			</ul>
+		</div>
+		<div class="clearfix"></div>
+	</div>
+</div>
+</div-->
+<script type="text/javascript">
+
+			$(function() {
+				
+				laydate.render({
+					  elem: '#birthday'
+					  ,format: 'yyyy/MM/dd'
+					});
+				
+				// These are the constraints used to validate the form
+			      var constraints = {
+	    		  name: {
+			          // Password is also required
+			          presence: true,
+			          // And must be at least 5 characters long
+			          length: {
+			            minimum: 2,
+			            message: "错误！"
+			          }
+			        },
+			        email: {
+			          // Email is required
+			          presence: true,
+			          // and must be an email (duh)
+			          email:  {
+			              message: "错误！"
+			          }
+			          //message: "doesn't look like a valid email"
+			        },
+			        crdt_no: {
+			          // Password is also required
+			          presence: true,
+			          // And must be at least 5 characters long
+			          length: {
+			            is: 18,
+			            message: "证件号错误！"
+			          },
+			          format: {
+			              // We don't allow anything that a-z and 0-9
+			              pattern: "[0-9A-Z]+",
+			             
+			              message: "证件号错误！"
+			            }
+			        },
+			        birthday: {
+			        	datetime: {
+			        		dateFormat: "yyyy/MM/dd",
+			        	     
+			        	      //message: "^You need to be atleast 18 years old"
+			        	    }
+			         	
+			        },
+			        phonenum: {
+			        	presence: true,
+			          // Zip is optional but if specified it must be a 5 digit long number
+			          format: {
+			            pattern: "\\d{11}",
+			            message: "错误！"
+			          }
+			        },
+			        /*
+			        authCode_user:{
+			        	presence: true,
+				          // And must be at least 5 characters long
+				          length: {
+				            is: 4,
+				            message: "错误！"
+				          },
+				          format: {
+				              // We don't allow anything that a-z and 0-9
+				              pattern: "[a-z0-9]+",
+					            // but we don't care if the username is uppercase or lowercase
+					            flags: "i",
+				             
+				              message: "错误！"
+				            }
+			        }
+			        */
+			      };
+
+			      // Hook up the form so we can prevent it from being posted
+			      var form = document.querySelector("form#main");
+			      form.addEventListener("submit", function(ev) {
+			        ev.preventDefault();
+			        handleFormSubmit(form);
+			      });
+
+			      // Hook up the inputs to validate on the fly
+			      var inputs = document.querySelectorAll("input, textarea, select")
+			      for (var i = 0; i < inputs.length; ++i) {
+			        inputs.item(i).addEventListener("change", function(ev) {
+			          var errors = validate(form, constraints) || {};
+			          showErrorsForInput(this, errors[this.name])
+			        });
+			      }
+
+			      function handleFormSubmit(form, input) {
+			        // validate the form aainst the constraints
+			        var errors = validate(form, constraints);
+			        // then we update the form to reflect the results
+			        showErrors(form, errors || {});
+			        console.log(errors);
+			        if (!errors) {
+			        	
+			        	user_register();
+			          //showSuccess();
+			        }
+			      }
+
+			      // Updates the inputs with the validation errors
+			      function showErrors(form, errors) {
+			        // We loop through all the inputs and show the errors for that input
+			        _.each(form.querySelectorAll("input[name], select[name]"), function(input) {
+			          // Since the errors can be null if no errors were found we need to handle
+			          // that
+			          showErrorsForInput(input, errors && errors[input.name]);
+			        });
+			      }
+
+			      // Shows the errors for a specific input
+			      function showErrorsForInput(input, errors) {
+			        // This is the root of the input
+			        var formGroup = closestParent(input.parentNode, "form-group")
+			          // Find where the error messages will be insert into
+			          , messages = formGroup.querySelector(".messages");
+			        // First we remove any old messages and resets the classes
+			        resetFormGroup(formGroup);
+			        // If we have errors
+			        if (errors) {
+			          // we first mark the group has having errors
+			          formGroup.classList.add("has-error");
+			          // then we append all the errors
+			          _.each(errors, function(error) {
+			            addError(messages, error);
+			          });
+			        } else {
+			          // otherwise we simply mark it as success
+			          formGroup.classList.add("has-success");
+			        }
+			      }
+
+			      // Recusively finds the closest parent that has the specified class
+			      function closestParent(child, className) {
+			        if (!child || child == document) {
+			          return null;
+			        }
+			        if (child.classList.contains(className)) {
+			          return child;
+			        } else {
+			          return closestParent(child.parentNode, className);
+			        }
+			      }
+
+			      function resetFormGroup(formGroup) {
+			        // Remove the success and error classes
+			        formGroup.classList.remove("has-error");
+			        formGroup.classList.remove("has-success");
+			        // and remove any old messages
+			        _.each(formGroup.querySelectorAll(".help-block.error"), function(el) {
+			          el.parentNode.removeChild(el);
+			        });
+			      }
+
+			      // Adds the specified error with the following markup
+			      // <p class="help-block error">[message]</p>
+			      function addError(messages, error) {
+			        var block = document.createElement("p");
+			        block.classList.add("help-block");
+			        block.classList.add("error");
+			        block.innerText = error;
+			        messages.appendChild(block);
+			      }
+
+			      function showSuccess() {
+			        // We made it \:D/
+			        alert("Success!");
+			      }
+			});
+			
+			function refresh (userOradmin){
+				if(userOradmin == 'user')
+				{
+					var verify_user=document.getElementById('autoCode_user');
+				    verify_user.setAttribute('src','${cxt!}/jf/platform/authImg?rand='+Math.random());
+				}
+				
+			    
+			}
+		</script>
+</body>
+</html>
