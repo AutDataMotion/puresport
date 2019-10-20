@@ -1128,5 +1128,62 @@ public class T7CrclController extends BaseController {
 		String rlt = path.substring(0, path.length() - 4) + "_ed.jpg";
 		System.out.println(rlt);
 	}
+	
+	
+	/**
+	 * 描述：高分榜100名
+	 * 
+	 * @author zhuchaobin 2018-10-19 二期 东京奥运会
+	 * @throws URISyntaxException
+	 */
+	@Clear
+	public void heroList100() {
+		String crdt_no = getPara("crdt_no");
+		setAttr("crdt_no", crdt_no);
+		String certificatePath = "";
+		
+		String useridStr = (String) getSession().getAttribute("usrid");
+		// 插入或者更新成绩统计表最后一次成绩
+		String sql = "select t.*, r.nm, r.spt_prj, r.province, (case r.city when '--' then '' when '-' then '' else r.city end) as city from t11_exam_stat t "
+				+ "JOIN t1_usr_bsc r on t.exam_st = '9' and t.usrid = r.usrid order by exam_grd desc, tms asc limit 100 ";
+		List<T11ExamStat> heroList = T11ExamStat.dao.find(sql);
+		List<T11ExamStat> heroListRlt10 = new ArrayList<T11ExamStat>();
+		List<T11ExamStat> heroListRlt100 = new ArrayList<T11ExamStat>();
+		// 名次，名次缩略图赋值
+		for (int i = 0; i < 100; i++) {
+			T11ExamStat t11 = new T11ExamStat();
+			if(i < heroList.size()) {
+				t11 = heroList.get(i);
+			} else {
+				break;
+			}
+			
+			LOG.debug("t11.getUsrid()" + t11.getUsrid());
+			if(null != useridStr) {
+				if(useridStr.equals((t11.getUsrid()+""))) {
+					t11.setRank("#FF0202");
+				}
+			}
+			
+			if(i < 10)	{
+				String rankImg = "rank" + (i + 1) + ".png";
+				t11.setRankImg(rankImg);
+				heroListRlt10.add(t11);
+			} else {
+				t11.setId(Long.parseLong((i+1)+""));
+				heroListRlt100.add(t11);
+			}
+			
+		
+//			// 默认city没有的话，默认值是“--”，特殊处理
+//			if(t11.getCity().toString().contains("-")) {
+//				t11.setCity(null);
+//			}
+			
+		}
+		setAttr("heroList10", heroListRlt10);
+		setAttr("heroList100", heroListRlt100);
+		renderWithPath("/f/accession/hero_list_100.html");
+	}
 
 }
