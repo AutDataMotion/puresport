@@ -102,6 +102,12 @@ public class T11ExamStat extends BaseModel<T11ExamStat> {
 	 */
 	public static final String column_city = "city";
 	
+	/**
+	 * 字段描述：赛事类型
+	 * 字段类型：String 
+	 * "":通用赛事; "05"东京奥运会
+	 */
+	public static final String column_type = "type";
 	
 	/**
 	 * sqlId : puresport.t11ExamStat.splitPageFrom
@@ -127,6 +133,14 @@ public class T11ExamStat extends BaseModel<T11ExamStat> {
 	protected String city;
 	protected String rankImg;
 	protected String rank;
+	private String type;
+
+	public <T> T  getType() {
+		return get(column_type);
+	}
+	public void setType(String type) {
+		set(column_type, type);
+	}
 	
 	public String getRankImg() {
 		return rankImg;

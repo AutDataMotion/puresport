@@ -1238,5 +1238,176 @@ public class T7CrclController extends BaseController {
 		setAttr("heroList100", heroListRlt100);
 		renderWithPath("/f/accession/hero_list_100.html");
 	}
+	
+	
+	/**
+	 * 描述：从30道选择题中随机取10道，从30道判断题中随机取10道构成试卷。并保存到成绩记录表中。
+	 * 
+	 * @author zhuchaobin 2019-10-20
+	 */
+	//@Before(FunctionInterceptor.class)  
+	public void generteTest_tokyo_5() {	
+		
+		String type = getPara("type");
+		String category = getPara("category");
+		
+		System.out.println("type="+type);
+		System.out.println("category="+category);
+		//判断赛事类型是否为空
+		String which_competition = (String) getSession().getAttribute("which_competition");	
+		if(StringUtils.isBlank(which_competition)) {
+			LOG.error("session中获取赛事名称获取为空");
+			renderWithPath("/f/zhunru_index_pre.html");
+			return;
+		}  else {
+			setAttr("which_competition", which_competition);
+		}
+/*		if (!isCanTest())
+			renderWithPath("/f/accession/dotest.html");*/
+		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
+
+//		List<T11ExamStat> T11ExamStat_num = null;
+		if(which_competition.equals("青奥会"))
+		{
+			// 查询一共考了多少次，规则修改为青奥会考试次数不能超过3次，2018-09-04
+			List<T11ExamStat> T11ExamStat_num = T11ExamStat.dao.find("select * from t11_exam_stat t where t.type = '"+ type +"' and t.usrid='" + usrid + "'");
+			if(T11ExamStat_num.size()>=3)
+			{
+				LOG.debug("generteTest----"+"总答题次数已满3次！！");
+				setAttr("tpsMsg", "对不起，每人最多只能答题三次。您已答题三次，不能再参加考试。");
+				renderWithPath("/f/tips.html");
+				return;
+			}
+		} else if(which_competition.equals("东京奥运会")){
+			// 查询一共考了多少次，没门课程不超过3次
+			List<T10ExamGrd> T10ExamGrd_num = T10ExamGrd.dao.find("select * from t10_exam_grd t where t.type = '"+ type +"' and t.category = '"+ category +"' and t.usrid='" + usrid + "'");
+			if(T10ExamGrd_num.size()>=3)
+			{
+				LOG.debug("generteTest----"+"总答题次数已满3次！！");
+				setAttr("tpsMsg", "对不起，该课程只能答题三次。您已答题三次，不能再参加考试。");
+				renderWithPath("/f/tips.html");
+				return;
+			}
+		} else {//省运会、亚运会
+			//查询当天已经考试了几次
+			List<T11ExamStat> T11ExamStat_num = T11ExamStatService.service.SelectByUserIdAndTime(usrid,which_competition);
+			if(T11ExamStat_num.size()>=3)
+			{
+				LOG.debug("generteTest----"+"今日答题次数已满！！");
+				setAttr("tpsMsg", "对不起，每日最多只能答题三次。您今天已答题三次，请明日再答。");
+				renderWithPath("/f/tips.html");
+				return;
+			} 
+		}
+		
+		//查询当天已经考试了几次
+//		List<T11ExamStat> T11ExamStat_num = T11ExamStatService.service.SelectByUserIdAndTime(usrid);
+//		if(T11ExamStat_num.size()>=4)
+//		{
+//			LOG.debug("generteTest----"+"今日答题次数已满！！");
+//			setAttr("tpsMsg", "对不起，每日最多只能答题三次。您今天已答题三次，请明日再答。");
+//			renderWithPath("/f/tips.html");
+//		} else {
+
+		// 选择题
+		String sql = "select * from t9_tstlib t where t.prblm_tp ='01' and t.type = '"+ type +"' and t.category = '"+ category +"' order by t.prblmid";
+		List<T9Tstlib> t9List = T9Tstlib.dao.find(sql);
+		List<ExamEntity> examEntityList = new ArrayList<ExamEntity>();
+		Integer questionNum = 0;
+		for (T9Tstlib t9Tstlib : t9List) {
+			ExamEntity examEntity = new ExamEntity();
+			examEntity.setTtl((String) t9Tstlib.getTtl());
+			examEntity.setPrblmid(Integer.parseInt((String) t9Tstlib.getPrblmid()));
+			examEntity.setOpt((String) t9Tstlib.getOpt());
+			String option = examEntity.getOpt();
+			String[] optionList = option.split("\\|");
+			// 4个选项
+			if (4 == optionList.length) {
+				examEntity.setOptA(optionList[0]);
+				examEntity.setOptB(optionList[1]);
+				examEntity.setOptC(optionList[2]);
+				examEntity.setOptD(optionList[3]);
+			} else if (2 == optionList.length) {// 2个选项
+				examEntity.setOptA(optionList[0]);
+				examEntity.setOptB(optionList[1]);
+			}
+			// 答案
+			examEntity.setPrblm_aswr((String) t9Tstlib.getPrblm_aswr());
+			// 题号
+			questionNum++;
+			examEntity.setPrblmno(questionNum);
+			examEntityList.add(examEntity);
+		}
+
+		// 判断题
+		List<ExamEntity> examEntityList2 = new ArrayList<ExamEntity>();
+		sql = "select * from t9_tstlib t where t.prblm_tp ='02' and t.type = '"+ type +"' and t.category = '"+ category +"' order by t.prblmid";
+		t9List = T9Tstlib.dao.find(sql);
+		for (T9Tstlib t9Tstlib : t9List) {
+			ExamEntity examEntity = new ExamEntity();
+			examEntity.setTtl((String) t9Tstlib.getTtl());
+			examEntity.setPrblmid(Integer.parseInt((String) t9Tstlib.getPrblmid()));
+			// 答案
+			examEntity.setPrblm_aswr((String) t9Tstlib.getPrblm_aswr());
+			// 题号
+			questionNum++;
+			examEntity.setPrblmno((Integer) questionNum);
+			examEntityList2.add(examEntity);
+		}
+
+		// 生成考试ID
+		sql = "select * from t10_exam_grd t where t.usrid = '" + usrid + "' order by examid desc";
+		List<T10ExamGrd> t10List = T10ExamGrd.dao.find(sql);
+		Integer examid = 1;
+		if ((null == t10List) || (0 == t10List.size())) {
+			LOG.debug("用户首次考试，考试ID取1");
+			examid = 1;
+		} else {
+			LOG.debug("用户非首次考试，考试ID取上次考试ID + 1");
+			T10ExamGrd t10 = t10List.get(0);
+			examid = Integer.parseInt((String) t10List.get(0).getExamid()) + 1;
+		}
+
+		for (ExamEntity examEntity : examEntityList) {
+			// 保存试题到“考试成绩信息表”
+			T10ExamGrd t10ExamGrd = new T10ExamGrd();
+			t10ExamGrd.setUsrid(usrid);
+			// 考试状态：0未考试
+			t10ExamGrd.setExam_st("0");
+			// // 考试开始时间
+			t10ExamGrd.setExamStTm(new Timestamp(System.currentTimeMillis()));
+			t10ExamGrd.setExam_st("0");
+			t10ExamGrd.setExamid(examid);
+			t10ExamGrd.setPrblmid(examEntity.getPrblmid());
+			t10ExamGrd.setPrblmno(examEntity.getPrblmno());
+			t10ExamGrd.setPrblm_aswr(examEntity.getPrblm_aswr());
+			t10ExamGrd.setType(type);
+			t10ExamGrd.setCategory(category);
+			t10ExamGrd.saveGenIntId();
+		}
+		for (ExamEntity examEntity : examEntityList2) {
+			// 保存试题到“考试成绩信息表”
+			T10ExamGrd t10ExamGrd = new T10ExamGrd();
+			t10ExamGrd.setUsrid(usrid);
+			// 考试状态：0未考试
+			t10ExamGrd.setExam_st("0");
+			// // 考试开始时间
+			t10ExamGrd.setExamStTm(new Timestamp(System.currentTimeMillis()));
+			t10ExamGrd.setExam_st("0");
+			t10ExamGrd.setExamid(examid);
+			t10ExamGrd.setPrblmid(examEntity.getPrblmid());
+			t10ExamGrd.setPrblmno(examEntity.getPrblmno());
+			t10ExamGrd.setPrblm_aswr(examEntity.getPrblm_aswr());
+			t10ExamGrd.saveGenIntId();
+		}
+		setAttr("examid", examid);
+		setAttr("examSelectList", examEntityList);
+		setAttr("examDeducList", examEntityList2);
+		setAttr("pre_action", "/jf/puresport/t7Crcl/video3_select_5");// 必修视频3选择
+		renderWithPath("/f/accession/dotest_tokyo_3.html");
+
+//		}
+
+	}
 
 }

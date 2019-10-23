@@ -88,6 +88,20 @@ public class T7Crcl extends BaseModel<T7Crcl> {
 	 */
 	public static final String column_stdy_st = "stdy_st";
 	
+	/**
+	 * 字段描述：赛事类型
+	 * 字段类型：String 
+	 * "":通用赛事; "05"东京奥运会
+	 */
+	public static final String column_type = "type";
+	
+	/**
+	 * 字段描述：科目
+	 * 字段类型：String 
+	 * "01":科目1;"02":科目2;"03":科目3;"04":科目4;"05":科目5;"06":科目6;
+	 */
+	public static final String column_category = "category";
+	
 	
 	/**
 	 * sqlId : puresport.t7Crcl.splitPageFrom
@@ -106,6 +120,21 @@ public class T7Crcl extends BaseModel<T7Crcl> {
 	private Timestamp tms;
 	private String thumbnail_rte;
 	private String stdy_st;
+	private String type;
+	private String category;
+
+	public <T> T  getType() {
+		return get(column_type);
+	}
+	public void setType(String type) {
+		set(column_type, type);
+	}
+	public <T> T  getCategory() {
+		return get(column_category);
+	}
+	public void setCategory(String category) {
+		set(column_category, category);
+	}
 
 	public void setStdy_st(String stdy_st){
 		set(column_stdy_st, stdy_st);
