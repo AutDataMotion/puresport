@@ -1,0 +1,142 @@
+<?xml version="1.0" ?>
+<manifest identifier="RusticiSoftwareSCORMDriverTemplate" version="1"
+  xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2"
+  xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd
+                      http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd
+                      http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>1.2</schemaversion>
+    <adlcp:location>metadata.xml</adlcp:location>
+  </metadata>
+  <organizations default="articulate_rise">
+      <organization identifier="articulate_rise">
+      <title>关于“授权”的那些事儿</title>
+      <item identifier="i1" identifierref="r1" isvisible="true">
+        <title>关于“授权”的那些事儿</title>
+      </item>
+    </organization>
+  </organizations>
+  <resources>
+    <resource identifier="r1" type="webcontent" adlcp:scormtype="sco" href="scormdriver/indexAPI.html">
+      <!-- SCORMDRIVER STUFF -->
+      <file href="scormdriver/indexAPI.html" />
+      <file href="scormdriver/AICCComm.html" />
+      <file href="scormdriver/auto-scripts/AutoBookmark.js" />
+      <file href="scormdriver/auto-scripts/AutoCompleteSCO.js" />
+      <file href="scormdriver/auto-scripts/CourseExit.js" />
+      <file href="scormdriver/blank.html" />
+      <file href="scormdriver/goodbye.html" />
+      <file href="scormdriver/scormdriver.js" />
+      <file href="scormdriver/browsersniff.js" />
+
+      <!-- RUNTIME COMMON STUFF -->
+      <file href="scormcontent/index.html" />
+      <file href="scormcontent/lib/main.bundle.js"/>
+
+      
+        <file href="scormcontent/lib/fonts/icomoon.ttf"/>
+        <file href="scormcontent/lib/fonts/icomoon.woff"/>
+
+        <file href="scormcontent/lib/fonts/AlegreyaSans-Black.woff"/>
+        <file href="scormcontent/lib/fonts/AlegreyaSans-Bold.woff"/>
+        <file href="scormcontent/lib/fonts/AlegreyaSans-BoldItalic.woff"/>
+        <file href="scormcontent/lib/fonts/AlegreyaSans-Italic.woff"/>
+        <file href="scormcontent/lib/fonts/AlegreyaSans-Light.woff"/>
+        <file href="scormcontent/lib/fonts/AlegreyaSans-LightItalic.woff"/>
+        <file href="scormcontent/lib/fonts/AlegreyaSans-Regular.woff"/>
+
+        <file href="scormcontent/lib/fonts/Lato-Black.woff"/>
+        <file href="scormcontent/lib/fonts/Lato-Bold.woff"/>
+        <file href="scormcontent/lib/fonts/Lato-BoldItalic.woff"/>
+        <file href="scormcontent/lib/fonts/Lato-Italic.woff"/>
+        <file href="scormcontent/lib/fonts/Lato-Light.woff"/>
+        <file href="scormcontent/lib/fonts/Lato-LightItalic.woff"/>
+        <file href="scormcontent/lib/fonts/Lato-Regular.woff"/>
+
+        <file href="scormcontent/lib/fonts/Lora-Bold.woff"/>
+        <file href="scormcontent/lib/fonts/Lora-BoldItalic.woff"/>
+        <file href="scormcontent/lib/fonts/Lora-Italic.woff"/>
+        <file href="scormcontent/lib/fonts/Lora-Regular.woff"/>
+
+        <file href="scormcontent/lib/fonts/Maitree-Bold.woff"/>
+        <file href="scormcontent/lib/fonts/Maitree-Light.woff"/>
+        <file href="scormcontent/lib/fonts/Maitree.woff"/>
+
+        <file href="scormcontent/lib/fonts/Merriweather-Black.woff"/>
+        <file href="scormcontent/lib/fonts/Merriweather-Bold.woff"/>
+        <file href="scormcontent/lib/fonts/Merriweather-BoldItalic.woff"/>
+        <file href="scormcontent/lib/fonts/Merriweather-Italic.woff"/>
+        <file href="scormcontent/lib/fonts/Merriweather-Light.woff"/>
+        <file href="scormcontent/lib/fonts/Merriweather-LightItalic.woff"/>
+        <file href="scormcontent/lib/fonts/Merriweather-Regular.woff"/>
+
+
+        <file href="scormcontent/lib/fonts/OpenSans-Bold.woff"/>
+        <file href="scormcontent/lib/fonts/OpenSans-BoldItalic.woff"/>
+        <file href="scormcontent/lib/fonts/OpenSans-Italic.woff"/>
+        <file href="scormcontent/lib/fonts/OpenSans-Light.woff"/>
+        <file href="scormcontent/lib/fonts/OpenSans.woff"/>
+        <file href="scormcontent/lib/fonts/OpenSansLight-Italic.woff"/>
+
+        <file href="scormcontent/lib/fonts/Raleway-Black.woff"/>
+        <file href="scormcontent/lib/fonts/Raleway-Bold.woff"/>
+        <file href="scormcontent/lib/fonts/Raleway-BoldItalic.woff"/>
+        <file href="scormcontent/lib/fonts/Raleway-Italic.woff"/>
+        <file href="scormcontent/lib/fonts/Raleway-Light.woff"/>
+        <file href="scormcontent/lib/fonts/Raleway-LightItalic.woff"/>
+        <file href="scormcontent/lib/fonts/Raleway-Regular.woff"/>
+
+        <file href="scormcontent/lib/fonts/Roboto-Black.woff"/>
+        <file href="scormcontent/lib/fonts/Roboto-Bold.woff"/>
+        <file href="scormcontent/lib/fonts/Roboto-BoldItalic.woff"/>
+        <file href="scormcontent/lib/fonts/Roboto-Italic.woff"/>
+        <file href="scormcontent/lib/fonts/Roboto-Light.woff"/>
+        <file href="scormcontent/lib/fonts/Roboto-LightItalic.woff"/>
+        <file href="scormcontent/lib/fonts/Roboto-Regular.woff"/>
+
+        <file href="scormcontent/lib/fonts/RobotoSlab-Bold.woff"/>
+        <file href="scormcontent/lib/fonts/RobotoSlab-Light.woff"/>
+        <file href="scormcontent/lib/fonts/RobotoSlab-Regular.woff"/>
+
+        <file href="scormcontent/lib/fonts/SourceSansPro-Black.woff"/>
+        <file href="scormcontent/lib/fonts/SourceSansPro-Bold.woff"/>
+        <file href="scormcontent/lib/fonts/SourceSansPro-BoldIt.woff"/>
+        <file href="scormcontent/lib/fonts/SourceSansPro-It.woff"/>
+        <file href="scormcontent/lib/fonts/SourceSansPro-Light.woff"/>
+        <file href="scormcontent/lib/fonts/SourceSansPro-LightIt.woff"/>
+        <file href="scormcontent/lib/fonts/SourceSansPro-Regular.woff"/>
+
+        <file href="scormcontent/lib/fonts.css"/>
+        <file href="scormcontent/lib/icomoon.css"/>
+        <file href="scormcontent/lib/main.bundle.css"/>
+        <file href="scormcontent/lib/player-0.0.11.min.js"/>
+      
+
+      <!-- RUNTIME CONTENT STUFF -->
+      <file href="scormcontent/assets/small_1461819524.png" />
+<file href="scormcontent/assets/transcoded-KSUDrjS6Gu74f1JG-sbgm-0001.mp3" />
+<file href="scormcontent/assets/-e5CCM5-ILTUJmvz.jpg" />
+<file href="scormcontent/assets/AMuD8t04KX-Vnm3b.jpg" />
+<file href="scormcontent/assets/nkpLYNvNDiA7ezzQ.jpg" />
+<file href="scormcontent/assets/qHlhVWxuLaw3ryYR-stock-image.jpg" />
+<file href="scormcontent/assets/hyUwHjCfwrwptJTq.jpg" />
+<file href="scormcontent/assets/rigo9gdT09SLU8oO.jpg" />
+<file href="scormcontent/assets/mountains.jpg" />
+<file href="scormcontent/assets/VI6oUonV8AA394SD.jpg" />
+<file href="scormcontent/assets/LEzj29lN35E_dRuo.jpg" />
+<file href="scormcontent/assets/fEFcjuwxK9FvrAdD.png" />
+<file href="scormcontent/assets/ZIUUu7Q6zaZiCmX1.png" />
+<file href="scormcontent/assets/NfwNUoNyceeT1-WR.png" />
+<file href="scormcontent/assets/-8e6AWCvbsHLRraa.jpg" />
+<file href="scormcontent/assets/EKlWlxOkzbzkqptP.png" />
+<file href="scormcontent/assets/fTsoNaFhzJydhQeF.jpg" />
+<file href="scormcontent/assets/VQ8wPNB5cHfzB0Sm.jpg" />
+<file href="scormcontent/assets/dNjVisk5DnfBcl8j.jpg" />
+<file href="scormcontent/assets/ECNwfrbXZbTrjLMw.jpg" />
+
+    </resource>
+  </resources>
+</manifest>

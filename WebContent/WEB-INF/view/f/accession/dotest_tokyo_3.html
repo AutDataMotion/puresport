@@ -1,0 +1,704 @@
+<html>
+<head>
+<title>准入考试</title>
+<link rel="shortcut icon" href="${cxt!}/images/favicon.ico" />
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="keywords"
+	content="Skate Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
+Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
+
+<META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+<META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
+<META HTTP-EQUIV="Expires" CONTENT="0">
+
+<script type="application/x-javascript">
+	
+ addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
+</script>
+<!-- Bootstrap -->
+<link href="/css/bootstrap.css" rel='stylesheet' type='text/css' />
+<link href="/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<!----font-Awesome----->
+<link rel="stylesheet" href="/fonts/css/font-awesome.min.css">
+<!----font-Awesome----->
+<!-- start plugins -->
+<script type="text/javascript" src="/js/jquery.min.js"></script>
+<script src="/js/menu.js" type="text/javascript"></script>
+<script type="text/javascript" src="/js/jquery.easing.min.js"></script>
+<script type="text/javascript" src="/js/jquery.mixitup.min.js"></script>
+<link href="/css/owl.carousel.css" rel="stylesheet">
+<link href="/css/owl.theme.css" rel="stylesheet">
+<!--script type="text/javascript"
+	src="http://code.jquery.com/jquery-latest.min.js"></script-->
+<!-- 弹出框样式及js -->
+<link type="text/css" rel="stylesheet"
+	href="/ui/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
+<script src="/ui/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<!-- 承诺书样式 -->
+<style type="text/css">
+* {
+	margin: 0px;
+	
+	padding: 0px;
+}
+
+.img_one {
+	width: 510px;
+	height: 687px;
+	background: url(/images_zcb/comiment2.png);
+}
+
+.txt_pwd {
+	padding-left: 170px;
+	padding-top: 547px;
+	width: 270px;
+	height: 20px;
+}
+</style>
+<style>
+#owl-demo .owl-item div {
+	padding: 1%;
+	padding-left: 12%;
+	padding-top: 3%;
+	padding-right: 12%;
+	padding-bottom: 1%;
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-size: 18px;
+}
+
+#owl-demo .owl-item img {
+	display: block;
+	width: 95%;
+	height: auto;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+</style>
+<style type="text/css">
+.demo {
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-size: 20px;
+	padding-left: 5px;
+}
+
+.commiment {
+	text-indent: 2em;
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-size: 20px;
+	padding-left: 5px;
+}
+
+.commiment2 {
+	text-indent: 2em;
+	font-family: "微软雅黑", "黑体", "宋体";
+}
+
+.title {
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-size: 25px;
+}
+
+.score {
+	padding-top: 130px;
+	padding-right: 250px;
+	padding-bottom: 160px;
+	padding-left: 250px;
+	font-family: "微软雅黑", "黑体", "宋体";
+	font-size: 25px;
+	height: 600px；
+}
+</style>
+<script src="/js/owl.carousel.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$("#owl-demo").owlCarousel({
+			//autoPlay : 3000,
+			stopOnHover : true,
+			navigation : true,
+			navigationText : [ "上一题", "下一题" ],
+			paginationSpeed : 1000,
+			//goToFirstSpeed : 2000,
+			pagination : true,
+			paginationNumbers : true,
+			singleItem : true,
+			autoHeight : true,
+			transitionStyle : "fade"
+		});
+	});
+</script>
+<!-- <script type="text/javascript">
+ 	$(document).ready(function() {
+		// 判断是否可以进行考试
+		isCanTest(1);
+	}); 
+</script> -->
+<script type="text/javascript">
+	//  返回上一页面
+	function do_pre() {
+/* 		var str=document.referrer;
+		var pre_url = str.replace(/stdy_st=0/g, "stdy_st=1")
+		pre_url = pre_url.replace(/stdy_st_hidden=0/g, "stdy_st_hidden=1")	
+		window.location.href = pre_url; */
+		window.location.href='${pre_action!}';
+	}
+
+	//提交试卷操作确认
+	function isSubmit() {
+		var msg = "您确定要提交试卷吗?\n\n请确认！";
+		if (confirm(msg) == true) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	var confirmNum = 0;
+	//提交试卷操作确认
+	function isSubmit2() {
+		confirmNum = confirmNum + 1;
+		submitExam();
+	}
+	//提交考试
+	function submitExam() {
+		/* 		if(confirmNum == 0){ */
+		var obj1 = document.getElementsByName("agreeSubmit")
+		var isAgreeSubmit = false;
+		for (var i = 0; i < obj1.length; i++) { //遍历Radio   
+			if (obj1[i].checked) {
+				if (obj1[i].value == 1) {
+					isAgreeSubmit = true;
+				}
+			}
+		}
+		if (!isAgreeSubmit) {
+			$('#tip1Modal').modal('show');
+			return;
+		}
+		confirmNum = 0;
+		var dataSet = new Array();
+		for (var j = 1; j < 21; j++) {
+			var obj = document.getElementsByName(j)
+			var item = j + ":";
+			for (var i = 0; i < obj.length; i++) { //遍历Radio   
+				if (obj[i].checked) {
+					item = item + obj[i].value;
+				}
+			}
+			dataSet.push(item);
+		}
+		// 承诺人姓名		
+		var commimentNm = document.getElementById("commimentNm").value;
+		if (commimentNm == "") {
+			$('#tip3Modal').modal('show');
+			return;
+		}
+		var url;
+		url = '/jf/puresport/t7Crcl/submitExam';
+		var examid = document.getElementById("examid").value;
+		$
+				.ajax({
+					type : 'POST',
+					url : url,
+					dataType : "json",
+					traditional : true,
+					data : {
+						"dataSet" : dataSet,
+						"examid" : examid,
+						"commimentNm" : commimentNm
+					},
+					success : function(res) {
+						if (res.code == "0000") {
+							/*showDiv(5);
+							 var t2 = document.getElementById('pageTitle');
+							 t2.innerText = "成绩证书";					
+							 var pic = document.getElementById("certificateImgId");//picture是img的id
+							 pic.src = res.parm1;					
+							 var pic = document.getElementById("erweima");//picture是img的id
+							 pic.src = "http://qr.liantu.com/api.php?text=" + res.parm2"; */
+							//					http://qr.liantu.com/api.php?text=http://m.qpic.cn/psb?/V10zsTr30tgqVO/JjLdVKa1q7ZJAlpFtcuGqVvutgKH1cvPUeTuDeTpKBY!/b/dCIBAAAAAAAA&bo=TwIgAwAAAAARF04!&rf=viewer_4&t=5&bg=ffffff&200					
+							window.location.href = "${cxt!''}/jf/puresport/t7Crcl/queryCetifate?flag=1&usrid="
+									+ res.parm3;
+						} else if (res.code == "0002") {
+							$('#tip2Modal').modal('show');
+						} else if (res.code == "0003") {
+							window.location.href = "${cxt!''}/jf/puresport/t7Crcl/queryCetifate?flag=2&totalScore="
+									+ res.parm1;
+						} else {
+							alert(res.desc);
+						}
+					},
+					dataType : "json"
+				});
+	}
+
+	//确认提交试卷
+	function confirSubmit() {
+		/* 		if(confirmNum == 0){ */
+		var obj1 = document.getElementsByName("agreeSubmit")
+		var isAgreeSubmit = false;
+		for (var i = 0; i < obj1.length; i++) { //遍历Radio   
+			if (obj1[i].checked) {
+				if (obj1[i].value == 1) {
+					isAgreeSubmit = true;
+				}
+			}
+		}
+		if (!isAgreeSubmit) {
+			$('#tip1Modal').modal('show');
+			return;
+		}
+
+		showDiv(4);
+		var t2 = document.getElementById('pageTitle');
+		t2.innerText = "承诺书";
+	}
+</script>
+
+<script type="text/javascript">
+	function showDiv(flag) {
+		if (flag == 1) {
+			document.getElementById("mannulDiv").style.display = "none";
+			document.getElementById("cantTestDiv").style.display = "";
+			document.getElementById("showScoreDiv").style.display = "none";
+			document.getElementById("doTestDiv").style.display = "none";
+			document.getElementById("commimentDiv").style.display = "none";
+
+		} else if (flag == 2) {
+			document.getElementById("mannulDiv").style.display = "";
+			document.getElementById("cantTestDiv").style.display = "none";
+			document.getElementById("showScoreDiv").style.display = "none";
+			document.getElementById("doTestDiv").style.display = "none";
+			document.getElementById("commimentDiv").style.display = "none";
+		} else if (flag == 3) {
+			document.getElementById("mannulDiv").style.display = "none";
+			document.getElementById("cantTestDiv").style.display = "none";
+			document.getElementById("showScoreDiv").style.display = "none";
+			document.getElementById("doTestDiv").style.display = "";
+			document.getElementById("commimentDiv").style.display = "none";
+		} else if (flag == 4) {
+			document.getElementById("mannulDiv").style.display = "none";
+			document.getElementById("cantTestDiv").style.display = "none";
+			document.getElementById("showScoreDiv").style.display = "none";
+			document.getElementById("doTestDiv").style.display = "none";
+			document.getElementById("commimentDiv").style.display = "";
+		} else if (flag == 5) {
+			document.getElementById("mannulDiv").style.display = "none";
+			document.getElementById("cantTestDiv").style.display = "none";
+			document.getElementById("showScoreDiv").style.display = "";
+			document.getElementById("doTestDiv").style.display = "none";
+			document.getElementById("commimentDiv").style.display = "none";
+		}
+	}
+	// 判定用户是否有资格参加考试
+	function isCanTest(flag) {
+		var userid = "333";
+		var url;
+		url = '/jf/puresport/t5CrclStdy/isCanTest';
+		$.ajax({
+			type : 'POST',
+			url : url,
+			dataType : "json",
+			traditional : true,
+			data : {
+				userid : userid
+			},
+			success : function(res) {
+				if (res.code == "0000") {
+					if (flag == 2) {
+						showDiv(3);
+					} else if (flag == 1) {
+						showDiv(2);
+					}
+				} else {
+					showDiv(1);
+					var t2 = document.getElementById('cantTestDesc');
+					t2.innerText = res.desc;
+				}
+			},
+			dataType : "json"
+		});
+	}
+	
+	// 判定用户是否有资格参加考试
+	function isCanTest_yes(flag) {
+		showDiv(3);
+/* 
+		var userid = "333";
+		var url;
+		url = '/jf/puresport/t5CrclStdy/isCanTest';
+		$.ajax({
+			type : 'POST',
+			url : url,
+			dataType : "json",
+			traditional : true,
+			data : {
+				userid : userid
+			},
+			success : function(res) {
+				if (res.code == "0000") {
+					if (flag == 2) {
+						showDiv(3);
+					} else if (flag == 1) {
+						showDiv(2);
+					}
+				} else {
+					showDiv(1);
+					var t2 = document.getElementById('cantTestDesc');
+					t2.innerText = res.desc;
+				}
+			},
+			dataType : "json"
+		}); */
+	}
+</script>
+<style type="text/css">
+.prblSelect {
+	width: 80%;
+}
+
+.prblSelect:hover {
+	background-color: #80B2D6;
+}
+</style>
+</head>
+<body>
+	<% include("/f/header.html"){} %>
+	<div class="main_bg">
+		<!-- start main -->
+		<div class="container">
+			<div class="main_grid1">
+				<h3 id="pageTitle" class="style pull-left">考试</h3>
+				<h3 class="style pull-right">${which_competition!''}</h3>
+			</div>
+		</div>
+	</div>
+	<div class="main_btm1">
+		<!-- 第一页：考试说明 -->
+		<!-- <div id="mannulDiv" class="demo" style="display: none;"> -->
+		<div id="mannulDiv" class="demo" >
+			<div class="container">
+				<h2 align="center">准入考试说明</h2>
+				</br>
+				<div class="row">
+					<div class="col-md-1 myTest"></div>
+					<div class="col-md-10 myTest">
+						<ul>
+							<li>1.本次考试包含不定项选择和判断题各10道，每题5分，满分100分，80分及格；</li>
+							<li>2.考试成绩不合格，可以重新答题，每次考试试题随机，每人最多可以考试3次。多次参加考试，以最高成绩为最终成绩；</li>
+							<li>3.所有试题完成后，点击提交试卷，系统才保存成绩；</li>
+							<li>4.考试过程中请注意保持浏览器客户端在线状态，不要强制刷新或者断开网络，否则考试将终止。</li>
+						</ul>
+					</div>
+					<div class="col-md-2 myTest"></div>
+				</div>
+
+				<div align="center">
+<!-- 					<button onclick="do_pre()" class="btn">上一步</button> -->
+					<button onclick="isCanTest_yes(2)" class="btn">开始考试</button>
+				</div>
+				<p>
+			</div>
+		</div>
+		<!-- 承诺书页 -->
+		<!-- 	<div id="commimentDiv" class="demo" style="display: none;">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-3 myTest"></div>
+					<div class="col-md-6 myTest" style="background: #FAFAFA">
+						<br>
+						<div align="center">
+							<img src="/images_zhuchaobin/logo_cn.png" class="img-rounded"
+								align="middle">
+						</div>
+						<h2 align="center">省运会反兴奋剂教育准入系统</h2>
+						<h3 align="center">反兴奋剂承诺书</h3>
+						<div class="commiment">
+							我将以维护国家荣普、发扬体育精神为己任，自觉 遵守反兴奋剂法律法规，认更艘行反兴奋剂责任义务， 保证千干净净参加比宜。 <br>
+						</div>
+						<div class="commiment">在此我承诺：</div>
+						<ul>
+							<li style="color: #F00; font-size: 18px;">&nbsp坚决抵制使用兴奋剂</li>
+							<li style="color: #F00; font-size: 18px;">&nbsp严防误服误用兴奋剂</li>
+							<li style="color: #F00; font-size: 18px;">&nbsp配合兴奋剂检查调查</li>
+							<li style="color: #F00; font-size: 18px;">&nbsp及时申请用药豁免</li>
+							<li style="color: #F00; font-size: 18px;">&nbsp准确填报行踪信息</li>
+							<li style="color: #F00; font-size: 18px;">&nbsp互相监督主动举报</li>
+						</ul>
+						<div class="input-group input-group-lg">
+							<span class="input-group-addon">承诺人</span> <input type="text"
+								class="form-control" placeholder="请输入姓名..." id="commimentNm">
+						</div>
+						<br>
+						<div align="center">
+							<button onclick="submitExam()" class="btn">确认提交</button>
+							<br>
+							<p>
+						</div>
+					</div>
+					<div class="col-md-3 myTest"></div>
+				</div>
+			</div>
+		</div> -->
+
+		<!-- 承诺书页 -->
+		<!--  		<div id="commimentDiv" class="demo" style="display: none;"> 
+			<div class="container" align="center"> -->
+		<div id="commimentDiv" align="center" style="display: none;">
+
+			<div class="img_one">
+				<div class="txt_pwd">
+					<input type="text" class="form-control" placeholder="姓名..."
+						id="commimentNm">
+				</div>
+
+				<!--  <input type="text" id="commimentNm" name="commimentNm" value="请输入姓名..."  maxlength="18" size="18" > </div> -->
+			</div>
+			<div align="center">
+				<p>
+					<button onclick="submitExam()" class="btn">确认提交</button>
+					</br>
+				<p>
+			</div>
+
+			<div id="showScoreDiv" class="demo" style="display: none;">
+				<div class="container">
+					<div align="center">
+						<div class="row">
+							<div class="col-md-3 myTest"></div>
+							<div class="col-md-6 myTest">
+								<img src="" id="certificateImgId" class="img-thumbnail"
+									height="400" width="400">
+							</div>
+							<div class="col-md-3 myTest">
+								<div class="row" class="style pull-bottom">
+									<div class="col-md-4 myTest">
+										<img id="erweima"
+											src="/images_zhuchaobin/certificates/139282192837111111.jpg"
+											height="150" width="150" />
+									</div>
+									<div class="col-md-4 myTest"></div>
+									<div class="col-md-4 myTest"></div>
+								</div>
+								<div class="row">
+									<div>使用如下app扫描二维码分享</div>
+								</div>
+								<div class="row">
+									<div>
+										<img src="/images_zhuchaobin/share.png" height="80"
+											width="290">
+									</div>
+								</div>
+								<div class="row">
+									<div>
+										<div>对成绩不满意？</div>
+									</div>
+								</div>
+								<div class="row">
+									<div>
+										<button
+											onclick="window.location.href='/jf/puresport/t7Crcl/study_notify_1'"
+											class="btn">跳转到课程学习</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 开始部分：学习没完成，无资格考试-->
+		<div id="cantTestDiv" class="demo" style="display: none;">
+			<div class="container">
+				<h2 align="center">准入考试说明</h2>
+				</br>
+				<div class="row">
+					<div class="col-md-1 myTest"></div>
+					<div class="col-md-10 myTest">
+						<div align="center" hight="300">
+							<p id="cantTestDesc"></p>
+							<table height="60">
+							</table>
+							<button
+								onclick="window.location.href='/jf/puresport/t7Crcl/study_notify_1'"
+								class="btn">开始学习</button>
+						</div>
+					</div>
+					<div class="col-md-2 myTest"></div>
+				</div>
+				<div align="center">
+					<button onclick="do_pre()" class="btn">上一步</button>
+					<button onclick="isCanTest_yes(2)" class="btn">开始考试</button>
+				</div>
+				<p>
+			</div>
+		</div>
+
+		<div id="doTestDiv" class="container" style="display: none;">
+			<!--  start cursual  -->
+			<div id="owl-demo" class="owl-carousel">
+				<%for(x in examSelectList){ %>
+				<div>
+					<label>【多项选择】 </label> </br> <label>第${x.prblmno!''}题：
+						${x.ttl!''} <!-- &nbsp${x.prblm_aswr!''} --></label> </br> <label for=${x.prblmid!
+						''}A class="prblSelect" style="font-weight: lighter"> <input
+						type="checkbox" name=${x.prblmno! ''} value=A id=${x.prblmid! ''}A>
+						${x.optA!}
+					</label> </br> <label for=${x.prblmid! ''}B class="prblSelect"
+						style="font-weight: lighter"> <input type="checkbox"
+						name=${x.prblmno! ''} value=B id=${x.prblmid! ''}B>
+						${x.optB!}
+					</label> </br> <label for=${x.prblmid! ''}C class="prblSelect"
+						style="font-weight: lighter"> <input type="checkbox"
+						name=${x.prblmno! ''} value=C id=${x.prblmid! ''}C>
+						${x.optC!}
+					</label> </br> <label for=${x.prblmid! ''}D class="prblSelect"
+						style="font-weight: lighter"> <input type="checkbox"
+						name=${x.prblmno! ''} value=D id=${x.prblmid! ''}D>
+						${x.optD!}
+					</label> </br>
+
+					<!-- 		 </br> <input type="checkbox"
+						name=${x.prblmno! ''} value=A id=${x.prblmid! ''}A>
+						${x.optA!}
+					 <input type="checkbox"
+						name=${x.prblmno! ''} value=B id=${x.prblmid! ''}B>
+						${x.optB!}
+					 <input type="checkbox"
+						name=${x.prblmno! ''} value=C id=${x.prblmid! ''}C>
+						${x.optC!}
+					<input type="checkbox"
+						name=${x.prblmno! ''} value=D id=${x.prblmid! ''}D>
+						${x.optD!}
+					</br> -->
+
+				</div>
+				<%}%> <%for(y in examDeducList){ %>
+				<div>
+					<label>【判断题】 </label> </br> <label> 第${y.prblmno!''}题：
+						${y.ttl!''} <!-- &nbsp${y.prblm_aswr!''} --></label> </br> </br> <label for=${y.prblmid!
+						''}A class="prblSelect" style="font-weight: lighter"> <input
+						type="radio" name=${y.prblmno! ''} value=A id=${y.prblmid! ''}A>
+						正 确<!-- ${y.prblmid!} -->
+					</label> </br> </br> <label for=${y.prblmid! ''}B class="prblSelect"
+						style="font-weight: lighter"> <input type="radio"
+						name=${y.prblmno! ''} value=B id=${y.prblmid! ''}B> 错 误<!-- ${y.prblmid!} -->
+					</label> </br> </br>
+				</div>
+				<%}%>
+				<!-- 最后一页：考试提交说明 -->
+				<div id="mannulDiv">
+					<div align="center">
+						<label style="font-weight: lighter"> <input type="radio"
+							name="agreeSubmit" value="1"> 同意
+						</label> &nbsp &nbsp <label style="font-weight: lighter"> <input
+							type="radio" name="agreeSubmit" value="0"> 拒绝
+						</label>
+					</div>
+					<div align="center">
+						<button onclick="confirSubmit()" class="btn">提交试卷</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- submit Modal-->
+		<div class="modal fade" id="submitModal" tabindex="-1" role="dialog"
+			aria-labelledby="submitModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header" align="center">
+						<h4 class="modal-title">友情提示</h4>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body" align="center">提交后不能再修改答案，请您再次确认是否要提交考试?</div>
+					<div class="modal-footer" align="center">
+						<button type="button" onclick="isSubmit2()" class="btn"
+							data-dismiss="modal">确定</button>
+						<button type="button" class="btn" data-dismiss="modal">取消</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+
+		<!-- tip1 Modal-->
+		<div class="modal fade" id="tip1Modal" tabindex="-1" role="dialog"
+			aria-labelledby="tip1ModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header" align="center">
+						<h5 class="modal-title">友情提示</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body" align="center">对不起，选择"同意"后才能提交试卷！</div>
+					<div class="modal-footer" align="center">
+						<button type="button" class="btn" data-dismiss="modal">确定</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+
+		<!-- tip2 Modal-->
+		<div class="modal fade" id="tip2Modal" tabindex="-1" role="dialog"
+			aria-labelledby="tip1ModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header" align="center">
+						<h5 class="modal-title">友情提示</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body" align="center">对不起，承诺书姓名与登录用户姓名不一致，请确认！</div>
+					<div class="modal-footer" align="center">
+						<button type="button" class="btn" data-dismiss="modal">确定</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+
+		<!-- tip3 Modal-->
+		<div class="modal fade" id="tip3Modal" tabindex="-1" role="dialog"
+			aria-labelledby="tip1ModalLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header" align="center">
+						<h5 class="modal-title">友情提示</h5>
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body" align="center">对不起，必须填写承诺书姓名，请确认！</div>
+					<div class="modal-footer" align="center">
+						<button type="button" class="btn" data-dismiss="modal">确定</button>
+					</div>
+				</div>
+				<!-- /.modal-content -->
+			</div>
+			<!-- /.modal-dialog -->
+		</div>
+
+	</div>
+	<!-- start footer -->
+	<% include("/f/footer.html"){} %>
+	<!-- end footer -->
+	<input type="hidden" id="examid" value="${examid!'-1'}">
+	</input>
+</body>
+</html>
