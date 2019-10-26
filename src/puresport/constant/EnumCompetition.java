@@ -5,6 +5,7 @@ public enum EnumCompetition {
 	YaYunHui(1,"1","亚运会"),
 	QingAoHui(2,"2","青奥会"),
 	JunYunHui(3,"3","军运会"),
+	DongJingAoYunHui(4,"4","东京奥运会"),
 	;
 	private int index;
 	private String index_str;

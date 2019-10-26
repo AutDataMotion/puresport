@@ -42,7 +42,9 @@ public class pagesController extends BaseController {
 //		long count = WebsiteSta.countPeople();
 //		log.debug(count);
 //		setAttr("userCounts",getSession().getAttribute("userCounts"));
-		renderWithPath(pthv+"index.html");
+//		renderWithPath(pthv+"index.html");
+		renderWithPath(pthv+"zhunru_index_pre.html");
+		
 		
 	}
 	@Clear
@@ -51,7 +53,7 @@ public class pagesController extends BaseController {
 		//renderWithPath(pthv+"list.html");
 		//getSession().setAttribute("userid", "100");
 //		setSessionAttr("userID","10");
-		
+
 		renderWithPath(pthv+"zhunru_index.html");
 		
 	}

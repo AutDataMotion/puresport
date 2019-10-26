@@ -97,7 +97,8 @@ public class T7CrclController extends BaseController {
 	public void study_notify_1() {
 		//判断是省运会、亚运会、青奥会
 		String which_competition = getPara("which_competition");
-		if(StringUtils.isBlank(which_competition)) {			
+		if(StringUtils.isBlank(which_competition)) {	
+			getSession().setAttribute("which_competition", which_competition);//设置session，保存
 			renderWithPath("/f/zhunru_index.html");
 			return;
 		}
@@ -130,6 +131,50 @@ public class T7CrclController extends BaseController {
 		}
 		renderWithPath("/f/accession/study_notify_1.html");
 	}
+	
+	
+	/**
+	 * 描述：东京奥运会学习说明
+	 * 
+	 * @author zhuchaobin 2019-10-20
+	 */
+	public void study_notify_tokyo_1() {
+		//判断是省运会、亚运会、青奥会
+		String which_competition = getPara("which_competition");
+		if(StringUtils.isBlank(which_competition)) {			
+			renderWithPath("/f/zhunru_index_pre.html");
+			return;
+		}
+		if(which_competition.equals(EnumCompetition.DongJingAoYunHui.getIndex_str()))
+		{
+			getSession().setAttribute("which_competition", EnumCompetition.DongJingAoYunHui.getCompetitionName());
+		}
+			
+		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
+		System.out.println(usrid);
+/*		List<T7Crcl> t7List = queryCrcl(1, usrid);
+		setAttr("t7", t7List.get(0));
+		LOG.debug("crclid = " + t7List.get(0).getCrclid());*/
+		getSession().setAttribute("which_competition", "东京奥运会");//设置session，保存为东京奥会
+		renderWithPath("/f/accession/study_notify_tokyo_1.html");
+	}
+	
+	/**
+	 * 描述：东京奥运会学习
+	 * 
+	 * @author zhuchaobin 2019-10-20
+	 */
+	public void course_list_tokyo_2() {
+		System.out.println("xxxx");
+		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
+		System.out.println(usrid);
+		List<T7Crcl> t7List = queryCrcl(5, usrid);
+		setAttr("t7", t7List);
+		LOG.debug("t7List.size() = " + t7List.size());
+		renderWithPath("/f/accession/course_list_tokyo_2.html");	
+//		renderWithPath("/f/accession/tokyo/course/scormcontent/index.html");
+	}
+	
 
 	/**
 	 * 描述：查询证书
@@ -431,6 +476,7 @@ public class T7CrclController extends BaseController {
 		List<T7Crcl> t7List2 = new ArrayList<T7Crcl>();
 		List<T7Crcl> t7List3 = new ArrayList<T7Crcl>();
 		List<T7Crcl> t7List4 = new ArrayList<T7Crcl>();
+		List<T7Crcl> t7List5 = new ArrayList<T7Crcl>();
 		// 必修课程1
 		String sql = "select t.*, s.stdy_st as stdy_st from t7_crcl t LEFT JOIN t5_crcl_stdy s "
 				+ "on t.crclid=s.crclid and s.usrid='" + usrid + "' order by t.crclid, t.crcl_attr";
@@ -461,17 +507,24 @@ public class T7CrclController extends BaseController {
 				} else if ("4".equals(t7.getCrcl_attr())) {// 下载资料
 					t7List4.add(t7);
 				}
+				
+				else if ("5".equals(t7.getCrcl_attr())) { // 冬奥会
+					t7List5.add(t7);
+				}
 			}
 			setAttr("t7List1", t7List1);
 			setAttr("t7List2", t7List2);
 			setAttr("t7List3", t7List3);
 			setAttr("t7List4", t7List4);
+			setAttr("t7List5", t7List5);
 			if (1 == flag) {
 				return t7List1;
 			} else if (2 == flag) {
 				return t7List2;
 			} else if (3 == flag) {
 				return t7List3;
+			} else if (5 == flag) {
+				return t7List5;
 			}
 			LOG.debug("查询课程信息成功结束.");
 		} else {
