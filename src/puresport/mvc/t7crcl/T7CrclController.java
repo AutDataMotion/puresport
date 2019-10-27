@@ -819,6 +819,11 @@ public class T7CrclController extends BaseController {
 		String[] ds = getParaValues("dataSet");
 		// 承诺人姓名
 		String commimentNm = getPara("commimentNm");
+		
+		// 类别
+		String type = getPara("type");
+		// 科目
+		String category = getPara("category");
 		// 查询用户信息
 		T1usrBsc t1 = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", usrid);// 根据用户名查询数据库中的用户
 		if (t1 == null) {
@@ -899,6 +904,8 @@ public class T7CrclController extends BaseController {
 				t10Data.setUsr_aswr(usr_aswr);
 				t10Data.setExam_st("1");
 				t10Data.setExamEndTm(new Timestamp(System.currentTimeMillis()));
+				t10Data.setType(type);
+				t10Data.setCategory(category);
 				t10Data.update();
 			}
 		}
@@ -923,7 +930,10 @@ public class T7CrclController extends BaseController {
 			LOG.debug("赛事名称：" + which_competition);
 		}	
 		t11.setExam_nm(which_competition);
+		t11.setType(type);
+		t11.setCategory(category);
 		t11.saveGenIntId();
+		
 		// 插入或者更新成绩统计表最后一次成绩
 		String sql = "select * from t11_exam_stat t where t.usrid = '" + t10.getUsrid() + "' and t.exam_st = '9'";
 		T11ExamStat t11Rlt = T11ExamStat.dao.findFirst(sql);
@@ -938,12 +948,18 @@ public class T7CrclController extends BaseController {
 			t11Rlt.setTms(new Timestamp(System.currentTimeMillis()));// 维护时间
 			t11Rlt.setExam_nm(which_competition);
 			t11Rlt.setExam_st("9");// 考试状态，9表示最终成绩
+			t11Rlt.setType(type);
+			t11Rlt.setCategory(category);
 			t11Rlt.saveGenIntId();
 		} else {
 /*			t11.setExam_st("9");// 考试状态，9表示最终成绩
 			t11.setId(Long.parseLong(t11Rlt.getId()));*/
 //			t11Rlt.setUsrid(usrid);// 用户id
 			t11Rlt.setExamid(Integer.parseInt(examid));// 考试id
+			if("东京奥运会".equals(which_competition)) {
+				if(totalScore < (Integer) t11Rlt.getExam_grd())
+					totalScore = t11Rlt.getExam_grd();
+			}
 			t11Rlt.setExam_grd(totalScore);// 考试成绩
 			t11Rlt.setExam_st("1");// 考试状态
 			t11Rlt.setExam_channel("01");// 考试渠道,01:互联网站
@@ -951,6 +967,8 @@ public class T7CrclController extends BaseController {
 			t11Rlt.setTms(new Timestamp(System.currentTimeMillis()));// 维护时间
 			t11Rlt.setExam_nm(which_competition);
 			t11Rlt.setExam_st("9");// 考试状态，9表示最终成绩
+			t11Rlt.setType(type);
+			t11Rlt.setCategory(category);
 			t11Rlt.update();
 		}
 		// 更新最高成绩
@@ -967,6 +985,8 @@ public class T7CrclController extends BaseController {
 			t12.setExam_num(Integer.parseInt(examid));// 考试次数
 			t12.setTms(new Timestamp(System.currentTimeMillis()));// 维护时间
 			t12.setExam_nm(which_competition);
+			t12.setType(type);
+			t12.setCategory(category);
 			t12.saveGenIntId();
 		} else {
 /*			t11.setExam_st("9");// 考试状态，9表示最终成绩
@@ -1280,8 +1300,8 @@ public class T7CrclController extends BaseController {
 			}
 		} else if(which_competition.equals("东京奥运会")){
 			// 查询一共考了多少次，没门课程不超过3次
-			List<T10ExamGrd> T10ExamGrd_num = T10ExamGrd.dao.find("select * from t10_exam_grd t where t.type = '"+ type +"' and t.category = '"+ category +"' and t.usrid='" + usrid + "'");
-			if(T10ExamGrd_num.size()>=3)
+			List<T11ExamStat> T11ExamStat_num = T11ExamStat.dao.find("select * from t11_exam_stat t where t.type = '"+ type +"' and t.category = '"+ category +"' and t.usrid='" + usrid + "'");
+			if(T11ExamStat_num.size()>=3)
 			{
 				LOG.debug("generteTest----"+"总答题次数已满3次！！");
 				setAttr("tpsMsg", "对不起，该课程只能答题三次。您已答题三次，不能再参加考试。");
@@ -1403,7 +1423,9 @@ public class T7CrclController extends BaseController {
 		setAttr("examid", examid);
 		setAttr("examSelectList", examEntityList);
 		setAttr("examDeducList", examEntityList2);
-		setAttr("pre_action", "/jf/puresport/t7Crcl/video3_select_5");// 必修视频3选择
+		setAttr("type", type);
+		setAttr("category", category);
+//		setAttr("pre_action", "/jf/puresport/t7Crcl/video3_select_5");// 必修视频3选择
 		renderWithPath("/f/accession/dotest_tokyo_3.html");
 
 //		}

@@ -191,13 +191,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		}
 		// 承诺人姓名		
 		var commimentNm = document.getElementById("commimentNm").value;
-		if (commimentNm == "") {
+/* 		if (commimentNm == "") {
 			$('#tip3Modal').modal('show');
 			return;
-		}
+		} */
 		var url;
-		url = '/jf/puresport/t7Crcl/submitExam';
+		url = '/jf/puresport/t7Crcl/submitExam_tokyo_5';
 		var examid = document.getElementById("examid").value;
+		var type = document.getElementById("type").value;
+		var category = document.getElementById("category").value;
 		$
 				.ajax({
 					type : 'POST',
@@ -207,7 +209,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					data : {
 						"dataSet" : dataSet,
 						"examid" : examid,
-						"commimentNm" : commimentNm
+						"commimentNm" : commimentNm,
+						"type" : type,
+						"category" : category
 					},
 					success : function(res) {
 						if (res.code == "0000") {
@@ -699,6 +703,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<% include("/f/footer.html"){} %>
 	<!-- end footer -->
 	<input type="hidden" id="examid" value="${examid!'-1'}">
+	<input type="hidden" id="type" value="${type!'-1'}">
+	<input type="hidden" id="category" value="${category!'-1'}">
 	</input>
 </body>
 </html>
