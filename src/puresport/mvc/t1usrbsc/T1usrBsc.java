@@ -204,6 +204,18 @@ public class T1usrBsc extends BaseModel<T1usrBsc> {
 	public static final String column_levelinstitute = "levelinstitute";
 	
 	/**
+	 * 字段描述：邮箱是否验证 0未验证 1验证成功 2验证失败 
+	 * 字段类型：int  长度：null
+	 */
+	public static final String column_email_val = "email_val";
+	
+	/**
+	 * 字段描述：手机是否验证 0未验证 1验证成功 2验证失败 
+	 * 字段类型：int  长度：null
+	 */
+	public static final String column_mblph_val = "mblph_val";
+	
+	/**
 	 * sqlId : puresport.t1usrBsc.splitPageFrom
 	 * 描述：分页from
 	 */
@@ -239,6 +251,8 @@ public class T1usrBsc extends BaseModel<T1usrBsc> {
 	private Integer levelprovince;
 	private Integer levelcity;
 	private Integer levelinstitute;
+	private Integer email_val;
+	private Integer mblph_val;
 
 	public void setUsrid(Long usrid){
 		set(column_usrid, usrid);
@@ -419,5 +433,19 @@ public class T1usrBsc extends BaseModel<T1usrBsc> {
 	}
 	public <T> T getLevelinstitute() {
 		return get(column_levelinstitute);
+	}
+	
+	public void setEmailVal(Integer emailVal){
+		set(column_email_val, emailVal);
+	}
+	public <T> T getEmailVal() {
+		return get(column_email_val);
+	}
+	
+	public void setMblPhVal(Integer mblphVal){
+		set(column_mblph_val, mblphVal);
+	}
+	public <T> T getMblPhVal() {
+		return get(column_mblph_val);
 	}
 }

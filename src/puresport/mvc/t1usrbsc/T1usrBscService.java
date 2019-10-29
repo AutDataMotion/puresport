@@ -563,4 +563,39 @@ public class T1usrBscService extends BaseService {
 			record.set(T1usrBsc.column_remark, mgrSession);
 		}
 	}
+	
+	public boolean addUserBsc(T1userBscDTO dto) {
+		
+		if (Objects.isNull(dto)) {
+			return false;
+		}
+		Record dbRow;
+		try {
+			dbRow = new Record()
+					.set(T1usrBsc.column_usr_tp, EnumRoleType.Sporter.name())
+					.set(T1usrBsc.column_usr_nm, dto.getMblph_no())
+					.set(T1usrBsc.column_nm, dto.getNm())
+					.set(T1usrBsc.column_crdt_tp, "身份证")
+					.set(T1usrBsc.column_crdt_no, dto.getCrdt_no())
+					.set(T1usrBsc.column_gnd, dto.getGnd()) // 性别
+					.set(T1usrBsc.column_brth_dt, dto.getBrth_dt())
+					.set(T1usrBsc.column_pswd,
+							DESUtil.encrypt(dto.getPasswd(), ConstantInitMy.SPKEY))// 密码默认身份证后6位
+					.set(T1usrBsc.column_mblph_no, dto.getMblph_no())
+					.set(T1usrBsc.column_email, dto.getEmail())
+					//.set(T1usrBsc.column_cty_prov_city_mgrid, mgrSession.getUsrid())
+					// .set(T1usrBsc.column_typelevel,
+					// mgrSession.getTypeleve())
+					.set(T1usrBsc.column_province, dto.getProvince())
+					.set(T1usrBsc.column_city, dto.getCity());
+			
+			return ConfMain.db().save(tableName, tableKey, dbRow);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			log.error(e);
+			return false;
+		}
+	}
 }

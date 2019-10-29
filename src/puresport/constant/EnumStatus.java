@@ -16,6 +16,8 @@ public enum EnumStatus {
 	LevelDeleted(0, "0", "已删除，不可见"),
 	LevelView(1, "1", "可见"),
 	LevelShow(2, "2", "具有该级别"),
+	
+	Illegal(10, "10", "参数有误"),
 	;
 	private int id;
 	private String idStr;
