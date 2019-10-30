@@ -84,14 +84,7 @@ public class T12HighestScore extends BaseModel<T12HighestScore> {
 	 * "":通用赛事; "05"东京奥运会
 	 */
 	public static final String column_type = "type";
-	
-	/**
-	 * 字段描述：科目
-	 * 字段类型：String 
-	 * "01":科目1;"02":科目2;"03":科目3;"04":科目4;"05":科目5;"06":科目6;
-	 */
-	public static final String column_category = "category";
-	
+		
 	/**
 	 * sqlId : puresport.t12HighestScore.splitPageFrom
 	 * 描述：分页from
@@ -108,19 +101,12 @@ public class T12HighestScore extends BaseModel<T12HighestScore> {
 	private Timestamp tms;
 	private String exam_nm;
 	private String type;
-	private String category;
 
 	public <T> T  getType() {
 		return get(column_type);
 	}
 	public void setType(String type) {
 		set(column_type, type);
-	}
-	public <T> T  getCategory() {
-		return get(column_category);
-	}
-	public void setCategory(String category) {
-		set(column_category, category);
 	}
 
 	public void setId(Long id){

@@ -122,7 +122,50 @@ public class T7Crcl extends BaseModel<T7Crcl> {
 	private String stdy_st;
 	private String type;
 	private String category;
-
+	
+	private String enterExamUrl;
+	private String oldScoreStr;
+	private String courseColor;
+	private String courseIcon;
+	private String examColor;
+	private String examIcon;
+	
+	public String getCourseColor() {
+		return courseColor;
+	}
+	public void setCourseColor(String courseColor) {
+		this.courseColor = courseColor;
+	}
+	public String getCourseIcon() {
+		return courseIcon;
+	}
+	public void setCourseIcon(String courseIcon) {
+		this.courseIcon = courseIcon;
+	}
+	public String getExamColor() {
+		return examColor;
+	}
+	public void setExamColor(String examColor) {
+		this.examColor = examColor;
+	}
+	public String getExamIcon() {
+		return examIcon;
+	}
+	public void setExamIcon(String examIcon) {
+		this.examIcon = examIcon;
+	}
+	public String getEnterExamUrl() {
+		return enterExamUrl;
+	}
+	public void setEnterExamUrl(String enterExamUrl) {
+		this.enterExamUrl = enterExamUrl;
+	}
+	public String getOldScoreStr() {
+		return oldScoreStr;
+	}
+	public void setOldScoreStr(String oldScoreStr) {
+		this.oldScoreStr = oldScoreStr;
+	}
 	public <T> T  getType() {
 		return get(column_type);
 	}

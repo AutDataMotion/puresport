@@ -196,7 +196,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			return;
 		} */
 		var url;
-		url = '/jf/puresport/t7Crcl/submitExam_tokyo_5';
+		url = '/jf/puresport/t7Crcl/submitExam';
 		var examid = document.getElementById("examid").value;
 		var type = document.getElementById("type").value;
 		var category = document.getElementById("category").value;
@@ -223,13 +223,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							 var pic = document.getElementById("erweima");//picture是img的id
 							 pic.src = "http://qr.liantu.com/api.php?text=" + res.parm2"; */
 							//					http://qr.liantu.com/api.php?text=http://m.qpic.cn/psb?/V10zsTr30tgqVO/JjLdVKa1q7ZJAlpFtcuGqVvutgKH1cvPUeTuDeTpKBY!/b/dCIBAAAAAAAA&bo=TwIgAwAAAAARF04!&rf=viewer_4&t=5&bg=ffffff&200					
-							window.location.href = "${cxt!''}/jf/puresport/t7Crcl/queryCetifate?flag=1&usrid="
-									+ res.parm3;
+							window.location.href = "${cxt!''}/jf/puresport/t7Crcl/queryCetifate_tokyo_5?flag=1&usrid="
+									+ res.parm3+"&category="+res.parm2;
 						} else if (res.code == "0002") {
 							$('#tip2Modal').modal('show');
 						} else if (res.code == "0003") {
-							window.location.href = "${cxt!''}/jf/puresport/t7Crcl/queryCetifate?flag=2&totalScore="
-									+ res.parm1;
+							window.location.href = "${cxt!''}/jf/puresport/t7Crcl/queryCetifate_tokyo_5?flag=2&totalScore="
+									+ res.parm1+"&category="+res.parm2;
 						} else {
 							alert(res.desc);
 						}

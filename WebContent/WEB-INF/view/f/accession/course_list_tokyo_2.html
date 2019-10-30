@@ -7,14 +7,18 @@
 <meta name="keywords"
 	content="Skate Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
-<script type="application/x-javascript">	
+<script type="application/x-javascript">
+		
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
 </script>
 <!-- Bootstrap -->
 <link href="${cxt!}/ui/bootstrap-3.3.7-dist/css/bootstrap.min.css"
 	rel='stylesheet' type='text/css' />
 <link href="${cxt!}/css/style.css" rel="stylesheet" type="text/css"
 	media="all" />
+<!-- 字体图标，zhuchaobin 20191027-->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <!-- start plugins -->
 <script type="text/javascript" src="${cxt!}/js/puresport.js"></script>
 <script type="text/javascript" src="${cxt!}/js/jquery-1.11.1.min.js"></script>
@@ -30,101 +34,107 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="${cxt!}/js/jquery-ui-1.8.16.custom.min.js"
 	type="text/javascript"></script>
 <script src="${cxt!}/js/allinone_carousel.js" type="text/javascript"></script>
-<script src="${cxt!}/js_zhuchaobin/layer/layer.js" type="text/javascript"></script>
-	
+<script src="${cxt!}/js_zhuchaobin/layer/layer.js"
+	type="text/javascript"></script>
+
 <script type="text/javascript">
-		function show2(){
-		document.getElementById("doTestDiv").style.display="";
-		document.getElementById("mannulDiv").style.display="none";		
+	function show2() {
+		document.getElementById("doTestDiv").style.display = "";
+		document.getElementById("mannulDiv").style.display = "none";
 		//alert(document.getElementById("div").style.display)
-		}
-		function show(){
-			$("tachu").show();
-		}
-</script>
-<script type="text/javascript">
-$(document).ready(function(){
-	// 0.4代表遮罩的透明度
-	$('.banner div').css('opacity',0.2);
-	$('.banner').hover(function(){
-		var el = $(this);		
-		// 先淡出阴影，后淡入文字
-		el.find('div').stop().animate({width:200,height:200},'slow',function(){
-			el.find('p').fadeIn('fast');
-		});
-	},function(){
-		var el = $(this);		
-		// 隐藏文字
-		el.find('p').stop(true,true).hide();		
-		// 去掉遮罩
-		el.find('div').stop().animate({width:60,height:60},'fast');
-	}).click(function(){		
-		// 点击图片时打开链接		
-		window.open($(this).find('a').attr('href'));		
-	});
-});
-</script>
-<script type="text/javascript">
-function toUtf8(str) {
-	var out, i, len, c;
-	out = "";
-	len = str.length;
-	for (i = 0; i < len; i++) {
-		c = str.charCodeAt(i);
-		if ((c >= 0x0001) && (c <= 0x007F)) {
-			out += str.charAt(i);
-		} else if (c > 0x07FF) {
-			out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
-			out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
-			out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
-		} else {
-			out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
-			out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
-		}
 	}
-	return out;
-}
-
-
-/* //根据长约id查询订单列表
-function getOrderListByArId(arId) {
-		//iframe窗
-			layer.open({
-		type: 2,
-		title: '长约 ['+arId+'] 订单列表',
-		shadeClose: true,
-		shade: true,
-		maxmin: true, //开启最大化最小化按钮
-		area: ['1024px', '600px'],
-		content: '/orderManagement/list_by_ar?arId='+arId
+	function show() {
+		$("tachu").show();
+	}
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		// 0.4代表遮罩的透明度
+		$('.banner div').css('opacity', 0.2);
+		$('.banner').hover(function() {
+			var el = $(this);
+			// 先淡出阴影，后淡入文字
+			el.find('div').stop().animate({
+				width : 200,
+				height : 200
+			}, 'slow', function() {
+				el.find('p').fadeIn('fast');
+			});
+		}, function() {
+			var el = $(this);
+			// 隐藏文字
+			el.find('p').stop(true, true).hide();
+			// 去掉遮罩
+			el.find('div').stop().animate({
+				width : 60,
+				height : 60
+			}, 'fast');
+		}).click(function() {
+			// 点击图片时打开链接		
+			window.open($(this).find('a').attr('href'));
+		});
 	});
-} */
+</script>
+<script type="text/javascript">
+	function toUtf8(str) {
+		var out, i, len, c;
+		out = "";
+		len = str.length;
+		for (i = 0; i < len; i++) {
+			c = str.charCodeAt(i);
+			if ((c >= 0x0001) && (c <= 0x007F)) {
+				out += str.charAt(i);
+			} else if (c > 0x07FF) {
+				out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+				out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+				out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+			} else {
+				out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+				out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+			}
+		}
+		return out;
+	}
 
-//
-function openCourse() {
+	/* //根据长约id查询订单列表
+	 function getOrderListByArId(arId) {
+	 //iframe窗
+	 layer.open({
+	 type: 2,
+	 title: '长约 ['+arId+'] 订单列表',
+	 shadeClose: true,
+	 shade: true,
+	 maxmin: true, //开启最大化最小化按钮
+	 area: ['1024px', '600px'],
+	 content: '/orderManagement/list_by_ar?arId='+arId
+	 });
+	 } */
+
+	//
+	function openCourse() {
 		alert("xxxx");
 		//iframe窗
-			layer.open({
-		type: 2,
-		title: '订单列表',
-		shadeClose: true,
-		shade: true,
-		maxmin: true, //开启最大化最小化按钮
-		area: ['1024px', '800px'],
-		content: '${cxt!}/course/scormcontent/index.html'
-	});
-}
-
+		layer.open({
+			type : 2,
+			title : '订单列表',
+			shadeClose : true,
+			shade : true,
+			maxmin : true, //开启最大化最小化按钮
+			area : [ '1024px', '800px' ],
+			content : '${cxt!}/course/scormcontent/index.html'
+		});
+	}
 </script>
 </head>
 <body>
-<style type="text/css">
+	<style type="text/css">
 .demo {
 	/*        text-indent:2em; */ /* 段首缩进2个字符 */
 	font-family: "微软雅黑", "黑体", "宋体";
 	font-size: 20px;
 	padding-left: 5px;
 }
+
 .title {
 	/*        text-indent:2em; */ /* 段首缩进2个字符 */
 	font-family: "微软雅黑", "黑体", "宋体";
@@ -134,8 +144,8 @@ function openCourse() {
 	/*        background:pink; */
 }
 </style>
-</style>
-<% include("/f/header.html"){} %>
+	</style>
+	<% include("/f/header.html"){} %>
 	<div class="main_bg">
 		<!-- start main -->
 		<div class="container">
@@ -150,38 +160,37 @@ function openCourse() {
 		<!-- 第一页：学习说明 -->
 		<div id="mannulDiv3" class="demo">
 			<div class="container">
-				<h2 align="center">课程列表及考试情况</h2>
+				<h2 align="center">课程及考试情况</h2>
 				</br>
 				<div class="row">
 					<div class="col-md-1 myTest"></div>
 					<div class="col-md-10 myTest">
-					
-					<%for(x in t7){ %>
-					
-							<div class="top_grid">
-				<div class="col-md-5 span1_of_1">
-				<a href="${cxt!}/course/scormcontent/index.html" target="_blank"><h2 style="font-weight: bold;color: #0065ac;text-align: center;margin-top: 10px;margin-bottom: 0px;border-right: 3px solid #0065ac;">课程：${x.crcl_nm!''}</h2>
-						<h4 style="text-indent:2em;">介绍：${x.crcl_brf!''}</h4>
-						</a>
-						
-				</div>
-				<div class="col-md-7 span1_of_2">
-					<h4 style="text-indent:2em;">您已考试2次，最高成绩12学分</h4>
-					<a href="${cxt!}/jf/puresport/t7Crcl/generteTest_tokyo_5?type=${x.type!''}&category=${x.category!''}" target="_blank"><h4 style="text-indent:2em;">进入考试</h4></a>
-					
-				</div>
-				<div class="clearfix"></div>
-		</div>
-		
-				<%}%>
-										
+						<%for(x in t7){ %>
+						<div class="top_grid">
+							<div class="col-md-5 span1_of_1">
+								<a href="${cxt!}/course/scormcontent/index.html" target="_blank"><h2
+										style="font-weight: bold; color: ${x.courseColor!'#0065ac'}; text-align: left; margin-top: 10px; margin-left: 20px;margin-bottom: 0px; border-right: 3px solid #0065ac;">课程：${x.crcl_nm!''}</h2>
+									<h4 style="text-indent: 2em;text-align: left; margin-left: 20px;">介绍：${x.crcl_brf!''}</h4> </a>
+
+							</div>
+							<div class="col-md-7 span1_of_2">
+								<h4 style="text-indent: 2em;">${x.oldScoreStr!''}</h4>
+								<a
+									href="${cxt!}/jf/puresport/t7Crcl/generteTest_tokyo_5?type=${x.type!''}&category=${x.category!''}"
+									target="_blank" ><h4 style="text-indent: 2em;color: ${x.examColor!'#0065ac'}"><a href="#"><i class="fa fa-lock"></i>  进入考试</h4>${x.enterExamUrl!''} </a>
+									
+
+							</div>
+							<div class="clearfix"></div>
+						</div>
+
+						<%}%>
+
 					</div>
 					<div class="col-md-2 myTest"></div>
 				</div>
 			</div>
-			<div align="center">
-				
-			</div>
+			<div align="center"></div>
 			</br>
 		</div>
 	</div>
