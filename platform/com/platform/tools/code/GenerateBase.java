@@ -43,7 +43,7 @@ public abstract class GenerateBase {
 	 */
 
 	public static String[][] tableArr = {
-			{ null, "sport_item", null, "Sport_Item", "运动项目表" },
+			{ null, "t14_invitation_code", null, "T14InvitationCode", "运动项目表" },
 //			{ null, "dt_area", null, "Area", "全国省市表" },
 //			{ null, "t1_usr_bsc", null, "T1usrBsc", "用户基本信息表" }
 //			{ null, "t2_adiv", null, "T2Adiv", "行政区划信息表" },

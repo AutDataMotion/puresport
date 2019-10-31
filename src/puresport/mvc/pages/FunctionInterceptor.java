@@ -22,7 +22,7 @@ public class FunctionInterceptor implements Interceptor{
 			
 			session.setAttribute("lastTime", currentTime);
 			
-			if(time <60000)
+			if(time <20000)
 			{
 				LOG.debug("频繁访问");
 				inv.getController().redirect(pthc+"tips");

@@ -6,7 +6,7 @@
  * @version 1.0
  */
 package puresport.config;
-import puresport.mvc.sport_item.Sport_ItemController;
+import puresport.mvc.t14_invitation_code.T14InvitationCodeController;
 import com.jfinal.config.Routes;
 /**
  * 创建时间：2016年1月28日 下午2:15:23
@@ -30,6 +30,6 @@ import com.jfinal.config.Routes;
 public class RoutePlugins extends Routes {
 	@Override
 	public void config() {
-		add("/jf/puresport/Sport_Item", Sport_ItemController.class);
+		add("/jf/puresport/T14InvitationCode", T14InvitationCodeController.class);
 	}
 }

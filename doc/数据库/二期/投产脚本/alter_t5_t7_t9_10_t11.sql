@@ -1,0 +1,9 @@
+ALTER TABLE t5_crcl_stdy add COLUMN type char(2) DEFAULT '' COMMENT '赛事类型';
+ALTER TABLE t5_crcl_stdy add COLUMN  `category` char(2) DEFAULT '' COMMENT '科目';
+ALTER TABLE t7_crcl add COLUMN type char(2) DEFAULT '' COMMENT '赛事类型';
+ALTER TABLE t7_crcl add COLUMN  `category` char(2) DEFAULT '' COMMENT '科目';
+ALTER TABLE t9_tstlib add COLUMN type char(2) DEFAULT '' COMMENT '赛事类型';
+ALTER TABLE t9_tstlib add COLUMN  `category` char(2) DEFAULT '' COMMENT '科目';
+ALTER TABLE t10_exam_grd add COLUMN type char(2) DEFAULT '' COMMENT '赛事类型';
+ALTER TABLE t10_exam_grd add COLUMN  `category` char(2) DEFAULT '' COMMENT '科目';
+ALTER TABLE t11_exam_stat add COLUMN type char(2) DEFAULT '' COMMENT '赛事类型';

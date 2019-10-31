@@ -1,0 +1,30 @@
+
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">邀请码</label>
+	<div class="col-sm-7">
+		<input type="text" name="t14InvitationCode.invitation_code" value="${escapeXml(t14InvitationCode.invitation_code!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">已验证用户列表</label>
+	<div class="col-sm-7">
+		<textarea name="t14InvitationCode.invited_user_list" class="autosize form-control">${escapeXml(t14InvitationCode.invited_user_list!)}</textarea>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">赛事类型</label>
+	<div class="col-sm-7">
+		<input type="text" name="t14InvitationCode.type" value="${escapeXml(t14InvitationCode.type!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>

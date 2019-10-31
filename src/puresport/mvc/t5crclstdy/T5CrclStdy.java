@@ -53,6 +53,20 @@ public class T5CrclStdy extends BaseModel<T5CrclStdy> {
 	public static final String column_ty_grd = "ty_grd";
 	
 	/**
+	 * 字段描述：赛事类型
+	 * 字段类型：String 
+	 * "":通用赛事; "05"东京奥运会
+	 */
+	public static final String column_type = "type";
+	
+	/**
+	 * 字段描述：科目
+	 * 字段类型：String 
+	 * "01":科目1;"02":科目2;"03":科目3;"04":科目4;"05":科目5;"06":科目6;
+	 */
+	public static final String column_category = "category";
+	
+	/**
 	 * 字段描述：维护时间 
 	 * 字段类型：timestamp  长度：null
 	 */
@@ -71,7 +85,22 @@ public class T5CrclStdy extends BaseModel<T5CrclStdy> {
 	private String stdy_st;
 	private Float ty_grd;
 	private Timestamp tms;
+	private String type;
+	private String category;
 
+	public <T> T  getType() {
+		return get(column_type);
+	}
+	public void setType(String type) {
+		set(column_type, type);
+	}
+	public <T> T  getCategory() {
+		return get(column_category);
+	}
+	public void setCategory(String category) {
+		set(column_category, category);
+	}
+	
 	public void setId(Long id){
 		set(column_id, id);
 	}

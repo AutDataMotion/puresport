@@ -88,6 +88,20 @@ public class T7Crcl extends BaseModel<T7Crcl> {
 	 */
 	public static final String column_stdy_st = "stdy_st";
 	
+	/**
+	 * 字段描述：赛事类型
+	 * 字段类型：String 
+	 * "":通用赛事; "05"东京奥运会
+	 */
+	public static final String column_type = "type";
+	
+	/**
+	 * 字段描述：科目
+	 * 字段类型：String 
+	 * "01":科目1;"02":科目2;"03":科目3;"04":科目4;"05":科目5;"06":科目6;
+	 */
+	public static final String column_category = "category";
+	
 	
 	/**
 	 * sqlId : puresport.t7Crcl.splitPageFrom
@@ -106,6 +120,64 @@ public class T7Crcl extends BaseModel<T7Crcl> {
 	private Timestamp tms;
 	private String thumbnail_rte;
 	private String stdy_st;
+	private String type;
+	private String category;
+	
+	private String enterExamUrl;
+	private String oldScoreStr;
+	private String courseColor;
+	private String courseIcon;
+	private String examColor;
+	private String examIcon;
+	
+	public String getCourseColor() {
+		return courseColor;
+	}
+	public void setCourseColor(String courseColor) {
+		this.courseColor = courseColor;
+	}
+	public String getCourseIcon() {
+		return courseIcon;
+	}
+	public void setCourseIcon(String courseIcon) {
+		this.courseIcon = courseIcon;
+	}
+	public String getExamColor() {
+		return examColor;
+	}
+	public void setExamColor(String examColor) {
+		this.examColor = examColor;
+	}
+	public String getExamIcon() {
+		return examIcon;
+	}
+	public void setExamIcon(String examIcon) {
+		this.examIcon = examIcon;
+	}
+	public String getEnterExamUrl() {
+		return enterExamUrl;
+	}
+	public void setEnterExamUrl(String enterExamUrl) {
+		this.enterExamUrl = enterExamUrl;
+	}
+	public String getOldScoreStr() {
+		return oldScoreStr;
+	}
+	public void setOldScoreStr(String oldScoreStr) {
+		this.oldScoreStr = oldScoreStr;
+	}
+	public <T> T  getType() {
+		return get(column_type);
+	}
+	public void setType(String type) {
+		set(column_type, type);
+	}
+	public <T> T  getCategory() {
+		return get(column_category);
+	}
+	public void setCategory(String category) {
+		set(column_category, category);
+	}
 
 	public void setStdy_st(String stdy_st){
 		set(column_stdy_st, stdy_st);
