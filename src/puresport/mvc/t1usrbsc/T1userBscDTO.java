@@ -7,11 +7,14 @@ package puresport.mvc.t1usrbsc;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.event.ListSelectionEvent;
 
+import csuduc.platform.util.ComUtil;
 import csuduc.platform.util.StringUtil;
+import puresport.mvc.comm.AuthCodeMdl;
 
 /**
  * @author zw
@@ -45,13 +48,46 @@ public class T1userBscDTO implements Serializable{
 
 	public T1userBscDTO(){}
 
-	public boolean validate() {
+	public boolean validate(AuthCodeMdl authCodeMdlPhone, AuthCodeMdl authCodeMdlEmail) {
 		
+		if (ComUtil.haveEmpty(nm, crdt_no, gnd, brth_dt, province, city, mblph_no, email, passwd)) {
+			tipList.add("have empty");
+			return false;
+		}
+		if (null == emailValCode && null == mblphValCode) {
+			tipList.add("valCode empty");
+			return false;
+		}
 		// 邮件是否校验
+		if (emailValCode!=null) {
+			if (authCodeMdlEmail.hasTimeOut(59*10)) {
+				tipList.add("邮箱校验码已过期");
+				return false;
+			} else if(!emailValCode.equals(Integer.valueOf(authCodeMdlEmail.getCode()))){
+				tipList.add("邮箱校验码不正确，请重新获取验证");
+				return false;
+			}
+		}
 		
 		// 手机是否校验
+		if (mblphValCode!=null) {
+			if (authCodeMdlPhone.hasTimeOut(59*10)) {
+				tipList.add("手机校验码已过期");
+				return false;
+			} else if(!mblphValCode.equals(Integer.valueOf(authCodeMdlPhone.getCode()))){
+				tipList.add("手机校验码不正确，请重新获取验证");
+				return false;
+			}
+		}
 		
 		return true;
+	}
+	
+	private void addTip(String msg) {
+		if (tipList == null) {
+			tipList = new LinkedList<String>();
+		}
+		tipList.add(msg);
 	}
 	/**
 	 * @return the usrid

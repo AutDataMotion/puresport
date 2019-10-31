@@ -21,7 +21,11 @@ import puresport.constant.EnumStatus;
  *
  */
 public class ResTips implements Serializable{
-	private boolean isSuc;
+	
+	public final static ResTips SUCCESS = getSuccRes();
+	public final static ResTips FAIL = getFailRes();
+	
+	private boolean hasSuc;
 	private TipMdl status = new TipMdl();
 	private List<TipMdl> fieldErrors;
 	private List<String> tipStrings;
@@ -29,12 +33,13 @@ public class ResTips implements Serializable{
 	public ResTips(){}
 	
 	public ResTips(EnumStatus astatus){
-		isSuc = astatus == EnumStatus.Success?true:false;
+		hasSuc = astatus == EnumStatus.Success?true:false;
 		status.setName(astatus.getName());
+		status.setStatus(astatus.getIdStr());
 	}
 	
 	public ResTips(EnumStatus astatus, List<String> tips){
-		isSuc = astatus == EnumStatus.Success?true:false;
+		hasSuc = astatus == EnumStatus.Success?true:false;
 		tipStrings = tips;
 	}
 	 
@@ -78,7 +83,15 @@ public class ResTips implements Serializable{
 	public static ResTips newSimpleTips(String status, String tips) {
 		return new ResTips().setStatus(new TipMdl(status, tips));
 	}
-	
+
+	public boolean isHasSuc() {
+		return hasSuc;
+	}
+
+	public void setHasSuc(boolean hasSuc) {
+		this.hasSuc = hasSuc;
+	}
+
 	/**
 	 * @return the status
 	 */

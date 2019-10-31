@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.util.log.Log;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
@@ -17,13 +19,16 @@ import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
 
 import csuduc.platform.util.ComOutMdl;
+import csuduc.platform.util.RegexUtils;
 import csuduc.platform.util.StringUtil;
 import csuduc.platform.util.encrypt.DESUtil;
+import csuduc.platform.util.lyf.EmailUtils;
 import csuduc.platform.util.tuple.Tuple2;
 import puresport.applicat.ExcelParseTool;
 import puresport.applicat.MdlExcelRow;
 import puresport.constant.ConstantInitMy;
 import puresport.constant.EnumStatus;
+import puresport.mvc.comm.AuthCodeMdl;
 import puresport.mvc.comm.ExportData2Excel;
 import puresport.mvc.comm.PageViewSta;
 import puresport.mvc.comm.ParamComm;
@@ -50,6 +55,12 @@ public class T1usrBscController extends BaseController {
 
 	public static final String aboutsporterDir = "files/querydata/aboutsporter/";
 	public static final String aboutsporterFileName = "运动员.xls";
+	
+	public static final String keyPhoneCode = "keyPhoneCode";
+	public static final String keyEmailCode = "keyEmailCode";
+	
+	public static final String messageTitle = "反兴奋剂在线教育平台";
+	public static final String messageContent = "尊敬的用户您好，您的验证码是:";
 
 	@Clear
 	public void index() {
@@ -283,39 +294,68 @@ public class T1usrBscController extends BaseController {
 	}
 
 	@Clear
-	public void validateEmail() {
+	public void sendEmailCode() {
 
-		JSONObject json = new JSONObject();
-		boolean flag = true;
-		// 生成验证码
+		String email = getPara("email");
+		 if (StringUtils.isBlank(email) || !RegexUtils.checkEmail(email)) {
+			 renderTextJson(ResTips.getFailRes("error, illegal email"));
+			return ;
+		}
+		 
+		AuthCodeMdl authCodeMdl =  (AuthCodeMdl)getSession().getAttribute(keyEmailCode);
+		if (Objects.nonNull(authCodeMdl)) {
+			if (!authCodeMdl.hasTimeOut(59)) {
+				renderTextJson(ResTips.getFailRes("error, not timeOut"));
+				return ;
+			} 
+		}
+		
+		authCodeMdl = AuthCodeMdl.createOne();
+		
+    	try {
+			boolean flag = EmailUtils.sendTextMail(email,messageTitle, messageContent+authCodeMdl.getCode());
+			if(flag)
+			{
+				getSession().setAttribute(keyEmailCode, authCodeMdl);
+			}
+			else {
+				renderTextJson(ResTips.getFailRes("邮件发送失败,请您稍后重试"));
+				return ;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			log.debug("--------validateEmail 发送验证码到邮箱失败！！");
+			e.printStackTrace();
+			renderTextJson(ResTips.getFailRes("邮件发送失败,请您联系管理员"));
+			return ;
+		}
 
-		// 发送到邮箱
-
-		// 放入cookie中
-
-		String code = "123456";
-		json.put("flag", flag);
-		json.put("code", code);
-
-		renderJson(json);
+    	renderTextJson(ResTips.SUCCESS);
 	}
 
 	@Clear
-	public void validatePhone() {
+	public void sendPhoneCode() {
 
-		JSONObject json = new JSONObject();
-		boolean flag = true;
-		// 生成验证码
-
-		// 发送到邮箱
-
-		// 放入cookie中
-
-		String code = "123456";
-		json.put("flag", flag);
-		json.put("code", code);
-
-		renderJson(json);
+		 String phone = getPara("phone");
+		 if (StringUtils.isBlank(phone) || !RegexUtils.checkMobile(phone)) {
+			 renderTextJson(ResTips.getFailRes("error, illegal phone"));
+			return ;
+		}
+		 
+		AuthCodeMdl authCodeMdl =  (AuthCodeMdl)getSession().getAttribute(keyPhoneCode);
+		if (Objects.nonNull(authCodeMdl)) {
+			if (!authCodeMdl.hasTimeOut(59)) {
+				renderTextJson(ResTips.getFailRes("error, not timeOut"));
+				return ;
+			} 
+		}
+		
+		authCodeMdl = AuthCodeMdl.createOne();
+		// todo send code to phone
+		
+		getSession().setAttribute(keyPhoneCode, authCodeMdl);
+		
+		renderTextJson(ResTips.SUCCESS);
 	}
 
 	/**
@@ -324,15 +364,21 @@ public class T1usrBscController extends BaseController {
 	@Clear
 	public void regist() {
 
+		AuthCodeMdl authCodeMdlPhone =  (AuthCodeMdl)getSession().getAttribute(keyPhoneCode);
+		AuthCodeMdl authCodeMdlEmail =  (AuthCodeMdl)getSession().getAttribute(keyEmailCode);
+		if (Objects.isNull(authCodeMdlPhone) && Objects.isNull(authCodeMdlEmail)) {
+			renderTextJson(ResTips.getFailRes("验证码已过期，请重新获取验证码"));
+			return;
+		}
 		// 入参 校验
 		T1userBscDTO t1userBscDTO = getParamWithClass(T1userBscDTO.class);
 		if (Objects.isNull(t1userBscDTO)) {
-			renderJson(ResTips.getFailRes());
+			renderTextJson(ResTips.getFailRes());
 			return;
 		}
 		// 验证输入
-		if (!t1userBscDTO.validate()) {
-			renderJson(ResTips.getFailRes(t1userBscDTO.getTipList()));
+		if (!t1userBscDTO.validate(authCodeMdlPhone, authCodeMdlEmail)) {
+			renderTextJson(ResTips.getFailRes(t1userBscDTO.getTipList()));
 			return;
 		}
 
@@ -340,16 +386,16 @@ public class T1usrBscController extends BaseController {
 		T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where crdt_no=? limit 1 ",
 				t1userBscDTO.getCrdt_no());
 		if (item != null) {
-			renderJson(ResTips.getFailRes(
-					String.format("该证件号【%s】已注册，可直接登录！", t1userBscDTO.getCrdt_no())));
+			renderTextJson(ResTips.getFailRes(
+					String.format("该证件号【%s】已注册，请登录！", t1userBscDTO.getCrdt_no())));
 			return ;
 		}
 		// 入库
 		if(T1usrBscService.service.addUserBsc(t1userBscDTO)) {
-			renderJson(ResTips.getSuccRes());
+			renderTextJson(ResTips.getSuccRes());
 			return ;
 		} else {
-			renderJson(ResTips.getFailRes());
+			renderTextJson(ResTips.getFailRes());
 			return ;
 		}
 	}

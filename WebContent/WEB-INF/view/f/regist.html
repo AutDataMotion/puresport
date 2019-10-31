@@ -52,7 +52,7 @@
 					<div class="layui-form-item">
 						<label class="layui-form-label">姓名</label>
 						<div class="layui-input-block">
-							<input type="text" name="nm" lay-verify="required|nm"
+							<input type="text" name="nm" lay-verify="required|nm" value='zw'
 								autocomplete="off" placeholder="姓名" class="layui-input">
 						</div>
 					</div>
@@ -60,10 +60,27 @@
 					<div class="layui-form-item">
 						<label class="layui-form-label">证件号码</label>
 						<div class="layui-input-block">
-							<input type="text" name="crdt_no" lay-verify="required|identity"
+							<input type="text" name="crdt_no" lay-verify="required|identity" value='130727198707082438'
 								autocomplete="off" placeholder="身份证号" class="layui-input">
 						</div>
 					</div>
+					
+					<div class="layui-form-item">
+						<label class="layui-form-label">密码</label>
+						<div class="layui-input-block">
+							<input type="password" name="passwd" lay-verify="required|pass" value='130727'
+								autocomplete="off" placeholder="请设置登录密码，不少于6位（数字与字母组合）" class="layui-input">
+						</div>
+					</div>
+					
+					<div class="layui-form-item">
+						<label class="layui-form-label">确认密码</label>
+						<div class="layui-input-block">
+							<input type="password" name="rePasswd" lay-verify="required|pass" value='130727'
+								autocomplete="off" placeholder="请再次输入密码" class="layui-input">
+						</div>
+					</div>
+					
 					<div class="layui-form-item">
 						<label class="layui-form-label">性别</label>
 						<div class="layui-input-block">
@@ -76,7 +93,7 @@
 						<label class="layui-form-label">出生日期</label>
 						<div class="layui-input-block">
 							<input type="text" name="brth_dt" id="brth_dt"
-								lay-verify="required|date" placeholder="yyyy-MM-dd"
+								lay-verify="required|date" placeholder="请选择"
 								autocomplete="off" class="layui-input">
 						</div>
 					</div>
@@ -84,12 +101,12 @@
 					<div class="layui-form-item">
 						<label class="layui-form-label">省市</label>
 						<div class="layui-input-inline">
-							<select name="quiz1" id="selProvince" lay-verify="required"
+							<select name="province" id="selProvince" lay-verify="required"
 								lay-filter="province"></select>
 						</div>
 						<label class="layui-form-label">城市</label>
 						<div class="layui-input-inline">
-							<select name="quiz2" id="selCity" lay-verify="required"
+							<select name="city" id="selCity" lay-verify="required"
 								lay-filter="city"></select>
 						</div>
 
@@ -98,31 +115,35 @@
 					<div class="layui-form-item">
 						<label class="layui-form-label">手机号码</label>
 						<div class="layui-input-inline">
-							<input type="text" name="mblph_no" lay-verify="required|phone"
+							<input type="text" name="mblph_no" lay-verify="required|phone" id="mblph_no" value='18518028007'
 								autocomplete="off" placeholder="手机号" class="layui-input">
 						</div>
-						<button type="button"
-							class="layui-btn layui-btn-normal layui-btn-sm"
-							lay-filter="btn-val-phone">点击获取</button>
+						
 						<div class="layui-input-inline">
-							<input type="text" name="authCode_phone" lay-verify="required"
+							<input type="text" name="authCode_phone" lay-verify="required" 
 								autocomplete="off" placeholder="手机验证码" class="layui-input">
 						</div>
+						
+						<button type="button" style="width: 100px;"
+							class="layui-btn layui-btn-normal layui-btn-sm" 
+							id="btn-val-phone">点击获取</button>
 					</div>
 
 					<div class="layui-form-item">
 						<label class="layui-form-label">邮箱</label>
 						<div class="layui-input-inline">
-							<input type="text" name="email" lay-verify="required|email"
+							<input type="text" name="email" lay-verify="required|email" id="email" value='zhongweng.hao@qq.com'
 								autocomplete="off" placeholder="邮箱" class="layui-input">
 						</div>
-						<button type="button"
-							class="layui-btn layui-btn-normal layui-btn-sm"
-							lay-filter="btn-val-email">点击获取</button>
+						
 						<div class="layui-input-inline">
 							<input type="text" name="authCode_email" lay-verify="required"
 								autocomplete="off" placeholder="邮箱验证码" class="layui-input">
 						</div>
+						
+						<button type="button" style="width: 100px;"
+							class="layui-btn layui-btn-normal layui-btn-sm"
+							id="btn-val-email">点击获取</button>
 					</div>
 
 					<div class="layui-form-item">

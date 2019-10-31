@@ -10,6 +10,8 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.render.JsonRender;
@@ -163,6 +165,14 @@ public abstract class BaseController extends Controller {
 			render(new JsonRender(object).forIE());
 		}else{
 			super.renderJson(object);
+		}
+	}
+	
+	public void renderTextJson(Object object) {
+		if (null == object) {
+			renderText("");
+		} else {
+			renderText(JSON.toJSONString(object, SerializerFeature.DisableCircularReferenceDetect));
 		}
 	}
 	

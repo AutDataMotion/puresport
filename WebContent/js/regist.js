@@ -3,7 +3,7 @@
             "吉林", "黑龙江", "河北", "河南", "山东", "陕西", "甘肃", "新疆", "青海", "山西", "四川",
             "贵州", "安徽", "江西", "云南", "内蒙古", "西藏", "广西", "宁夏", "海南", "香港", "澳门", "台湾"];
 
-        //定义数组,存储城市信息
+        // 定义数组,存储城市信息
         var beijing = ["东城区", "西城区", "海淀区", "朝阳区", "丰台区", "石景山区", "通州区", "顺义区", "房山区", "大兴区", "昌平区", "怀柔区", "平谷区", "门头沟区", "延庆县", "密云县"];
         var shanghai = ["浦东新区", "徐汇区", "长宁区", "普陀区", "闸北区", "虹口区", "杨浦区", "黄浦区", "卢湾区", "静安区", "宝山区", "闵行区", "嘉定区", "金山区", "松江区", "青浦区", "南汇区", "奉贤区", "崇明县"];
         var tianjing = ["河东", "南开", "河西", "河北", "和平", "红桥", "东丽", "津南", "西青", "北辰", "塘沽", "汉沽", "大港", "蓟县", "宝坻", "宁河", "静海", "武清"];
@@ -39,6 +39,27 @@
         var taiwan = ["台北", "高雄", "基隆", "台中", "台南", "新竹", "嘉义"];
         var aomeng = ["澳门半岛", "氹仔岛", "路环岛"];
 
+      // -----validate
+        function validateComm(rule, v,lenMin, lenMax){
+        	if(!v) return false;
+        	if(v.length < lenMin || v.length > lenMax){
+        		return false;
+        	}
+        	if(!rule.test(v)){
+        		return false;
+        	}
+        	return true;
+        }
+        function validatePhone(v) {
+        	var reg = /(^1\d{10}$)|(^[0-9]\d{7}$)/;
+        	return validateComm(reg, v, 11, 11);
+        };
+        function validateEmail (v) {
+        	var reg=/^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
+        	return validateComm(reg, v, 5, 50);
+            
+        };
+   
 $(function() {
 	layui.use([ 'layer', 'form', 'laydate'], function() {
 		var layer = layui.layer, form = layui.form, laydate=layui.laydate;
@@ -83,12 +104,87 @@ $(function() {
            
         });
 		
+		layui.$('#btn-val-phone').on('click', function(){
+			var phone = $('#mblph_no').val();
+			console.log(phone);
+			if(!validatePhone(phone)){
+				layer.msg('手机号码格式不正确，请确认！');
+				return ;
+			}
+			var btnValPhone = $('#btn-val-phone');
+			ajaxSendAuthCode(1, 'sendPhoneCode', {phone: phone}, '验证码已发送到您手机,请注意查收', '验证码发送失败，请重试或联系管理员', btnValPhone);
+		    
+		});
+		
+		layui.$('#btn-val-email').on('click', function(){
+			var email = $('#email').val();
+			console.log(email);
+			if(!validateEmail(email)){
+				layer.msg('邮箱格式不正确，请确认！');
+				return ;
+			}
+			var btnValEmail = $('#btn-val-email');
+			ajaxSendAuthCode(2, 'sendEmailCode', {email: email}, '验证码已发送到您邮箱,请注意查收', '验证码发送失败，请重试或联系管理员', btnValEmail);
+		    
+		});
+		
 		form.on('submit(btn-submit)', function(data){
 			var jsonStr = JSON.stringify(data.field);
 		    console.log(jsonStr);
 		    return false;
 		});
 		  
+		// ======== ajax
+		var countdownPhone = 60;
+		var countdownEmail = 60;
+		
+        function setTime(flag, obj) {
+        	var countdown = flag===1?countdownPhone:countdownEmail;
+        	
+            if (countdown == 0) {
+                obj.prop('disabled', false);
+                obj.text("点击获取");
+                if(flag===1){
+                	countdownPhone = 60;
+                } else {
+                	countdownEmail = 60;
+                }
+                return;
+            } else {
+                obj.prop('disabled', true);
+                obj.text("剩余"+countdown+"秒") ;
+                if(flag===1){
+                	countdownPhone--;
+                } else {
+                	countdownEmail--;
+                }
+            }
+            setTimeout(function() { setTime(flag, obj) },1000);
+        }
+
+		function ajaxSendAuthCode(flag, addr, dataObj, tipSuc, tipFail, domObj){
+			$.ajax({
+                url:encodeURI(encodeURI(cxt + "/jf/puresport/t1usrBsc/"+addr)),
+                data:dataObj,
+                dataType:"json",
+                type:"post",
+                timeout:5000,   
+                async : false,
+                cache : false,
+                success:function(res){
+                	console.log('sendRes', res)
+                    if(res.hasSuc){
+                        layer.msg(tipSuc);
+                        setTime(flag, domObj);
+                    }else{
+                    	layer.msg(tipFail);
+                    }
+                },
+                error:function(){
+                	layer.msg(tipFail);
+                }
+            })
+		}
 		function user_regist() {
 
 			$.ajax({
@@ -106,7 +202,7 @@ $(function() {
 				},
 				success : function(data, textStatus, jqXHR) {
 
-					if (data.isSuc) {
+					if (data.hasSuc) {
 
 						layer.confirm('注册成功，系统将跳转到登录页面！', {
 							icon : 3,
@@ -118,10 +214,9 @@ $(function() {
 							layer.close(index);
 						});
 					} else {
-						var tips = data.tipStrings.join("__");
+						var tips = data.tipStrings.join("  ");
 						layer.alert('注册失败:' + tips, {
-							skin : 'layui-layer-molv' // 样式类名
-							,
+							skin : 'layui-layer-molv' ,
 							closeBtn : 0
 						});
 					}
@@ -137,17 +232,17 @@ $(function() {
 			})
 		}
 		
-		//设置省份数据
+		// 设置省份数据
 	    function setProvince() {
-	        //给省份下拉列表赋值
+	        // 给省份下拉列表赋值
 	        var $sel = $("#selProvince");
 
-	        //获取对应省份城市
+	        // 获取对应省份城市
 	        for (var i = 0, len = province.length; i < len; i++) {
 	            modelVal = province[i];
 	            var option = $("<option value='" + province[i] + "'>" + province[i] + "</option>");
 
-	            //添加到 select 元素中
+	            // 添加到 select 元素中
 	            $sel.append(option);
 	        }
 	        form.render('select');
@@ -156,12 +251,12 @@ $(function() {
 	    }
 
 
-	    //根据选中的省份获取对应的城市
+	    // 根据选中的省份获取对应的城市
 	    function setCity(province) {
 	        var $city = $("#selCity");
 	        var proCity, option, modelVal;
 
-	        //通过省份名称，获取省份对应城市的数组名
+	        // 通过省份名称，获取省份对应城市的数组名
 	        switch (province) {
 	            case "北京":
 	                proCity = beijing;
@@ -267,10 +362,10 @@ $(function() {
 	                break;
 	        }
 	        
-	        //先清空之前绑定的值
+	        // 先清空之前绑定的值
 	        $city.empty();
 	        
-	        //设置对应省份的城市
+	        // 设置对应省份的城市
 	        for (var i = 0, len = proCity.length; i < len; i++) {
 	            modelVal = proCity[i];
 	            option = "<option value='" + modelVal + "'>" + modelVal + "</option>";
