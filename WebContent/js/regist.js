@@ -73,30 +73,6 @@ $(function() {
 		
         setProvince();
 
-		// 表单 引用
-		function registFormObj() {
-			return {
-				// usr_tp : $(':text[name="t1usrBsc.usr_tp"]'),
-				nm : $('#nm'),
-				// crdt_tp : $(':text[name="t1usrBsc.crdt_tp"]'),
-				crdt_no : $('crdt_no'),
-
-				gnd : '男',
-				brth_dt : $('#birthday'),
-				// spt_prj : $(':text[name="t1usrBsc.spt_prj"]'),
-				// typelevel : $(':text[name="t1usrBsc.typelevel"]'),
-				province : $('#province'),
-				city : $('#city'),
-				// institute : $(':text[name="t1usrBsc.institute"]'),
-				mblph_no : $('#phonenum'),
-				email : $('email'),
-				authCode_phone : $('authCode_phone'),
-				authCode_email : $('authCode_email'),
-
-			}
-		}
-		;
-
 		// ========Event
 
 		form.on('select(province)', function (data) {
@@ -131,6 +107,7 @@ $(function() {
 		form.on('submit(btn-submit)', function(data){
 			var jsonStr = JSON.stringify(data.field);
 		    console.log(jsonStr);
+		    user_regist(jsonStr);
 		    return false;
 		});
 		  
@@ -185,15 +162,14 @@ $(function() {
                 }
             })
 		}
-		function user_regist() {
+		function user_regist(formObjJsonStr) {
 
 			$.ajax({
-				// encodeURI(encodeURI(cxt + "/jf/puresport/t1usrBsc/regist"))
-				url : '/jf/puresport/t1usrBsc/regist',
+				url : encodeURI(encodeURI(cxt + "/jf/puresport/t1usrBsc/regist")),
 				type : 'POST', // GET
 				async : false, // 或false,是否异步
 				data : {
-					v : registFormObj()
+					v : formObjJsonStr
 				},
 				timeout : 5000, // 超时时间
 				dataType : 'json', // 返回的数据格式：json/xml/html/script/jsonp/text
@@ -222,12 +198,8 @@ $(function() {
 					}
 				},
 				error : function(xhr, textStatus) {
-					console.log('错误')
-					console.log(xhr)
-					console.log(textStatus)
-				},
-				complete : function() {
-					console.log('结束')
+					console.log('错误', xhr, textStatus);
+					layer.alert('系统错误，请联系管理员');
 				}
 			})
 		}

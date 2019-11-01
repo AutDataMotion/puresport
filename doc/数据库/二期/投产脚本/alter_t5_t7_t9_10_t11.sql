@@ -1,9 +1,14 @@
-ALTER TABLE t5_crcl_stdy add COLUMN type char(2) DEFAULT '' COMMENT '赛事类型';
-ALTER TABLE t5_crcl_stdy add COLUMN  `category` char(2) DEFAULT '' COMMENT '科目';
-ALTER TABLE t7_crcl add COLUMN type char(2) DEFAULT '' COMMENT '赛事类型';
-ALTER TABLE t7_crcl add COLUMN  `category` char(2) DEFAULT '' COMMENT '科目';
-ALTER TABLE t9_tstlib add COLUMN type char(2) DEFAULT '' COMMENT '赛事类型';
-ALTER TABLE t9_tstlib add COLUMN  `category` char(2) DEFAULT '' COMMENT '科目';
-ALTER TABLE t10_exam_grd add COLUMN type char(2) DEFAULT '' COMMENT '赛事类型';
-ALTER TABLE t10_exam_grd add COLUMN  `category` char(2) DEFAULT '' COMMENT '科目';
-ALTER TABLE t11_exam_stat add COLUMN type char(2) DEFAULT '' COMMENT '赛事类型';
+ALTER TABLE t5_crcl_stdy add COLUMN type char(2) DEFAULT '' COMMENT '锟斤拷锟斤拷锟斤拷锟斤拷';
+ALTER TABLE t5_crcl_stdy add COLUMN  `category` char(2) DEFAULT '' COMMENT '锟斤拷目';
+ALTER TABLE t7_crcl add COLUMN type char(2) DEFAULT '' COMMENT '锟斤拷锟斤拷锟斤拷锟斤拷';
+ALTER TABLE t7_crcl add COLUMN  `category` char(2) DEFAULT '' COMMENT '锟斤拷目';
+ALTER TABLE t9_tstlib add COLUMN type char(2) DEFAULT '' COMMENT '锟斤拷锟斤拷锟斤拷锟斤拷';
+ALTER TABLE t9_tstlib add COLUMN  `category` char(2) DEFAULT '' COMMENT '锟斤拷目';
+ALTER TABLE t10_exam_grd add COLUMN type char(2) DEFAULT '' COMMENT '锟斤拷锟斤拷锟斤拷锟斤拷';
+ALTER TABLE t10_exam_grd add COLUMN  `category` char(2) DEFAULT '' COMMENT '锟斤拷目';
+ALTER TABLE t11_exam_stat add COLUMN type char(2) DEFAULT '' COMMENT '锟斤拷锟斤拷锟斤拷锟斤拷';
+
+ALTER TABLE `puresport`.`t1_usr_bsc` 
+ADD COLUMN `email_val` INT(11) NULL DEFAULT 0 COMMENT '閭鏄惁楠岃瘉' AFTER `levelinstitute`;
+ALTER TABLE `puresport`.`t1_usr_bsc` 
+ADD COLUMN `mblph_val` INT(11) NULL DEFAULT 0 COMMENT '鎵嬫満鏄惁楠岃瘉' AFTER `email_val`;

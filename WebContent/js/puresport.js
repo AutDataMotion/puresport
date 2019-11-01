@@ -78,31 +78,45 @@ function  changeSelect_user_Competetion(index){
 		
 	}
 }
+
+function loginAlert(msg){
+	$('#myModallyf_content').text(msg);
+	$('#myModallyf').modal('show');
+}
 	
 function user_login()
 {
 
+	var account= $("#form-phone_user").val();
+	var pwd=$("#form-pwd_user").val();
+	var authCode=$("#authCode_user").val();
+	if(!account || !pwd || !authCode){
+		loginAlert('有空值，请检查！');
+		return ;
+	}
+	
+	if(!validatePhone(account) && !validateEmail(account) && !validateID(account)){
+		loginAlert('账号格式不正确，请检查！');
+		return ;
+	}
+	
+	
 //	alert(hex_md5($("#form-pwd_user").val()));
 	$.ajax({
 	    url:'/jf/puresport/t1usrBsc/login',
 	    type:'POST', //GET
 	    async:true,    //或false,是否异步
 	    data:{
-	    	account:$("#form-phone_user").val(),
-	    	pwd:$("#form-pwd_user").val(),
-	    	authCode:$("#authCode_user").val()
+	    	account:account,
+	    	pwd:pwd,
+	    	authCode:authCode
 	    },
 	    timeout:5000,    //超时时间
 	    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
 	    beforeSend:function(xhr){
-	        //console.log(xhr)
-	        console.log('发送前')
 	    },
 	    success:function(data,textStatus,jqXHR){
-	    	//console.log(data);
-	    	//window.location.href=data.reportUrl;
-	    	//alert(data.reportUrl);
-	    	//window.open(data.reportUrl,"_blank");
+
 	    	if(data.flag) {  
 	    		app.userType = data.userType;
 	    		if(data.needImproveInfoOrNot)
@@ -131,18 +145,11 @@ function user_login()
 	
             }  
             else {  
-//                alert(data.msg);  
-                $('#myModallyf_content').text(data.msg);
-	    		$('#myModallyf').modal('show');
+            	loginAlert(data.msg);
             }  
 	    },
 	    error:function(xhr,textStatus){
-	        console.log('错误')
-	        console.log(xhr)
-	        console.log(textStatus)
-	    },
-	    complete:function(){
-	        console.log('结束')
+	        console.log('错误', xhr, textStatus);
 	    }
 	})
 	
@@ -189,10 +196,7 @@ function admin_login()
 	        console.log('发送前')
 	    },
 	    success:function(data,textStatus,jqXHR){
-	    	//console.log(data);
-	    	//window.location.href=data.reportUrl;
-	    	//alert(data.reportUrl);
-	    	//window.open(data.reportUrl,"_blank");
+	
 	    	if(data.flag) {  
 	    		console.log(data);
 	    		if(data.needImproveInfoOrNot)
@@ -234,9 +238,6 @@ function admin_login()
 	        console.log('错误')
 	        console.log(xhr)
 	        console.log(textStatus)
-	    },
-	    complete:function(){
-	        console.log('结束')
 	    }
 	})
 	
@@ -318,9 +319,6 @@ function Improve_user_info()
 			        console.log('错误')
 			        console.log(xhr)
 			        console.log(textStatus)
-			    },
-			    complete:function(){
-			        console.log('结束')
 			    }
 			})
 		}
@@ -357,10 +355,7 @@ function Improve_user_info()
 			        console.log('发送前')
 			    },
 			    success:function(data,textStatus,jqXHR){
-			    	//console.log(data);
-			    	//window.location.href=data.reportUrl;
-			    	//alert(data.reportUrl);
-			    	//window.open(data.reportUrl,"_blank");
+			    
 			    	if(data.flag) {  
 		                window.location=data.url;  
 			    	}  
@@ -377,9 +372,6 @@ function Improve_user_info()
 			        console.log('错误')
 			        console.log(xhr)
 			        console.log(textStatus)
-			    },
-			    complete:function(){
-			        console.log('结束')
 			    }
 			})
 		}
@@ -392,9 +384,7 @@ function Improve_user_info()
 			Tips('myModallyf_content_user',"请完善个人信息！");
 		}
 	}
-//	else{
-//		Tips('myModallyf_content_user',"请完善个人信息！");
-//	}
+
 	
 	
 }
@@ -457,23 +447,15 @@ function Improve_admin_info()
 		    timeout:5000,    //超时时间
 		    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
 		    beforeSend:function(xhr){
-		        //console.log(xhr)
 		        console.log('发送前')
 		    },
 		    success:function(data,textStatus,jqXHR){
-		    	//console.log(data);
-		    	//window.location.href=data.reportUrl;
-		    	//alert(data.reportUrl);
-		    	//window.open(data.reportUrl,"_blank");
+
 		    	if(data.flag) {  
 	                window.location=data.url;  
 		    		
 	            }  
 	            else {  
-//	                alert(data.msg);  
-//	            	 $('#myModallyf_content_user').style.display="block";
-//	                $('#myModallyf_content_user').text(data.msg);
-//	    	    	$('#myModallyf').modal('show');
 	            	Tips('myModallyf_content_admin',data.msg);
 	            }  
 		    },
@@ -488,9 +470,6 @@ function Improve_admin_info()
 		})
 	}
 	else{
-//		alert("请完善个人信息！");
-//		 $('#myModallyf_content').text("请完善个人信息！");
-//		 $('#myModallyf').modal('show');
 		Tips('myModallyf_content_admin',"请完善个人信息！");
 	}
 }
@@ -501,9 +480,6 @@ function Tips(contentid,content)
 }
 function get_email_confirmcode(userOradmin)
 {
-	
-	//form-email_user_forPwdBack
-	//form-email_user_confirmCode
 	if(userOradmin=='01')
 	{
 		var email = $("#form-email_user_forPwdBack").val();
@@ -513,7 +489,6 @@ function get_email_confirmcode(userOradmin)
 			sendConfirmcode2Email(email,userOradmin);
 		}
 		else{
-//			alert("请先输入邮箱！");
 			$('#myModallyf_content').text("请先输入邮箱！");
 			$('#myModallyf').modal('show');
 		}
@@ -526,7 +501,6 @@ function get_email_confirmcode(userOradmin)
 			sendConfirmcode2Email(email,userOradmin);                                                                                                                                                                                                                                                                                                                                                                                                                
 		}
 		else{
-//			alert("请先输入邮箱！");
 			$('#myModallyf_content').text("请先输入邮箱！");
 			$('#myModallyf').modal('show');
 		}
@@ -548,17 +522,12 @@ function sendConfirmcode2Email(email,userOradmin)
 	    timeout:5000,    //超时时间
 	    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
 	    beforeSend:function(xhr){
-	        //console.log(xhr)
 	        console.log('发送前')
 	    },
 	    success:function(data,textStatus,jqXHR){
-	    	//console.log(data);
-	    	//window.location.href=data.reportUrl;
-	    	//alert(data.reportUrl);
-	    	//window.open(data.reportUrl,"_blank");
+
 	    	if(data.flag) {  
-                //window.location=data.url;  
-	    		//alert("验证码已发送邮箱！");
+
 	    		$('#myModallyf_content').text("验证码已发送邮箱!");
 	    		$('#myModallyf').modal('show');
             }  
@@ -572,9 +541,6 @@ function sendConfirmcode2Email(email,userOradmin)
 	        console.log('错误')
 	        console.log(xhr)
 	        console.log(textStatus)
-	    },
-	    complete:function(){
-	        console.log('结束')
 	    }
 	})
 }
@@ -718,9 +684,7 @@ function resetPwd(userOradmin)
 	}
 	else
 	{
-//		$('#passwordModal_hint').text("信息缺失！！");
 		Tips('passwordModal_hint',"信息缺失！！");
-	    //$('#systemModal').modal('show');
 	}
 }
 function initScoreTable(userID)
@@ -738,13 +702,10 @@ function initScoreTable(userID)
 		    timeout:5000,    //超时时间
 		    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
 		    beforeSend:function(xhr){
-		        //console.log(xhr)
 		        console.log('发送前')
 		    },
 		    success:function(data,textStatus,jqXHR){
 		    	if(data.flag) {  
-//		    		alert(data);
-//	                console.log(data.itemlist[0].exam_grd);
 		    		var dataSet = [];
 		    		for(var i =0;i<data.itemlist.length;i++)
 		    		{
@@ -789,14 +750,7 @@ function initScoreTable(userID)
 		        console.log('错误')
 		        console.log(xhr)
 		        console.log(textStatus)
-		    },
-		    complete:function(){
-		        console.log('结束')
 		    }
 		})
 	}
 }
-//function test()
-//{
-//	alert("ooo");
-//}

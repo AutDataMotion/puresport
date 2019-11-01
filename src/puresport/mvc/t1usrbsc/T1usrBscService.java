@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.util.log.Log;
 
@@ -572,7 +573,7 @@ public class T1usrBscService extends BaseService {
 		Record dbRow;
 		try {
 			dbRow = new Record()
-					.set(T1usrBsc.column_usr_tp, EnumRoleType.Sporter.name())
+					.set(T1usrBsc.column_usr_tp, EnumRoleType.Sporter.getName())
 					.set(T1usrBsc.column_usr_nm, dto.getMblph_no())
 					.set(T1usrBsc.column_nm, dto.getNm())
 					.set(T1usrBsc.column_crdt_tp, "身份证")
@@ -588,6 +589,13 @@ public class T1usrBscService extends BaseService {
 					// mgrSession.getTypeleve())
 					.set(T1usrBsc.column_province, dto.getProvince())
 					.set(T1usrBsc.column_city, dto.getCity());
+			
+			if ( dto.getEmailValCode()!= null) {
+				dbRow.set(T1usrBsc.column_email_val, 1);
+			}
+			if ( dto.getMblphValCode()!= null) {
+				dbRow.set(T1usrBsc.column_mblph_val, 1);
+			}
 			
 			return ConfMain.db().save(tableName, tableKey, dbRow);
 			

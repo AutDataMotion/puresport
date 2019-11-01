@@ -86,7 +86,6 @@ public class T1usrBscController extends BaseController {
 		res.put("flag", result);
 		String fileUrl = getCxt() + "/" + aboutsporterDir + usrid + "/" + aboutsporterFileName;
 		res.put("fileUrl", fileUrl);
-//		renderText("getAllData-----"+resList.size()+"");
 		renderJson(res);
 	}
 
@@ -230,7 +229,6 @@ public class T1usrBscController extends BaseController {
 				if (item != null) {
 					String pwddd = item.getPswd();
 					if (encryptpassword.equals(item.getPswd())) {// 判断数据库中的密码与用户输入的密码是否一致
-//    	        	if(password.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
 						PageViewSta.StaLoginPeopleCountByDay();
 						flag = true;
 						userType = item.getUsr_tp();
@@ -277,8 +275,7 @@ public class T1usrBscController extends BaseController {
 			json.put("flag", flag);
 			json.put("userType", userType);
 			json.put("msg", msg);
-//	        json.put("url", getCxt()+"/jf/puresport/pagesController/selfcenter"); 
-//	        System.out.println("login----"+(String)getSession().getAttribute("RequestURL"));
+
 			if (getSession().getAttribute("RequestURL") != null) {
 				json.put("url", (String) getSession().getAttribute("RequestURL"));
 			} else {
@@ -412,8 +409,6 @@ public class T1usrBscController extends BaseController {
 		Long userID = Long.valueOf((String) getSession().getAttribute("usrid"));
 		T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", userID);// 根据用户名查询数据库中的用户
 		if (item != null) {
-//        	userType = getPara("userType");
-//            if(((String)item.getUsr_tp()).equals("运动员"))//运动员
 			if (usertype.equals("运动员"))// 运动员
 			{
 
