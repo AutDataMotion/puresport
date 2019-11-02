@@ -752,6 +752,8 @@ function initScoreTable(userID)
 		    			score.push(data.itemlist[i].exam_grd);
 		    			score.push(data.itemlist[i].exam_name);
 		    			score.push(data.itemlist[i].tms);
+		    			score.push(data.itemlist[i].examid);
+		    			score.push(data.itemlist[i].usrid);
 		    			dataSet.push(score);
 		    		}
 		    		$('#score_excel').DataTable({
@@ -762,9 +764,10 @@ function initScoreTable(userID)
 //	    		        "filter": false,
 //	    		        "destroy": true,
 	    		        columns: [
-	    		            { title: "成绩" },
+	    		            { title: "成绩" },    		  
 	    		            { title: "赛事" },
-	    		            { title: "时间" }
+	    		            { title: "时间" },
+	    		            { title: "查看试卷", sortable: false, render: function(data, type, row) { return '<a href="/jf/puresport/t7Crcl/testPaper?usrid='+row[4]+'&examid='+row[3]+'" target="_blank" type="button" class="btn  btn-lg btn-block logout_btn" role="button">'+row[3]+'</a>'; } },
 	    		        ]
 	    		    });
 	            }  
