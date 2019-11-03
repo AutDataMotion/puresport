@@ -42,7 +42,7 @@ public class T1usrBscService extends BaseService {
 
 	public static final T1usrBscService service = Enhancer.enhance(T1usrBscService.class);
 
-	public T1usrBsc SelectById(Integer id) {
+	public T1usrBsc SelectById(Long id) {
 
 		T1usrBsc mdl = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=? limit 1 ", id);
 		return mdl;
@@ -57,7 +57,7 @@ public class T1usrBscService extends BaseService {
 		return true;
 	}
 	public Tuple2<Boolean, String> delete(T6MgrSession mgrSession, ParamComm paramComm){
-		Integer usrId = paramComm.getId().intValue();
+		Long usrId = paramComm.getId();
 		try {
 			// 查询待删除信息
 			T1usrBsc sporter = SelectById(usrId);
@@ -605,5 +605,54 @@ public class T1usrBscService extends BaseService {
 			log.error(e);
 			return false;
 		}
+	}
+	
+	public boolean updateUserBsc(T1userBscDTO dto, T1usrBsc userBsc) {
+		
+		if (Objects.isNull(dto) || Objects.isNull(userBsc)) {
+			log.warn("updateUserBsc Objects.isNull(dto) || Objects.isNull(userBsc)");
+			return false;
+		}
+		boolean hasChange = false;
+		
+		if (!dto.getNm().equals(userBsc.nm)) {
+			userBsc.setNm(dto.getNm());
+			hasChange = true;
+		}
+		if (!dto.getGnd().equals(userBsc.gnd)) {
+			userBsc.setGnd(dto.getGnd());
+			hasChange = true;
+		}
+		if (!dto.getBrth_dt().equals(userBsc.brth_dt)) {
+			userBsc.setBrth_dt(dto.getBrth_dt());
+			hasChange = true;
+		}
+		if (!dto.getProvince().equals(userBsc.province)) {
+			userBsc.setProvince(dto.getProvince());
+			hasChange = true;
+		}
+		if (!dto.getCity().equals(userBsc.city)) {
+			userBsc.setCity(dto.getCity());
+			hasChange = true;
+		}
+		if (!dto.getSpt_prj().equals(userBsc.spt_prj)) {
+			userBsc.setSpt_prj(dto.getSpt_prj());
+			hasChange = true;
+		}
+		if (!dto.getEmail().equals(userBsc.email)) {
+			userBsc.setEmail(dto.getEmail());
+			hasChange = true;
+		}
+		if (!dto.getMblph_no().equals(userBsc.mblph_no)) {
+			userBsc.setMblph_no(dto.getMblph_no());
+			hasChange = true;
+		}
+		
+		if (!hasChange) {
+			return true;
+		}
+		
+		return userBsc.update();
+
 	}
 }

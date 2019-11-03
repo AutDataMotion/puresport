@@ -214,7 +214,7 @@ public class pagesController extends BaseController {
 		Long userID = (Long)getSession().getAttribute("usrid");
 		String crdt_no = (String)getSession().getAttribute("crdt_no");
 		String pwd = (String)getSession().getAttribute("pwd");
-		T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", userID);//根据用户名查询数据库中的用户  
+		T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=? limit 1", userID);//根据用户名查询数据库中的用户  
         if(item!=null)
         {
         	if(crdt_no.equals((String)item.getCrdt_no())&&pwd.equals((String)item.getPswd()))

@@ -48,29 +48,71 @@ public class T1userBscDTO implements Serializable{
 	
 
 	public T1userBscDTO(){}
+	
+	public T1userBscDTO(T1usrBsc t1usrBsc){
+		if (null == t1usrBsc) {
+			return;
+		}
+		nm = t1usrBsc.getNm();
+		crdt_no = t1usrBsc.getCrdt_no();
+		gnd = t1usrBsc.getGnd();
+		brth_dt = t1usrBsc.getBrth_dt();
+		province = t1usrBsc.getProvince();
+		city = t1usrBsc.getCity();
+		mblph_no = t1usrBsc.getMblph_no();
+		email = t1usrBsc.getEmail();
+		spt_prj = t1usrBsc.getSpt_prj();
+		
+	}
 
 	public boolean validate(AuthCodeMdl authCodeMdlPhone, AuthCodeMdl authCodeMdlEmail) {
 		
 		if (ComUtil.haveEmpty(nm, crdt_no, gnd, brth_dt, province, city, mblph_no, email, passwd)) {
-			tipList.add("have empty");
+			addTip("have empty");
 			return false;
 		}
 		if (null == emailValCode && null == mblphValCode) {
-			tipList.add("valCode empty");
+			addTip("valCode empty");
 			return false;
 		}
 		// 邮件是否校验
 		if (emailValCode!=null) {
-			if (authCodeMdlEmail.checkAuthCode(email, emailValCode.toString(), ConstantInitMy.AuthCode_TimeOut)) {
-				tipList.add("邮箱校验码失败，请重新获取验证");
+			if (authCodeMdlEmail.checkAuthCodeFail(email, emailValCode.toString(), ConstantInitMy.AuthCode_TimeOut)) {
+				addTip("邮箱校验码失败，请重新获取验证");
 				return false;
 			}
 		}
 		
 		// 手机是否校验
 		if (mblphValCode!=null) {
-			if (authCodeMdlPhone.checkAuthCode(mblph_no, mblphValCode.toString(), ConstantInitMy.AuthCode_TimeOut)) {
-				tipList.add("手机校验码不正确，请重新获取验证");
+			if (authCodeMdlPhone.checkAuthCodeFail(mblph_no, mblphValCode.toString(), ConstantInitMy.AuthCode_TimeOut)) {
+				addTip("手机校验码不正确，请重新获取验证");
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+public boolean validateForUpdate(AuthCodeMdl authCodeMdlPhone, AuthCodeMdl authCodeMdlEmail) {
+		
+		if (ComUtil.haveEmpty(nm, crdt_no, gnd, brth_dt, province, city,spt_prj, mblph_no, email)) {
+			addTip("have empty");
+			return false;
+		}
+
+		// 邮件是否校验
+		if (emailValCode!=null) {
+			if (null == authCodeMdlEmail || authCodeMdlEmail.checkAuthCodeFail(email, emailValCode.toString(), ConstantInitMy.AuthCode_TimeOut)) {
+				addTip("邮箱校验码失败，请重新获取验证");
+				return false;
+			}
+		}
+		
+		// 手机是否校验
+		if (mblphValCode!=null) {
+			if (null == authCodeMdlPhone || authCodeMdlPhone.checkAuthCodeFail(mblph_no, mblphValCode.toString(), ConstantInitMy.AuthCode_TimeOut)) {
+				addTip("手机校验码不正确，请重新获取验证");
 				return false;
 			}
 		}

@@ -61,6 +61,7 @@
         };
    
 $(function() {
+	
 	layui.use([ 'layer', 'form', 'laydate'], function() {
 		var layer = layui.layer, form = layui.form, laydate=layui.laydate;
 
@@ -74,8 +75,41 @@ $(function() {
         setProvince();
 
 		// ========Event
-
+        layui.$('#btn-update-userInfo').on('click', function(){
+        	console.log("btn-update-userInfo click");
+        	$.ajax({
+                url:encodeURI(encodeURI(cxt + "/jf/puresport/t1usrBsc/selfCenterInfo")),
+                data:{},
+                dataType:"json",
+                type:"get",
+                timeout:5000,   
+                async : false,
+                cache : false,
+                success:function(res){
+                	console.log('selfCenterInfo ajax', res);
+                    // 表单赋值
+                	form.val('athleteForm', {
+                        "nm": res.nm
+                        ,"crdt_no": res.crdt_no
+                        ,"gnd": res.gnd
+                        ,"brth_dt": res.brth_dt
+                        ,"province": res.province
+                        ,"city": res.city
+                        ,"spt_prj": res.spt_prj
+                        ,"mblph_no": res.mblph_no
+                        , "email":res.email
+                      });
+                },
+                error:function(){
+                	layer.msg(tipFail);
+                }
+            });
+        	
+          
+        });
+        
 		form.on('select(province)', function (data) {
+			console.log("select(province)", data.value);
             setCity(data.value);
            
         });
@@ -104,10 +138,10 @@ $(function() {
 		    
 		});
 		
-		form.on('submit(btn-submit)', function(data){
+		form.on('submit(btn-submit-update)', function(data){
 			var jsonStr = JSON.stringify(data.field);
 		    console.log(jsonStr);
-		    user_regist(jsonStr);
+		    user_update(jsonStr);
 		    return false;
 		});
 		  
@@ -160,13 +194,13 @@ $(function() {
                 error:function(){
                 	layer.msg(tipFail);
                 }
-            })
+            });
 		}
 		
 		function user_update(formObjJsonStr) {
 
 			$.ajax({
-				url : encodeURI(encodeURI(cxt + "/jf/puresport/t1usrBsc/regist")),
+				url : encodeURI(encodeURI(cxt + "/jf/puresport/t1usrBsc/updateSelfCenterInfo")),
 				type : 'POST', // GET
 				async : false, // 或false,是否异步
 				data : {
@@ -181,18 +215,18 @@ $(function() {
 
 					if (data.hasSuc) {
 
-						layer.confirm('注册成功，系统将跳转到登录页面！', {
+						layer.confirm('更新成功', {
 							icon : 3,
 							title : '提示'
 						}, function(index) {
 							// do something
 							window.location = cxt
-									+ '/jf/puresport/pagesController/login';
+									+ '/jf/puresport/pagesController/selfcenter';
 							layer.close(index);
 						});
 					} else {
 						var tips = data.tipStrings.join("  ");
-						layer.alert('注册失败:' + tips, {
+						layer.alert('更新失败:' + tips, {
 							skin : 'layui-layer-molv' ,
 							closeBtn : 0
 						});
@@ -209,7 +243,8 @@ $(function() {
 	    function setProvince() {
 	        // 给省份下拉列表赋值
 	        var $sel = $("#selProvince");
-
+	        
+	        console.log("setProvince");
 	        // 获取对应省份城市
 	        for (var i = 0, len = province.length; i < len; i++) {
 	            modelVal = province[i];
@@ -226,6 +261,7 @@ $(function() {
 
 	    // 根据选中的省份获取对应的城市
 	    function setCity(province) {
+	    	console.log('setCity', province);
 	        var $city = $("#selCity");
 	        var proCity, option, modelVal;
 

@@ -59,10 +59,10 @@ public class T1usrBscController extends BaseController {
 
 	public static final String aboutsporterDir = "files/querydata/aboutsporter/";
 	public static final String aboutsporterFileName = "运动员.xls";
-	
+
 	public static final String keyPhoneCode = "keyPhoneCode";
 	public static final String keyEmailCode = "keyEmailCode";
-	
+
 	public static final String messageTitle = "反兴奋剂在线教育平台";
 	public static final String messageContent = "尊敬的用户您好，您的验证码是:";
 
@@ -225,24 +225,25 @@ public class T1usrBscController extends BaseController {
 
 		String crdt_no = getPara("account");// 获取表单数据，这里的参数就是页面表单中的name属性值
 		String password = getPara("pwd");
-		
+
 		if (ComUtil.haveEmpty(crdt_no, password)) {
 			renderText("illegal");
 			return;
 		}
-		
+
 		Integer accountType = RegexUtils.checkPhoneOrEmailOrID(crdt_no);
 		if (accountType == 0) {
 			renderText("illegal");
 			return;
 		}
-		
+
 		try {
 			if (authCode) {
 				String encryptpassword = DESUtil.encrypt(password, ConstantInitMy.SPKEY);
 
-				String accountFieldName = accountType==1?"usr_nm":(accountType==2?"email":"crdt_no");
-				T1usrBsc item = T1usrBsc.dao.findFirst(String.format("select * from t1_usr_bsc where %s=?", accountFieldName), crdt_no);
+				String accountFieldName = accountType == 1 ? "usr_nm" : (accountType == 2 ? "email" : "crdt_no");
+				T1usrBsc item = T1usrBsc.dao
+						.findFirst(String.format("select * from t1_usr_bsc where %s=?", accountFieldName), crdt_no);
 				if (item != null) {
 					String pwddd = item.getPswd();
 					if (encryptpassword.equals(item.getPswd())) {// 判断数据库中的密码与用户输入的密码是否一致
@@ -258,21 +259,21 @@ public class T1usrBscController extends BaseController {
 						String sptPrj = item.getSpt_prj();
 						Integer emailVal = item.getEmailVal();
 						Integer phoneVal = item.getMblPhVal();
-						Boolean needValEmail =  (null == emailVal)||(emailVal==0);
-						Boolean needValPhone =  (null == phoneVal)||(phoneVal==0);
+						Boolean needValEmail = (null == emailVal) || (emailVal == 0);
+						Boolean needValPhone = (null == phoneVal) || (phoneVal == 0);
 						Boolean needValSptPrj = StringUtils.isBlank(sptPrj);
-						
+
 						json.put("needValSptPrj", needValSptPrj);
 						json.put("needValEmail", needValEmail);
 						json.put("needValPhone", needValPhone);
-						
+
 						getSession().setAttribute("needValSptPrj", needValSptPrj);
 						getSession().setAttribute("needValEmail", needValEmail);
 						getSession().setAttribute("needValPhone", needValPhone);
-						
+
 						if (userType.equals("运动员"))// 运动员表 这个字段的初始值为运动员！
 						{
-							needImproveInfoOrNot = needValSptPrj||needValEmail||needValPhone;
+							needImproveInfoOrNot = needValSptPrj || needValEmail || needValPhone;
 						} else {
 							needImproveInfoOrNot = (item.getDepartment() == null || item.getPost() == null);
 						}
@@ -309,64 +310,62 @@ public class T1usrBscController extends BaseController {
 	public void sendEmailCode() {
 
 		String email = getPara("email");
-		 if (StringUtils.isBlank(email) || !RegexUtils.checkEmail(email)) {
-			 renderTextJson(ResTips.getFailRes("error, illegal email"));
-			return ;
+		if (StringUtils.isBlank(email) || !RegexUtils.checkEmail(email)) {
+			renderTextJson(ResTips.getFailRes("error, illegal email"));
+			return;
 		}
-		 
-		AuthCodeMdl authCodeMdl =  (AuthCodeMdl)getSession().getAttribute(keyEmailCode);
+
+		AuthCodeMdl authCodeMdl = (AuthCodeMdl) getSession().getAttribute(keyEmailCode);
 		if (Objects.nonNull(authCodeMdl)) {
 			if (!authCodeMdl.hasTimeOut(ConstantInitMy.AuthCode_TimeOut_Send)) {
 				renderTextJson(ResTips.getFailRes("error, not timeOut"));
-				return ;
-			} 
-		}
-		
-		authCodeMdl = AuthCodeMdl.createOne(email);
-		
-    	try {
-			boolean flag = EmailUtils.sendTextMail(email,messageTitle, messageContent+authCodeMdl.getCode());
-			if(flag)
-			{
-				getSession().setAttribute(keyEmailCode, authCodeMdl);
+				return;
 			}
-			else {
+		}
+
+		authCodeMdl = AuthCodeMdl.createOne(email);
+
+		try {
+			boolean flag = EmailUtils.sendTextMail(email, messageTitle, messageContent + authCodeMdl.getCode());
+			if (flag) {
+				getSession().setAttribute(keyEmailCode, authCodeMdl);
+			} else {
 				renderTextJson(ResTips.getFailRes("邮件发送失败,请您稍后重试"));
-				return ;
+				return;
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			log.debug("--------validateEmail 发送验证码到邮箱失败！！");
 			e.printStackTrace();
 			renderTextJson(ResTips.getFailRes("邮件发送失败,请您联系管理员"));
-			return ;
+			return;
 		}
 
-    	renderTextJson(ResTips.SUCCESS);
+		renderTextJson(ResTips.SUCCESS);
 	}
 
 	@Clear
 	public void sendPhoneCode() {
 
-		 String phone = getPara("phone");
-		 if (StringUtils.isBlank(phone) || !RegexUtils.checkMobile(phone)) {
-			 renderTextJson(ResTips.getFailRes("error, illegal phone"));
-			return ;
+		String phone = getPara("phone");
+		if (StringUtils.isBlank(phone) || !RegexUtils.checkMobile(phone)) {
+			renderTextJson(ResTips.getFailRes("error, illegal phone"));
+			return;
 		}
-		 
-		AuthCodeMdl authCodeMdl =  (AuthCodeMdl)getSession().getAttribute(keyPhoneCode);
+
+		AuthCodeMdl authCodeMdl = (AuthCodeMdl) getSession().getAttribute(keyPhoneCode);
 		if (Objects.nonNull(authCodeMdl)) {
 			if (!authCodeMdl.hasTimeOut(ConstantInitMy.AuthCode_TimeOut_Send)) {
 				renderTextJson(ResTips.getFailRes("error, not timeOut"));
-				return ;
-			} 
+				return;
+			}
 		}
-		
+
 		authCodeMdl = AuthCodeMdl.createOne(phone);
 		// todo send code to phone
-		
+
 		getSession().setAttribute(keyPhoneCode, authCodeMdl);
-		
+
 		renderTextJson(ResTips.SUCCESS);
 	}
 
@@ -376,8 +375,8 @@ public class T1usrBscController extends BaseController {
 	@Clear
 	public void regist() {
 
-		AuthCodeMdl authCodeMdlPhone =  (AuthCodeMdl)getSession().getAttribute(keyPhoneCode);
-		AuthCodeMdl authCodeMdlEmail =  (AuthCodeMdl)getSession().getAttribute(keyEmailCode);
+		AuthCodeMdl authCodeMdlPhone = (AuthCodeMdl) getSession().getAttribute(keyPhoneCode);
+		AuthCodeMdl authCodeMdlEmail = (AuthCodeMdl) getSession().getAttribute(keyEmailCode);
 		if (Objects.isNull(authCodeMdlPhone) && Objects.isNull(authCodeMdlEmail)) {
 			renderTextJson(ResTips.getFailRes("验证码已过期，请重新获取验证码"));
 			return;
@@ -398,20 +397,19 @@ public class T1usrBscController extends BaseController {
 		T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where crdt_no=? limit 1 ",
 				t1userBscDTO.getCrdt_no());
 		if (item != null) {
-			renderTextJson(ResTips.getFailRes(
-					String.format("该证件号【%s】已注册，请登录！", t1userBscDTO.getCrdt_no())));
-			return ;
+			renderTextJson(ResTips.getFailRes(String.format("该证件号【%s】已注册，请登录！", t1userBscDTO.getCrdt_no())));
+			return;
 		}
 		// 入库
-		if(T1usrBscService.service.addUserBsc(t1userBscDTO)) {
+		if (T1usrBscService.service.addUserBsc(t1userBscDTO)) {
 			renderTextJson(ResTips.getSuccRes());
-			return ;
+			return;
 		} else {
 			renderTextJson(ResTips.getFailRes());
-			return ;
+			return;
 		}
 	}
-	
+
 	private static JSONObject resJsonFail(String msg) {
 		JSONObject json = new JSONObject();
 		json.put("flag", false);
@@ -426,36 +424,38 @@ public class T1usrBscController extends BaseController {
 		HttpSession session = getSession();
 		if (null == session) {
 			renderJson(resJsonFail("登录信息已过期，请刷新页面重试！"));
-			return ;
+			return;
 		}
 
-		String msg = "";		
+		String msg = "";
 		String usertype = getPara("usertype");
-		
-		Long userID = (Long)session.getAttribute("usrid");
+
+		Long userID = (Long) session.getAttribute("usrid");
 		T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", userID);// 根据用户名查询数据库中的用户
 		if (item != null) {
 			if (usertype.equals("运动员"))// 运动员
 			{
 
-				Boolean needValEmail =  (Boolean)session.getAttribute("needValEmail");
-				Boolean needValPhone =  (Boolean)session.getAttribute("needValPhone");
-				Boolean needValSptPrj = (Boolean)session.getAttribute("needValSptPrj");
+				Boolean needValEmail = (Boolean) session.getAttribute("needValEmail");
+				Boolean needValPhone = (Boolean) session.getAttribute("needValPhone");
+				Boolean needValSptPrj = (Boolean) session.getAttribute("needValSptPrj");
 				StringBuilder sqlUpdate = new StringBuilder("update puresport.t1_usr_bsc set usr_tp=?");
 				List<Object> argList = new LinkedList<Object>();
 				argList.add(usertype);
-				
+
 				boolean haveUpdate = false;
-				
-				if (needValEmail!=null && needValEmail==Boolean.TRUE) {
+
+				if (needValEmail != null && needValEmail == Boolean.TRUE) {
 					String email = getPara("email");
 					String emailValCode = getPara("emailValCode");
-					if (StringUtils.isBlank(email) || StringUtils.isBlank(emailValCode) || !RegexUtils.checkEmail(email)) {
+					if (StringUtils.isBlank(email) || StringUtils.isBlank(emailValCode)
+							|| !RegexUtils.checkEmail(email)) {
 						renderJson(resJsonFail("邮箱或验证码不正确或为空"));
-						return ;
+						return;
 					}
-					AuthCodeMdl authCodeMdlEmail =  (AuthCodeMdl)getSession().getAttribute(keyEmailCode);
-					if (Objects.isNull(authCodeMdlEmail) || !authCodeMdlEmail.checkAuthCode(email, emailValCode, ConstantInitMy.AuthCode_TimeOut)) {
+					AuthCodeMdl authCodeMdlEmail = (AuthCodeMdl) getSession().getAttribute(keyEmailCode);
+					if (Objects.isNull(authCodeMdlEmail)
+							|| authCodeMdlEmail.checkAuthCodeFail(email, emailValCode, ConstantInitMy.AuthCode_TimeOut)) {
 						renderTextJson(ResTips.getFailRes("邮箱验证码错误或已过期，请重新获取验证"));
 						return;
 					}
@@ -464,16 +464,18 @@ public class T1usrBscController extends BaseController {
 					argList.add(1);
 					haveUpdate = true;
 				}
-				
-				if (needValPhone!=null && needValPhone==Boolean.TRUE) {
+
+				if (needValPhone != null && needValPhone == Boolean.TRUE) {
 					String phone = getPara("phone");
 					String mblphValCode = getPara("mblphValCode");
-					if (StringUtils.isBlank(phone) || StringUtils.isBlank(mblphValCode) || !RegexUtils.checkMobile(phone)) {
+					if (StringUtils.isBlank(phone) || StringUtils.isBlank(mblphValCode)
+							|| !RegexUtils.checkMobile(phone)) {
 						renderJson(resJsonFail("手机或验证码不正确或为空"));
-						return ;
+						return;
 					}
-					AuthCodeMdl authCodeMdlPhone =  (AuthCodeMdl)getSession().getAttribute(keyPhoneCode);
-					if (Objects.isNull(authCodeMdlPhone) || !authCodeMdlPhone.checkAuthCode(phone, mblphValCode, ConstantInitMy.AuthCode_TimeOut)) {
+					AuthCodeMdl authCodeMdlPhone = (AuthCodeMdl) getSession().getAttribute(keyPhoneCode);
+					if (Objects.isNull(authCodeMdlPhone)
+							|| authCodeMdlPhone.checkAuthCodeFail(phone, mblphValCode, ConstantInitMy.AuthCode_TimeOut)) {
 						renderTextJson(ResTips.getFailRes("手机验证码错误或已过期，请重新获取验证"));
 						return;
 					}
@@ -490,20 +492,20 @@ public class T1usrBscController extends BaseController {
 					argList.add(competetionitem);
 					haveUpdate = true;
 				}
-				
+
 				if (!haveUpdate) {
 					renderText("!haveUpdate");
 					return;
 				}
-				
+
 				sqlUpdate.append(" where usrid=?");
 				argList.add(userID);
-				
+
 				int res = Db.update(sqlUpdate.toString(), argList.toArray());
 				if (res > 0) {
 					flag = true;
 					getSession().setAttribute("usr_tp", usertype);
-					
+
 				}
 			} else {// 辅助人员
 				String belongToInstitute = getPara("belongToInstitute");
@@ -539,6 +541,63 @@ public class T1usrBscController extends BaseController {
 	}
 
 	/**
+	 * 个人中心 更新个人信息
+	 */
+	@Clear
+	public void updateSelfCenterInfo() {
+		Long userID = (Long) getSession().getAttribute("usrid");
+		String crdt_no = (String) getSession().getAttribute("crdt_no");
+		if (null == userID || null == crdt_no) {
+			renderWithPath(pthv + "login.html");
+			return;
+		}
+
+		// 入参 校验
+		T1userBscDTO t1userBscDTO = getParamWithClass(T1userBscDTO.class);
+		if (Objects.isNull(t1userBscDTO)) {
+			renderTextJson(ResTips.getFailRes());
+			return;
+		}
+		AuthCodeMdl authCodeMdlPhone = (AuthCodeMdl) getSession().getAttribute(keyPhoneCode);
+		AuthCodeMdl authCodeMdlEmail = (AuthCodeMdl) getSession().getAttribute(keyEmailCode);
+		if (!t1userBscDTO.validateForUpdate(authCodeMdlPhone, authCodeMdlEmail)) {
+			renderTextJson(ResTips.getFailRes(t1userBscDTO.getTipList()));
+			return;
+		}
+
+		T1usrBsc userBsc = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=? limit 1", userID);
+		if (null == userBsc) {
+			renderWithPath(pthv + "login.html");
+			return;
+		}
+		
+		if (T1usrBscService.service.updateUserBsc(t1userBscDTO, userBsc)) {
+			renderTextJson(ResTips.getSuccRes());
+			return;
+		} else {
+			renderTextJson(ResTips.getFailRes());
+			return;
+		}
+	}
+	
+	@Clear
+	public void selfCenterInfo() {
+		
+		Long userID = (Long) getSession().getAttribute("usrid");
+		if (null == userID ) {
+			renderWithPath(pthv + "login.html");
+			return;
+		}
+		T1usrBsc t1usrBsc = T1usrBscService.service.SelectById(userID); 
+		if (null == t1usrBsc) {
+			renderWithPath(pthv + "login.html");
+			return;
+		}
+		T1userBscDTO dto = new T1userBscDTO(t1usrBsc);
+		renderJson(dto);
+	}
+
+	/**
 	 * 保存
 	 */
 	@Before(T1usrBscValidator.class)
@@ -556,7 +615,7 @@ public class T1usrBscController extends BaseController {
 	 */
 	public void edit() {
 		// T1usrBsc t1usrBsc = T1usrBsc.dao.findById(getPara()); //guuid
-		T1usrBsc t1usrBsc = T1usrBscService.service.SelectById(getParaToInt()); // serial int id
+		T1usrBsc t1usrBsc = T1usrBscService.service.SelectById(getParaToLong()); // serial int id
 		setAttr("t1usrBsc", t1usrBsc);
 		renderWithPath(pthv + "update.html");
 
@@ -576,7 +635,7 @@ public class T1usrBscController extends BaseController {
 	 */
 	public void view() {
 		// T1usrBsc t1usrBsc = T1usrBsc.dao.findById(getPara()); //guuid
-		T1usrBsc t1usrBsc = T1usrBscService.service.SelectById(getParaToInt()); // serial int id
+		T1usrBsc t1usrBsc = T1usrBscService.service.SelectById(getParaToLong()); // serial int id
 		setAttr("t1usrBsc", t1usrBsc);
 		renderWithPath(pthv + "view.html");
 	}
