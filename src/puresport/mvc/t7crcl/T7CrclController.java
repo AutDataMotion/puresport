@@ -141,6 +141,7 @@ public class T7CrclController extends BaseController {
 	public void study_notify_tokyo_1() {
 		//判断是省运会、亚运会、青奥会
 		String which_competition = getPara("which_competition");
+		System.out.println("study_notify_tokyo_1 which_competition=" + which_competition);
 		if(StringUtils.isBlank(which_competition)) {			
 			renderWithPath("/f/zhunru_index_pre.html");
 			return;
@@ -166,7 +167,7 @@ public class T7CrclController extends BaseController {
 	 */
 	public void course_list_tokyo_2() {
 		System.out.println("xxxx");
-		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
+		Integer usrid = Integer.parseInt(getSession().getAttribute("usrid")+"");
 		System.out.println(usrid);
 		List<T7Crcl> t7List = queryCrcl(5, usrid);
 		// 查询考试情况,来源t11,判定当前各课程考试情况
@@ -1390,7 +1391,7 @@ public class T7CrclController extends BaseController {
 		setAttr("crdt_no", crdt_no);
 		String certificatePath = "";
 		
-		String useridStr = (String) getSession().getAttribute("usrid");
+		String useridStr = getSession().getAttribute("usrid")+"";
 		// 插入或者更新成绩统计表最后一次成绩
 		String sql = "select t.*, r.nm, r.spt_prj, r.province, (case r.city when '--' then '' when '-' then '' else r.city end) as city from t11_exam_stat t "
 				+ "JOIN t1_usr_bsc r on t.exam_st = '9' and t.usrid = r.usrid order by exam_grd desc, tms asc limit 100 ";
@@ -1641,10 +1642,10 @@ public class T7CrclController extends BaseController {
 			for(T10ExamGrd t10 : t10List) {
 				ExamEntity exam = new ExamEntity();
 				exam.setUsr_aswr(t10.getUsr_aswr());
-				exam.setPrblmno(t10.getPrblmno());
-				exam.setPrblmid(t10.getPrblmid());
-				exam.setUsrid(t10.getUsrid());
-				exam.setExam_grd(t10.getExam_grd());
+				exam.setPrblmno(Integer.parseInt(t10.getPrblmno()));
+				exam.setPrblmid(Integer.parseInt(t10.getPrblmid()));
+				exam.setUsrid(Integer.parseInt(t10.getUsrid()));
+				exam.setExam_grd(Integer.parseInt(t10.getExam_grd()));
 				// 查题目
 				T9Tstlib t9 = T9Tstlib.dao.findById(Long.parseLong(t10.getPrblmid()+""));
 				if(null != t9)
@@ -1691,4 +1692,15 @@ public class T7CrclController extends BaseController {
 		}
 	
 	}	
+	
+	/**
+	 * 描述：证书查询
+	 * 
+	 * @author zhuchaobin 2019-11-03
+	 */
+	@Clear
+	public void queryCredit() {
+		LOG.debug("queryCredit。。。");
+		renderWithPath("/f/queryCredit.html");
+	}
 }
