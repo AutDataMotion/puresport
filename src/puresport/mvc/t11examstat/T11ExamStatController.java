@@ -109,7 +109,7 @@ public class T11ExamStatController extends BaseController {
 		boolean flag = false;  
           
         String userID = getPara("userID");//获取表单数据，这里的参数就是页面表单中的name属性值  
-        List<T11ExamStat> itemlist = T11ExamStat.dao.find("select * from t11_exam_stat where usrid=? and exam_st = '1' order by tms desc limit 10", userID);
+        List<T11ExamStat> itemlist = T11ExamStat.dao.find("select * from t11_exam_stat where usrid=? and exam_st = '1' order by tms desc", userID);
         if(itemlist!=null)
         {
         	flag = true;
@@ -124,6 +124,8 @@ public class T11ExamStatController extends BaseController {
         		json.put("exam_grd", item.getExam_grd());
         		json.put("exam_name", item.getExam_nm());
         		json.put("tms", item.getTms());
+        		json.put("examid", item.getExamid());
+        		json.put("usrid", item.getUsrid());
         		
         		jsonArray.add(json);
         	}

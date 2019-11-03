@@ -1403,7 +1403,8 @@ public class T7CrclController extends BaseController {
 			if(i < heroList.size()) {
 				t11 = heroList.get(i);
 			} else {
-				break;
+				if(i >= 10)
+					break;
 			}
 			
 			LOG.debug("t11.getUsrid()" + t11.getUsrid());
