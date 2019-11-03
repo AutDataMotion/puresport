@@ -139,7 +139,7 @@ public class T6MgrAhrController extends BaseController {
 		// String userType = "";
 		JSONObject json = new JSONObject();
 
-		Long userID = Long.valueOf((String)getSession().getAttribute("usrid"));
+		Long userID = (Long)getSession().getAttribute("usrid");
 		T6MgrAhr item = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where usrid=?", userID);// 根据用户名查询数据库中的用户
 		if (item != null) {
 			//

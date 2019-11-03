@@ -87,9 +87,9 @@ function loginAlert(msg){
 function user_login()
 {
 
-	var account= $("#form-phone_user").val();
-	var pwd=$("#form-pwd_user").val();
-	var authCode=$("#authCode_user").val();
+	var account= $("#form-phone_user").val().trim();
+	var pwd=$("#form-pwd_user").val().trim();
+	var authCode=$("#authCode_user").val().trim();
 	if(!account || !pwd || !authCode){
 		loginAlert('有空值，请检查！');
 		return ;
@@ -116,28 +116,31 @@ function user_login()
 	    beforeSend:function(xhr){
 	    },
 	    success:function(data,textStatus,jqXHR){
-
+	    	
+	    	console.log("userLogin", data);
 	    	if(data.flag) {  
 	    		app.userType = data.userType;
 	    		if(data.needImproveInfoOrNot)
 	    		{
 	    			$("#userLoginPanel_1").toggle();
 		    		$("#userLoginPanel_2").toggle();
+		    		
+		    		if(data.needValSptPrj){
+		    			console.log("data.needValSptPrj", $('#getSportItem_user'));
+		    			$('#getSportItem_user').show();
+		    		}
+		    		if(data.needValPhone){
+		    			$('#divValPhone').show();
+		    		}
+		    		if(data.needValEmail){
+		    			$('#divValEmail').show();
+		    		}
+		    		
 		    		if(data.belongToInstitute)
 		    		{
 		    			app.belongToInstitute = data.belongToInstitute;
 		    			$("#getSportItem_user_assist").toggle();
 		    		}
-//		    		if(data.userType == "运动员")//运动员
-//	    			{
-//		    			
-//		    			$(".form-loginbox_user_2_1").toggle(true);
-//		    			$(".form-loginbox_user_2_2").toggle(false);
-//	    			}
-//		    		else{//辅助人员
-//		    			$(".form-loginbox_user_2_2").toggle(true);
-//		    			$(".form-loginbox_user_2_1").toggle(false);
-//		    		}
 	    		}
 	    		else{
 	    			window.location=data.url;  
@@ -213,14 +216,6 @@ function admin_login()
 		    		else{
 		    			$(".form-loginbox_admin_1").toggle(false);
 		    		}
-//		    		if(data.needImproveWrk_unitAndPostOrNot)
-//		    		{
-//		    			$(".form-loginbox_admin_2").toggle(true);
-//		    		}
-//		    		else{
-//		    			//alert(data.needImproveWrk_unitAndPostOrNot);
-//		    			$(".form-loginbox_admin_2").toggle(false);
-//		    		}
 		    		
 	    		}
 	    		else{
@@ -248,26 +243,8 @@ function Improve_user_info()
 	if(app.userType=="运动员")//运动员
 	{
 
-//		var group1=false;
-
 		var group2=false;
 
-//		var province = $('#getDist_user_province option:selected').val();
-//		var city = $('#getDist_user_city option:selected').val();
-//
-//		if(province&&city)
-//		{
-//			group1=true;
-//			
-//		}
-//		else
-//		{
-//			group1=false;
-//
-//			Tips('myModallyf_content_user',"请选择代表单位!");
-//			return;
-//			
-//		}
 		var Competetion = $('#getSportItem_user_Competetion option:selected').val();
 		
 		var CompetetionItem = $('#getSportItem_user_CompetetionItem option:selected').val();
@@ -281,8 +258,7 @@ function Improve_user_info()
 		else{
 			group2=true;
 		}
-//		if(group1&&group2)
-//		{
+
 		if(group2)
 		{	
 			
@@ -291,12 +267,14 @@ function Improve_user_info()
 			    type:'POST', //GET
 			    async:true,    //或false,是否异步
 			    data:{
-
-//			    	province:province,
-//			    	city:city,
 			    	usertype:app.userType,
 			    	competetion:Competetion,
-			    	competetionitem:CompetetionItem
+			    	competetionitem:CompetetionItem,
+			    	phone:$('#mblph_no').val().trim(),
+			    	mblphValCode:$('#mblphValCode').val().trim(),
+			    	email:$('#email').val().trim(),
+			    	emailValCode:$('#emailValCode').val().trim(),
+			    	
 			    },
 			    timeout:5000,    //超时时间
 			    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
@@ -360,11 +338,7 @@ function Improve_user_info()
 		                window.location=data.url;  
 			    	}  
 		            else {  
-//		                alert(data.msg); 
-//		                $('#myModallyf_content').text(data.msg);
-//		    	    	$('#myModallyf').modal('show');
-//		            	$('#myModallyf_content_user').style.display="block";
-//		    			$('#myModallyf_content_user').text(data.msg);
+
 		            	Tips('myModallyf_content_user',data.msg);
 		            }  
 			    },
@@ -376,11 +350,6 @@ function Improve_user_info()
 			})
 		}
 		else{
-//			alert("请完善个人信息！");
-//			$('#myModallyf_content').text("请完善个人信息！");
-//	    	$('#myModallyf').modal('show');
-//			$('#myModallyf_content_user').style.display="block";
-//			$('#myModallyf_content_user').text("请完善个人信息！");
 			Tips('myModallyf_content_user',"请完善个人信息！");
 		}
 	}
@@ -404,8 +373,6 @@ function Improve_user_info_selfcenter(usr_tp)
 function Improve_admin_info()
 {
 
-//	var company = $('#form-company_admin').val();
-//	var position = $('#form-position_admin').val();
 	var xiehuiItemName = $('#getxiehuiItemName option:selected').val();
 	
 	if(app.needImproveInstituteOrNot)
@@ -417,19 +384,6 @@ function Improve_admin_info()
 			return;
 		}	
 	}
-//	if(app.needImproveWrk_unitAndPostOrNot)
-//	{
-//		
-//		
-//		if(!company&&!position)
-//		{
-//			alert("请完善个人信息");
-//			return;
-//		}
-//	}
-	
-	
-	
 	
 //	if(company&&position)
 	if(xiehuiItemName)
@@ -588,9 +542,6 @@ function forgetpwd_getpwdByEmail(userOradmin)
 			    },
 			    success:function(data,textStatus,jqXHR){
 			    	if(data.flag) {  
-		                //window.location=data.url;  
-			    		//alert("密码重置成功！请重新登录！");
-			    		
 			    		$('#myModallyf_content').text("密码重置成功！请重新登录！");
 			    		$('#myModallyf').modal('show');
 			    		$("#myModallyf_btn").click(function(){
@@ -634,7 +585,6 @@ function resetPwd(userOradmin)
 	{
 		if(newPwd!=newPwd_confrim)
 		{
-//			$('#passwordModal_hint').text("密码不一致！！");
 			Tips('passwordModal_hint',"密码不一致！！");
 		}
 		else{
@@ -656,19 +606,10 @@ function resetPwd(userOradmin)
 			    },
 			    success:function(data,textStatus,jqXHR){
 			    	if(data.flag) {  
-		                //window.location=data.url;  
-			    		//alert("密码重置成功！请重新登录！");
-			    		
-//			    		$('#passwordModal_hint').text("密码重置成功！请重新登录！");
 			    		Tips('passwordModal_hint',"密码重置成功！请重新登录！");
-			    		//$('#passwordModal').modal('hide');
-			    		
 		            }  
 		            else {  
-//		            	$('#passwordModal_hint').text(data.msg);
 		            	Tips('passwordModal_hint',data.msg);
-//			    		$('#systemModal').modal('show');
-		                //alert(data.msg);  
 		            }  
 			    },
 			    error:function(xhr,textStatus){

@@ -168,7 +168,7 @@ public abstract class Model<M extends Model> implements Serializable {
 	public <T> T get(String attr) {
 //		return (T)(String.valueOf(attrs.get(attr)));
 		Object result = attrs.get(attr);
-		return (T)(result != null ? String.valueOf(attrs.get(attr)) : null);
+		return (T)(result != null ? result : null);
 	}
 	
 	/**

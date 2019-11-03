@@ -57,7 +57,7 @@ public class ModelBuilder {
 					value = handleBlob(rs.getBlob(i));
 				else
 					value = rs.getObject(i);
-				//System.out.println(String.format("labelName:[%s] value[%s]", labelNames[i], String.valueOf(value)));
+				//System.out.println(String.format("labelName:[%s] type[%d] value[%s]", labelNames[i],  types[i], String.valueOf(value)));
 				attrs.put(labelNames[i], value);
 			}
 			result.add((T)ar);

@@ -1,9 +1,12 @@
 package puresport.mvc.t1usrbsc;
 
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -19,6 +22,7 @@ import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
 
 import csuduc.platform.util.ComOutMdl;
+import csuduc.platform.util.ComUtil;
 import csuduc.platform.util.RegexUtils;
 import csuduc.platform.util.StringUtil;
 import csuduc.platform.util.encrypt.DESUtil;
@@ -221,45 +225,56 @@ public class T1usrBscController extends BaseController {
 
 		String crdt_no = getPara("account");// 获取表单数据，这里的参数就是页面表单中的name属性值
 		String password = getPara("pwd");
+		
+		if (ComUtil.haveEmpty(crdt_no, password)) {
+			renderText("illegal");
+			return;
+		}
+		
+		Integer accountType = RegexUtils.checkPhoneOrEmailOrID(crdt_no);
+		if (accountType == 0) {
+			renderText("illegal");
+			return;
+		}
+		
 		try {
 			if (authCode) {
 				String encryptpassword = DESUtil.encrypt(password, ConstantInitMy.SPKEY);
 
-				T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where crdt_no=?", crdt_no);// 根据用户名查询数据库中的用户
+				String accountFieldName = accountType==1?"usr_nm":(accountType==2?"email":"crdt_no");
+				T1usrBsc item = T1usrBsc.dao.findFirst(String.format("select * from t1_usr_bsc where %s=?", accountFieldName), crdt_no);
 				if (item != null) {
 					String pwddd = item.getPswd();
 					if (encryptpassword.equals(item.getPswd())) {// 判断数据库中的密码与用户输入的密码是否一致
 						PageViewSta.StaLoginPeopleCountByDay();
 						flag = true;
 						userType = item.getUsr_tp();
-						getSession().setAttribute("usrid", item.getUsrid());// 设置session，保存登录用户的昵称
-						getSession().setAttribute("crdt_no", item.getCrdt_no());// 设置session，保存登录用户的昵称
-						getSession().setAttribute("pwd", item.getPswd());// 设置session，保存登录用户的昵称
-						getSession().setAttribute("usr_tp", item.getUsr_tp());// 设置session，保存登录用户的昵称
+						getSession().setAttribute("usrid", item.getUsrid());
+						getSession().setAttribute("crdt_no", item.getCrdt_no());
+						getSession().setAttribute("pwd", item.getPswd());
+						getSession().setAttribute("usr_tp", item.getUsr_tp());
 
-						if (item.getInstitute() != null) {
-							belongToInstitute = true;
-						}
-						json.put("belongToInstitute", belongToInstitute);
+						json.put("belongToInstitute", item.getInstitute() != null);
+						String sptPrj = item.getSpt_prj();
+						Integer emailVal = item.getEmailVal();
+						Integer phoneVal = item.getMblPhVal();
+						Boolean needValEmail =  (null == emailVal)||(emailVal==0);
+						Boolean needValPhone =  (null == phoneVal)||(phoneVal==0);
+						Boolean needValSptPrj = StringUtils.isBlank(sptPrj);
+						
+						json.put("needValSptPrj", needValSptPrj);
+						json.put("needValEmail", needValEmail);
+						json.put("needValPhone", needValPhone);
+						
+						getSession().setAttribute("needValSptPrj", needValSptPrj);
+						getSession().setAttribute("needValEmail", needValEmail);
+						getSession().setAttribute("needValPhone", needValPhone);
+						
 						if (userType.equals("运动员"))// 运动员表 这个字段的初始值为运动员！
 						{
-							Object ss = item.getAdiv_cd();
-//    	                	if(item.getAdiv_cd()!=null&&item.getSpt_prj()!=null)
-//    	                	if(item.getProvince()!="--"&&item.getCity()!="--"&&item.getSpt_prj()!=null)
-//    	                	{
-//    	                		needImproveInfoOrNot  =false;
-//    	                	}	
-							if (item.getSpt_prj() != null) {
-								needImproveInfoOrNot = false;
-							} else {
-								needImproveInfoOrNot = true;
-							}
+							needImproveInfoOrNot = needValSptPrj||needValEmail||needValPhone;
 						} else {
-							if (item.getDepartment() != null && item.getPost() != null) {
-								needImproveInfoOrNot = false;
-							} else {
-								needImproveInfoOrNot = true;
-							}
+							needImproveInfoOrNot = (item.getDepartment() == null || item.getPost() == null);
 						}
 						json.put("needImproveInfoOrNot", needImproveInfoOrNot);
 					} else {
@@ -301,13 +316,13 @@ public class T1usrBscController extends BaseController {
 		 
 		AuthCodeMdl authCodeMdl =  (AuthCodeMdl)getSession().getAttribute(keyEmailCode);
 		if (Objects.nonNull(authCodeMdl)) {
-			if (!authCodeMdl.hasTimeOut(59)) {
+			if (!authCodeMdl.hasTimeOut(ConstantInitMy.AuthCode_TimeOut_Send)) {
 				renderTextJson(ResTips.getFailRes("error, not timeOut"));
 				return ;
 			} 
 		}
 		
-		authCodeMdl = AuthCodeMdl.createOne();
+		authCodeMdl = AuthCodeMdl.createOne(email);
 		
     	try {
 			boolean flag = EmailUtils.sendTextMail(email,messageTitle, messageContent+authCodeMdl.getCode());
@@ -341,13 +356,13 @@ public class T1usrBscController extends BaseController {
 		 
 		AuthCodeMdl authCodeMdl =  (AuthCodeMdl)getSession().getAttribute(keyPhoneCode);
 		if (Objects.nonNull(authCodeMdl)) {
-			if (!authCodeMdl.hasTimeOut(59)) {
+			if (!authCodeMdl.hasTimeOut(ConstantInitMy.AuthCode_TimeOut_Send)) {
 				renderTextJson(ResTips.getFailRes("error, not timeOut"));
 				return ;
 			} 
 		}
 		
-		authCodeMdl = AuthCodeMdl.createOne();
+		authCodeMdl = AuthCodeMdl.createOne(phone);
 		// todo send code to phone
 		
 		getSession().setAttribute(keyPhoneCode, authCodeMdl);
@@ -396,33 +411,99 @@ public class T1usrBscController extends BaseController {
 			return ;
 		}
 	}
+	
+	private static JSONObject resJsonFail(String msg) {
+		JSONObject json = new JSONObject();
+		json.put("flag", false);
+		json.put("msg", msg);
+		return json;
+	};
 
 	@Clear
 	public void ImproveUserInfo() {
 		boolean flag = false;
-		String msg = "";
-//        String userType = "";
 		JSONObject json = new JSONObject();
+		HttpSession session = getSession();
+		if (null == session) {
+			renderJson(resJsonFail("登录信息已过期，请刷新页面重试！"));
+			return ;
+		}
 
+		String msg = "";		
 		String usertype = getPara("usertype");
-
-		Long userID = Long.valueOf((String) getSession().getAttribute("usrid"));
+		
+		Long userID = (Long)session.getAttribute("usrid");
 		T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", userID);// 根据用户名查询数据库中的用户
 		if (item != null) {
 			if (usertype.equals("运动员"))// 运动员
 			{
 
-//            	String province = getPara("province");
-//            	String city = getPara("city");
-				String competetion = getPara("competetion");
-				String competetionitem = getPara("competetionitem");
+				Boolean needValEmail =  (Boolean)session.getAttribute("needValEmail");
+				Boolean needValPhone =  (Boolean)session.getAttribute("needValPhone");
+				Boolean needValSptPrj = (Boolean)session.getAttribute("needValSptPrj");
+				StringBuilder sqlUpdate = new StringBuilder("update puresport.t1_usr_bsc set usr_tp=?");
+				List<Object> argList = new LinkedList<Object>();
+				argList.add(usertype);
+				
+				boolean haveUpdate = false;
+				
+				if (needValEmail!=null && needValEmail==Boolean.TRUE) {
+					String email = getPara("email");
+					String emailValCode = getPara("emailValCode");
+					if (StringUtils.isBlank(email) || StringUtils.isBlank(emailValCode) || !RegexUtils.checkEmail(email)) {
+						renderJson(resJsonFail("邮箱或验证码不正确或为空"));
+						return ;
+					}
+					AuthCodeMdl authCodeMdlEmail =  (AuthCodeMdl)getSession().getAttribute(keyEmailCode);
+					if (Objects.isNull(authCodeMdlEmail) || !authCodeMdlEmail.checkAuthCode(email, emailValCode, ConstantInitMy.AuthCode_TimeOut)) {
+						renderTextJson(ResTips.getFailRes("邮箱验证码错误或已过期，请重新获取验证"));
+						return;
+					}
+					sqlUpdate.append(", email = ?, email_val=? ");
+					argList.add(email);
+					argList.add(1);
+					haveUpdate = true;
+				}
+				
+				if (needValPhone!=null && needValPhone==Boolean.TRUE) {
+					String phone = getPara("phone");
+					String mblphValCode = getPara("mblphValCode");
+					if (StringUtils.isBlank(phone) || StringUtils.isBlank(mblphValCode) || !RegexUtils.checkMobile(phone)) {
+						renderJson(resJsonFail("手机或验证码不正确或为空"));
+						return ;
+					}
+					AuthCodeMdl authCodeMdlPhone =  (AuthCodeMdl)getSession().getAttribute(keyPhoneCode);
+					if (Objects.isNull(authCodeMdlPhone) || !authCodeMdlPhone.checkAuthCode(phone, mblphValCode, ConstantInitMy.AuthCode_TimeOut)) {
+						renderTextJson(ResTips.getFailRes("手机验证码错误或已过期，请重新获取验证"));
+						return;
+					}
+					sqlUpdate.append(", mblph_no = ?, mblph_val=? ");
+					argList.add(phone);
+					argList.add(1);
+					haveUpdate = true;
+				}
 
-//                int res = Db.update("update puresport.t1_usr_bsc set province=?,city=?,spt_prj=? where usrid=?",province,city,competetionitem,userID);
-				int res = Db.update("update puresport.t1_usr_bsc set usr_tp=?,spt_prj=? where usrid=?", usertype,
-						competetionitem, userID);
+				if (needValSptPrj) {
+//					String competetion = getPara("competetion");
+					String competetionitem = getPara("competetionitem");
+					sqlUpdate.append(",spt_prj=? ");
+					argList.add(competetionitem);
+					haveUpdate = true;
+				}
+				
+				if (!haveUpdate) {
+					renderText("!haveUpdate");
+					return;
+				}
+				
+				sqlUpdate.append(" where usrid=?");
+				argList.add(userID);
+				
+				int res = Db.update(sqlUpdate.toString(), argList.toArray());
 				if (res > 0) {
 					flag = true;
-					getSession().setAttribute("usr_tp", usertype);// 设置session，保存登录用户的昵称
+					getSession().setAttribute("usr_tp", usertype);
+					
 				}
 			} else {// 辅助人员
 				String belongToInstitute = getPara("belongToInstitute");
@@ -448,7 +529,7 @@ public class T1usrBscController extends BaseController {
 				}
 			}
 		} else {
-			msg = "更新失败";
+			msg = "更新失败，请刷新页面！";
 		}
 		json.put("flag", flag);
 		json.put("msg", msg);

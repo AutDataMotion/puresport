@@ -211,7 +211,7 @@ public class pagesController extends BaseController {
 		setAttr("sport_items_of_institute",sport_items_of_institute);
 		setAttr("sport_items_of_shengyunhui",sport_items_of_shengyunhui);
 		
-		Long userID = Long.valueOf((String)getSession().getAttribute("usrid"));
+		Long userID = (Long)getSession().getAttribute("usrid");
 		String crdt_no = (String)getSession().getAttribute("crdt_no");
 		String pwd = (String)getSession().getAttribute("pwd");
 		T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", userID);//根据用户名查询数据库中的用户  
@@ -237,7 +237,7 @@ public class pagesController extends BaseController {
 	public void admin() {
 		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
 		//renderWithPath(pthv+"list.html");
-		Long userID = Long.valueOf((String)getSession().getAttribute("usrid"));
+		Long userID = (Long)getSession().getAttribute("usrid");
 		String crdt_no = (String)getSession().getAttribute("crdt_no");
 		String pwd = (String)getSession().getAttribute("pwd");
 		T6MgrAhr item = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where usrid=?", userID);//根据用户名查询数据库中的用户  
@@ -382,7 +382,7 @@ public class pagesController extends BaseController {
 			
 			String userOradmin = getPara("userOradmin"); 
 	        
-	        Long userID = Long.valueOf((String)getSession().getAttribute("usrid"));
+	        Long userID = (Long)getSession().getAttribute("usrid");
 	        if(userOradmin.equals("01"))
 	        {
 	        	

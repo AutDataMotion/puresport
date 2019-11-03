@@ -18,8 +18,8 @@ public class PageViewSta {
 			T3Statl mdl = T3StatlService.service.SelectByDate();
 			if(mdl!=null)
 			{
-				int count = Integer.valueOf(mdl.getLogin_cnt());
-				Long id = Long.valueOf(mdl.getId());
+				int count = mdl.getLogin_cnt();
+				Long id = mdl.getId();
 				int res = Db.update("update puresport.t3_stat set login_cnt=? where id=?",count+1,id);
 			}
 			else {

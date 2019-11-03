@@ -162,6 +162,7 @@ $(function() {
                 }
             })
 		}
+		
 		function user_regist(formObjJsonStr) {
 
 			$.ajax({

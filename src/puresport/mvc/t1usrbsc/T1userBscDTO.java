@@ -14,6 +14,7 @@ import javax.swing.event.ListSelectionEvent;
 
 import csuduc.platform.util.ComUtil;
 import csuduc.platform.util.StringUtil;
+import puresport.constant.ConstantInitMy;
 import puresport.mvc.comm.AuthCodeMdl;
 
 /**
@@ -60,21 +61,15 @@ public class T1userBscDTO implements Serializable{
 		}
 		// 邮件是否校验
 		if (emailValCode!=null) {
-			if (authCodeMdlEmail.hasTimeOut(59*10)) {
-				tipList.add("邮箱校验码已过期");
-				return false;
-			} else if(!emailValCode.equals(Integer.valueOf(authCodeMdlEmail.getCode()))){
-				tipList.add("邮箱校验码不正确，请重新获取验证");
+			if (authCodeMdlEmail.checkAuthCode(email, emailValCode.toString(), ConstantInitMy.AuthCode_TimeOut)) {
+				tipList.add("邮箱校验码失败，请重新获取验证");
 				return false;
 			}
 		}
 		
 		// 手机是否校验
 		if (mblphValCode!=null) {
-			if (authCodeMdlPhone.hasTimeOut(59*10)) {
-				tipList.add("手机校验码已过期");
-				return false;
-			} else if(!mblphValCode.equals(Integer.valueOf(authCodeMdlPhone.getCode()))){
+			if (authCodeMdlPhone.checkAuthCode(mblph_no, mblphValCode.toString(), ConstantInitMy.AuthCode_TimeOut)) {
 				tipList.add("手机校验码不正确，请重新获取验证");
 				return false;
 			}
