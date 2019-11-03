@@ -150,7 +150,7 @@ public class T7CrclController extends BaseController {
 			getSession().setAttribute("which_competition", EnumCompetition.DongJingAoYunHui.getCompetitionName());
 		}
 			
-		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
+		Integer usrid = Integer.parseInt(getSession().getAttribute("usrid") +"");
 		System.out.println(usrid);
 /*		List<T7Crcl> t7List = queryCrcl(1, usrid);
 		setAttr("t7", t7List.get(0));
@@ -1607,5 +1607,88 @@ public class T7CrclController extends BaseController {
 //		}
 
 	}
+	
+	/**
+	 * 描述：根据考试id查询试卷
+	 * 
+	 * @author zhuchaobin 2019-11-2
+	 */
+	public void queryTestPaper() {			
+		String usrid = getPara("usrid");
+		String examid = getPara("examid");		
+		// 考试名称，科目
+		String t11sql = "select * from t11_exam_stat t where t.examid ='"
+				+ examid +"'";
+		T11ExamStat t11 = T11ExamStat.dao.findFirst(t11sql);
+		if(null != t11){
+			setAttr("exam_name", t11.getExam_nm());
+			setAttr("category", t11.getCategory());
+			DateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");  
+			setAttr("tms", t11.getTms());
+			setAttr("exam_grd", t11.getExam_grd());
+		}
 
+		System.out.println("usrid="+usrid);
+		System.out.println("examid="+examid);
+				
+		String sql = "select * from t10_exam_grd t where t.usrid = '" + usrid + "' and t.examid ='"
+				+ examid + "' order by t.prblmid";
+		List<T10ExamGrd> t10List = T10ExamGrd.dao.find(sql);
+		List<ExamEntity> testPaperList01 = new ArrayList<ExamEntity>();
+		List<ExamEntity> testPaperList02 = new ArrayList<ExamEntity>();
+		if ((null == t10List) || (0 < t10List.size())) {
+			LOG.debug("查询到试卷，包含考题：" + t10List.size() + "道.");
+			for(T10ExamGrd t10 : t10List) {
+				ExamEntity exam = new ExamEntity();
+				exam.setUsr_aswr(t10.getUsr_aswr());
+				exam.setPrblmno(t10.getPrblmno());
+				exam.setPrblmid(t10.getPrblmid());
+				exam.setUsrid(t10.getUsrid());
+				exam.setExam_grd(t10.getExam_grd());
+				// 查题目
+				T9Tstlib t9 = T9Tstlib.dao.findById(Long.parseLong(t10.getPrblmid()+""));
+				if(null != t9)
+					exam.setTtl(t9.getTtl());
+				if(Integer.parseInt(t10.getExam_grd()+"") > 0)
+					exam.setRltDesc("正确");
+				else 
+					exam.setRltDesc("错误");
+				
+				exam.setOpt((String) t9.getOpt());
+				String option = exam.getOpt();
+				String[] optionList = option.split("\\|");
+				// 4个选项
+				if (4 == optionList.length) {
+					exam.setOptA(optionList[0]);
+					exam.setOptB(optionList[1]);
+					exam.setOptC(optionList[2]);
+					exam.setOptD(optionList[3]);
+				} else if (2 == optionList.length) {// 2个选项
+					exam.setOptA("正确");
+					exam.setOptB("错误");
+				}
+				// 设置已选选项
+				if(t10.getUsr_aswr().toString().contains("A"))
+					exam.setOptASelct("checked");
+				if(t10.getUsr_aswr().toString().contains("B"))
+					exam.setOptBSelct("checked");
+				if(t10.getUsr_aswr().toString().contains("C"))
+					exam.setOptCSelct("checked");
+				if(t10.getUsr_aswr().toString().contains("D"))
+					exam.setOptDSelct("checked");
+				
+				if("01".equals(t9.getPrblm_tp()))
+					testPaperList01.add(exam);
+				else if("02".equals(t9.getPrblm_tp()))
+					testPaperList02.add(exam);
+			}
+			setAttr("testPaperList01", testPaperList01);
+			setAttr("testPaperList02", testPaperList02);
+			renderWithPath("/f/accession/queryTestPaper.html");
+		} else {
+			LOG.error("查询不到对应考试记录，请确认！");
+			renderWithPath("/f/accession/queryTestPaper.html");
+		}
+	
+	}	
 }
