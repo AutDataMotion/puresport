@@ -171,9 +171,6 @@ public abstract class Model<M extends Model> implements Serializable {
 			return null;
 		}
 		return (T)(String.valueOf(result));
-		
-//		return (T)(String.valueOf(attrs.get(attr)));
-//		return (T)(result != null ? result : null);
 	}
 	
 	// 正确的泛型

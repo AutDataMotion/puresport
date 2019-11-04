@@ -643,10 +643,13 @@ function initScoreTable(userID)
 		    timeout:5000,    //超时时间
 		    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
 		    beforeSend:function(xhr){
+		        //console.log(xhr)
 		        console.log('发送前')
 		    },
 		    success:function(data,textStatus,jqXHR){
 		    	if(data.flag) {  
+//		    		alert(data);
+//	                console.log(data.itemlist[0].exam_grd);
 		    		var dataSet = [];
 		    		for(var i =0;i<data.itemlist.length;i++)
 		    		{
@@ -654,6 +657,8 @@ function initScoreTable(userID)
 		    			score.push(data.itemlist[i].exam_grd);
 		    			score.push(data.itemlist[i].exam_name);
 		    			score.push(data.itemlist[i].tms);
+		    			score.push(data.itemlist[i].examid);
+		    			score.push(data.itemlist[i].usrid);
 		    			dataSet.push(score);
 		    		}
 		    		$('#score_excel').DataTable({
@@ -664,9 +669,10 @@ function initScoreTable(userID)
 //	    		        "filter": false,
 //	    		        "destroy": true,
 	    		        columns: [
-	    		            { title: "成绩" },
+	    		            { title: "成绩" },    		  
 	    		            { title: "赛事" },
-	    		            { title: "时间" }
+	    		            { title: "时间" },
+	    		            { title: "查看试卷", sortable: false, render: function(data, type, row) { return '<a href="/jf/puresport/t7Crcl/queryTestPaper?exam_grd='+row[0] +'&tms='+row[2] +'&usrid='+row[4]+'&examid='+row[3]+'" target="_blank"  role="button">'+'答题情况'+'</a>'; } },
 	    		        ]
 	    		    });
 	            }  
@@ -691,6 +697,9 @@ function initScoreTable(userID)
 		        console.log('错误')
 		        console.log(xhr)
 		        console.log(textStatus)
+		    },
+		    complete:function(){
+		        console.log('结束')
 		    }
 		})
 	}

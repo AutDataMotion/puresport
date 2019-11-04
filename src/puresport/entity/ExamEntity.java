@@ -29,7 +29,102 @@ public class ExamEntity {
 	private String optF;
 	private String optG;
 	private String optH;
-		
+	
+	// 答题选项
+	private String optASelct;
+	private String optBSelct;
+	private String optCSelct;
+	private String optDSelct;
+	private String optESelct;
+	private String optFSelct;
+	private String optGSelct;
+	private String optHSelct;
+	
+	public String getOptASelct() {
+		return optASelct;
+	}
+	public void setOptASelct(String optASelct) {
+		this.optASelct = optASelct;
+	}
+	public String getOptBSelct() {
+		return optBSelct;
+	}
+	public void setOptBSelct(String optBSelct) {
+		this.optBSelct = optBSelct;
+	}
+	public String getOptCSelct() {
+		return optCSelct;
+	}
+	public void setOptCSelct(String optCSelct) {
+		this.optCSelct = optCSelct;
+	}
+	public String getOptDSelct() {
+		return optDSelct;
+	}
+	public void setOptDSelct(String optDSelct) {
+		this.optDSelct = optDSelct;
+	}
+	public String getOptESelct() {
+		return optESelct;
+	}
+	public void setOptESelct(String optESelct) {
+		this.optESelct = optESelct;
+	}
+	public String getOptFSelct() {
+		return optFSelct;
+	}
+	public void setOptFSelct(String optFSelct) {
+		this.optFSelct = optFSelct;
+	}
+	public String getOptGSelct() {
+		return optGSelct;
+	}
+	public void setOptGSelct(String optGSelct) {
+		this.optGSelct = optGSelct;
+	}
+	public String getOptHSelct() {
+		return optHSelct;
+	}
+	public void setOptHSelct(String optHSelct) {
+		this.optHSelct = optHSelct;
+	}
+	// 答题结果对错描述
+	private String rltDesc;	
+	private String usr_aswr;
+	private Integer usrid;
+	private Integer examid;
+	private Integer exam_grd;
+
+	public String getRltDesc() {
+		return rltDesc;
+	}
+	public void setRltDesc(String rltDesc) {
+		this.rltDesc = rltDesc;
+	}
+	public String getUsr_aswr() {
+		return usr_aswr;
+	}
+	public void setUsr_aswr(String usr_aswr) {
+		this.usr_aswr = usr_aswr;
+	}
+	public Integer getUsrid() {
+		return usrid;
+	}
+	public void setUsrid(Integer usrid) {
+		this.usrid = usrid;
+	}
+	public Integer getExamid() {
+		return examid;
+	}
+	public void setExamid(Integer examid) {
+		this.examid = examid;
+	}
+	public Integer getExam_grd() {
+		return exam_grd;
+	}
+	public void setExam_grd(Integer exam_grd) {
+		this.exam_grd = exam_grd;
+	}
 		public Timestamp getExam_st_tm() {
 		return exam_st_tm;
 	}

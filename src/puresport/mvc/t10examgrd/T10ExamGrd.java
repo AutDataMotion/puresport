@@ -137,7 +137,28 @@ public class T10ExamGrd extends BaseModel<T10ExamGrd> {
 	private String result;
 	private String type;
 	private String category;
+	
+/*	// 题目
+	private String ttl;
+	// 答题结果对错描述
+	private String rltDesc;
+	// 试题类型
+	private String prblm_tp;
+	// 选项
+	private String opt;*/
 
+/*	public String getRltDesc() {
+		return rltDesc;
+	}
+	public void setRltDesc(String rltDesc) {
+		this.rltDesc = rltDesc;
+	}
+	public String getTtl() {
+		return ttl;
+	}
+	public void setTtl(String ttl) {
+		this.ttl = ttl;
+	}*/
 	public <T> T  getType() {
 		return get(column_type);
 	}
