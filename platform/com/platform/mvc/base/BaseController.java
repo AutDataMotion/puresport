@@ -53,12 +53,12 @@ public abstract class BaseController extends Controller {
 	
 	protected abstract void setViewPath();
 	
-	public <T> T getSessionAttr(HttpSession session, String key, Class<T> type) throws Exception {
+	public <T> T getSessionAttrForStr(String key, Class<T> type){
 		
-		if (ComUtil.haveEmpty(session, key, type)) {
-			throw new Exception("arg have empty");
+		if (ComUtil.haveEmpty(key, type)) {
+			return null;
 		}
-		Object obj = session.getAttribute(key);
+		Object obj = getSessionAttr(key);
 		
 		if (null == obj) {
 			return null;
@@ -78,7 +78,8 @@ public abstract class BaseController extends Controller {
 			if (type.equals(Boolean.class)) {
 				return (T)Boolean.valueOf(strObj);
 			}
-			throw new Exception("not support");
+			// throw new Exception("not support");
+			log.error("getSessionAttrForStr not support type:"+type.getName());
 		}
 		return (T)obj;
 	}

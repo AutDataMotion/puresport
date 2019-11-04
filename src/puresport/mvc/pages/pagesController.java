@@ -212,9 +212,9 @@ public class pagesController extends BaseController {
 		setAttr("sport_items_of_institute",sport_items_of_institute);
 		setAttr("sport_items_of_shengyunhui",sport_items_of_shengyunhui);
 		
-		Long userID = (Long)getSession().getAttribute("usrid");
-		String crdt_no = (String)getSession().getAttribute("crdt_no");
-		String pwd = (String)getSession().getAttribute("pwd");
+		Long userID = getSessionAttrForStr("usrid", Long.class);
+		String crdt_no = getSessionAttr("crdt_no");
+		String pwd = getSessionAttr("pwd");
 		T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=? limit 1", userID);//根据用户名查询数据库中的用户  
         if(item!=null)
         {
@@ -238,9 +238,9 @@ public class pagesController extends BaseController {
 	public void admin() {
 		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
 		//renderWithPath(pthv+"list.html");
-		Long userID = (Long)getSession().getAttribute("usrid");
-		String crdt_no = (String)getSession().getAttribute("crdt_no");
-		String pwd = (String)getSession().getAttribute("pwd");
+		Long userID = getSessionAttrForStr("usrid", Long.class);
+		String crdt_no = getSessionAttr("crdt_no");
+		String pwd = getSessionAttr("pwd");
 		T6MgrAhr item = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where usrid=?", userID);//根据用户名查询数据库中的用户  
 		if(item!=null)
         {
@@ -293,7 +293,7 @@ public class pagesController extends BaseController {
 				flag = EmailUtils.sendTextMail(email,subject, confirmMsg);
 				if(flag)
 				{
-					getSession().setAttribute("emailConfirmCode", confirmCode);//设置session，保存登录用户的昵称
+					setSessionAttr("emailConfirmCode", confirmCode);//设置session，保存登录用户的昵称
 				}
 				else {
 					msg = "邮件发送失败";  
@@ -330,7 +330,7 @@ public class pagesController extends BaseController {
         try {
 			String encryptpassword = DESUtil.encrypt(newPwd, ConstantInitMy.SPKEY);
 			
-			if(confrimcode.equals((String)getSession().getAttribute("emailConfirmCode")))
+			if(confrimcode.equals((String)getSessionAttr("emailConfirmCode")))
 	        {
 	        	if(userOradmin.equals("01"))//运动员及辅助人员
 	            {
@@ -338,7 +338,7 @@ public class pagesController extends BaseController {
 	                if(res>0)
 	                {
 	                	flag = true; 
-	                	getSession().removeAttribute("emailConfirmCode");
+	                	removeSessionAttr("emailConfirmCode");
 	                }
 	            }
 	            else {
@@ -346,7 +346,7 @@ public class pagesController extends BaseController {
 	                if(res>0)
 	                {
 	                	flag = true; 
-	                	getSession().removeAttribute("emailConfirmCode");
+	                	removeSessionAttr("emailConfirmCode");
 	                }
 	            }
 	        	
@@ -383,7 +383,7 @@ public class pagesController extends BaseController {
 			
 			String userOradmin = getPara("userOradmin"); 
 	        
-	        Long userID = (Long)getSession().getAttribute("usrid");
+			Long userID = getSessionAttrForStr("usrid", Long.class);
 	        if(userOradmin.equals("01"))
 	        {
 	        	

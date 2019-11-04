@@ -37,7 +37,7 @@ public class loginInterceptorlyf implements Interceptor{
 			//String userID = (String)session.getAttribute("usrid");
 			if(session.getAttribute("usrid")!=null)
 			{
-				Long userID = (Long)session.getAttribute("usrid");
+				Long userID = Long.valueOf((String)session.getAttribute("usrid"));
 				
 				if((session.getAttribute("usr_tp").equals("管理员")))
 				{

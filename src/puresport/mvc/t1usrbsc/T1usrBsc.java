@@ -439,13 +439,13 @@ public class T1usrBsc extends BaseModel<T1usrBsc> {
 		set(column_email_val, emailVal);
 	}
 	public <T> T getEmailVal() {
-		return get(column_email_val);
+		return getByType(column_email_val);
 	}
 	
 	public void setMblPhVal(Integer mblphVal){
 		set(column_mblph_val, mblphVal);
 	}
 	public <T> T getMblPhVal() {
-		return get(column_mblph_val);
+		return getByType(column_mblph_val);
 	}
 }

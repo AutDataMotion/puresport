@@ -115,7 +115,7 @@ $(function() {
         });
 		
 		function btnSetDisable(domObj, disabled){
-			if(disabled){
+			if(disabled===true){
 				domObj.prop('disabled', true);
 				domObj.css({'background-color':'rgb(160, 162, 163);'});
 			}else {
@@ -132,7 +132,7 @@ $(function() {
 			}
 			var btnValPhone = $('#btn-val-phone');
 			btnSetDisable(btnValPhone, true);
-			domObj.text("正在发送...");
+			btnValPhone.text("正在发送...");
 			ajaxSendAuthCode(1, 'sendPhoneCode', {phone: phone}, '验证码已发送到您手机,请注意查收', '验证码发送失败，请重试或联系管理员', btnValPhone);
 			btnSetDisable(btnValEmail, false); 
 		});
@@ -146,7 +146,7 @@ $(function() {
 			
 			var btnValEmail = $('#btn-val-email');
 			btnSetDisable(btnValEmail, true);
-			domObj.text("正在发送...");
+			btnValEmail.text("正在发送...");
 			ajaxSendAuthCode(2, 'sendEmailCode', {email: email}, '验证码已发送到您邮箱,请注意查收', '验证码发送失败，请重试或联系管理员', btnValEmail);
 			btnSetDisable(btnValEmail, false); 
 		});
