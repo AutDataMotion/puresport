@@ -166,7 +166,18 @@ public abstract class Model<M extends Model> implements Serializable {
 	 * Get attribute of any mysql type
 	 */
 	public <T> T get(String attr) {
+		Object result = attrs.get(attr);
+		if (null == result) {
+			return null;
+		}
+		return (T)(String.valueOf(result));
+		
 //		return (T)(String.valueOf(attrs.get(attr)));
+//		return (T)(result != null ? result : null);
+	}
+	
+	// 正确的泛型
+	public <T> T getByType(String attr){
 		Object result = attrs.get(attr);
 		return (T)(result != null ? result : null);
 	}

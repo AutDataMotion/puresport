@@ -114,28 +114,41 @@ $(function() {
            
         });
 		
+		function btnSetDisable(domObj, disabled){
+			if(disabled){
+				domObj.prop('disabled', true);
+				domObj.css({'background-color':'rgb(160, 162, 163);'});
+			}else {
+				domObj.prop('disabled', false);
+				domObj.css({'background-color':'rgb(30, 159, 255);'});
+			}
+		}
+		
 		layui.$('#btn-val-phone').on('click', function(){
 			var phone = $('#mblph_no').val();
-			console.log(phone);
 			if(!validatePhone(phone)){
 				layer.msg('手机号码格式不正确，请确认！');
 				return ;
 			}
 			var btnValPhone = $('#btn-val-phone');
+			btnSetDisable(btnValPhone, true);
+			domObj.text("正在发送...");
 			ajaxSendAuthCode(1, 'sendPhoneCode', {phone: phone}, '验证码已发送到您手机,请注意查收', '验证码发送失败，请重试或联系管理员', btnValPhone);
-		    
+			btnSetDisable(btnValEmail, false); 
 		});
 		
 		layui.$('#btn-val-email').on('click', function(){
 			var email = $('#email').val();
-			console.log(email);
 			if(!validateEmail(email)){
 				layer.msg('邮箱格式不正确，请确认！');
 				return ;
 			}
+			
 			var btnValEmail = $('#btn-val-email');
+			btnSetDisable(btnValEmail, true);
+			domObj.text("正在发送...");
 			ajaxSendAuthCode(2, 'sendEmailCode', {email: email}, '验证码已发送到您邮箱,请注意查收', '验证码发送失败，请重试或联系管理员', btnValEmail);
-		    
+			btnSetDisable(btnValEmail, false); 
 		});
 		
 		form.on('submit(btn-submit-update)', function(data){
@@ -147,13 +160,16 @@ $(function() {
 		  
 		// ======== ajax
 		var countdownPhone = 60;
+		var timerInterruptPhone = false;
 		var countdownEmail = 60;
+		var timerInterruptEmail = false;
 		
         function setTime(flag, obj) {
         	var countdown = flag===1?countdownPhone:countdownEmail;
+        	var timerInterrupt = flag===1?timerInterruptPhone:timerInterruptEmail;
         	
-            if (countdown == 0) {
-                obj.prop('disabled', false);
+            if (countdown == 0 || timerInterrupt) {
+            	btnSetDisable(obj, false);
                 obj.text("点击获取");
                 if(flag===1){
                 	countdownPhone = 60;
@@ -162,7 +178,7 @@ $(function() {
                 }
                 return;
             } else {
-                obj.prop('disabled', true);
+            	btnSetDisable(obj, true);
                 obj.text("剩余"+countdown+"秒") ;
                 if(flag===1){
                 	countdownPhone--;

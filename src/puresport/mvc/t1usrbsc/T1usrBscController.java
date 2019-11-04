@@ -397,7 +397,7 @@ public class T1usrBscController extends BaseController {
 		T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where crdt_no=? limit 1 ",
 				t1userBscDTO.getCrdt_no());
 		if (item != null) {
-			renderTextJson(ResTips.getFailRes(String.format("该证件号【%s】已注册，请登录！", t1userBscDTO.getCrdt_no())));
+			renderTextJson(ResTips.getFailRes(String.format("该证件号【%s】已注册过，请登录！", t1userBscDTO.getCrdt_no())));
 			return;
 		}
 		// 入库

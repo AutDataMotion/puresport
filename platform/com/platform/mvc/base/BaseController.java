@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.apache.log4j.Logger;
 
 import com.alibaba.fastjson.JSON;
@@ -25,6 +27,7 @@ import com.platform.plugin.PropertiesPlugin;
 import com.platform.tools.ToolModelInjector;
 import com.platform.tools.ToolWeb;
 
+import csuduc.platform.util.ComUtil;
 import csuduc.platform.util.JsonUtils;
 import csuduc.platform.util.StringUtil;
 import puresport.constant.EnumStatus;
@@ -49,6 +52,36 @@ public abstract class BaseController extends Controller {
 	protected Syslog reqSysLog;		// 访问日志
 	
 	protected abstract void setViewPath();
+	
+	public <T> T getSessionAttr(HttpSession session, String key, Class<T> type) throws Exception {
+		
+		if (ComUtil.haveEmpty(session, key, type)) {
+			throw new Exception("arg have empty");
+		}
+		Object obj = session.getAttribute(key);
+		
+		if (null == obj) {
+			return null;
+		}
+		// 针对string 类型的特殊处理
+		if (obj instanceof String) {
+			if (String.class.equals(type)) {
+				return (T)(String)obj;
+			}
+			String strObj = (String)obj;
+			if (type.equals(Integer.class)) {
+				return (T)Integer.valueOf(strObj);
+			}
+			if (type.equals(Long.class)) {
+				return (T)Long.valueOf(strObj);
+			}
+			if (type.equals(Boolean.class)) {
+				return (T)Boolean.valueOf(strObj);
+			}
+			throw new Exception("not support");
+		}
+		return (T)obj;
+	}
 	
 	protected void renderWithPath(String view){
 		setViewPath();

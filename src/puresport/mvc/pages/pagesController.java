@@ -180,8 +180,6 @@ public class pagesController extends BaseController {
 	}
 	@Clear
 	public void loginout() {
-		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
-		//renderWithPath(pthv+"list.html");
 		// 清除session
 		Enumeration<String> em = getSession().getAttributeNames();
 		while (em.hasMoreElements()) {
@@ -197,6 +195,9 @@ public class pagesController extends BaseController {
 	
 	@Clear
 	public void regist() {
+		
+		List<Sport_Item> sport_items_of_shengyunhui = Sport_ItemService.service.SelectByItemId(2);
+		setAttr("sport_items_of_shengyunhui",sport_items_of_shengyunhui);
 		renderWithPath(pthv+"regist.html");
 	}
 	
