@@ -588,7 +588,8 @@ public class T1usrBscService extends BaseService {
 					// .set(T1usrBsc.column_typelevel,
 					// mgrSession.getTypeleve())
 					.set(T1usrBsc.column_province, dto.getProvince())
-					.set(T1usrBsc.column_city, dto.getCity());
+					.set(T1usrBsc.column_city, dto.getCity())
+					.set(T1usrBsc.column_spt_prj, dto.getSpt_prj());
 			
 			if ( dto.getEmailValCode()!= null) {
 				dbRow.set(T1usrBsc.column_email_val, 1);

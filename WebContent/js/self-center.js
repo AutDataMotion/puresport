@@ -117,10 +117,10 @@ $(function() {
 		function btnSetDisable(domObj, disabled){
 			if(disabled===true){
 				domObj.prop('disabled', true);
-				domObj.css({'background-color':'rgb(160, 162, 163);'});
+				domObj.css({'background-color':'rgb(160, 162, 163)'});
 			}else {
 				domObj.prop('disabled', false);
-				domObj.css({'background-color':'rgb(30, 159, 255);'});
+				domObj.css({'background-color':'rgb(30, 159, 255)'});
 			}
 		}
 		

@@ -243,7 +243,7 @@ public class T1usrBscController extends BaseController {
 
 				String accountFieldName = accountType == 1 ? "usr_nm" : (accountType == 2 ? "email" : "crdt_no");
 				T1usrBsc item = T1usrBsc.dao
-						.findFirst(String.format("select * from t1_usr_bsc where %s=?", accountFieldName), crdt_no);
+						.findFirst(String.format("select * from t1_usr_bsc where %s=? limit 1", accountFieldName), crdt_no);
 				if (item != null) {
 					String pwddd = item.getPswd();
 					if (encryptpassword.equals(item.getPswd())) {// 判断数据库中的密码与用户输入的密码是否一致
@@ -322,6 +322,22 @@ public class T1usrBscController extends BaseController {
 				return;
 			}
 		}
+		
+		String type = getPara("type");
+		String module = getPara("module");
+		if (null == type) {
+			// athlete
+			if (module!=null) { // regist module
+				T1usrBsc usr = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where email=? limit 1 ", email);
+				if (usr != null) {
+					renderTextJson(ResTips.getFailRes("此邮件地址已存在，请换一个"));
+					return;
+				}
+			}
+			
+		} else {
+			// admin
+		}
 
 		authCodeMdl = AuthCodeMdl.createOne(email);
 
@@ -359,6 +375,22 @@ public class T1usrBscController extends BaseController {
 				renderTextJson(ResTips.getFailRes("error, not timeOut"));
 				return;
 			}
+		}
+		
+		String type = getPara("type");
+		String module = getPara("module");
+		if (null == type) {
+			// athlete
+			if (module!=null) { // regist module
+				T1usrBsc usr = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where mblph_no=? limit 1 ", phone);
+				if (usr != null) {
+					renderTextJson(ResTips.getFailRes("此手机号已存在，请换一个"));
+					return;
+				}
+			}
+			
+		} else {
+			// admin
 		}
 
 		authCodeMdl = AuthCodeMdl.createOne(phone);
@@ -430,15 +462,15 @@ public class T1usrBscController extends BaseController {
 		String msg = "";
 		String usertype = getPara("usertype");
 
-		Long userID = (Long) session.getAttribute("usrid");
+		Long userID = (Long) getSessionAttrForStr("usrid", Long.class);
 		T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", userID);// 根据用户名查询数据库中的用户
 		if (item != null) {
 			if (usertype.equals("运动员"))// 运动员
 			{
 
-				Boolean needValEmail = (Boolean) session.getAttribute("needValEmail");
-				Boolean needValPhone = (Boolean) session.getAttribute("needValPhone");
-				Boolean needValSptPrj = (Boolean) session.getAttribute("needValSptPrj");
+				Boolean needValEmail = (Boolean) getSessionAttr("needValEmail");
+				Boolean needValPhone = (Boolean) getSessionAttr("needValPhone");
+				Boolean needValSptPrj = (Boolean) getSessionAttr("needValSptPrj");
 				StringBuilder sqlUpdate = new StringBuilder("update puresport.t1_usr_bsc set usr_tp=?");
 				List<Object> argList = new LinkedList<Object>();
 				argList.add(usertype);
@@ -485,13 +517,13 @@ public class T1usrBscController extends BaseController {
 					haveUpdate = true;
 				}
 
-				if (needValSptPrj) {
-//					String competetion = getPara("competetion");
-					String competetionitem = getPara("competetionitem");
-					sqlUpdate.append(",spt_prj=? ");
-					argList.add(competetionitem);
-					haveUpdate = true;
-				}
+//				if (needValSptPrj) {
+////					String competetion = getPara("competetion");
+//					String competetionitem = getPara("competetionitem");
+//					sqlUpdate.append(",spt_prj=? ");
+//					argList.add(competetionitem);
+//					haveUpdate = true;
+//				}
 
 				if (!haveUpdate) {
 					renderText("!haveUpdate");

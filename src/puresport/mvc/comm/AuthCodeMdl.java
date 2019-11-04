@@ -36,7 +36,20 @@ public class AuthCodeMdl implements Serializable{
 	
 	public boolean checkAuthCodeSuc(String userAddr, String userCode, int seconds) {
 	
-		return (!hasTimeOut(seconds)) && (addr.equals(userAddr)) && (this.code.equals(userCode));
+		if (hasTimeOut(seconds)) {
+			System.out.println("hasTimeOut");
+			return false;
+		}
+		if (!addr.equals(userAddr)) {
+			System.out.println("!addr.equals");
+			return false;
+		}
+		if (!this.code.equals(userCode)) {
+			System.out.println("!code.equals");
+			return false;
+		}
+		return true;
+//		return (!hasTimeOut(seconds)) && (addr.equals(userAddr)) && (this.code.equals(userCode));
 	}
 	
 	public boolean checkAuthCodeFail(String userAddr, String userCode, int seconds) {

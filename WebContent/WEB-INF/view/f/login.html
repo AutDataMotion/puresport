@@ -222,8 +222,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									</div>
 
 								</div>
-								<div class="row" style="display: block;">
-									<!-- 运动员完善个人信息 -->
+								<!-- <div class="row" style="display: block;">
+									运动员完善个人信息
 									<div class="col-sm-12 col-xs-12">
 
 										<div class="form-bottom">
@@ -242,13 +242,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										</div>
 									</div>
 
-								</div>
-								<div class="row form-loginbox_user_2_1" style="display: none;">
+								</div> -->
+								<!-- <div class="row form-loginbox_user_2_1" style="display: none;"> -->
+								<div class="row form-loginbox_user_2_1" style="margin-top:20px;">
 									<!-- 运动员完善个人信息 -->
 									<div class="col-sm-12 col-xs-12">
 
 										<div class="form-bottom">
-											<div id="getSportItem_user" style="display: none;">
+											<!-- <div id="getSportItem_user" style="display: none;">
 												<h4>
 													<strong>运动项目</strong>
 												</h4>
@@ -259,8 +260,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 													in sport_items_of_shengyunhui){%>
 													<option value=${item.name!}>${item.name!}</option> <%}%>
 												</select>
-											</div>
-
+											</div> -->
 
 											<div id="divValPhone" class="layui-form-item" style="display: none;">
 												<label class="layui-form-label">手机</label>
@@ -390,9 +390,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<div class="form-bottom">
 
 											<div class="form-group">
-												<input type="text" id="form-phone_admin"
-													name="form-phone_admin" placeholder="账号(手机/邮箱/证件号)"
+												<!-- <input type="text" id="form-phone_admin"
+													name="form-phone_admin" 
+													placeholder="账号(手机/邮箱/证件号)"
+													class="form-control" id="form-account"> -->
+													
+													<input type="text" id="form-phone_admin"
+													name="form-phone_admin" 
+													placeholder="证件号"
 													class="form-control" id="form-account">
+													
 											</div>
 											<div class="form-group">
 												<input type="password" id="form-pwd_admin"

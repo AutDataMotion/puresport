@@ -67,7 +67,7 @@ public class T1userBscDTO implements Serializable{
 
 	public boolean validate(AuthCodeMdl authCodeMdlPhone, AuthCodeMdl authCodeMdlEmail) {
 		
-		if (ComUtil.haveEmpty(nm, crdt_no, gnd, brth_dt, province, city, mblph_no, email, passwd)) {
+		if (ComUtil.haveEmpty(nm, crdt_no, gnd, brth_dt, province, city,spt_prj, mblph_no, email, passwd)) {
 			addTip("have empty");
 			return false;
 		}
