@@ -171,16 +171,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<div class="form-group">
 												<label class="sr-only" for="form-email_user_forPwdBack">邮箱</label>
 												<input type="text" id="form-email_user_forPwdBack"
-													name="form-email_user_forPwdBack" placeholder="邮箱..."
+													name="form-email_user_forPwdBack" placeholder="手机/邮箱"
 													class="form-control">
 											</div>
 											<div class="form-group" style="position: relative;">
 												<label class="sr-only" for="form-email_user_confirmCode">验证码</label>
 												<input type="text" id="form-email_user_confirmCode"
-													name="form-email_user_confirmCode" placeholder="验证码..."
+													name="form-email_user_confirmCode" placeholder="验证码"
 													class="form-control">
 												<div class="get_email_confirmcode"
-													onclick="get_email_confirmcode('01')">获取验证码</div>
+													onclick="sendUserAuthCode()">获取验证码</div>
 											</div>
 											<h4>
 												<strong>第二步：重置密码</strong>
@@ -442,7 +442,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<div class="form-group">
 												<label class="sr-only" for="form-email_admin_forpwdback">邮箱</label>
 												<input type="text" id="form-email_admin_forpwdback"
-													name="form-email_admin_forpwdback" placeholder="邮箱..."
+													name="form-email_admin_forpwdback" placeholder="邮箱"
 													class="form-control">
 											</div>
 											<div class="form-group" style="position: relative;">
@@ -450,9 +450,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 													for="form-email_admin_confirmcode_forpwaback">验证码</label> <input
 													type="text" id="form-email_admin_confirmcode_forpwaback"
 													name="form-email_admin_confirmcode_forpwaback"
-													placeholder="验证码..." class="form-control"> <span
+													placeholder="验证码" class="form-control"> <span
 													class="get_email_confirmcode"
-													onclick="get_email_confirmcode('02')">获取验证码</span>
+													onclick="sendAdminAuthCode()">获取验证码</span>
 											</div>
 											<h4>
 												<strong>第二步：重置密码</strong>

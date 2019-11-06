@@ -114,13 +114,20 @@ $(function() {
            
         });
 		
-		function btnSetDisable(domObj, disabled){
+		function btnSetDisable(domObj, disabled, text){
 			if(disabled===true){
 				domObj.prop('disabled', true);
 				domObj.css({'background-color':'rgb(160, 162, 163)'});
+				if(text){
+					domObj.text(text);
+				}
+				
 			}else {
 				domObj.prop('disabled', false);
 				domObj.css({'background-color':'rgb(30, 159, 255)'});
+				if(text){
+					domObj.text(text);
+				}
 			}
 		}
 		
@@ -131,10 +138,9 @@ $(function() {
 				return ;
 			}
 			var btnValPhone = $('#btn-val-phone');
-			btnSetDisable(btnValPhone, true);
-			btnValPhone.text("正在发送...");
-			ajaxSendAuthCode(1, 'sendPhoneCode', {phone: phone}, '验证码已发送到您手机,请注意查收', '验证码发送失败，请重试或联系管理员', btnValPhone);
-			btnSetDisable(btnValEmail, false); 
+			btnSetDisable(btnValPhone, true, "正在发送...");
+			ajaxSendAuthCode(1, 'sendPhoneCode', {phone: phone, module:1}, '验证码已发送到您手机,请注意查收', '验证码发送失败，请重试或联系管理员', btnValPhone);
+			btnSetDisable(btnValPhone, false, "点击获取"); 
 		});
 		
 		layui.$('#btn-val-email').on('click', function(){
@@ -146,9 +152,9 @@ $(function() {
 			
 			var btnValEmail = $('#btn-val-email');
 			btnSetDisable(btnValEmail, true);
-			btnValEmail.text("正在发送...");
-			ajaxSendAuthCode(2, 'sendEmailCode', {email: email}, '验证码已发送到您邮箱,请注意查收', '验证码发送失败，请重试或联系管理员', btnValEmail);
-			btnSetDisable(btnValEmail, false); 
+			btnSetDisable(btnValEmail, true, "正在发送...");
+			ajaxSendAuthCode(2, 'sendEmailCode', {email: email, module:1}, '验证码已发送到您邮箱,请注意查收', '验证码发送失败，请重试或联系管理员', btnValEmail);
+			btnSetDisable(btnValEmail, false, "点击获取"); 
 		});
 		
 		form.on('submit(btn-submit-update)', function(data){
@@ -169,8 +175,7 @@ $(function() {
         	var timerInterrupt = flag===1?timerInterruptPhone:timerInterruptEmail;
         	
             if (countdown == 0 || timerInterrupt) {
-            	btnSetDisable(obj, false);
-                obj.text("点击获取");
+            	btnSetDisable(obj, false, "点击获取");
                 if(flag===1){
                 	countdownPhone = 60;
                 } else {
@@ -178,8 +183,7 @@ $(function() {
                 }
                 return;
             } else {
-            	btnSetDisable(obj, true);
-                obj.text("剩余"+countdown+"秒") ;
+            	btnSetDisable(obj, true, "剩余"+countdown+"秒");
                 if(flag===1){
                 	countdownPhone--;
                 } else {
@@ -204,7 +208,7 @@ $(function() {
                         layer.msg(tipSuc);
                         setTime(flag, domObj);
                     }else{
-                    	layer.msg(tipFail);
+                    	layer.msg(res.tipStrings.join("  "));
                     }
                 },
                 error:function(){
