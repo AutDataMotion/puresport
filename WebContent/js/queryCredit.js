@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	// js 数据module
-	var dataMdl = {
+	var dataMdl = { 
 		id : '',
 		nm : '',
 		crdt_tp : '',
