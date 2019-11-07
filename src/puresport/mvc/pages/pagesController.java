@@ -45,7 +45,7 @@ public class pagesController extends BaseController {
 //		log.debug(count);
 //		setAttr("userCounts",getSession().getAttribute("userCounts"));
 //		renderWithPath(pthv+"index.html");
-		renderWithPath(pthv+"zhunru_index_pre.html");
+		renderWithPath(pthv+"index.html");
 		
 		
 	}
@@ -56,7 +56,7 @@ public class pagesController extends BaseController {
 		//getSession().setAttribute("userid", "100");
 //		setSessionAttr("userID","10");
 
-		renderWithPath(pthv+"zhunru_index.html");
+		renderWithPath(pthv+"zhunru_index_pre.html");
 		
 	}
 	@Clear
