@@ -488,7 +488,7 @@ public class T1usrBscController extends BaseController {
 					AuthCodeMdl authCodeMdlEmail = (AuthCodeMdl) getSessionAttr(keyEmailCode);
 					if (Objects.isNull(authCodeMdlEmail)
 							|| authCodeMdlEmail.checkAuthCodeFail(email, emailValCode, ConstantInitMy.AuthCode_TimeOut)) {
-						renderTextJson(ResTips.getFailRes("邮箱验证码错误或已过期，请重新获取验证"));
+						renderTextJson(resJsonFail("邮箱验证码错误或已过期，请重新获取验证"));
 						return;
 					}
 					sqlUpdate.append(", email = ?, email_val=? ");
@@ -508,7 +508,7 @@ public class T1usrBscController extends BaseController {
 					AuthCodeMdl authCodeMdlPhone = (AuthCodeMdl) getSessionAttr(keyPhoneCode);
 					if (Objects.isNull(authCodeMdlPhone)
 							|| authCodeMdlPhone.checkAuthCodeFail(phone, mblphValCode, ConstantInitMy.AuthCode_TimeOut)) {
-						renderTextJson(ResTips.getFailRes("手机验证码错误或已过期，请重新获取验证"));
+						renderTextJson(resJsonFail("手机验证码错误或已过期，请重新获取验证"));
 						return;
 					}
 					sqlUpdate.append(", mblph_no = ?, mblph_val=? ");

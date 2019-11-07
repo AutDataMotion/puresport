@@ -434,36 +434,41 @@ function Tips(contentid, content) {
 	document.getElementById(contentid).style.display = "block";
 	$('#' + contentid).text(content);
 }
-function get_email_confirmcode(userOradmin) {
-	if (userOradmin == '01') {
-		var email = $("#form-email_user_forPwdBack").val();
-		// alert(email);
-		if (email) {
-			sendConfirmcode2Email(email, userOradmin);
-		} else {
-			$('#myModallyf_content').text("请先输入邮箱！");
-			$('#myModallyf').modal('show');
-		}
-	} else {
-		var email = $("#form-email_admin_forpwdback").val();
-		if (email) {
-			sendConfirmcode2Email(email, userOradmin);
-		} else {
-			$('#myModallyf_content').text("请先输入邮箱！");
-			$('#myModallyf').modal('show');
-		}
-	}
 
+function sendUserAuthCode(){
+	var account = $("#form-email_user_forPwdBack").val().trim();
+	sendAuthCode(account, '01');
 }
 
-function sendConfirmcode2Email(email, userOradmin) {
+function sendAdminAuthCode(){
+	var account = $("#form-email_admin_forpwdback").val().trim();
+	sendAuthCode(account, '02');
+}
+
+function sendAuthCode(account, userOradmin) {
+	console.log("sendAuthCode account", account);
+	if(!account || account==''){
+		console.log("1");
+		loginAlert( "手机/邮箱不能为空！");
+		return;
+	}
+		
+	if(!validatePhone(account) && !validateEmail(account)){
+		console.log("2");
+		loginAlert("手机/邮箱格式不正确！");
+		return ;
+	} 
+	sendConfirmcode2Email(account, userOradmin);
+	
+}
+
+function sendConfirmcode2Email(account, userOradmin) {
 	$.ajax({
 		url : '/jf/puresport/pagesController/ForgetPwd_getConfirmcodeByEmail',
 		type : 'POST', // GET
 		async : true, // 或false,是否异步
 		data : {
-			// userType:app.userType,
-			email : email,
+			account : account,
 			userOradmin : userOradmin
 		},
 		timeout : 5000, // 超时时间
@@ -474,41 +479,33 @@ function sendConfirmcode2Email(email, userOradmin) {
 		success : function(data, textStatus, jqXHR) {
 
 			if (data.flag) {
-
-				$('#myModallyf_content').text("验证码已发送邮箱!");
-				$('#myModallyf').modal('show');
+				loginAlert("验证码已发送, 请注意查收!");
+				
 			} else {
-				// alert(data.msg);
-				$('#myModallyf_content').text(data.msg);
-				$('#myModallyf').modal('show');
+				loginAlert(data.msg);
 			}
-		},
-		error : function(xhr, textStatus) {
-			console.log('错误')
-			console.log(xhr)
-			console.log(textStatus)
 		}
 	})
 }
 function forgetpwd_getpwdByEmail(userOradmin) {
 	// alert(userOradmin);
-	var email = '';
+	var account = '';
 	var confrimcode = '';
 	var newPwd = '';
 	var newPwd_confirm = '';
 	if (userOradmin == '01')// 运动及辅助人员
 	{
-		email = $("#form-email_user_forPwdBack").val();
+		account = $("#form-email_user_forPwdBack").val();
 		confrimcode = $('#form-email_user_confirmCode').val();
 		newPwd = $('#form_user_newPwd_forPwdBack').val();
 		newPwd_confirm = $('#form_user_newPwd_confirm_forPwdBack').val();
 	} else {// 管理员
-		email = $("#form-email_admin_forpwdback").val();
+		account = $("#form-email_admin_forpwdback").val();
 		confrimcode = $('#form-email_admin_confirmcode_forpwaback').val();
 		newPwd = $('#form-admin_newpwd_forpwdback').val();
 		newPwd_confirm = $('#form-admin_confirmcode_forpwdback').val();
 	}
-	if (newPwd && newPwd_confirm && email && confrimcode) {
+	if (newPwd && newPwd_confirm && account && confrimcode) {
 		if (newPwd == newPwd_confirm) {
 			// alert(newPwd);
 			$.ajax({
@@ -517,7 +514,7 @@ function forgetpwd_getpwdByEmail(userOradmin) {
 				async : true, // 或false,是否异步
 				data : {
 					// userType:app.userType,
-					email : email,
+					account : account,
 					confrimcode : confrimcode,
 					newPwd : newPwd,
 					userOradmin : userOradmin

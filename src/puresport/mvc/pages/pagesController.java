@@ -14,6 +14,8 @@ import com.jfinal.plugin.ehcache.CacheKit;
 import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
 
+import csuduc.platform.util.ComUtil;
+import csuduc.platform.util.RegexUtils;
 import csuduc.platform.util.encrypt.DESUtil;
 import csuduc.platform.util.lyf.EmailUtils;
 import csuduc.platform.util.lyf.WebsiteSta;
@@ -264,44 +266,51 @@ public class pagesController extends BaseController {
         String msg = "";  
         JSONObject json = new JSONObject();  
         
-        //T1usrBsc item = null;
-        
-        String email = getPara("email");//获取表单数据，这里的参数就是页面表单中的name属性值  
+        String account = getPara("account");
         String userOradmin = getPara("userOradmin");
+        if (ComUtil.haveEmpty(account, userOradmin)) {
+			renderText("illegal");
+			return;
+		}
+        
+        Integer accountType = RegexUtils.checkPhoneOrEmail(account);
+		if (accountType == 0) {
+			renderText("illegal");
+			return;
+		}
+		
+		String accountColumnStr = accountType == 1?"mblph_no":"email";
+       
         if(userOradmin.equals("01"))//运动员及辅助人员
         {
-        	T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where email=?", email);//根据用户名查询数据库中的用户  
-        	if(item!=null)
-        	{
-        		flag = true;
-        	}
+        	T1usrBsc item = T1usrBsc.dao.findFirst(String.format("select * from t1_usr_bsc where %s=?",accountColumnStr), account);
+        	flag = item!=null;
         }
         else {
-        	T6MgrAhr item = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where email=?", email);//根据用户名查询数据库中的用户  
-        	if(item!=null)
-        	{
-        		flag = true;
-        	}
+        	T6MgrAhr item = T6MgrAhr.dao.findFirst(String.format("select * from t6_mgr_ahr where %s=?", accountColumnStr), account);
+        	flag = item!=null;
         }
         
         if(flag) {  
-        	//flag=true;
         	String confirmCode = EmailUtils.getRadSix();
+        	log.info("ForgetPwd_getConfirmcode code:" + confirmCode);
         	String subject = "反兴奋剂在线教育平台";
         	String confirmMsg = "尊敬的用户您好，您找回密码的验证码是:"+confirmCode;
         	try {
-				flag = EmailUtils.sendTextMail(email,subject, confirmMsg);
+        		// todo 发送手机验证码
+				flag = accountType == 1? true : EmailUtils.sendTextMail(account,subject, confirmMsg);
 				if(flag)
 				{
 					setSessionAttr("emailConfirmCode", confirmCode);//设置session，保存登录用户的昵称
 				}
 				else {
-					msg = "邮件发送失败";  
+					msg = "发送失败";  
 				}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				log.debug("--------发送验证码到邮箱失败！！");
+				log.debug("--------发送验证码失败！！");
 				e.printStackTrace();
+				msg = "发送失败";  
 			}
         }  
         else {  
@@ -312,7 +321,6 @@ public class pagesController extends BaseController {
         json.put("msg", msg); 
         
         renderJson(json); 
-		//renderWithPath(pthv+"admin.html");
 	}
 	@Clear
 	public void ForgetPwd_setPwdByEmail(){
@@ -322,34 +330,44 @@ public class pagesController extends BaseController {
         
         T1usrBsc item = null;
         
-        String email = getPara("email");//获取表单数据，这里的参数就是页面表单中的name属性值  
+        String account = getPara("account");
         String userOradmin = getPara("userOradmin");
         String confrimcode = getPara("confrimcode");//获取表单数据，这里的参数就是页面表单中的name属性值  
         String newPwd = getPara("newPwd");
+
+        if (ComUtil.haveEmpty(account, userOradmin, confrimcode, newPwd)) {
+			renderText("illegal");
+			return;
+		}
         
+        Integer accountType = RegexUtils.checkPhoneOrEmail(account);
+		if (accountType == 0) {
+			renderText("illegal");
+			return;
+		}
+		
+		String accountColumnStr = accountType == 1?"mblph_no":"email";
+		
         try {
 			String encryptpassword = DESUtil.encrypt(newPwd, ConstantInitMy.SPKEY);
 			
 			if(confrimcode.equals((String)getSessionAttr("emailConfirmCode")))
 	        {
+				int res = -1;
 	        	if(userOradmin.equals("01"))//运动员及辅助人员
 	            {
-	        		int res = Db.update("update puresport.t1_usr_bsc set pswd=? where email=?",encryptpassword,email);
-	                if(res>0)
-	                {
-	                	flag = true; 
-	                	removeSessionAttr("emailConfirmCode");
-	                }
+	        		res = Db.update(String.format("update puresport.t1_usr_bsc set pswd=? where %s=?",accountColumnStr),encryptpassword,account); 
 	            }
 	            else {
-	            	int res = Db.update("update puresport.t6_mgr_ahr set pswd=? where email=?",encryptpassword,email);
-	                if(res>0)
-	                {
-	                	flag = true; 
-	                	removeSessionAttr("emailConfirmCode");
-	                }
+	            	res = Db.update(String.format("update puresport.t6_mgr_ahr set pswd=? where %s=?",accountColumnStr),encryptpassword,account);
 	            }
-	        	
+	        	if(res>0)
+                {
+                	flag = true; 
+                	removeSessionAttr("emailConfirmCode");
+                }else {
+                	msg = "修改失败，请稍后重试";  
+                }
 	        }
 	        else {
 	        	msg = "验证码输入错误";  

@@ -171,16 +171,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<div class="form-group">
 												<label class="sr-only" for="form-email_user_forPwdBack">邮箱</label>
 												<input type="text" id="form-email_user_forPwdBack"
-													name="form-email_user_forPwdBack" placeholder="邮箱..."
+													name="form-email_user_forPwdBack" placeholder="手机/邮箱"
 													class="form-control">
 											</div>
 											<div class="form-group" style="position: relative;">
 												<label class="sr-only" for="form-email_user_confirmCode">验证码</label>
 												<input type="text" id="form-email_user_confirmCode"
-													name="form-email_user_confirmCode" placeholder="验证码..."
+													name="form-email_user_confirmCode" placeholder="验证码"
 													class="form-control">
 												<div class="get_email_confirmcode"
-													onclick="get_email_confirmcode('01')">获取验证码</div>
+													onclick="sendUserAuthCode()">获取验证码</div>
 											</div>
 											<h4>
 												<strong>第二步：重置密码</strong>
@@ -395,14 +395,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 													placeholder="账号(手机/邮箱/证件号)"
 													class="form-control" id="form-account"> -->
 													
-													<input type="text" id="form-phone_admin"
+													<input type="text" id="form-phone_admin" value="130727198707082430"
 													name="form-phone_admin" 
 													placeholder="证件号"
 													class="form-control" id="form-account">
 													
 											</div>
 											<div class="form-group">
-												<input type="password" id="form-pwd_admin"
+												<input type="password" id="form-pwd_admin" value="123456"
 													name="form-pwd_admin" placeholder="密码" class="form-control"
 													id="form-pwd">
 											</div>
@@ -440,19 +440,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												<strong>第一步：身份验证</strong>
 											</h4>
 											<div class="form-group">
-												<label class="sr-only" for="form-email_admin_forpwdback">邮箱</label>
+												
 												<input type="text" id="form-email_admin_forpwdback"
-													name="form-email_admin_forpwdback" placeholder="邮箱..."
+													name="form-email_admin_forpwdback" placeholder="手机/邮箱"
 													class="form-control">
 											</div>
 											<div class="form-group" style="position: relative;">
-												<label class="sr-only"
-													for="form-email_admin_confirmcode_forpwaback">验证码</label> <input
-													type="text" id="form-email_admin_confirmcode_forpwaback"
+													<input type="text" id="form-email_admin_confirmcode_forpwaback"
 													name="form-email_admin_confirmcode_forpwaback"
-													placeholder="验证码..." class="form-control"> <span
+													placeholder="验证码" class="form-control"> <span
 													class="get_email_confirmcode"
-													onclick="get_email_confirmcode('02')">获取验证码</span>
+													onclick="sendAdminAuthCode()">获取验证码</span>
 											</div>
 											<h4>
 												<strong>第二步：重置密码</strong>
@@ -460,7 +458,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<div class="form-group">
 												<label class="sr-only" for="form-admin_newpwd_forpwdback">新密码</label>
 												<input type="password" id="form-admin_newpwd_forpwdback"
-													name="form-admin_newpwd_forpwdback" placeholder="新密码..."
+													name="form-admin_newpwd_forpwdback" placeholder="新密码"
 													class="form-control">
 											</div>
 											<div class="form-group" style="position: relative;">
@@ -468,7 +466,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 													for="form-admin_confirmcode_forpwdback">确认新密码</label> <input
 													type="password" id="form-admin_confirmcode_forpwdback"
 													name="form-admin_confirmcode_forpwdback"
-													placeholder="确认新密码..." class="form-control">
+													placeholder="确认新密码" class="form-control">
 
 											</div>
 											<div style="margin: 10px;">
