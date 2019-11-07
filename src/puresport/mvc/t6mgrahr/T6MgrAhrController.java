@@ -68,11 +68,11 @@ public class T6MgrAhrController extends BaseController {
 					if (encryptpassword.equals(item.getPswd())) {// 判断数据库中的密码与用户输入的密码是否一致
 						PageViewSta.StaLoginPeopleCountByDay();
 						flag = true;
-						getSession().setAttribute("usrid", item.getUsrid());// 设置session，保存登录用户的昵称
-						getSession().setAttribute("crdt_no", item.getCrdt_no());// 设置session，保存登录用户的昵称
-						getSession().setAttribute("pwd", item.getPswd());// 设置session，保存登录用户的昵称
-						getSession().setAttribute("usr_tp", item.getUsr_tp());//设置session，保存登录用户的昵称
-						getSession().setAttribute("typeleve", item.getTypeleve());//设置session，保存登录用户的昵称
+						setSessionAttr("usrid", item.getUsrid());// 设置session，保存登录用户的昵称
+						setSessionAttr("crdt_no", item.getCrdt_no());// 设置session，保存登录用户的昵称
+						setSessionAttr("pwd", item.getPswd());// 设置session，保存登录用户的昵称
+						setSessionAttr("usr_tp", item.getUsr_tp());//设置session，保存登录用户的昵称
+						setSessionAttr("typeleve", item.getTypeleve());//设置session，保存登录用户的昵称
 						T6MgrSession mgrSession = new T6MgrSession(item);
 						setSessionAttr(T6MgrSession.KeyName, mgrSession);// 管理员session对象	
 						
@@ -139,7 +139,7 @@ public class T6MgrAhrController extends BaseController {
 		// String userType = "";
 		JSONObject json = new JSONObject();
 
-		Long userID = (Long)getSession().getAttribute("usrid");
+		Long userID = getSessionAttrForStr("usrid", Long.class);
 		T6MgrAhr item = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where usrid=?", userID);// 根据用户名查询数据库中的用户
 		if (item != null) {
 			//
