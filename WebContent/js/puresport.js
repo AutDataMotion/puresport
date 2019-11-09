@@ -200,6 +200,7 @@ function admin_login() {
 				url : '/jf/puresport/t6MgrAhr/login',
 				type : 'POST', // GET
 				async : true, // 或false,是否异步
+				cache : false,
 				data : {
 					account : $("#form-phone_admin").val(),
 					pwd : $("#form-pwd_admin").val(),
@@ -229,7 +230,9 @@ function admin_login() {
 							}
 
 						} else {
-							window.location = data.url;
+							var urlRedirect = data.url + "?r=" + Math.random();
+							console.log('redirect', urlRedirect);
+							window.location = urlRedirect;
 						}
 
 					} else {
