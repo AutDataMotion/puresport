@@ -662,6 +662,7 @@ function initScoreTable(userID) {
 															render : function(
 																	data, type,
 																	row) {
+																
 																return '<a href="/jf/puresport/t7Crcl/queryTestPaper?exam_grd='
 																		+ row[0]
 																		+ '&tms='
@@ -671,7 +672,7 @@ function initScoreTable(userID) {
 																		+ '&examid='
 																		+ row[3]
 																		+ '" target="_blank"  role="button">'
-																		+ '答题情况'
+																		+ '<code class="text-success bg-success">答题情况</code>'
 																		+ '</a>';
 															}
 														}, ]
