@@ -587,7 +587,6 @@ var flagInit_admin = 1;// 最开始就加载
 var flagInit_sport = 0;
 var flagInit_staScore = 0;
 var flagInit_staPrj = 0;
-var flagInit_staQue = 0;
 </script>
 	<script src="${cxt!}/ui/loading/app.min.js"></script>
 	<script src="${cxt!}/js/t6admin.js"></script>
@@ -605,36 +604,7 @@ var flagInit_staQue = 0;
 
 	<script>
 $(function(){
-			if('${session["typeleve"]}'=='中心协会级')
-			{
-				$('#importAdmin_btn').remove();
-				$('#importSporter_btn').addClass('active');
-				$('#myTabs_1_0').remove();
-				$('#myTabs_1_1').addClass('in').addClass('active');
-			}
-	
-	$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
-		// 获取已激活的标签页的名称
-		var activeTab = $(e.target).text(); 
-		console.log(activeTab);
-		// 获取前一个激活的标签页的名称
-		// var previousTab = $(e.relatedTarget).text(); 
 
-		if(activeTab == '导入管理员'){
-		} else if(activeTab == '导入运动员'){
-			//lazyLoadMy(flagInit_sport, cxt + "/js/t1sporter.js");
-			//flagInit_sport = 1;
-		}else if(activeTab == '成绩统计' || activeTab == '统计'){
-			lazyLoadMy(flagInit_staScore, cxt + "/js/statis_score.js");
-			flagInit_staScore = 1;
-		}else if(activeTab == '项目合格率统计'){
-			lazyLoadMy(flagInit_staPrj, cxt + "/js/statis_passed.js");
-			flagInit_staPrj = 1;
-		}else if(activeTab == '试题错误率统计'){
-			lazyLoadMy(flagInit_staQue, cxt + "/js/statis_question.js");
-			flagInit_staQue = 1;
-		} 
-	});
 });
 </script>
 

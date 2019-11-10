@@ -150,7 +150,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<a
 							href="${cxt!}/jf/puresport/t7Crcl/queryCetifate?usrid=${session['usrid']}"
 							target="_blank" type="button"
-							class="btn  btn-lg btn-block logout_btn" role="button">证书</a> <a
+							class="btn  btn-lg btn-block logout_btn" role="button">我的证书</a>
+							<a
+							href="${cxt!}/jf/puresport/t7Crcl/heroList100/" target="_blank"
+							type="button" class="btn  btn-lg btn-block logout_btn"
+							role="button">证书查询</a> 
+							
+							 <a
 							href="${cxt!}/jf/puresport/t7Crcl/heroList100/" target="_blank"
 							type="button" class="btn  btn-lg btn-block logout_btn"
 							role="button">准入考试排行榜</a> <a
@@ -248,6 +254,26 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</div>
 		</div>
 	</div>
+	
+			wwwwwwww
+								<div class="layui-form-item">
+									<label class="layui-form-label">证书编号</label>
+									<div class="layui-input-block">
+										<input type="text" name="credit_no"  id="credit_no"
+											lay-verify="identity" value='130727198707082438'
+											autocomplete="off" placeholder="证书编号" class="layui-input">
+									</div>
+								</div>								
+								<div class="layui-form-item">
+									<label class="layui-form-label">证件号码</label>
+									<div class="layui-input-block">
+										<input type="text" name="crdt_no" id="crdt_no" 
+											lay-verify="identity" value='130727198707082438'
+											autocomplete="off" placeholder="身份证号" class="layui-input">
+									</div>
+								</div>
+							<button type="button" class="btn  btn-lg btn-block reset_btn"
+							onclick="queryCredit()">重置密码</button>	
 	<!--personInfoModal modify modal-->
 	<div class="modal fade" id="personInfoModal" tabindex="-1"
 		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -399,7 +425,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 
 			</div>
-		</div>
+		</div>								
 	</div>
 	
 	<script type="text/javascript" src="${cxt!}/ui/layui/layui.js"></script>
@@ -428,6 +454,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				initScoreTable(usrId);
 				
 			});
+			
+			function queryCredit(){
+				alert("ddddd");
+				var credit_no = document.getElementById("credit_no").value;
+				alert(credit_no);
+				
+				var crdt_no = document.getElementById("crdt_no").value;
+				alert(crdt_no);
+			}
 		</script>
 </body>
 </html>
