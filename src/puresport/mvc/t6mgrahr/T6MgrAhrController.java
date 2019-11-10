@@ -63,7 +63,7 @@ public class T6MgrAhrController extends BaseController {
             {
 				String encryptpassword = DESUtil.encrypt(password, ConstantInitMy.SPKEY);
 				
-				T6MgrAhr item = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where crdt_no=?", crdt_no);// 根据用户名查询数据库中的用户
+				T6MgrAhr item = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where crdt_no=? limit 1", crdt_no);// 根据用户名查询数据库中的用户
 				if (item != null) {
 					if (encryptpassword.equals(item.getPswd())) {// 判断数据库中的密码与用户输入的密码是否一致
 						PageViewSta.StaLoginPeopleCountByDay();

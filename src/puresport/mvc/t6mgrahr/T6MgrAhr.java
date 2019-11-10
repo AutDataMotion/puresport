@@ -160,6 +160,18 @@ public class T6MgrAhr extends BaseModel<T6MgrAhr> {
 	 */
 	public static final String column_institute = "institute";
 	
+	/**
+	 * 字段描述：邮箱是否验证 0未验证 1验证成功 2验证失败 
+	 * 字段类型：int  长度：null
+	 */
+	public static final String column_email_val = "email_val";
+	
+	/**
+	 * 字段描述：手机是否验证 0未验证 1验证成功 2验证失败 
+	 * 字段类型：int  长度：null
+	 */
+	public static final String column_mblph_val = "mblph_val";
+	
 	
 	/**
 	 * sqlId : puresport.t6MgrAhr.splitPageFrom
@@ -167,29 +179,31 @@ public class T6MgrAhr extends BaseModel<T6MgrAhr> {
 	 */
 	public static final String sqlId_splitPage_from = "puresport.t6MgrAhr.splitPageFrom";
 
-	private Long usrid;
-	private String usr_tp;
-	private String usr_nm;
-	private String nm;
-	private String crdt_tp;
-	private String crdt_no;
-	private String gnd;
-	private String wrk_unit;
+	protected Long usrid;
+	protected String usr_tp;
+	protected String usr_nm;
+	protected String nm;
+	protected String crdt_tp;
+	protected String crdt_no;
+	protected String gnd;
+	protected String wrk_unit;
 	private String pswd;
-	private String post;
-	private String brth_dt;
-	private String adiv_cd;
-	private String asscid;
-	private String mblph_no;
-	private Timestamp tms;
-	private Integer cty_prov_city_mgrid;
-	private Integer assc_mgrid;
-	private String email;
-	private String rmrk;
-	private String typeleve;
-	private String province;
-	private String city;
-	private String institute;
+	protected String post;
+	protected String brth_dt;
+	protected String adiv_cd;
+	protected String asscid;
+	protected String mblph_no;
+	protected Timestamp tms;
+	protected Integer cty_prov_city_mgrid;
+	protected Integer assc_mgrid;
+	protected String email;
+	protected String rmrk;
+	protected String typeleve;
+	protected String province;
+	protected String city;
+	protected String institute;
+	protected Integer email_val;
+	protected Integer mblph_val;
 
 	public void setUsrid(Long usrid){
 		set(column_usrid, usrid);
@@ -328,6 +342,20 @@ public class T6MgrAhr extends BaseModel<T6MgrAhr> {
 	}
 	public <T> T getInstitute() {
 		return get(column_institute);
+	}
+
+	public void setEmailVal(Integer emailVal){
+		set(column_email_val, emailVal);
+	}
+	public <T> T getEmailVal() {
+		return getByType(column_email_val);
+	}
+	
+	public void setMblPhVal(Integer mblphVal){
+		set(column_mblph_val, mblphVal);
+	}
+	public <T> T getMblPhVal() {
+		return getByType(column_mblph_val);
 	}
 	
 }
