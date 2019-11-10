@@ -123,7 +123,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="col-md-6 " align="left">
 				<div class="span4_of_list" width="100%">
 					<div class="alert alert-info">
-						考试名称：${exam_name!''}</br>科目：${category!''}</br>成绩：${exam_grd!''}</br>考试时间：${tms!''}</br>
+						考试名称：${exam_name!''}</br>科目：${category!''}</br>成绩：${exam_grd!''}</br>答题人： ${usrNm!''}  ${crdtNo!''}</br> 答题时间：${tms!''}</br>
 					</div>
 					<%for(x in testPaperList01){ %>
 					<div disabled="disabled">
@@ -148,8 +148,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						name=${x.prblmno! ''} value=D
 							id=${x.prblmid! ''}D> ${x.optD!}
 						</label> </br>
-						<p class="text-success">答题结果：${x.rltDesc!}</p>
+						<p><!-- <span class="badge">答案${x.rltDesc!}</span> -->${x.rltDesc!}</p>
+					<!-- 	<code class='text-success bg-success'>答案${x.rltDesc!}</code> -->
 						</br>
+						
 					</div>
 					<%}%> <%for(y in testPaperList02){ %>
 					<div disabled="disabled">
@@ -165,7 +167,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						name=${y.prblmno! ''} value=B
 							id=${y.prblmid! ''}B> 错 误<!-- ${y.prblmid!} -->
 						</label> </br>
-						<p class="text-danger">答题结果：${y.rltDesc!}</p>
+						<p><!-- <code class="text-danger bg-danger">答案${y.rltDesc!}</code> -->${y.rltDesc!}</p>
+						
 					</div>
 					<%}%>
 				</div>

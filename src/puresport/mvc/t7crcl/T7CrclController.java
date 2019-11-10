@@ -1726,6 +1726,13 @@ public class T7CrclController extends BaseController {
 			setAttr("tms", t11.getTms());
 			setAttr("exam_grd", t11.getExam_grd());
 		}
+		
+		// 查询用户信息
+		T1usrBsc t1 = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", usrid);// 根据用户名查询数据库中的用户
+		if (t1 != null) {
+			setAttr("usrNm", t1.getUsr_nm());
+			setAttr("crdtNo", t1.getCrdt_no());
+		}
 
 		System.out.println("usrid="+usrid);
 		System.out.println("examid="+examid);
@@ -1749,9 +1756,9 @@ public class T7CrclController extends BaseController {
 				if(null != t9)
 					exam.setTtl(t9.getTtl());
 				if(Integer.parseInt(t10.getExam_grd()+"") > 0)
-					exam.setRltDesc("正确");
+					exam.setRltDesc("<code class=\"text-success bg-success\">答案正确</code>");
 				else 
-					exam.setRltDesc("错误");
+					exam.setRltDesc("<code class=\"text-danger bg-danger\">答案错误</code>");
 				
 				exam.setOpt((String) t9.getOpt());
 				String option = exam.getOpt();

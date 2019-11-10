@@ -669,7 +669,8 @@ function initScoreTable(userID) {
 																		+ '&examid='
 																		+ row[3]
 																		+ '" target="_blank"  role="button">'
-																		+ '<code class="text-success bg-success">答题情况</code>'
+																		/*+ '<code class="text-success bg-success">答题情况</code>'*/
+																		+ '<span class="badge">查看</span>'
 																		+ '</a>';
 															}
 														}, ]
