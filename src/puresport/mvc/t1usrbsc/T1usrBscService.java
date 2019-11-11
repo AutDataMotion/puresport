@@ -194,14 +194,24 @@ public class T1usrBscService extends BaseService {
 //			+ " select usrid, exam_nm, max(exam_grd) as exam_grd from t11_exam_stat where exam_st='1' group by usrid, exam_nm "
 //			+ " ) as s on u.usrid = s.usrid  where 1=1  %s ";
 
-	private static String sql_score = "select u.*, s.exam_nm as exam_nm, s.exam_grd as exam_grd, (CASE WHEN s.exam_grd >= 80 THEN '及格'  WHEN s.exam_grd is null THEN '未考试'  ELSE '不及格' END) as passed "
+/*	private static String sql_score = "select u.*, s.exam_nm as exam_nm, s.exam_grd as exam_grd, (CASE WHEN s.exam_grd >= 80 THEN '及格'  WHEN s.exam_grd is null THEN '未考试'  ELSE '不及格' END) as passed "
 			+ " from t1_usr_bsc u  left join ("
 			+ " select usrid, exam_nm, exam_grd from t12_highest_score"
+			+ " ) as s on u.usrid = s.usrid  where 1=1 %s  limit ?,?";*/
+	
+	private static String sql_score = "select u.*, s.examid as examid, s.category as category, s.type as type, s.exam_nm as exam_nm, s.exam_grd as exam_grd, (CASE WHEN s.exam_grd >= 80 THEN '及格'  WHEN s.exam_grd is null THEN '未考试'  ELSE '不及格' END) as passed "
+			+ " from t1_usr_bsc u  left join ("
+			+ " select usrid, exam_nm, exam_grd, examid, exam_st, category, type from t11_exam_stat"
 			+ " ) as s on u.usrid = s.usrid  where 1=1 %s  limit ?,?";
+	
+/*	private static String sql_score_total = "select count(1) "
+	+ " from t1_usr_bsc u  left join ("
+	+ " select usrid, exam_nm, exam_grd from t12_highest_score"
+	+ " ) as s on u.usrid = s.usrid  where 1=1  %s ";*/
 	
 	private static String sql_score_total = "select count(1) "
 	+ " from t1_usr_bsc u  left join ("
-	+ " select usrid, exam_nm, exam_grd from t12_highest_score"
+	+ " select usrid, exam_nm, exam_grd, exam_st from t11_exam_stat"
 	+ " ) as s on u.usrid = s.usrid  where 1=1  %s ";
 			
 	public List<Record> selectScoreByPage(T6MgrSession mgrSession, ParamComm paramMdl) {
@@ -278,6 +288,11 @@ public class T1usrBscService extends BaseService {
 		if (StringUtil.notEmptyOrLikeDefault(paramMdl.getName11(), defSelect)) {
 			whereStr.append(" and gnd like ? ");
 			listArgs.add(getStringLikeLeft(paramMdl.getName11()));
+		}
+		
+		if (StringUtil.notEmptyOrDefault(paramMdl.getName12(), defSelect)) {
+			whereStr.append(" and exam_st = ? ");
+			listArgs.add(paramMdl.getName12());
 		}
 		
 		if (isAddRoleWhere) {

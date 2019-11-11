@@ -78,6 +78,7 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 		// datasrch.name9 = $("#sta_t1usrBsc_exam_grd").val();
 		datasrch.name10 = $("#sta_t1usrBsc_passOrnot option:selected").html();
 		datasrch.name11 = $("#sta_t1usrBsc_gnd option:selected").html();
+		datasrch.name12 = $("#sta_t1usrBsc_examSt option:selected").val();
 	};
 	var myTable = $('#example3').DataTable({
 		dom: 'Bfrtip',
@@ -137,23 +138,25 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 			buttons : [ 'excel']
 			//buttons : [ 'excel', 'print' ]
 		}  ],
-		columns : [  {
+		columns : [  /*{
 			data : "usr_tp"
 		}, {
 			data : "spt_prj"
-		},{
-			data : "nm"
-		}, {
+		},*/ {
 			data : "exam_nm"
+		},{
+			data : "category"
 		}, {
 			data : "exam_grd"
 		}, {
 			data : "passed"
-		} , {
+		} /*, {
 			data : "crdt_tp"
+		}*/,{
+			data : "nm"
 		}, {
 			data : "crdt_no"
-		}, {
+		}, /*{
 			data : "gnd"
 		}, {
 			data : "brth_dt"
@@ -168,14 +171,31 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 			data : "mblph_no"
 		}, {
 			data : "email"
+		},*/
+		{
+			title : "查看试卷",
+			sortable : false,
+			render : function(
+					data, type,
+					row) {
+				
+				return '<a href="/jf/puresport/t7Crcl/queryTestPaper?usrid='
+						+ row.usrid
+						+ '&examid='
+						+ row.examid
+						+ '" target="_blank"  role="button">'
+						/*+ '<code class="text-success bg-success">答题情况</code>'*/
+						+ '<span class="badge">查看</span>'
+						+ '</a>';
+			}
 		}],
-		"columnDefs" : [ {
+/*		"columnDefs" : [ {
 			"targets" : [ 7 ], // 目标列位置，下标从0开始
 			"data" : "crdt_no", // 数据列名
 			"render" : function(data, type, full) { // 返回自定义内容
 				return "\u200C" + data ; 
 			}
-		} ]
+		} ]*/
 	});
 
 	// 查询按钮
