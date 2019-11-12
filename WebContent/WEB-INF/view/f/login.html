@@ -103,12 +103,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					                        	<h2 style="text-align: center;margin-top: 0px;">ADQP E-Learning System</h2-->
 										<img src="${cxt!}/images/zi1.png" alt=""
 											class="img-responsive" />
-										<!--div class="description">
-					                            	<p>
-						                            	反兴奋剂使命崇高而神圣，中国反兴奋剂中心坚决贯彻“严令禁止、严格检查、严肃处理”的方针，
-														愿以坚定的立场、敏锐的目光、严谨的态度、科学的方法、公正的程序，捍卫体育的纯洁与尊严
-					                            	</p>
-					                            </div-->
 									</div>
 
 								</div>
@@ -220,18 +214,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<h4 id="myModallyf_content_user"
 											style="text-align: center; color: red; display: none;">提示信息</h4>
 									</div>
-
 								</div>
 								<!-- <div class="row" style="display: block;">
 									运动员完善个人信息
 									<div class="col-sm-12 col-xs-12">
-
 										<div class="form-bottom">
-
 											<div id="getUserType">
-												<h4>
-													<strong>人员类型</strong>
-												</h4>
+												<h4><strong>人员类型</strong></h4>
 												<select name="type"
 													onchange="user_ImproveType(this.options[this.options.selectedIndex].value)">
 													<option value="0">请选择人员类型</option>
@@ -249,19 +238,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<div class="col-sm-12 col-xs-12">
 
 										<div class="form-bottom">
-											<!-- <div id="getSportItem_user" style="display: none;">
-												<h4>
-													<strong>运动项目</strong>
-												</h4>
-
-												<select class="improveinfo_select"
-													id="getSportItem_user_CompetetionItem">
-													<option value="请选择项目" selected>请选择项目</option> <%for (item
-													in sport_items_of_shengyunhui){%>
-													<option value=${item.name!}>${item.name!}</option> <%}%>
-												</select>
-											</div> -->
-
 											<div id="divValPhone" class="layui-form-item" style="display: none;">
 												<label class="layui-form-label">手机</label>
 												<div class="layui-input-inline">
@@ -304,7 +280,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<div style="margin: 10px;">
 												<a id="back2loginBtn_user_2">返回登录</a>
 											</div>
-
 
 											<button class="btn" onclick="Improve_user_info()">提交</button>
 
@@ -369,12 +344,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					                        	<h2 style="text-align: center;margin-top: 0px;">ADQP E-Learning System</h2-->
 										<img src="${cxt!}/images/zi1.png" alt=""
 											class="img-responsive" />
-										<!--div class="description">
-					                            	<p>
-						                            	反兴奋剂使命崇高而神圣，中国反兴奋剂中心坚决贯彻“严令禁止、严格检查、严肃处理”的方针，
-														愿以坚定的立场、敏锐的目光、严谨的态度、科学的方法、公正的程序，捍卫体育的纯洁与尊严
-					                            	</p>
-					                            </div-->
 									</div>
 								</div>
 								<div class="row form-loginbox_admin">
@@ -431,9 +400,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										<div class="form-top">
 											<div class="form-top-left">
 												<h3 class="tab-h3" style="text-align: center;">找回密码</h3>
-
 											</div>
-
 										</div>
 										<div class="form-bottom">
 											<h4>
@@ -482,71 +449,77 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<div id="adminLoginPanel_2" style="display: none;">
 								<div class="row">
 									<div class="col-sm-12 col-xs-12">
-										<h3 style="text-align: center;">
-											<strong>完善个人信息</strong>
-										</h3>
-										<h4 id="myModallyf_content_admin"
-											style="text-align: center; color: red; display: none;"></h4>
+										<h3 style="text-align: center;"><strong>完善个人信息</strong></h3>
+										<h4 id="myModallyf_content_admin" style="text-align: center; color: red; display: none;"></h4>
 									</div>
 
 								</div>
 								<div class="row form-loginbox_admin_1">
-									<!-- 运动员完善个人信息 -->
+									<!-- 管理员完善个人信息 -->
 									<div class="col-sm-12 col-xs-12">
 
 										<div class="form-bottom">
-											<div id="getxiehuiItem">
-												<h4>
-													<strong>协会项目</strong>
-												</h4>
-												<!--select class="improveinfo_select" id="getxiehuiItemName"></select-->
-												<select class="improveinfo_select" id="getxiehuiItemName">
-													<option value="请选择协会项目" selected>请选择协会项目</option>
-													<%for(institute in sport_items_of_institute){%>
-													<option value=${institute.name!}>${institute.name!}</option>
-													<%}%>
-												</select>
+											<div id="getxiehuiItem"  class="layui-form-item" style="display: none;">
+												<label class="layui-form-label">协会项目</label>
+												<div class="layui-input-block">
+													<select class="improveinfo_select" id="getxiehuiItemName">
+														<option value="请选择协会项目" selected>请选择协会项目</option>
+														<%for(institute in sport_items_of_institute){%>
+														<option value=${institute.name!}>${institute.name!}</option>
+														<%}%>
+													</select>
+												</div>
 											</div>
-										</div>
-									</div>
+											
+											<div id="divValPhone_admin" class="layui-form-item" style="display: none;">
+												<label class="layui-form-label">手机</label>
+												<div class="layui-input-inline">
+													<input type="text" name="mblph_no_admin"
+														lay-verify="required|phone" id="mblph_no_admin"
+														value='18518028007' autocomplete="off" placeholder="手机号"
+														class="layui-input">
+												</div>
 
-								</div>
-								<div class="row form-loginbox_admin_2" style="display: none;">
-									<div class="col-sm-12 col-xs-12">
+												<div class="layui-input-inline">
+													<input type="text" name="mblphValCode_admin" id="mblphValCode_admin"
+														lay-verify="required" autocomplete="off"
+														placeholder="手机验证码" class="layui-input">
+												</div>
 
-										<div class="form-bottom">
-
-											<div class="form-group">
-												<label class="sr-only" for="form-company_admin">工作单位</label>
-												<input type="text" id="form-company_admin"
-													name="form-company_admin" placeholder="工作单位..."
-													class="form-control">
+												<button type="button" style="width: 100px;"
+													class="layui-btn layui-btn-normal layui-btn-sm"
+													id="btn-val-phone_admin">点击获取</button>
 											</div>
-											<div class="form-group">
-												<label class="sr-only" for="form-position_admin">职务/职称</label>
-												<input type="text" id="form-position_admin"
-													name="form-position_admin" placeholder="职务/职称..."
-													class="form-control">
+
+											<div id="divValEmail_admin" class="layui-form-item" style="display: none;">
+												<label class="layui-form-label">邮箱</label>
+												<div class="layui-input-inline">
+													<input type="text" name="email_admin" lay-verify="required|email"
+														id="email_admin" value='zhongweng.hao@qq.com' autocomplete="off"
+														placeholder="邮箱" class="layui-input">
+												</div>
+
+												<div class="layui-input-inline">
+													<input type="text" name="emailValCode_admin"  id="emailValCode_admin"
+														lay-verify="required" autocomplete="off"
+														placeholder="邮箱验证码" class="layui-input">
+												</div>
+
+												<button type="button" style="width: 100px;"
+													class="layui-btn layui-btn-normal layui-btn-sm"
+													id="btn-val-email_admin">点击获取</button>
 											</div>
+
 											<div style="margin: 10px;">
 												<a id="back2loginBtn_admin_2">返回登录</a>
 											</div>
 
-
-											<!-- button class="btn" onclick="Improve_admin_info()">提交</button-->
-
-										</div>
-									</div>
-
-								</div>
-								<div class="row">
-									<div class="col-sm-12 col-xs-12">
-										<div class="form-bottom">
 											<button class="btn" onclick="Improve_admin_info()">提交</button>
+											
 										</div>
 									</div>
-
 								</div>
+								
 							</div>
 						</div>
 
@@ -582,8 +555,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 	<script type="text/javascript" src="${cxt!}/js/commUtil.js"></script>
 	<script type="text/javascript" src="${cxt!}/ui/layui/layui.js"></script>
-	<script type="text/javascript" src="${cxt!}/js/puresport.js"></script>
+	<script type="text/javascript" src="${cxt!}/ui/layer/layer.js"></script>
 	<script type="text/javascript" src="${cxt!}/js/sendCodeValidate.js"></script>
+	<script type="text/javascript" src="${cxt!}/js/puresport.js"></script>
+	
 
 	<script type="text/javascript">
 		$(function() {

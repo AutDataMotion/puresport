@@ -84,6 +84,10 @@ public abstract class BaseController extends Controller {
 		return (T)obj;
 	}
 	
+	protected void renderIllegal() {
+		renderText("illegal");
+	}
+	
 	protected void renderWithPath(String view){
 		setViewPath();
 		render(view);

@@ -151,7 +151,6 @@ $(function() {
 			}
 			
 			var btnValEmail = $('#btn-val-email');
-			btnSetDisable(btnValEmail, true);
 			btnSetDisable(btnValEmail, true, "正在发送...");
 			ajaxSendAuthCode(2, 'sendEmailCode', {email: email, module:1}, '验证码已发送到您邮箱,请注意查收', '验证码发送失败，请重试或联系管理员', btnValEmail);
 			btnSetDisable(btnValEmail, false, "点击获取"); 
@@ -159,7 +158,6 @@ $(function() {
 		
 		form.on('submit(btn-submit-update)', function(data){
 			var jsonStr = JSON.stringify(data.field);
-		    console.log(jsonStr);
 		    user_update(jsonStr);
 		    return false;
 		});
@@ -203,7 +201,6 @@ $(function() {
                 async : false,
                 cache : false,
                 success:function(res){
-                	console.log('sendRes', res)
                     if(res.hasSuc){
                         layer.msg(tipSuc);
                         setTime(flag, domObj);

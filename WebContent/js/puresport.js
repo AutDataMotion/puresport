@@ -120,7 +120,6 @@ function user_login() {
 		return;
 	}
 
-	// alert(hex_md5($("#form-pwd_user").val()));
 	$.ajax({
 		url : '/jf/puresport/t1usrBsc/login',
 		type : 'POST', // GET
@@ -136,7 +135,6 @@ function user_login() {
 		},
 		success : function(data, textStatus, jqXHR) {
 
-			console.log("userLogin", data);
 			if (data.flag) {
 				app.userType = data.userType;
 				if (data.needImproveInfoOrNot) {
@@ -174,6 +172,7 @@ function user_login() {
 	})
 
 }
+
 function user_ImproveType(user_type) {
 	// alert(user_type);
 	if (user_type == "0")// 请选择人员类型
@@ -194,41 +193,63 @@ function user_ImproveType(user_type) {
 		$(".form-loginbox_user_2_1").toggle(false);
 	}
 }
+
+var admin_needValInstitute = false;
+var admin_needValEmail = false;
+var admin_needValPhone = false;
+
 function admin_login() {
 
+	var account = $("#form-phone_admin").val().trim();
+	var pwd = $("#form-pwd_admin").val().trim();
+	var authCode = $("#authCode_admin").val().trim();
+	if (!account || !pwd || !authCode) {
+		loginAlert('有空值，请检查！');
+		return;
+	}
+
+	// if(!validatePhone(account) && !validateEmail(account) && !validateID(account)){
+	if (!validateID(account)) {
+		loginAlert('账号格式不正确，请检查！');
+		return;
+	}
+	
 	$.ajax({
 				url : '/jf/puresport/t6MgrAhr/login',
 				type : 'POST', // GET
 				async : true, // 或false,是否异步
 				cache : false,
 				data : {
-					account : $("#form-phone_admin").val(),
-					pwd : $("#form-pwd_admin").val(),
-					authCode : $("#authCode_admin").val()
+					account : account,
+					pwd : pwd,
+					authCode : authCode
 				},
 				timeout : 5000, // 超时时间
 				dataType : 'json', // 返回的数据格式：json/xml/html/script/jsonp/text
 				beforeSend : function(xhr) {
-					// console.log(xhr)
 					console.log('发送前')
 				},
 				success : function(data, textStatus, jqXHR) {
-
+					console.log(data);
 					if (data.flag) {
-						console.log(data);
-						if (data.needImproveInfoOrNot) {
+						if (data.needImproveInfo) {
 							$("#adminLoginPanel_1").toggle();
 							$("#adminLoginPanel_2").toggle();
-							app.needImproveInstituteOrNot = data.needImproveInstituteOrNot;
-							// app.needImproveWrk_unitAndPostOrNot =
-							// data.needImproveWrk_unitAndPostOrNot;
-							if (data.needImproveInstituteOrNot) {
-								// alert(data.needImproveInstituteOrNot);
-								$(".form-loginbox_admin_1").toggle(true);
-							} else {
-								$(".form-loginbox_admin_1").toggle(false);
+							
+							if (data.needValInstitute) {
+								admin_needValInstitute = true;
+								$('#getxiehuiItem').show();
 							}
-
+							
+							if (data.needValPhone) {
+								admin_needValPhone = true;
+								$('#divValPhone_admin').show();
+							}
+							if (data.needValEmail) {
+								admin_needValEmail = true;
+								$('#divValEmail_admin').show();
+							}
+							
 						} else {
 							var urlRedirect = data.url + "?r=" + Math.random();
 							console.log('redirect', urlRedirect);
@@ -236,19 +257,28 @@ function admin_login() {
 						}
 
 					} else {
-						// alert(data.msg);
-						$('#myModallyf_content').text(data.msg);
-						$('#myModallyf').modal('show');
+						loginAlert(data.msg);
 					}
 				},
 				error : function(xhr, textStatus) {
-					console.log('错误')
-					console.log(xhr)
-					console.log(textStatus)
+					console.log('错误', xhr, textStatus)
 				}
 			})
 
 }
+
+$(function(){
+	
+	// user 
+	setValPhoneBtn('#btn-val-phone', '#mblph_no');
+	setValEmailBtn('#btn-val-email', '#email');
+
+	// admin
+	setValPhoneBtn('#btn-val-phone_admin', '#mblph_no_admin', "a");
+	setValEmailBtn('#btn-val-email_admin', '#email_admin', "a");
+	
+});
+
 function Improve_user_info() {
 	if (app.userType == "运动员")// 运动员
 	{
@@ -287,8 +317,6 @@ function Improve_user_info() {
 			async : true, // 或false,是否异步
 			data : {
 				usertype : app.userType,
-				//competetion : Competetion,
-				//competetionitem : CompetetionItem,
 				phone : phone,
 				mblphValCode : mblphValCode,
 				email : email,
@@ -312,9 +340,7 @@ function Improve_user_info() {
 				}
 			},
 			error : function(xhr, textStatus) {
-				console.log('错误')
-				console.log(xhr)
-				console.log(textStatus)
+				console.log('错误');
 			}
 		})
 
@@ -360,8 +386,6 @@ function Improve_user_info() {
 				},
 				error : function(xhr, textStatus) {
 					console.log('错误')
-					console.log(xhr)
-					console.log(textStatus)
 				}
 			})
 		} else {
@@ -371,40 +395,59 @@ function Improve_user_info() {
 
 }
 function Improve_user_info_selfcenter(usr_tp) {
-	// alert(usr_tp);
 	app.userType = usr_tp;
 	Improve_user_info();
 }
-// function Improve_user_Assist_info()
-// {
-//
-// console.log($('#form-company_assist').val());
-// console.log($('#form-position_assist').val());
-//	
-// }
+
 function Improve_admin_info() {
 
 	var xiehuiItemName = $('#getxiehuiItemName option:selected').val();
 
-	if (app.needImproveInstituteOrNot) {
-
-		if (xiehuiItemName == "请选择协会项目") {
-			alert("请选择协会项目");
+	if (admin_needValInstitute) {
+		if (!xiehuiItemName || xiehuiItemName == "请选择协会项目") {
+			Tips('myModallyf_content_admin', "请选择协会项目");
 			return;
 		}
 	}
-
-	// if(company&&position)
-	if (xiehuiItemName) {
+	
+	var phone = $('#mblph_no_admin').val().trim();
+	var mblphValCode = $('#mblphValCode_admin').val().trim();
+	
+	var email = $('#email_admin').val().trim();
+	var emailValCode = $('#emailValCode_admin').val().trim();
+	
+	if(admin_needValEmail){
+		if(!email || !emailValCode){
+			Tips('myModallyf_content_admin', "邮箱及其验证码不能为空！");
+			return ;
+		}
+		if(!validateEmail(email)){
+			Tips('myModallyf_content_admin', "邮箱格式不正确！");
+			return ;
+		}
+	}
+	
+	if(login_needValPhone){
+		if(!phone || !mblphValCode){
+			Tips('myModallyf_content_admin', "手机号及其验证码不能为空！");
+			return ;
+		}
+		if(!validatePhone(phone)){
+			Tips('myModallyf_content_admin', "手机号码格式不正确！");
+			return ;
+		}
+	}
+	
 		$.ajax({
 			url : '/jf/puresport/t6MgrAhr/ImproveAdminInfo',
 			type : 'POST', // GET
 			async : true, // 或false,是否异步
 			data : {
-
-				// company:company,
-				// position:position
-				xiehuiItemName : xiehuiItemName
+				xiehuiItemName : xiehuiItemName,
+				phone : phone,
+				mblphValCode : mblphValCode,
+				email : email,
+				emailValCode : emailValCode,
 			},
 			timeout : 5000, // 超时时间
 			dataType : 'json', // 返回的数据格式：json/xml/html/script/jsonp/text
@@ -421,17 +464,9 @@ function Improve_admin_info() {
 				}
 			},
 			error : function(xhr, textStatus) {
-				console.log('错误')
-				console.log(xhr)
-				console.log(textStatus)
-			},
-			complete : function() {
-				console.log('结束')
+				console.log('错误',xhr, textStatus);
 			}
-		})
-	} else {
-		Tips('myModallyf_content_admin', "请完善个人信息！");
-	}
+		});
 }
 function Tips(contentid, content) {
 	document.getElementById(contentid).style.display = "block";
@@ -451,13 +486,11 @@ function sendAdminAuthCode(){
 function sendAuthCode(account, userOradmin) {
 	console.log("sendAuthCode account", account);
 	if(!account || account==''){
-		console.log("1");
 		loginAlert( "手机/邮箱不能为空！");
 		return;
 	}
 		
 	if(!validatePhone(account) && !validateEmail(account)){
-		console.log("2");
 		loginAlert("手机/邮箱格式不正确！");
 		return ;
 	} 
@@ -542,12 +575,7 @@ function forgetpwd_getpwdByEmail(userOradmin) {
 					}
 				},
 				error : function(xhr, textStatus) {
-					console.log('错误')
-					console.log(xhr)
-					console.log(textStatus)
-				},
-				complete : function() {
-					console.log('结束')
+					console.log('错误',xhr, textStatus);
 				}
 			})
 		} else {
@@ -561,6 +589,7 @@ function forgetpwd_getpwdByEmail(userOradmin) {
 		$('#myModallyf').modal('show');
 	}
 }
+
 function resetPwd(userOradmin) {
 	var oldPwd = $("#resetPwd_oldPwd").val();
 	var newPwd = $("#resetPwd_newPwd").val();
@@ -606,6 +635,7 @@ function resetPwd(userOradmin) {
 		Tips('passwordModal_hint', "信息缺失！！");
 	}
 }
+
 function initScoreTable(userID) {
 	// alert(userID);
 	if (userID) {

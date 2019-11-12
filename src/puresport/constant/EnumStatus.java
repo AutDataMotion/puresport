@@ -18,6 +18,14 @@ public enum EnumStatus {
 	LevelShow(2, "2", "具有该级别"),
 	
 	Illegal(10, "10", "参数有误"),
+	
+	Illegal_AuthCode(11, "11", "验证码不正确"),
+	
+	Illegal_Pwd(12, "12", "密码不正确"),
+	
+	Null_Account(20, "20", "帐号不存在"),
+	
+	Error_Exception(-1, "-1", "系统异常,请联系管理员"),
 	;
 	private int id;
 	private String idStr;
