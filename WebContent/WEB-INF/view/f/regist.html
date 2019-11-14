@@ -10,7 +10,9 @@
 	
 	
 	
+	
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
+
 
 
 
@@ -115,6 +117,19 @@
 								<option value="请选择项目">请选择项目</option> <%for (item in
 								sport_items_of_shengyunhui){%>
 								<option value=${item.name!}>${item.name!}</option> <%}%>
+							</select>
+						</div>
+					</div>
+
+					<div class="layui-form-item">
+						<label class="layui-form-label">级别</label>
+						<div class="layui-input-block">
+							<select name="typeleve" lay-verify="required">
+								<option value="请选择">请选择</option>
+								<option value="2">国家级</option>
+								<option value="3">中心协会级</option>
+								<option value="4">省级</option>
+								<option value="4">市级</option>
 							</select>
 						</div>
 					</div>

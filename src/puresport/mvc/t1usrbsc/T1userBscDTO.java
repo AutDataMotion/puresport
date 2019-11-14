@@ -15,6 +15,7 @@ import javax.swing.event.ListSelectionEvent;
 import csuduc.platform.util.ComUtil;
 import csuduc.platform.util.StringUtil;
 import puresport.constant.ConstantInitMy;
+import puresport.constant.EnumTypeLevel;
 import puresport.mvc.comm.AuthCodeMdl;
 
 /**
@@ -40,6 +41,9 @@ public class T1userBscDTO implements Serializable{
     private Integer emailValCode;
     private Integer mblphValCode;
     
+    // 级别
+    private String typeleve;
+    
     private String passwd;
     private String rePasswd;
 	
@@ -62,12 +66,14 @@ public class T1userBscDTO implements Serializable{
 		mblph_no = t1usrBsc.getMblph_no();
 		email = t1usrBsc.getEmail();
 		spt_prj = t1usrBsc.getSpt_prj();
+		typeleve = EnumTypeLevel.toTypeLevel(t1usrBsc.getTypelevel()
+				, t1usrBsc.getLevelinstitute(), t1usrBsc.getLevelprovince(), t1usrBsc.getLevelcity());
 		
 	}
 
 	public boolean validate(AuthCodeMdl authCodeMdlPhone, AuthCodeMdl authCodeMdlEmail) {
 		
-		if (ComUtil.haveEmpty(nm, crdt_no, gnd, brth_dt, province, city,spt_prj, mblph_no, email, passwd)) {
+		if (ComUtil.haveEmpty(nm, crdt_no, gnd, brth_dt, province, city,spt_prj, mblph_no, email, passwd, typeleve)) {
 			addTip("have empty");
 			return false;
 		}
@@ -96,7 +102,7 @@ public class T1userBscDTO implements Serializable{
 	
 public boolean validateForUpdate(AuthCodeMdl authCodeMdlPhone, AuthCodeMdl authCodeMdlEmail) {
 		
-		if (ComUtil.haveEmpty(nm, crdt_no, gnd, brth_dt, province, city,spt_prj, mblph_no, email)) {
+		if (ComUtil.haveEmpty(nm, crdt_no, gnd, brth_dt, province, city,spt_prj, mblph_no, email, typeleve)) {
 			addTip("have empty");
 			return false;
 		}
@@ -361,4 +367,14 @@ public boolean validateForUpdate(AuthCodeMdl authCodeMdlPhone, AuthCodeMdl authC
 	public void setTipList(List<String> tipList) {
 		this.tipList = tipList;
 	}
+
+	public String getTypeleve() {
+		return typeleve;
+	}
+
+	public void setTypeleve(String typeleve) {
+		this.typeleve = typeleve;
+	}
+	
+	
 }

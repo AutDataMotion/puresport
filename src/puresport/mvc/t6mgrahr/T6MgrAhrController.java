@@ -157,8 +157,6 @@ public class T6MgrAhrController extends BaseController {
 			return;
 		}
 		
-		
-
 		Boolean needValEmail = (Boolean) getSessionAttr("needValEmail");
 		Boolean needValPhone = (Boolean) getSessionAttr("needValPhone");
 		Boolean needValInstitute = (Boolean) getSessionAttr("needValInstitute");

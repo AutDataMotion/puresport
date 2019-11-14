@@ -565,6 +565,55 @@ public class T1usrBscService extends BaseService {
 		}
 	}
 	
+	private void resolveLevel(Record record,  String typeLevel){
+
+		if (typeLevel.equals(EnumTypeLevel.Country.getName())) {
+			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelShow.getIdStr());
+			
+		} else if (typeLevel.equals(EnumTypeLevel.Province.getName())) {
+			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelView.getIdStr())
+			.set(T1usrBsc.column_levelprovince, EnumStatus.LevelShow.getId());
+			
+		} else if (typeLevel.equals(EnumTypeLevel.City.getName())) {
+			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelView.getIdStr())
+			.set(T1usrBsc.column_levelprovince, EnumStatus.LevelView.getId())
+			.set(T1usrBsc.column_levelcity, EnumStatus.LevelShow.getId());
+
+		} else if(typeLevel.equals(EnumTypeLevel.CenterInstitute.getName()))
+		{
+			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelView.getIdStr())
+			.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelShow.getId());
+
+		}
+		else {
+			record.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelUnknown.getId());
+		}
+	}
+	
+	private void resolveLevel(T1usrBsc userBsc,  String typeLevel){
+
+		if (typeLevel.equals(EnumTypeLevel.Country.getName())) {
+			userBsc.setTypelevel(EnumStatus.LevelShow.getIdStr()); 
+			
+		} else if (typeLevel.equals(EnumTypeLevel.Province.getName())) {
+			userBsc.setTypelevel(EnumStatus.LevelView.getIdStr());
+			userBsc.setLevelprovince(EnumStatus.LevelShow.getId());
+			
+		} else if (typeLevel.equals(EnumTypeLevel.City.getName())) {
+			userBsc.setTypelevel(EnumStatus.LevelView.getIdStr());
+			userBsc.setLevelprovince(EnumStatus.LevelView.getId());
+			userBsc.setLevelcity(EnumStatus.LevelShow.getId());
+
+		} else if(typeLevel.equals(EnumTypeLevel.CenterInstitute.getName()))
+		{
+			userBsc.setTypelevel(EnumStatus.LevelView.getIdStr());
+			userBsc.setLevelinstitute(EnumStatus.LevelShow.getId());
+		}
+		else {
+			userBsc.setLevelinstitute(EnumStatus.LevelUnknown.getId());
+		}
+	}
+	
 	public boolean addUserBsc(T1userBscDTO dto) {
 		
 		if (Objects.isNull(dto)) {
@@ -584,9 +633,6 @@ public class T1usrBscService extends BaseService {
 							DESUtil.encrypt(dto.getPasswd(), ConstantInitMy.SPKEY))// 密码默认身份证后6位
 					.set(T1usrBsc.column_mblph_no, dto.getMblph_no())
 					.set(T1usrBsc.column_email, dto.getEmail())
-					//.set(T1usrBsc.column_cty_prov_city_mgrid, mgrSession.getUsrid())
-					// .set(T1usrBsc.column_typelevel,
-					// mgrSession.getTypeleve())
 					.set(T1usrBsc.column_province, dto.getProvince())
 					.set(T1usrBsc.column_city, dto.getCity())
 					.set(T1usrBsc.column_spt_prj, dto.getSpt_prj());
@@ -597,6 +643,8 @@ public class T1usrBscService extends BaseService {
 			if ( dto.getMblphValCode()!= null) {
 				dbRow.set(T1usrBsc.column_mblph_val, 1);
 			}
+			
+			resolveLevel(dbRow, dto.getTypeleve());
 			
 			return ConfMain.db().save(tableName, tableKey, dbRow);
 			
@@ -653,6 +701,7 @@ public class T1usrBscService extends BaseService {
 			return true;
 		}
 		
+		resolveLevel(userBsc, dto.getTypeleve());
 		return userBsc.update();
 
 	}

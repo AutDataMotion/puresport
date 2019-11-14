@@ -57,7 +57,7 @@ public class T6MgrSession implements Serializable {
 			return String.format(" city='%s' and province='%s'  and typeleve in ('市级') ", city, province);
 		}
 		// 未知的都不可见
-		return " 1=1 ";
+		return " 1=2 ";
 	}
 	
 

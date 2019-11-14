@@ -19,6 +19,21 @@ public enum EnumTypeLevel {
 		name = aname;
 	}
 
+	public static String toTypeLevel(String typeLevel, String levelInstitute, String levelProvince, String levelCity) {
+		if (typeLevel.contentEquals(EnumStatus.LevelShow.getIdStr())) {
+			return Country.getName();
+		}
+		if (levelInstitute.contentEquals(EnumStatus.LevelShow.getIdStr())) {
+			return CenterInstitute.getName();
+		}
+		if (levelProvince.contentEquals(EnumStatus.LevelShow.getIdStr())) {
+			return Province.getName();
+		}
+		if (levelCity.contentEquals(EnumStatus.LevelShow.getIdStr())) {
+			return City.getName();
+		}
+		return "未知";
+	}
 	public static int getLevelId(String levelName) {
 
 		for (EnumTypeLevel e : EnumTypeLevel.values()) {
