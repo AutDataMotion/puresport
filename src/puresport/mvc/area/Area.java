@@ -60,8 +60,8 @@ public class Area extends BaseModel<Area> {
 	public void setId(Integer id){
 		set(column_id, id);
 	}
-	public <T> T getId() {
-		return get(column_id);
+	public Integer getId() {
+		return getInt(column_id);
 	}
 	public void setName(String name){
 		set(column_name, name);
@@ -78,8 +78,8 @@ public class Area extends BaseModel<Area> {
 	public void setParent_id(Integer parent_id){
 		set(column_parent_id, parent_id);
 	}
-	public <T> T getParent_id() {
-		return get(column_parent_id);
+	public Integer getParent_id() {
+		return getInt(column_parent_id);
 	}
 	
 }

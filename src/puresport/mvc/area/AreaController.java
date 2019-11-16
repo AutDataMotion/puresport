@@ -1,7 +1,11 @@
 package puresport.mvc.area;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.jfinal.aop.Before;
@@ -17,6 +21,7 @@ import oracle.net.aso.e;
 import puresport.constant.ConstantInitMy;
 import puresport.constant.EnumStatus;
 import puresport.mvc.comm.ParamComm;
+import puresport.mvc.comm.ResTips;
 import puresport.mvc.t6mgrahr.T6MgrSession;
 
 
@@ -41,7 +46,22 @@ public class AreaController extends BaseController {
 
 	public static final String pthc = "/jf/puresport/area/";
 	public static final String pthv = "/puresport/area/";
-
+	
+	@Clear
+	public void fetchProvinces() {
+		renderJson(AreaService.service.fetchProvinces());
+	}
+	
+	@Clear
+	public void fetchCities() {
+		String provinceName = getPara("provinceName");
+		if (StringUtils.isBlank(provinceName) || provinceName.length() > 10) {
+			renderJson(ResTips.getFailRes());
+		}
+		renderJson(AreaService.service.fetchCities(provinceName));
+	}
+	
+	
 	@Clear
 	public void selectProvince(){
 		// 判断管理员级别，不同级别设置可见省份

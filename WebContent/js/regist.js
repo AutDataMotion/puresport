@@ -71,13 +71,12 @@ $(function() {
 			  ,max: '2030-1-1'
 			});
 		
-        setProvince();
+        setProvinceAjax();
 
 		// ========Event
 
 		form.on('select(province)', function (data) {
-            setCity(data.value);
-           
+            setCityAjax(data.value); 
         });
 		
 		function btnSetDisable(domObj, disabled, text){
@@ -223,149 +222,72 @@ $(function() {
 				}
 			})
 		}
-		
-		// 设置省份数据
-	    function setProvince() {
-	        // 给省份下拉列表赋值
-	        var $sel = $("#selProvince");
+	    
+	    function setProvinceAjax(){
+	    	
+	    	$.ajax({
+                url:encodeURI(encodeURI(cxt + "/jf/puresport/area/fetchProvinces")),
+                data:{},
+                dataType:"json",
+                type:"get",
+                timeout:5000,   
+                async : true,
+                cache : true,
+                success:function(provinceList){
+                	console.log('fetchProvinces', provinceList)
+                	
+                	var $sel = $("#selProvince");
 
-	        // 获取对应省份城市
-	        for (var i = 0, len = province.length; i < len; i++) {
-	            modelVal = province[i];
-	            var option = $("<option value='" + province[i] + "'>" + province[i] + "</option>");
+        	        // 获取对应省份城市
+        	        for (var i = 0, len = provinceList.length; i < len; i++) {
+        	            var provinceArea = provinceList[i];
+        	            var option = $("<option value='" + provinceArea.name + "' pid='"+provinceArea.id+"'>" + provinceArea.name + "</option>");
 
-	            // 添加到 select 元素中
-	            $sel.append(option);
-	        }
-	        form.render('select');
-	        setCity($($sel.get(0)).val());
-
+        	            // 添加到 select 元素中
+        	            $sel.append(option);
+        	        }
+        	        form.render('select');
+        	        setCityAjax(provinceList[0].name);
+        	        
+                },
+                error:function(){
+                	layer.msg(tipFail);
+                }
+            })
 	    }
 
+	    function setCityAjax(provinceName) {
+	    	$.ajax({
+                url:encodeURI(encodeURI(cxt + "/jf/puresport/area/fetchCities")),
+                data:{provinceName:provinceName},
+                dataType:"json",
+                type:"get",
+                timeout:5000,   
+                async : true,
+                cache : true,
+                success:function(cityList){
+                	console.log('cityList', cityList)
+                	
+                	var $city = $("#selCity");
+                	var option, modelVal;
 
-	    // 根据选中的省份获取对应的城市
-	    function setCity(province) {
-	        var $city = $("#selCity");
-	        var proCity, option, modelVal;
-
-	        // 通过省份名称，获取省份对应城市的数组名
-	        switch (province) {
-	            case "北京":
-	                proCity = beijing;
-	                break;
-	            case "上海":
-	                proCity = shanghai;
-	                break;
-	            case "天津":
-	                proCity = tianjing;
-	                break;
-	            case "重庆":
-	                proCity = chongqing;
-	                break;
-	            case "浙江":
-	                proCity = zhejiang;
-	                break;
-	            case "江苏":
-	                proCity = jiangsu;
-	                break;
-	            case "广东":
-	                proCity = guangdong;
-	                break;
-	            case "福建":
-	                proCity = fujiang;
-	                break;
-	            case "湖南":
-	                proCity = hunan;
-	                break;
-	            case "湖北":
-	                proCity = hubei;
-	                break;
-	            case "辽宁":
-	                proCity = liaoning;
-	                break;
-	            case "吉林":
-	                proCity = jilin;
-	                break;
-	            case "黑龙江":
-	                proCity = heilongjiang;
-	                break;
-	            case "河北":
-	                proCity = hebei;
-	                break;
-	            case "河南":
-	                proCity = henan;
-	                break;
-	            case "山东":
-	                proCity = shandong;
-	                break;
-	            case "陕西":
-	                proCity = shangxi;
-	                break;
-	            case "甘肃":
-	                proCity = gansu;
-	                break;
-	            case "新疆":
-	                proCity = xinjiang;
-	                break;
-	            case "青海":
-	                proCity = qinghai;
-	                break;
-	            case "山西":
-	                proCity = shanxi;
-	                break;
-	            case "四川":
-	                proCity = sichuan;
-	                break;
-	            case "贵州":
-	                proCity = guizhou;
-	                break;
-	            case "安徽":
-	                proCity = anhui;
-	                break;
-	            case "江西":
-	                proCity = jiangxi;
-	                break;
-	            case "云南":
-	                proCity = yunnan;
-	                break;
-	            case "内蒙古":
-	                proCity = neimenggu;
-	                break;
-	            case "西藏":
-	                proCity = xizang;
-	                break;
-	            case "广西":
-	                proCity = guangxi;
-	                break;
-	            case "宁夏":
-	                proCity = ningxia;
-	                break;
-	            case "海南":
-	                proCity = hainan;
-	                break;
-	            case "香港":
-	                proCity = xianggang;
-	                break;
-	            case "澳门":
-	                proCity = aomeng;
-	                break;
-	            case "台湾":
-	                proCity = taiwan;
-	                break;
-	        }
-	        
-	        // 先清空之前绑定的值
-	        $city.empty();
-	        
-	        // 设置对应省份的城市
-	        for (var i = 0, len = proCity.length; i < len; i++) {
-	            modelVal = proCity[i];
-	            option = "<option value='" + modelVal + "'>" + modelVal + "</option>";
-	            $city.append(option);
-	        }
-	        form.render('select');
-
+                	// 先清空之前绑定的值
+        	        $city.empty();
+        	        
+        	        // 设置对应省份的城市
+        	        for (var i = 0, len = cityList.length; i < len; i++) {
+        	            modelVal = cityList[i];
+        	            option = "<option value='" + modelVal.name + "'>" + modelVal.name + "</option>";
+        	            $city.append(option);
+        	        }
+        	        form.render('select');
+                },
+                error:function(){
+                	layer.msg(tipFail);
+                }
+            })
 	    }
+
 	}); // end layUI
 	
 

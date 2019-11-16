@@ -1,5 +1,6 @@
 package puresport.mvc.area;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -21,6 +22,9 @@ public class AreaService extends BaseService {
 	private final static String tableName = "dt_area";
 	private final static String tableKey = "id";
 	
+	private final static String CacheName_Provinces= "CacheName_Provinces";
+	private final static String CacheName_ProvinceCities= "CacheName_ProvinceCities";
+	
 	@SuppressWarnings("unused")
 	private static Logger log = Logger.getLogger(AreaService.class);
 	
@@ -28,8 +32,28 @@ public class AreaService extends BaseService {
 	
 	public Area SelectById(Integer id){
 		
-		Area mdl = Area.dao.findFirst("select * from area where id=?", id);
+		Area mdl = Area.dao.findFirst("select * from dt_area where id=?", id);
 		return mdl;
+	}
+	
+	public List<Area> fetchProvinces(){
+		return Area.dao.findByCache(CacheName_Provinces, CacheName_Provinces, "select * from dt_area where parent_id=0 limit 100");
+	}
+	
+	public List<Area> fetchCities(Integer provinceId){
+		return Area.dao.findByCache(CacheName_ProvinceCities, provinceId, "select * from dt_area where parent_id=? limit 100",provinceId);
+	}
+	
+	public Area findProvinceByName(String name) {
+		return Area.dao.findFirstByCache(CacheName_Provinces, name, "select * from dt_area where name=? and parent_id=0 limit 1",name);
+	}
+	
+	public List<Area> fetchCities(String provinceName){
+		Area area = findProvinceByName(provinceName);
+		if (null == area) {
+			return Collections.EMPTY_LIST;
+		}
+		return Area.dao.findByCache(CacheName_ProvinceCities, provinceName, "select * from dt_area where parent_id=? limit 100",area.getId());
 	}
 	
 	public List<Area> getProvince(T6MgrSession mgrSession){

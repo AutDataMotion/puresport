@@ -34,6 +34,8 @@ public enum EnumTypeLevel {
 		}
 		return "未知";
 	}
+	
+	
 	public static int getLevelId(String levelName) {
 
 		for (EnumTypeLevel e : EnumTypeLevel.values()) {
