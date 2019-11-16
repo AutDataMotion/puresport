@@ -109,23 +109,18 @@
 						</div>
 					</div>
 
-
 					<div class="layui-form-item">
 						<label class="layui-form-label">运动项目</label>
-						<div class="layui-input-block">
+						<div class="layui-input-inline">
 							<select name="spt_prj" lay-verify="required">
 								<option value="请选择项目">请选择项目</option> <%for (item in
 								sport_items_of_shengyunhui){%>
 								<option value=${item.name!}>${item.name!}</option> <%}%>
 							</select>
 						</div>
-					</div>
-
-					<div class="layui-form-item">
 						<label class="layui-form-label">级别</label>
-						<div class="layui-input-block">
+						<div class="layui-input-inline">
 							<select name="typeleve" lay-verify="required">
-								<option value="请选择">请选择</option>
 								<option value="国家级">国家级</option>
 								<option value="中心协会级">中心协会级</option>
 								<option value="省级">省级</option>

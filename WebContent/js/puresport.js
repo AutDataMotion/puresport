@@ -468,6 +468,7 @@ function Improve_admin_info() {
 			}
 		});
 }
+
 function Tips(contentid, content) {
 	document.getElementById(contentid).style.display = "block";
 	$('#' + contentid).text(content);
@@ -523,6 +524,7 @@ function sendConfirmcode2Email(account, userOradmin) {
 		}
 	})
 }
+
 function forgetpwd_getpwdByEmail(userOradmin) {
 	// alert(userOradmin);
 	var account = '';

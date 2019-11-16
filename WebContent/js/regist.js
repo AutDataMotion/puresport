@@ -251,7 +251,7 @@ $(function() {
         	        
                 },
                 error:function(){
-                	layer.msg(tipFail);
+                	layer.msg("获取信息失败");
                 }
             })
 	    }
@@ -283,7 +283,7 @@ $(function() {
         	        form.render('select');
                 },
                 error:function(){
-                	layer.msg(tipFail);
+                	layer.msg("获取信息失败");
                 }
             })
 	    }
