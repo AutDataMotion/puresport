@@ -234,7 +234,7 @@ $(function() {
                 async : true,
                 cache : true,
                 success:function(provinceList){
-                	console.log('fetchProvinces', provinceList)
+//                	console.log('fetchProvinces', provinceList)
                 	
                 	var $sel = $("#selProvince");
 
@@ -266,7 +266,7 @@ $(function() {
                 async : true,
                 cache : true,
                 success:function(cityList){
-                	console.log('cityList', cityList)
+//                	console.log('cityList', cityList)
                 	
                 	var $city = $("#selCity");
                 	var option, modelVal;

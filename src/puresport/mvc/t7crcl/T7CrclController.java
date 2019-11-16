@@ -217,7 +217,105 @@ public class T7CrclController extends BaseController {
 //		renderWithPath("/f/accession/tokyo/course/scormcontent/index.html");
 	}
 	
-
+	/**
+	 * 描述：查询证书
+	 * 
+	 * @author zhuchaobin 2019-11-10
+	 * @throws URISyntaxException
+	 * @throws IOException 
+	 */
+	@Clear
+	public void queryCredit() throws URISyntaxException, IOException {
+		Integer usrid = Integer.parseInt(getSession().getAttribute("usrid")+"");
+		System.out.println(usrid);
+		String creditNo = getPara("credit_no");
+		String crdtNo = getPara("crdt_no");
+		String certificatePath_1 = "";
+		String certificatePath_2 = "";
+		// // 处理结果
+		ResultEntity res = null;
+		
+		String path = Class.class.getResource("/").toURI().getPath();
+		String filepath = new File(path).getParentFile().getParentFile().getCanonicalPath();
+		
+		if(StringUtils.isNotBlank(crdtNo)) {
+			T1usrBsc t1 = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where crdt_no=?", crdtNo);// 根据用户证件号查询数据库中的用户
+			if(null != t1) {
+				certificatePath_1 = "/images_zcb/certificates/" + "反兴奋剂教育准入合格证书_" + t1.getNm() + "_"
+						+ t1.getUsrid() + ".jpg";
+				if(!isFileExsit(filepath + certificatePath_1))
+					certificatePath_1 = "";
+			}
+		}
+		if(StringUtils.isNotBlank(creditNo)) {
+			certificatePath_2 = "/images_zcb/certificates/" + creditNo + ".jpg";
+			if(!isFileExsit(filepath + certificatePath_2))
+				certificatePath_2 = "";
+		}
+		
+		if(StringUtils.isNotBlank(certificatePath_1) && StringUtils.isNotBlank(certificatePath_2)) {
+			if(certificatePath_1.equals(certificatePath_2)) {
+				// 查询到，返回
+//				setAttr("certificatePath", certificatePath_1);
+				res = new ResultEntity("2000", "查询证书成功!", certificatePath_1, certificatePath_2, "");
+			} else {
+				// 条件组合后，没查到
+				res = new ResultEntity("0001", "查询证书失败!", "", "", "");
+			}
+		} else if(StringUtils.isNotBlank(certificatePath_1)) {
+			// 查询到返回certificatePath_1
+//			setAttr("certificatePath", certificatePath_1);
+			res = new ResultEntity("1000", "查询证书成功!", certificatePath_1, "", "");
+		} else if(StringUtils.isNotBlank(certificatePath_2)) {
+			// 查询到返回certificatePath_2
+//			setAttr("certificatePath", certificatePath_2);
+			res = new ResultEntity("1000", "查询证书成功!", certificatePath_2, "", "");
+		} else {
+			// 没查询到证书
+			res = new ResultEntity("0001", "查询证书失败!", "", "", "");
+		}		
+		renderJson(res);
+		return;
+	}
+	
+	/**
+	 * 描述：展示证书
+	 * 
+	 * @author zhuchaobin 2019-11-10
+	 * @throws URISyntaxException
+	 * @throws IOException 
+	 */
+	@Clear
+	public void showCredit() {
+		String certificatePath_1 = getPara("certificatePath_1");
+		String certificatePath_2 = getPara("certificatePath_2");
+		LOG.debug("certificatePath=" + certificatePath_1);
+		setAttr("certificatePath", certificatePath_1);
+		renderWithPath("/f/accession/showCredit.html");
+	}
+	
+	/**
+	 * 描述：文件是否存在
+	 * 
+	 * @author zhuchaobin 2019-06-03
+	 * @throws URISyntaxException
+	 */
+	@Clear
+	public boolean isFileExsit(String filePathDir) {
+		try {
+			File file = new File(filePathDir);
+			if (!judeFileExists(file)) {
+				return false;
+			} else {
+				return true;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		} 
+	}
+		
 	/**
 	 * 描述：查询证书
 	 * 
@@ -1628,6 +1726,13 @@ public class T7CrclController extends BaseController {
 			setAttr("tms", t11.getTms());
 			setAttr("exam_grd", t11.getExam_grd());
 		}
+		
+		// 查询用户信息
+		T1usrBsc t1 = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", usrid);// 根据用户名查询数据库中的用户
+		if (t1 != null) {
+			setAttr("usrNm", t1.getUsr_nm());
+			setAttr("crdtNo", t1.getCrdt_no());
+		}
 
 		System.out.println("usrid="+usrid);
 		System.out.println("examid="+examid);
@@ -1651,9 +1756,9 @@ public class T7CrclController extends BaseController {
 				if(null != t9)
 					exam.setTtl(t9.getTtl());
 				if(Integer.parseInt(t10.getExam_grd()+"") > 0)
-					exam.setRltDesc("正确");
+					exam.setRltDesc("<code class=\"text-success bg-success\">答案正确</code>");
 				else 
-					exam.setRltDesc("错误");
+					exam.setRltDesc("<code class=\"text-danger bg-danger\">答案错误</code>");
 				
 				exam.setOpt((String) t9.getOpt());
 				String option = exam.getOpt();
@@ -1693,14 +1798,5 @@ public class T7CrclController extends BaseController {
 	
 	}	
 	
-	/**
-	 * 描述：证书查询
-	 * 
-	 * @author zhuchaobin 2019-11-03
-	 */
-	@Clear
-	public void queryCredit() {
-		LOG.debug("queryCredit。。。");
-		renderWithPath("/f/queryCredit.html");
-	}
+
 }

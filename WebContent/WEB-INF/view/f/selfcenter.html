@@ -158,10 +158,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<a
 							href="${cxt!}/jf/puresport/t7Crcl/queryCetifate?usrid=${session['usrid']}"
 							target="_blank" type="button"
-							class="btn  btn-lg btn-block logout_btn" role="button">我的证书</a> <a
+							class="btn  btn-lg btn-block logout_btn" role="button">我的证书</a>
+							<a
 							href="${cxt!}/jf/puresport/t7Crcl/heroList100/" target="_blank"
 							type="button" class="btn  btn-lg btn-block logout_btn"
-							role="button">证书查询</a> <a
+							role="button">证书查询</a> 
+							
+							 <a
 							href="${cxt!}/jf/puresport/t7Crcl/heroList100/" target="_blank"
 							type="button" class="btn  btn-lg btn-block logout_btn"
 							role="button">准入考试排行榜</a> <a
@@ -186,7 +189,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</div>
 	</div>
 	<!-- start footer -->
-
 
 	<!--system message modal-->
 	<div class="modal fade" id="myModallyf" tabindex="-1" role="dialog"
@@ -259,6 +261,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</div>
 		</div>
 	</div>
+
 
 	<div class="layui-form-item">
 		<label class="layui-form-label">证书编号</label>
@@ -351,6 +354,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 								<div class="layui-form-item">
 									<label class="layui-form-label">运动项目</label>
+
 									<div class="layui-input-inline">
 										<select name="spt_prj" lay-verify="required">
 											<%for (item in
@@ -365,6 +369,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<option value="中心协会级">中心协会级</option>
 											<option value="省级">省级</option>
 											<option value="市级">市级</option>
+										</select>
+
+									<div class="layui-input-block">
+										<select name="spt_prj" lay-verify="required">
+											<option value="请选择项目">请选择项目</option> <%for (item in
+											sport_items_of_shengyunhui){%>
+											<option value=${item.name!}>${item.name!}</option> <%}%>
 										</select>
 									</div>
 								</div>
@@ -442,6 +453,99 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</div>
 	</div>
 
+	<!-- tip2 Modal-->
+	<div class="modal fade" id="tip2Modal" tabindex="-1" role="dialog"
+		aria-labelledby="tip1ModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header" align="center">
+					<h5 class="modal-title">友情提示</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" align="center">对不起，查询不到对应证书，请确认！</div>
+				<div class="modal-footer" align="center">
+					<button type="button" class="btn" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+
+	<!-- tip2 Modal-->
+	<div class="modal fade" id="tip3Modal" tabindex="-1" role="dialog"
+		aria-labelledby="tip1ModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header" align="center">
+					<h5 class="modal-title">友情提示</h5>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body" align="center">证书查询成功！</div>
+				<div class="modal-footer" align="center">
+					<button type="button" class="btn" data-dismiss="modal">确定</button>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+
+
+	<!--password modify modal-->
+	<div class="modal fade" id="queryCreditModal" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">合格证书查询</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="layui-form-item">
+							<label class="layui-form-label">证书编号</label>
+							<div class="layui-input-block">
+								<input type="text" name="credit_no" id="credit_no"
+									lay-verify="identity" value='130727198707082438'
+									autocomplete="off" placeholder="证书编号" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">证件号码</label>
+							<div class="layui-input-block">
+								<input type="text" name="crdt_no" id="crdt_no"
+									lay-verify="identity" value='130727198707082438'
+									autocomplete="off" placeholder="身份证号" class="layui-input">
+							</div>
+						</div>
+
+
+					</form>
+				</div>
+				<div class="modal-footer">
+					<!-- 					<button class="btn btn-primay system_btn" id="resetPwd_btn"
+						onclick="resetPwd('02')" type="button" data-toggle="modal">重置</button> -->
+					<button class="btn  system_btn" id="resetPwd_btn"
+						onclick="queryCredit()" type="button" data-toggle="modal">查询</button>
+					<button class="btn btn-secondary" type="button"
+						data-dismiss="modal">取消</button>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	
 	<script type="text/javascript" src="${cxt!}/ui/layui/layui.js"></script>
 	<script type="text/javascript" src="${cxt!}/js/self-center.js"></script>
 
@@ -468,12 +572,43 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		});
 
 		function queryCredit() {
-			alert("ddddd");
 			var credit_no = document.getElementById("credit_no").value;
-			alert(credit_no);
-
 			var crdt_no = document.getElementById("crdt_no").value;
-			alert(crdt_no);
+			if ("" == credit_no && "" == crdt_no) {
+				alert("证书编号和身份证号不能全部为空，请输入!");
+				return;
+			}
+			var url;
+			url = '/jf/puresport/t7Crcl/queryCredit';
+			$.ajax({
+				type : 'POST',
+				url : url,
+				dataType : "json",
+				traditional : true,
+				data : {
+					"credit_no" : credit_no,
+					"crdt_no" : crdt_no
+				},
+				success : function(res) {
+					if (res.code == "1000") {
+						/* 	window.location.href = "${cxt!''}/jf/puresport/t7Crcl/showCredit?certificatePath_1="
+									+ res.parm1; */
+						//		$('#tip3Modal').modal('show');
+						alert(res.desc);
+						window.open(
+								"${cxt!''}/jf/puresport/t7Crcl/showCredit?certificatePath_1="
+										+ res.parm1, 'blank');
+
+					} else if (res.code == "0001") {
+						//$('#tip2Modal').modal('show');
+						alert(res.desc);
+						//		$('#tip2Modal').modal('show');
+					} else {
+						alert(res.desc);
+					}
+				},
+				dataType : "json"
+			});
 		}
 	</script>
 </body>

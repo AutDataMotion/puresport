@@ -1,24 +1,21 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>${session['which_competition']}答题详情</title>
+<title>${pageHead!'反兴奋剂教育准入合格证书'}</title>
 <link rel="shortcut icon" href="${cxt!}/images/favicon.ico" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords"
 	content="Skate Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
-
 <!-- 浏览器不缓存 -->
 <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
 <META HTTP-EQUIV="Expires" CONTENT="0">
 
 <script type="application/x-javascript">
-	
 			
 	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } 
-
 </script>
 <link href="/css/bootstrap.css" rel='stylesheet' type='text/css' />
 <link href="/css/style.css" rel="stylesheet" type="text/css" media="all" />
@@ -62,6 +59,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	font-size: 25px;
 	height: 600px；
 }
+
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -70,8 +68,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		/* 	$('#code').qrcode(str); */
 		$("#code").qrcode({
 			render : "table",
-			width : 130,
-			height : 130,
+			width : 100,
+			height : 100,
 			text : str
 		});
 	})
@@ -96,6 +94,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		return out;
 	}
 </script>
+
 <style type="text/css">
 .prblSelect {
 	width: 850px;
@@ -112,70 +111,94 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<!-- start main -->
 		<div class="container">
 			<div class="main_grid1">
-				<h3 class="style pull-left">试卷答题详情</h3>
+				<h3 class="style pull-left">合格证书</h3>
 				<h3 class="style pull-right">${which_competition!''}</h3>
 			</div>
 		</div>
 	</div>
 	<div class="main_btm1">
-		<div class="row">
-			<div class="col-md-3 "></div>
-			<div class="col-md-6 " align="left">
-				<div class="span4_of_list" width="100%">
-					<div class="alert alert-info">
-						考试名称：${exam_name!''}</br>科目：${category!''}</br>成绩：${exam_grd!''}</br>答题人： ${usrNm!''}  ${crdtNo!''}</br> 答题时间：${tms!''}</br>
+		<div id="showScoreDiv" class="demo">
+			<div class="container">
+				<div align="center">
+					<div class="row">
+						<div class="col-md-3 myTest"></div>
+						<div class="col-md-6 myTest">
+							<!-- 							<img src="/images_zcb/certificates/${crdt_no!''}.jpg" -->
+							<img
+								src="${cxt!''}${certificatePath!'/images_zcb/certificates/certificateDefault.jpg'}"
+								id="certificateImgId" class="img-thumbnail" height="400"
+								width="400">
+						</div>
+						<div class="col-md-3 myTest">
+							<div style="display: ${shareDisplay!'none'};">
+									<div class="row" class="style pull-bottom">
+										</br> </br>
+<!-- 										<div align="left"><img src="http://qr.liantu.com/api.php?text=${cxt!''}${certificatePath!'/images_zcb/certificates/certificateDefault.jpg'}&fg=0065AD&w=190&inpt=000000&pt=DE6199&m=30"/></div> -->
+										<div align="left"><img src="http://qr.liantu.com/api.php?text=${cxt!''}${certificatePath!'/images_zcb/certificates/certificateDefault.jpg'}&w=190"/></div>
+										<!-- <div style="width:100px; height:100px" id="code"></div> -->
+									</div>
+									<div class="row">
+										<div align="left">使用如下app扫描二维码分享</div>
+									</div>
+									<div class="row">
+										<div align="left">
+											<img src="/images_zcb/share.png" height="55" width="210">
+										</div>
+									</div>
+								</div>
+							</br>
+							<div class="row" >
+								<div align="left" style="display: ${rankDisplay!'none'};">您在${totalExamer!''}名参考人员中排名第${mingci!''}，击败了全国${koPercent!''}的考生！</div>
+							</div>
+							<P>
+							<div style="display: ${disappointDisplay!'none'};">
+							<div class="row">
+								<div align="left">对成绩不满意？</div>
+							</div>
+							<div class="row">
+								<div align="left">
+									<button
+										onclick="window.location.href='/jf/puresport/t7Crcl/study_notify_1'"
+										class="btn">重新学习</button> 
+<!-- 									<button
+										onclick="window.location.href='/jf/puresport/t7Crcl/generteTest'"
+										class="btn">重新考试</button> -->
+<!-- 									<button
+										onclick="window.location.href='/jf/puresport/t7Crcl/heroList/'"
+										class="btn">英雄榜</button> -->
+								</div>
+							</div>
+							</div>
+							
+							<div style="display: ${startDisplay!'none'};">
+							<div class="row">
+								<div align="left">您尚未参加考试，请参加准入学习及考试。</div>
+							</div>
+							<div class="row">
+								<div align="left">
+									<button
+										onclick="window.location.href='/jf/puresport/t7Crcl/study_notify_1'"
+										class="btn">准入学习</button>
+<!-- 									<button
+										onclick="window.location.href='/jf/puresport/t7Crcl/generteTest'"
+										class="btn">准入考试</button> -->
+									<!--button
+										onclick="window.location.href='/jf/puresport/t7Crcl/heroList/'"
+										class="btn">英雄榜</button-->
+								</div>
+							</div>
+							</div>
+						</div>
 					</div>
-					<%for(x in testPaperList01){ %>
-					<div disabled="disabled">
-						<label>【多项选择】 第${x.prblmno!''}题： ${x.ttl!''} <!-- &nbsp${x.prblm_aswr!''} --></label>
-						</br> <label for=${x.prblmid! ''}A class="prblSelect"
-							style="font-weight: lighter"> <input type="checkbox"
-							${x.optASelct! ''} name=${x.prblmno! ''} value=A id=${x.prblmid!
-							''}A> ${x.optA!}
-						</label> </br> <label for=${x.prblmid! ''}B class="prblSelect"
-							style="font-weight: lighter"> <input type="checkbox"
-							${x.optBSelct! ''}
-						name=${x.prblmno! ''} value=B
-							id=${x.prblmid! ''}B> ${x.optB!}
-						</label> </br> <label for=${x.prblmid! ''}C class="prblSelect"
-							style="font-weight: lighter"> <input type="checkbox"
-							${x.optCSelct! ''}
-						name=${x.prblmno! ''} value=C
-							id=${x.prblmid! ''}C> ${x.optC!}
-						</label> </br> <label for=${x.prblmid! ''}D class="prblSelect"
-							style="font-weight: lighter"> <input type="checkbox"
-							${x.optDSelct! ''}
-						name=${x.prblmno! ''} value=D
-							id=${x.prblmid! ''}D> ${x.optD!}
-						</label> </br>
-						<p><!-- <span class="badge">答案${x.rltDesc!}</span> -->${x.rltDesc!}</p>
-					<!-- 	<code class='text-success bg-success'>答案${x.rltDesc!}</code> -->
-						</br>
-						
-					</div>
-					<%}%> <%for(y in testPaperList02){ %>
-					<div disabled="disabled">
-						<label>【判断题】 第${y.prblmno!''}题： ${y.ttl!''} <!-- &nbsp${y.prblm_aswr!''} --></label>
-						</br> <label for=${y.prblmid! ''}A class="prblSelect"
-							style="font-weight: lighter"> <input type="radio"
-							${y.optASelct! ''} name=${y.prblmno! ''} value=A id=${y.prblmid!
-							''}A> 正 确<!-- ${y.prblmid!} -->
-						</label> </br>
-						<label for=${y.prblmid! ''}B class="prblSelect"
-							style="font-weight: lighter"> <input type="radio"
-							${y.optBSelct! ''}
-						name=${y.prblmno! ''} value=B
-							id=${y.prblmid! ''}B> 错 误<!-- ${y.prblmid!} -->
-						</label> </br>
-						<p><!-- <code class="text-danger bg-danger">答案${y.rltDesc!}</code> -->${y.rltDesc!}</p>
-						
-					</div>
-					<%}%>
 				</div>
 			</div>
-			<div class="col-md-3"></div>
 		</div>
-		<% include("/f/footer.html"){} %>
+
 	</div>
+	<!-- start footer -->
+	<% include("/f/footer.html"){} %>
+	<!-- end footer -->
+	<input type="hidden" id="examid" value="${examid!'-1'}">
+	</input>
 </body>
 </html>
