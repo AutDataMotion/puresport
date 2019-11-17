@@ -1818,6 +1818,7 @@ public class T7CrclController extends BaseController {
 	public void queryTestPaper() {
 		String usrid = getPara("usrid");
 		String examid = getPara("examid");
+		String userFlag = getPara("userFlag");//1:管理员 2：普通用户
 		// 考试名称，科目
 		String t11sql = "select * from t11_exam_stat t where t.examid ='" + examid + "'";
 		T11ExamStat t11 = T11ExamStat.dao.findFirst(t11sql);
@@ -1852,14 +1853,30 @@ public class T7CrclController extends BaseController {
 				exam.setPrblmno(Integer.parseInt(t10.getPrblmno()));
 				exam.setPrblmid(Integer.parseInt(t10.getPrblmid()));
 				exam.setUsrid(Integer.parseInt(t10.getUsrid()));
-				exam.setExam_grd(Integer.parseInt(t10.getExam_grd()));
+				exam.setExam_grd(Integer.parseInt(t10.getExam_grd()));				
 				// 查题目
 				T9Tstlib t9 = T9Tstlib.dao.findById(Long.parseLong(t10.getPrblmid() + ""));
-				if (null != t9)
+				if (null != t9) {
 					exam.setTtl(t9.getTtl());
-				if (Integer.parseInt(t10.getExam_grd() + "") > 0)
+					if("1".equals(userFlag)) {
+						exam.setPrblm_aswr("【正确答案：" + t9.getPrblm_aswr() + "】");
+						if ("02".equals(t9.getPrblm_tp())) {
+							if(t9.getPrblm_aswr().equals("A"))
+								exam.setPrblm_aswr("	【正确答案：正确】");
+							else if(t9.getPrblm_aswr().equals("B"))
+								exam.setPrblm_aswr("	【正确答案：错误】");
+						}
+					}
+				}
+/*				if (Integer.parseInt(t10.getExam_grd() + "") > 0)
 					exam.setRltDesc("<code class=\"text-success bg-success\">答案正确</code>");
 				else
+					exam.setRltDesc("<code class=\"text-danger bg-danger\">答案错误</code>");*/
+				
+				if (t9.getPrblm_aswr().equals(t10.getUsr_aswr())) {
+					exam.setRltDesc("<code class=\"text-success bg-success\">答案正确</code>");
+					exam.setPrblm_aswr("");
+				} else
 					exam.setRltDesc("<code class=\"text-danger bg-danger\">答案错误</code>");
 
 				exam.setOpt((String) t9.getOpt());
@@ -1887,8 +1904,9 @@ public class T7CrclController extends BaseController {
 
 				if ("01".equals(t9.getPrblm_tp()))
 					testPaperList01.add(exam);
-				else if ("02".equals(t9.getPrblm_tp()))
+				else if ("02".equals(t9.getPrblm_tp())) {
 					testPaperList02.add(exam);
+				}
 			}
 			setAttr("testPaperList01", testPaperList01);
 			setAttr("testPaperList02", testPaperList02);

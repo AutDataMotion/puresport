@@ -148,7 +148,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						name=${x.prblmno! ''} value=D
 							id=${x.prblmid! ''}D> ${x.optD!}
 						</label> </br>
-						<p><!-- <span class="badge">答案${x.rltDesc!}</span> -->${x.rltDesc!}</p>
+						<p><!-- <span class="badge">答案${x.rltDesc!}</span> -->${x.rltDesc!} ${x.prblm_aswr!}</p>
 					<!-- 	<code class='text-success bg-success'>答案${x.rltDesc!}</code> -->
 						</br>
 						
@@ -167,8 +167,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						name=${y.prblmno! ''} value=B
 							id=${y.prblmid! ''}B> 错 误<!-- ${y.prblmid!} -->
 						</label> </br>
-						<p><!-- <code class="text-danger bg-danger">答案${y.rltDesc!}</code> -->${y.rltDesc!}</p>
-						
+						<p><!-- <code class="text-danger bg-danger">答案${y.rltDesc!}</code> -->${y.rltDesc!} ${y.prblm_aswr!}</p>
 					</div>
 					<%}%>
 				</div>
