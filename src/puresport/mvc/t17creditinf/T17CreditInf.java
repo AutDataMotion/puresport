@@ -1,4 +1,4 @@
-package puresport.mvc.t15creditinf;
+package puresport.mvc.t17creditinf;
 
 import com.platform.annotation.Table;
 import com.platform.constant.ConstantInit;
@@ -13,16 +13,16 @@ import org.apache.log4j.Logger;
  * @author ZW
  */
 @SuppressWarnings("unused")
-//@Table(tableName = "t15_credit_inf")
-public class T15CreditInf extends BaseModel<T15CreditInf> {
+//@Table(tableName = "t17_credit_inf")
+public class T17CreditInf extends BaseModel<T17CreditInf> {
 
 	private static final long serialVersionUID = 6761767368352810428L;
 
-	private static Logger log = Logger.getLogger(T15CreditInf.class);
+	private static Logger log = Logger.getLogger(T17CreditInf.class);
 	
-	public static final T15CreditInf dao = new T15CreditInf();
+	public static final T17CreditInf dao = new T17CreditInf();
 	
-	public static final String  tableName = "t15_credit_inf";
+	public static final String  tableName = "t17_credit_inf";
 	
 	/**
 	 * 字段描述：id 

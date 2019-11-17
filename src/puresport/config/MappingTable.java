@@ -30,7 +30,7 @@ import puresport.mvc.t11examstat.T11ExamStat;
 import puresport.mvc.t12highestscore.T12HighestScore;
 import puresport.mvc.t13tststat.T13TstStat;
 import puresport.mvc.t14invitationcode.T14InvitationCode;
-import puresport.mvc.t15creditinf.T15CreditInf;
+import puresport.mvc.t17creditinf.T17CreditInf;
 import puresport.mvc.t1usrbsc.T1usrBsc;
 import puresport.mvc.t2adiv.T2Adiv;
 import puresport.mvc.t3statl.T3Statl;
@@ -72,7 +72,7 @@ public class MappingTable {
 		arp.addMapping("t12_highest_score", "id", T12HighestScore.class);
 		arp.addMapping("t13_tst_stat", "id", T13TstStat.class);
 		arp.addMapping("t14_invitation_code", "id", T14InvitationCode.class);
-		arp.addMapping("t15_credit_inf", "id", T15CreditInf.class);
+		arp.addMapping("t17_credit_inf", "id", T17CreditInf.class);
 		log.info("puresport MappingTable 表手工注册-----end");
 
 	}

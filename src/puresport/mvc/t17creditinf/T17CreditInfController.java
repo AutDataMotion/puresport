@@ -1,4 +1,4 @@
-package puresport.mvc.t15creditinf;
+package puresport.mvc.t17creditinf;
 
 import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
@@ -24,10 +24,10 @@ import puresport.constant.ConstantInitMy;
  * 
  */
 //@Controller(controllerKey = "/jf/puresport/t15CreditInf")
-public class T15CreditInfController extends BaseController {
+public class T17CreditInfController extends BaseController {
 
 	@SuppressWarnings("unused")
-	private static Logger log = Logger.getLogger(T15CreditInfController.class);
+	private static Logger log = Logger.getLogger(T17CreditInfController.class);
 
 	public static final String pthc = "/jf/puresport/t15CreditInf/";
 	public static final String pthv = "/puresport/t15CreditInf/";
@@ -36,16 +36,16 @@ public class T15CreditInfController extends BaseController {
 	 * 列表
 	 */
 	public void index() {
-		paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T15CreditInf.sqlId_splitPage_from);
+		paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T17CreditInf.sqlId_splitPage_from);
 		renderWithPath(pthv+"list.html");
 	}
 	
 	/**
 	 * 保存
 	 */
-	@Before(T15CreditInfValidator.class)
+	@Before(T17CreditInfValidator.class)
 	public void save() {
-		T15CreditInf t15CreditInf = getModel(T15CreditInf.class);
+		T17CreditInf t15CreditInf = getModel(T17CreditInf.class);
 		//other set 
 		
 		//t15CreditInf.save();		//guiid
@@ -58,7 +58,7 @@ public class T15CreditInfController extends BaseController {
 	 */
 	public void edit() {
 		//T15CreditInf t15CreditInf = T15CreditInf.dao.findById(getPara());	//guuid
-		T15CreditInf t15CreditInf = T15CreditInfService.service.SelectById(getParaToInt());		//serial int id
+		T17CreditInf t15CreditInf = T17CreditInfService.service.SelectById(getParaToInt());		//serial int id
 		setAttr("t15CreditInf", t15CreditInf);
 		renderWithPath(pthv+"update.html");
 
@@ -67,9 +67,9 @@ public class T15CreditInfController extends BaseController {
 	/**
 	 * 更新
 	 */
-	@Before(T15CreditInfValidator.class)
+	@Before(T17CreditInfValidator.class)
 	public void update() {
-		getModel(T15CreditInf.class).update();
+		getModel(T17CreditInf.class).update();
 		redirect(pthc);
 	}
 
@@ -78,7 +78,7 @@ public class T15CreditInfController extends BaseController {
 	 */
 	public void view() {
 		//T15CreditInf t15CreditInf = T15CreditInf.dao.findById(getPara());	//guuid
-		T15CreditInf t15CreditInf = T15CreditInfService.service.SelectById(getParaToInt());		//serial int id
+		T17CreditInf t15CreditInf = T17CreditInfService.service.SelectById(getParaToInt());		//serial int id
 		setAttr("t15CreditInf", t15CreditInf);
 		renderWithPath(pthv+"view.html");
 	}
@@ -88,7 +88,7 @@ public class T15CreditInfController extends BaseController {
 	 */
 	public void delete() {
 		//T15CreditInfService.service.delete("t15_credit_inf", getPara() == null ? ids : getPara());	//guuid
-		T15CreditInfService.service.deleteById("t15_credit_inf", getPara() == null ? ids : getPara());	//serial int id
+		T17CreditInfService.service.deleteById("t15_credit_inf", getPara() == null ? ids : getPara());	//serial int id
 		redirect(pthc);
 	}
 	
