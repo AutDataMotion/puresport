@@ -1,4 +1,4 @@
-package puresport.mvc.t17creditinf;
+package puresport.mvc.t17creditInf;
 
 import org.apache.log4j.Logger;
 

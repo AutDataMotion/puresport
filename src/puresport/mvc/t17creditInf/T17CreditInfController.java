@@ -1,4 +1,4 @@
-package puresport.mvc.t17creditinf;
+package puresport.mvc.t17creditInf;
 
 import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
