@@ -30,6 +30,7 @@ import puresport.mvc.t11examstat.T11ExamStat;
 import puresport.mvc.t12highestscore.T12HighestScore;
 import puresport.mvc.t13tststat.T13TstStat;
 import puresport.mvc.t14invitationcode.T14InvitationCode;
+import puresport.mvc.t15creditinf.T15CreditInf;
 import puresport.mvc.t1usrbsc.T1usrBsc;
 import puresport.mvc.t2adiv.T2Adiv;
 import puresport.mvc.t3statl.T3Statl;
