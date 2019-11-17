@@ -19,6 +19,7 @@ import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -52,6 +53,7 @@ import puresport.mvc.t5crclstdy.T5CrclStdyController;
 //import puresport.entity.ExamEntity;
 import puresport.mvc.t9tstlib.T9Tstlib;
 import puresport.mvc.t13tststat.T13TstStat;
+import puresport.mvc.t17creditInf.T17CreditInf;
 import puresport.mvc.pages.FunctionInterceptor;
 
 /**
@@ -476,7 +478,14 @@ public class T7CrclController extends BaseController {
 			 * (!StringUtils.isBlank(crdt_no)) { crdt_no_endStr = crdt_no.substring(0, 1) +
 			 * crdt_no.substring(crdt_no.length() - 2, crdt_no.length() - 1); }
 			 */
-			certificatePath = "/images_zcb/certificates/" + "反兴奋剂教育准入合格证书_" + t1.getNm() + "_" + usrid + ".jpg";
+//			certificatePath = "/images_zcb/certificates/" + "反兴奋剂教育准入合格证书_" + t1.getNm() + "_" + usrid + ".jpg";
+			
+			String sql = "select * from t17_credit_inf t where t.usrid = '" + usrid + "' and t.flag ='01'";
+			T17CreditInf t17Rlt = T17CreditInf.dao.findFirst(sql);
+			if(null != t17Rlt) {
+				certificatePath = t17Rlt.getFile_path();
+			} 
+	
 			setAttr("certificatePath", certificatePath);
 		}
 		// 判定证书文件是否存在,不存在则返回默认未取得证书路径
@@ -535,7 +544,7 @@ public class T7CrclController extends BaseController {
 		String koPercent = nf.format(percent);
 		setAttr("koPercent", koPercent);
 		LOG.debug("certificatePath=" + certificatePath);
-		renderWithPath("/f/accession/certificate.html");
+		renderWithPath("/f/accession/certificate_tokyo.html");
 	}
 
 	/**
@@ -1308,19 +1317,79 @@ public class T7CrclController extends BaseController {
 		}
 
 		LOG.debug("totalScore=" + totalScore);
-		// 判断是否可以取得合格证书
-		if (totalScore >= 80) {
-		} else {
-			res = new ResultEntity("0003", "考试成绩不合格.", totalScore.toString(), "", t1.getUsrid() + "");
-			// setAttr("certificatePath", certificatePath);
-			// renderWithPath("/f/accession/certificate.html");
-			renderJson(res);
-			return;
-		}
-		// ResultEntity res = new ResultEntity("0000", "恭喜您！您已完成测试，您的成绩为：" + toltalScore
-		// + "分！");
-		String certificatePath = "";
-		if (t1 != null) {
+		// 东京奥运会积分制合格证书生成
+		if ("东京奥运会".equals(which_competition)) {
+			// 判断是否可以取得合格证书
+/*						if (totalScore >= 80) {
+						} else {
+							res = new ResultEntity("0003", "考试成绩不合格.", totalScore.toString(), "", t1.getUsrid() + "");
+							// setAttr("certificatePath", certificatePath);
+							// renderWithPath("/f/accession/certificate.html");
+							renderJson(res);
+							return;
+						}*/
+						// ResultEntity res = new ResultEntity("0000", "恭喜您！您已完成测试，您的成绩为：" + toltalScore
+						// + "分！");
+						String certificatePath = "";
+						Date date = new Date();
+						DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						String dataTime = format.format(date);
+						// 获取工程路径
+						String webContentPath = "";
+						try {
+							String path = Class.class.getResource("/").toURI().getPath();
+							webContentPath = new File(path).getParentFile().getParentFile().getCanonicalPath();
+							LOG.info("webContentPath=" + webContentPath);
+						} catch (URISyntaxException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						// DateFormat类的静态工厂方法
+						System.out.println(format.getInstance().format(date));
+						String srcImg = webContentPath + "\\images_zcb\\certificateTemp01.jpg";
+						DateFormat formatYear = new SimpleDateFormat("yyyy");
+						String year = formatYear.format(date);
+						// 生成证书编号
+						String creditNo = "01" + year + String.format("%06d", Long.parseLong(t1.getUsrid()));
+						certificatePath = "\\images_zcb\\certificates\\" + "反兴奋剂教育准入合格证书_" + t1.getNm() + creditNo + ".jpg";
+						String dscImg = webContentPath + certificatePath;
+						LOG.info("srcImg=" + srcImg);
+						LOG.info("dscImg=" + dscImg);
+						LOG.info("certificatePath=" + certificatePath);
+						waterMark(totalScore.toString(), srcImg, dscImg, 1800, 2000);
+						waterMark(t1.getNm(), dscImg, dscImg, 1800, 2050);
+						waterMark(dataTime, dscImg, dscImg, 1800, 2100);
+						waterMark(creditNo, dscImg, dscImg, 1800, 2150);
+						LOG.info(totalScore.toString() + t1.getNm() + dataTime);
+						
+						// 记录或者更新证书信息表
+						T17CreditInf t17 = new T17CreditInf();
+						t17.setUsrid(Long.parseLong(t1.getUsrid()));
+						t17.setNm(t1.getNm());
+						t17.setCrdt_tp(t1.getCrdt_tp());
+						t17.setCrdt_no(t1.getCrdt_no());
+						t17.setCredit_no(creditNo);
+						t17.setFile_path(certificatePath);
+						t17.setTms(new Timestamp(date.getTime()));
+						t17.setType("05");
+						t17.setFlag("01");
+						saveCreditInf(t17);
+		} else {// 通用模块合格证书生成
+			// 判断是否可以取得合格证书
+			if (totalScore >= 80) {
+			} else {
+				res = new ResultEntity("0003", "考试成绩不合格.", totalScore.toString(), "", t1.getUsrid() + "");
+				// setAttr("certificatePath", certificatePath);
+				// renderWithPath("/f/accession/certificate.html");
+				renderJson(res);
+				return;
+			}
+			// ResultEntity res = new ResultEntity("0000", "恭喜您！您已完成测试，您的成绩为：" + toltalScore
+			// + "分！");
+			String certificatePath = "";
 			Date date = new Date();
 			DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String dataTime = format.format(date);
@@ -1357,8 +1426,6 @@ public class T7CrclController extends BaseController {
 			waterMark(t1.getNm(), dscImg, dscImg, 212, 671);
 			waterMark(dataTime, dscImg, dscImg, 212, 731);
 			LOG.info(totalScore.toString() + t1.getNm() + dataTime);
-		} else {
-			LOG.error("查不到用户信息！");
 		}
 		// 合格证书加水印
 		// String hostAddress = "";
@@ -1403,8 +1470,9 @@ public class T7CrclController extends BaseController {
 			g.setColor(Color.BLACK);
 
 			// 最后一个参数用来设置字体的大小
-			Font f = new Font("黑体", Font.PLAIN, 28);
-			Color mycolor = Color.darkGray;// new Color(0, 0, 255);
+			Font f = new Font("黑体", Font.PLAIN, 40);
+	//		Color mycolor = Color.darkGray;// new Color(0, 0, 255);
+			Color mycolor = Color.RED;// new Color(0, 0, 255);
 			g.setColor(mycolor);
 			g.setFont(f);
 
@@ -1829,7 +1897,21 @@ public class T7CrclController extends BaseController {
 			LOG.error("查询不到对应考试记录，请确认！");
 			renderWithPath("/f/accession/queryTestPaper.html");
 		}
-
 	}
+	
+	void saveCreditInf(T17CreditInf t17) {
+		String sql = "select * from t17_credit_inf t where t.usrid = '" + t17.getUsrid() + "' and t.flag ='" + t17.getFlag()
+				+ "'";
+		T17CreditInf t17Rlt = T17CreditInf.dao.findFirst(sql);
+		if(null != t17Rlt) {
+			t17Rlt.setFile_path(t17.getFile_path());
+			t17Rlt.setCredit_no(t17.getCredit_no());
+			t17Rlt.setTms(new Timestamp(System.currentTimeMillis()));
+			t17Rlt.update();
+		} else {
+			t17.saveGenIntId();
+		}
+	}
+	
 
 }
