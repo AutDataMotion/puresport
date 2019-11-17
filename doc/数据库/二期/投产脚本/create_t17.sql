@@ -16,10 +16,10 @@ Date: 2019-11-17 14:34:48
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for t15_credit_inf
+-- Table structure for t17_credit_inf
 -- ----------------------------
-DROP TABLE IF EXISTS `t15_credit_inf`;
-CREATE TABLE `t15_credit_inf` (
+DROP TABLE IF EXISTS `t17_credit_inf`;
+CREATE TABLE `t17_credit_inf` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
   `type` char(2) NOT NULL DEFAULT '' COMMENT '赛事类型',
   `nm` varchar(32) NOT NULL COMMENT '姓名',
