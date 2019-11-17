@@ -159,10 +159,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							href="${cxt!}/jf/puresport/t7Crcl/queryCetifate?usrid=${session['usrid']}"
 							target="_blank" type="button"
 							class="btn  btn-lg btn-block logout_btn" role="button">我的证书</a>
-							<a
-							href="${cxt!}/jf/puresport/t7Crcl/heroList100/" target="_blank"
-							type="button" class="btn  btn-lg btn-block logout_btn"
-							role="button">证书查询</a> 
+							
+							<button type="button" class="btn  btn-lg btn-block reset_btn"
+							id="btn-update-userInfo" data-toggle="modal"
+							data-target="#queryCreditModal">证书查询</button>
 							
 							 <a
 							href="${cxt!}/jf/puresport/t7Crcl/heroList100/" target="_blank"
@@ -261,26 +261,53 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</div>
 		</div>
 	</div>
+	
+	<div class="modal fade" id="queryCreditModal" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content" style="min-width: 700px;">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">合格证书查询</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="layui-form-item">
+							<label class="layui-form-label">证书编号</label>
+							<div class="layui-input-block">
+								<input type="text" name="credit_no" id="credit_no"
+									lay-verify="identity" value='130727198707082438'
+									autocomplete="off" placeholder="证书编号" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label">证件号码</label>
+							<div class="layui-input-block">
+								<input type="text" name="crdt_no" id="crdt_no"
+									lay-verify="identity" value='130727198707082438'
+									autocomplete="off" placeholder="身份证号" class="layui-input">
+							</div>
+						</div>
 
 
-	<div class="layui-form-item">
-		<label class="layui-form-label">证书编号</label>
-		<div class="layui-input-block">
-			<input type="text" name="credit_no" id="credit_no"
-				lay-verify="identity" value='130727198707082438' autocomplete="off"
-				placeholder="证书编号" class="layui-input">
+					</form>
+				</div>
+				<div class="modal-footer">
+					<!-- 					<button class="btn btn-primay system_btn" id="resetPwd_btn"
+						onclick="resetPwd('02')" type="button" data-toggle="modal">重置</button> -->
+					<button class="btn  system_btn" id="resetPwd_btn"
+						onclick="queryCredit()" type="button" data-toggle="modal">查询</button>
+					<button class="btn btn-secondary" type="button"
+						data-dismiss="modal">取消</button>
+
+				</div>
+			</div>
 		</div>
 	</div>
-	<div class="layui-form-item">
-		<label class="layui-form-label">证件号码</label>
-		<div class="layui-input-block">
-			<input type="text" name="crdt_no" id="crdt_no" lay-verify="identity"
-				value='130727198707082438' autocomplete="off" placeholder="身份证号"
-				class="layui-input">
-		</div>
-	</div>
-	<button type="button" class="btn  btn-lg btn-block reset_btn"
-		onclick="queryCredit()">重置密码</button>
+
 	<!--personInfoModal modify modal-->
 	<div class="modal fade" id="personInfoModal" tabindex="-1"
 		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -497,9 +524,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<!-- /.modal-dialog -->
 	</div>
 
-
-	<!--password modify modal-->
-	<div class="modal fade" id="queryCreditModal" tabindex="-1"
+		<!--password modify modal-->
+<!-- 	<div class="modal fade" id="queryCreditModal" tabindex="-1"
 		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -533,8 +559,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					</form>
 				</div>
 				<div class="modal-footer">
-					<!-- 					<button class="btn btn-primay system_btn" id="resetPwd_btn"
-						onclick="resetPwd('02')" type="button" data-toggle="modal">重置</button> -->
+										<button class="btn btn-primay system_btn" id="resetPwd_btn"
+						onclick="resetPwd('02')" type="button" data-toggle="modal">重置</button>
 					<button class="btn  system_btn" id="resetPwd_btn"
 						onclick="queryCredit()" type="button" data-toggle="modal">查询</button>
 					<button class="btn btn-secondary" type="button"
@@ -543,8 +569,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				</div>
 			</div>
 		</div>
-	</div>
-
+	</div> -->
+	
+	
 	
 	<script type="text/javascript" src="${cxt!}/ui/layui/layui.js"></script>
 	<script type="text/javascript" src="${cxt!}/js/self-center.js"></script>
