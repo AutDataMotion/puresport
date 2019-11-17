@@ -71,6 +71,7 @@ public class MappingTable {
 		arp.addMapping("t12_highest_score", "id", T12HighestScore.class);
 		arp.addMapping("t13_tst_stat", "id", T13TstStat.class);
 		arp.addMapping("t14_invitation_code", "id", T14InvitationCode.class);
+		arp.addMapping("t15_credit_inf", "id", T15CreditInf.class);
 		log.info("puresport MappingTable 表手工注册-----end");
 
 	}

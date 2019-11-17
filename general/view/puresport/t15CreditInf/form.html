@@ -1,0 +1,92 @@
+
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">赛事类型</label>
+	<div class="col-sm-7">
+		<input type="text" name="t15CreditInf.type" value="${escapeXml(t15CreditInf.type!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">姓名</label>
+	<div class="col-sm-7">
+		<input type="text" name="t15CreditInf.nm" value="${escapeXml(t15CreditInf.nm!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">证件类型</label>
+	<div class="col-sm-7">
+		<input type="text" name="t15CreditInf.crdt_tp" value="${escapeXml(t15CreditInf.crdt_tp!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">证件号</label>
+	<div class="col-sm-7">
+		<input type="text" name="t15CreditInf.crdt_no" value="${escapeXml(t15CreditInf.crdt_no!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">用户id</label>
+	<div class="col-sm-7">
+		<input type="text" name="t15CreditInf.usrid" value="${t15CreditInf.usrid!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">生成时间</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="t15CreditInf.tms" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t15CreditInf.tms!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">类型</label>
+	<div class="col-sm-7">
+		<input type="text" name="t15CreditInf.flag" value="${escapeXml(t15CreditInf.flag!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">文件路径</label>
+	<div class="col-sm-7">
+		<input type="text" name="t15CreditInf.file_path" value="${escapeXml(t15CreditInf.file_path!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">证书编号</label>
+	<div class="col-sm-7">
+		<input type="text" name="t15CreditInf.credit_no" value="${escapeXml(t15CreditInf.credit_no!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>

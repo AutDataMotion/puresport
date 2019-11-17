@@ -167,19 +167,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="col-md-10 myTest">
 						<%for(x in t7){ %>
 						<div class="top_grid">
-							<div class="col-md-5 span1_of_1">
-								<a href="${cxt!}/course/scormcontent/index.html" target="_blank"><h2
-										style="font-weight: bold; color: ${x.courseColor!'#0065ac'}; text-align: left; margin-top: 10px; margin-left: 20px;margin-bottom: 0px; border-right: 3px solid #0065ac;">课程：${x.crcl_nm!''}</h2>
-									<h4 style="text-indent: 2em;text-align: left; margin-left: 20px;">介绍：${x.crcl_brf!''}</h4> </a>
+							<div class="col-md-5 span1_of_1" >
+								<a href="${cxt!}${x.courseUrl!''}" target="_blank" ${x.courseDisabled!''} title="${x.courseTitle!''}"><h2
+										style="font-weight: bold; color: ${x.courseColor!'#0065ac'}; text-align: left; margin-top: 10px; margin-left: 20px;margin-bottom: 0px; border-right: 3px solid #0065ac;"><i class="${x.courseLockIcon!''}"></i> 课程：${x.crcl_nm!''}</h2>
+									 <h4 style="text-indent: 2em;text-align: left; margin-left: 20px; color: ${x.courseColor!'#0065ac'};">介绍：${x.crcl_brf!''}</h4> </a>
 
 							</div>
 							<div class="col-md-7 span1_of_2">
 								<h4 style="text-indent: 2em;">${x.oldScoreStr!''}</h4>
 								<a
 									href="${cxt!}/jf/puresport/t7Crcl/generteTest_tokyo_5?type=${x.type!''}&category=${x.category!''}"
-									target="_blank" ><h4 style="text-indent: 2em;color: ${x.examColor!'#0065ac'}"><i class="fa fa-lock"></i>  进入考试</h4>${x.enterExamUrl!''} </a>
-									
-
+									target="_blank"  ${x.testDisabled!''} title="${x.testitle!''}"><h4 style="text-indent: 2em;color: ${x.testColor!'#0065ac'}"><i class="${x.testLockIcon!''}"></i> ${x.testTitle!'进入考试'}</h4></a><h4 style="text-indent: 2em;color: ${x.testColor!'#0065ac'}">${x.testRltDesc!''} </h4>
 							</div>
 							<div class="clearfix"></div>
 						</div>

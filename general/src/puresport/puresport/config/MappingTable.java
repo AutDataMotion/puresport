@@ -8,7 +8,7 @@
 package puresport.config;
 
 import org.apache.log4j.Logger;
-import puresport.mvc.t14_invitation_code.T14InvitationCode;
+import puresport.mvc.t15_credit_inf.T15CreditInf;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 /**
  * 创建时间：2016年3月12日 上午10:11:42
@@ -34,7 +34,7 @@ public class MappingTable {
 	private static Logger log = Logger.getLogger(MappingTable.class);
 	public static void mapping(ActiveRecordPlugin arp){
 		log.info("puresport MappingTable 表手工注册-----begin");
-		arp.addMapping("t14_invitation_code", "id", T14InvitationCode.class);
+		arp.addMapping("t15_credit_inf", "id", T15CreditInf.class);
 		log.info("puresport MappingTable 表手工注册-----end");
 		
 	}
