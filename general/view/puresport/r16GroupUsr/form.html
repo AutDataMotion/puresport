@@ -1,0 +1,62 @@
+
+
+<div class="form-group">
+	<label class="col-sm-2 control-label"></label>
+	<div class="col-sm-7">
+		<input type="text" name="r16GroupUsr.group_id" value="${r16GroupUsr.group_id!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label"></label>
+	<div class="col-sm-7">
+		<input type="text" name="r16GroupUsr.user_id" value="${r16GroupUsr.user_id!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label"></label>
+	<div class="col-sm-7">
+		<input type="text" name="r16GroupUsr.type" value="${r16GroupUsr.type!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label"></label>
+	<div class="col-sm-7">
+		<input type="text" name="r16GroupUsr.status" value="${r16GroupUsr.status!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">扩展</label>
+	<div class="col-sm-7">
+		<input type="text" name="r16GroupUsr.ext" value="${escapeXml(r16GroupUsr.ext!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">维护时间</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="r16GroupUsr.tms" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${r16GroupUsr.tms!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>

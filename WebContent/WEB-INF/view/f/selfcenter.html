@@ -339,12 +339,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								</div>
 
 								<div class="layui-form-item">
-									<label class="layui-form-label">省</label>
+									<label class="layui-form-label">省/自治区/直辖市</label>
 									<div class="layui-input-inline">
 										<select name="province" id="selProvince" lay-verify="required"
 											lay-filter="province"></select>
 									</div>
-									<label class="layui-form-label">市</label>
+									<label class="layui-form-label">市/区</label>
 									<div class="layui-input-inline">
 										<select name="city" id="selCity" lay-verify="required"
 											lay-filter="city"></select>
@@ -370,13 +370,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<option value="省级">省级</option>
 											<option value="市级">市级</option>
 										</select>
-
-									<div class="layui-input-block">
-										<select name="spt_prj" lay-verify="required">
-											<option value="请选择项目">请选择项目</option> <%for (item in
-											sport_items_of_shengyunhui){%>
-											<option value=${item.name!}>${item.name!}</option> <%}%>
-										</select>
 									</div>
 								</div>
 
@@ -385,12 +378,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<div class="layui-input-inline">
 										<input type="text" name="mblph_no" lay-verify="required|phone"
 											id="mblph_no"  autocomplete="off"
-											placeholder="修改需验证" class="layui-input">
+											placeholder="" class="layui-input">
 									</div>
 
 									<div class="layui-input-inline">
 										<input type="text" name="mblphValCode" autocomplete="off"
-											placeholder="手机验证码" class="layui-input">
+											placeholder="修改需验证" class="layui-input">
 									</div>
 
 									<button type="button" style="width: 100px;"
@@ -403,12 +396,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<div class="layui-input-inline">
 										<input type="text" name="email" lay-verify="required|email"
 											id="email" autocomplete="off"
-											placeholder="修改需验证" class="layui-input">
+											placeholder="" class="layui-input">
 									</div>
 
 									<div class="layui-input-inline">
 										<input type="text" name="emailValCode" autocomplete="off"
-											placeholder="邮箱验证码" class="layui-input">
+											placeholder="修改需验证" class="layui-input">
 									</div>
 
 									<button type="button" style="width: 100px;"

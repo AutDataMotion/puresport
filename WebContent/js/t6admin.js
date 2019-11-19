@@ -18,7 +18,7 @@ $(document).ready(function() {
 	};
 
 	// 表单 引用
-	function  curFormMdl() {
+	var curFormMdl = function() {
 		return  {
 			usrid : $(':text[name="t6MgrAhr.usrid"]'),
 			nm : $(':text[name="t6MgrAhr.nm"]'),

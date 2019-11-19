@@ -11,7 +11,7 @@ function setValPhoneBtn(divBtnSelector, divInputSelector, type, module){
 	btnDom.on('click', function() {
 		var phone = inputDom.val();
 		if (!validatePhone(phone)) {
-			layer.msg('手机号码格式不正确，请确认！');
+			layui.layer.msg('手机号码格式不正确，请确认！');
 			return;
 		}
 
@@ -38,7 +38,7 @@ function setValEmailBtn(divBtnSelector, divInputSelector, type, module){
 	btnDom.on('click', function() {
 		var email = inputDom.val();
 		if (!validateEmail(email)) {
-			layer.msg('邮箱格式不正确，请确认！');
+			layui.layer.msg('邮箱格式不正确，请确认！');
 			return;
 		}
 		
@@ -93,14 +93,14 @@ function ajaxSendAuthCode(flag, addr, dataObj, tipSuc, tipFail, domObj) {
 		cache : false,
 		success : function(res) {
 			if (res.hasSuc) {
-				layer.msg(tipSuc);
+				layui.layer.msg(tipSuc);
 				setTime(flag, domObj);
 			} else {
-				layer.msg(res.tipStrings.join("  "));
+				layui.layer.msg(res.tipStrings.join("  "));
 			}
 		},
 		error : function() {
-			layer.msg(tipFail);
+			layui.layer.msg(tipFail);
 		}
 	})
 }

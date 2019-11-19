@@ -6,7 +6,8 @@
  * @version 1.0
  */
 package puresport.config;
-import puresport.mvc.t14_invitation_code.T14InvitationCodeController;
+import puresport.mvc.t15_group.T15GroupController;
+import puresport.mvc.r16_group_usr.R16GroupUsrController;
 import com.jfinal.config.Routes;
 /**
  * 创建时间：2016年1月28日 下午2:15:23
@@ -30,6 +31,7 @@ import com.jfinal.config.Routes;
 public class RoutePlugins extends Routes {
 	@Override
 	public void config() {
-		add("/jf/puresport/T14InvitationCode", T14InvitationCodeController.class);
+		add("/jf/puresport/T15Group", T15GroupController.class);
+		add("/jf/puresport/R16GroupUsr", R16GroupUsrController.class);
 	}
 }

@@ -29,6 +29,7 @@ public class ResTips implements Serializable{
 	private TipMdl status = new TipMdl();
 	private List<TipMdl> fieldErrors;
 	private List<String> tipStrings;
+	private Object data;
 	
 	public ResTips(){}
 	
@@ -51,9 +52,14 @@ public class ResTips implements Serializable{
 		return this;
 	}
 	
-	
 	public static ResTips getSuccRes() {
 		return new ResTips(EnumStatus.Success);
+	}
+	
+	public static ResTips getSuccRes(Object data) {
+		ResTips res = new ResTips(EnumStatus.Success);
+		res.setData(data);
+		return res;
 	}
 	
 	public static ResTips getFailRes() {
@@ -133,6 +139,14 @@ public class ResTips implements Serializable{
 		this.tipStrings = tipStrings;
 	}
 
+	public Object getData() {
+		return data;
+	}
+
+	public void setData(Object data) {
+		this.data = data;
+	}
+
 
 
 	public static class TipMdl implements Serializable{
@@ -173,7 +187,5 @@ public class ResTips implements Serializable{
 		public void setStatus(String status) {
 			this.status = status;
 		}
-		
-		
 	}
 }

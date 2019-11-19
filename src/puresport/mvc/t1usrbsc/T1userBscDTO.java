@@ -13,6 +13,7 @@ import java.util.List;
 import javax.swing.event.ListSelectionEvent;
 
 import csuduc.platform.util.ComUtil;
+import csuduc.platform.util.RegexUtils;
 import csuduc.platform.util.StringUtil;
 import puresport.constant.ConstantInitMy;
 import puresport.constant.EnumTypeLevel;
@@ -100,7 +101,33 @@ public class T1userBscDTO implements Serializable{
 		return true;
 	}
 	
-public boolean validateForUpdate(AuthCodeMdl authCodeMdlPhone, AuthCodeMdl authCodeMdlEmail) {
+	public boolean validate(AuthCodeMdl authCodeMdlPhone) {
+		
+		if (ComUtil.haveEmpty(nm, crdt_no, gnd, brth_dt, province, city,spt_prj, mblph_no, passwd, typeleve)) {
+			addTip("have empty");
+			return false;
+		}
+		if (!RegexUtils.checkMobile(mblph_no)) {
+			addTip("phone invalidate");
+			return false;
+		}
+		if (null == mblphValCode) {
+			addTip("valCode empty");
+			return false;
+		}
+		
+		// 手机是否校验
+		if (mblphValCode!=null) {
+			if (authCodeMdlPhone.checkAuthCodeFail(mblph_no, mblphValCode.toString(), ConstantInitMy.AuthCode_TimeOut)) {
+				addTip("手机校验码不正确，请重新获取验证");
+				return false;
+			}
+		}
+		
+		return true;
+	}
+	
+	public boolean validateForUpdate(AuthCodeMdl authCodeMdlPhone, AuthCodeMdl authCodeMdlEmail) {
 		
 		if (ComUtil.haveEmpty(nm, crdt_no, gnd, brth_dt, province, city,spt_prj, mblph_no, email, typeleve)) {
 			addTip("have empty");

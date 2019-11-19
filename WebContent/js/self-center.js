@@ -47,6 +47,10 @@ $(function() {
                 cache : false,
                 success:function(res){
                 	console.log('selfCenterInfo ajax', res);
+                	
+                	// 初始化市
+                	setCityAjax(res.province);
+                	
                     // 表单赋值
                 	form.val('athleteForm', {
                         "nm": res.nm
@@ -176,6 +180,7 @@ $(function() {
 		
 		function user_update(formObjJsonStr) {
 
+			var indexLayer = layer.load();
 			$.ajax({
 				url : encodeURI(encodeURI(cxt + "/jf/puresport/t1usrBsc/updateSelfCenterInfo")),
 				type : 'POST', // GET
@@ -186,7 +191,7 @@ $(function() {
 				timeout : 5000, // 超时时间
 				dataType : 'json', // 返回的数据格式：json/xml/html/script/jsonp/text
 				beforeSend : function(xhr) {
-					console.log('发送前 xhr', xhr)
+					
 				},
 				success : function(data, textStatus, jqXHR) {
 
@@ -211,6 +216,9 @@ $(function() {
 				error : function(xhr, textStatus) {
 					console.log('错误', xhr, textStatus);
 					layer.alert('系统错误，请联系管理员');
+				},
+				complete:function(){
+					layer.close(indexLayer);
 				}
 			})
 		}
@@ -313,11 +321,15 @@ function resetPwd(userOradmin) {
 					console.log('发送前')
 				},
 				success : function(data, textStatus, jqXHR) {
-					if (data.flag) {
-						Tips('passwordModal_hint', "密码重置成功！请重新登录！");
-					} else {
-						Tips('passwordModal_hint', data.msg);
-					}
+					layer.confirm('密码重置成功！请重新登录！', {
+						icon : 3,
+						title : '提示'
+					}, function(index) {
+						// do something
+						window.location = cxt
+								+ '/jf/puresport/pagesController/login';
+						layer.close(index);
+					});
 				},
 				error : function(xhr, textStatus) {
 					console.log('错误')

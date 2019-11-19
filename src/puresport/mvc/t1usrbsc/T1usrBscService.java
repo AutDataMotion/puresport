@@ -1,6 +1,7 @@
 package puresport.mvc.t1usrbsc;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -29,6 +30,7 @@ import puresport.constant.ConstantInitMy;
 import puresport.constant.EnumRoleType;
 import puresport.constant.EnumStatus;
 import puresport.constant.EnumTypeLevel;
+import puresport.mvc.comm.CommFun;
 import puresport.mvc.comm.ParamComm;
 import puresport.mvc.comm.ValidateComm;
 import puresport.mvc.t6mgrahr.T6MgrSession;
@@ -128,6 +130,7 @@ public class T1usrBscService extends BaseService {
 			}
 			return whereStr.toString();
 	}
+	
 	public List<T1usrBsc> selectByPage(T6MgrSession mgrSession, ParamComm paramMdl) {
 		final String roleStr = mgrSession.selectRoleStr_UserBasic();
 		List<Object> listArgs = new ArrayList<>();
@@ -137,7 +140,7 @@ public class T1usrBscService extends BaseService {
 		log.debug("selectByPage----"+countTotal+","+paramMdl.getDraw());
 		
 		paramMdl.setTotal(countTotal);
-		List<T1usrBsc> resList = new ArrayList<>();
+		List<T1usrBsc> resList = Collections.EMPTY_LIST;
 		if (countTotal > 0) {
 			if(paramMdl.getExportall().equals("1"))//全量导出
 			{
@@ -149,33 +152,52 @@ public class T1usrBscService extends BaseService {
 				listArgs.add(paramMdl.getPageSize());
 			}
 			
-//			String test = String.format(
-//					"select usrid,usr_tp, nm,crdt_tp, crdt_no,department,post, gnd,brth_dt,spt_prj, typelevel, province, city,institute, mblph_no, email,levelprovince,levelcity,levelinstitute  from %s where %s %s  limit ?,?",
-//					tableName, roleStr, searchStr);
 			resList = T1usrBsc.dao.find(String.format(
 					"select usrid,usr_tp, nm,crdt_tp, crdt_no,department,post, gnd,brth_dt,spt_prj, typelevel, province, city,institute, mblph_no, email,levelprovince,levelcity,levelinstitute  from %s where %s %s  limit ?,?",
 					tableName, roleStr, searchStr), listArgs.toArray());
-			resList.forEach(e->{
-				// 单独处理级别显示
-				StringBuilder levelAll = new StringBuilder();
-	
-				if ((EnumStatus.LevelShow.getIdStr().equals((String)e.getTypelevel()))
-						||(EnumStatus.LevelShow.getIdStr().equals((String)e.getLevelinstitute()))) {
-					levelAll.append( EnumTypeLevel.Country.getName()).append(" ");
-				}
-				if(EnumStatus.LevelShow.getIdStr().equals((String)e.getLevelprovince()))
-				{
-					levelAll.append( EnumTypeLevel.Province.getName()).append(" ");
-				}
-				if(EnumStatus.LevelShow.getIdStr().equals((String)e.getLevelcity()))
-				{
-					levelAll.append( EnumTypeLevel.City.getName()).append(" ");
-				}
-				e.setTypelevel(levelAll.toString());
-			});
+			
+			resolveTypeLeve(resList);
 		
 		}
 		return resList;
+	}
+	
+	public List<T1usrBsc> resolveTypeLeve(List<T1usrBsc> users){
+		if(CollectionUtils.isEmpty(users)) {
+			return users;
+		}
+		users.forEach(e->{
+			// 单独处理级别显示
+			StringBuilder levelAll = new StringBuilder();
+
+			if ((EnumStatus.LevelShow.getIdStr().equals((String)e.getTypelevel()))
+					||(EnumStatus.LevelShow.getIdStr().equals((String)e.getLevelinstitute()))) {
+				levelAll.append( EnumTypeLevel.Country.getName()).append(" ");
+			}
+			if(EnumStatus.LevelShow.getIdStr().equals((String)e.getLevelprovince()))
+			{
+				levelAll.append( EnumTypeLevel.Province.getName()).append(" ");
+			}
+			if(EnumStatus.LevelShow.getIdStr().equals((String)e.getLevelcity()))
+			{
+				levelAll.append( EnumTypeLevel.City.getName()).append(" ");
+			}
+			e.setTypelevel(levelAll.toString());
+		});
+		
+		return users;
+	}
+	public List<T1usrBsc> selectByIds(List<Long> userIds){
+		if (CollectionUtils.isEmpty(userIds)) {
+			return Collections.EMPTY_LIST;
+		}
+		
+		List<T1usrBsc> users = T1usrBsc.dao.find(
+				String.format("select usrid,usr_tp, nm,crdt_tp, crdt_no,department,post, gnd,brth_dt,spt_prj, typelevel, province, city,institute, mblph_no, email,levelprovince,levelcity,levelinstitute from %s where usrid in %s "
+						, T1usrBsc.tableName, CommFun.sqlWhereIn(userIds)), userIds.toArray());
+		resolveTypeLeve(users);
+		
+		return users;
 	}
 
 	/**
@@ -652,9 +674,9 @@ public class T1usrBscService extends BaseService {
 					.set(T1usrBsc.column_city, dto.getCity())
 					.set(T1usrBsc.column_spt_prj, dto.getSpt_prj());
 			
-			if ( dto.getEmailValCode()!= null) {
-				dbRow.set(T1usrBsc.column_email_val, 1);
-			}
+//			if ( dto.getEmailValCode()!= null) {
+//				dbRow.set(T1usrBsc.column_email_val, 1);
+//			}
 			if ( dto.getMblphValCode()!= null) {
 				dbRow.set(T1usrBsc.column_mblph_val, 1);
 			}

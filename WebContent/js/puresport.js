@@ -2,6 +2,7 @@
  * author:lyf
  * 
  */
+
 var app = {};
 function initlogin() {
 	app.arr_xiehuiItemName = [ "请选择协会项目", "射箭", "田径", "垒球", '棒球', '羽毛球', '篮球',
@@ -291,22 +292,22 @@ function Improve_user_info() {
 		
 		if(login_needValEmail){
 			if(!email || !emailValCode){
-				Tips('myModallyf_content_user', "邮箱及其验证码不能为空！");
+				layui.layer.msg("邮箱及其验证码不能为空！");
 				return ;
 			}
 			if(!validateEmail(email)){
-				Tips('myModallyf_content_user', "邮箱格式不正确！");
+				layui.layer.msg("邮箱格式不正确！");
 				return ;
 			}
 		}
 		
 		if(login_needValPhone){
 			if(!phone || !mblphValCode){
-				Tips('myModallyf_content_user', "手机号及其验证码不能为空！");
+				layui.layer.msg("手机号及其验证码不能为空！");
 				return ;
 			}
 			if(!validatePhone(phone)){
-				Tips('myModallyf_content_user', "手机号码格式不正确！");
+				layui.layer.msg("手机号码格式不正确！");
 				return ;
 			}
 		}
@@ -617,10 +618,24 @@ function resetPwd(userOradmin) {
 					console.log('发送前')
 				},
 				success : function(data, textStatus, jqXHR) {
+					
 					if (data.flag) {
-						Tips('passwordModal_hint', "密码重置成功！请重新登录！");
+
+						layer.confirm('密码重置成功！请重新登录！', {
+							icon : 3,
+							title : '提示'
+						}, function(index) {
+							// do something
+							window.location = cxt
+									+ '/jf/puresport/pagesController/login';
+							layer.close(index);
+						});
 					} else {
-						Tips('passwordModal_hint', data.msg);
+						var tips = data.msg;
+						layer.alert('注册失败:' + tips, {
+							skin : 'layui-layer-molv' ,
+							closeBtn : 0
+						});
 					}
 				},
 				error : function(xhr, textStatus) {

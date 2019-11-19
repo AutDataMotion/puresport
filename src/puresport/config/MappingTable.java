@@ -24,12 +24,14 @@ import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
  */
 
 import puresport.mvc.area.Area;
+import puresport.mvc.r16groupusr.R16GroupUsr;
 import puresport.mvc.sport_item.Sport_Item;
 import puresport.mvc.t10examgrd.T10ExamGrd;
 import puresport.mvc.t11examstat.T11ExamStat;
 import puresport.mvc.t12highestscore.T12HighestScore;
 import puresport.mvc.t13tststat.T13TstStat;
 import puresport.mvc.t14invitationcode.T14InvitationCode;
+import puresport.mvc.t15group.T15Group;
 import puresport.mvc.t1usrbsc.T1usrBsc;
 import puresport.mvc.t2adiv.T2Adiv;
 import puresport.mvc.t3statl.T3Statl;
@@ -71,6 +73,8 @@ public class MappingTable {
 		arp.addMapping("t12_highest_score", "id", T12HighestScore.class);
 		arp.addMapping("t13_tst_stat", "id", T13TstStat.class);
 		arp.addMapping("t14_invitation_code", "id", T14InvitationCode.class);
+		arp.addMapping("t15_group", "id", T15Group.class);
+		arp.addMapping("r16_group_usr", "id", R16GroupUsr.class);
 		log.info("puresport MappingTable 表手工注册-----end");
 
 	}

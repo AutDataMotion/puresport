@@ -358,6 +358,8 @@ public class T6MgrAhrController extends BaseController {
 		}
 		return;
 	}
+	
+	
 
 	/**
 	 * 保存

@@ -35,6 +35,7 @@ public class ParamComm implements Serializable{
 	private String name12;
 	
 
+	private Long groupId;
 	
 	private Integer draw;
 	private Integer pageIndex;
@@ -42,9 +43,19 @@ public class ParamComm implements Serializable{
 	private Long total;
 	
 	ParamComm(){}
+	
+	public Long getGroupId() {
+		return groupId;
+	}
 
-	
-	
+
+
+	public void setGroupId(Long groupId) {
+		this.groupId = groupId;
+	}
+
+
+
 	/**
 	 * @return the total
 	 */

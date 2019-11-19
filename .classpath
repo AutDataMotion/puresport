@@ -76,6 +76,9 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/excelpoi/poi-scratchpad-3.17.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/excelpoi/commons-collections4-4.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-collections4-4.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/aliyun-java-sdk-core-4.1.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/aliyun-java-sdk-ecs-4.9.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/gson-2.8.5.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/UtilZW"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/excelpoi/jxl-2.6.12.jar"/>

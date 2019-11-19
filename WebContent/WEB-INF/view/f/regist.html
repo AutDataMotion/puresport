@@ -21,8 +21,7 @@
 <link href="${cxt!}/ui/bootstrap-3.3.7-dist/css/bootstrap.min.css"
 	rel='stylesheet' type='text/css' />
 <link rel="stylesheet" href="${cxt!}/ui/layui/css/layui.css" media="all">
-<link href="${cxt!}/css/style.css" rel="stylesheet" type="text/css"
-	media="all" />
+<link href="${cxt!}/css/style.css" rel="stylesheet" type="text/css" media="all" />
 <!-- link rel="stylesheet" href="${cxt!}/ui/pickarea/css/pick-pcc.min.1.0.1.css"-->
 
 <style>
@@ -97,12 +96,12 @@
 					</div>
 
 					<div class="layui-form-item">
-						<label class="layui-form-label">省</label>
+						<label class="layui-form-label">省/自治区/直辖市</label>
 						<div class="layui-input-inline">
 							<select name="province" id="selProvince" lay-verify="required"
 								lay-filter="province"></select>
 						</div>
-						<label class="layui-form-label">市</label>
+						<label class="layui-form-label">市/区</label>
 						<div class="layui-input-inline">
 							<select name="city" id="selCity" lay-verify="required"
 								lay-filter="city"></select>
@@ -149,20 +148,19 @@
 
 					<div class="layui-form-item">
 						<label class="layui-form-label">邮箱</label>
-						<div class="layui-input-inline">
-							<input type="text" name="email" lay-verify="required|email"
+						<div class="layui-input-block">
+							<input type="text" name="email" lay-verify="email"
 								id="email" value='zhongweng.hao@qq.com' autocomplete="off"
 								placeholder="邮箱" class="layui-input">
 						</div>
 
-						<div class="layui-input-inline">
+						<!-- <div class="layui-input-inline">
 							<input type="text" name="emailValCode" lay-verify="required"
 								autocomplete="off" placeholder="邮箱验证码" class="layui-input">
-						</div>
-
-						<button type="button" style="width: 100px;"
+						</div> -->
+						<!-- <button type="button" style="width: 100px;"
 							class="layui-btn layui-btn-normal layui-btn-sm"
-							id="btn-val-email">点击获取</button>
+							id="btn-val-email">点击获取</button> -->
 					</div>
 
 					<div class="layui-form-item">

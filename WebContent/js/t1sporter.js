@@ -57,11 +57,43 @@ $(document).ready(function() {
 		pageSize : ''
 	};
 	
+	function initGroupSelect(){
+    	// 获取分组信息
+    	$.ajax({
+            url:encodeURI(encodeURI(cxt + "/jf/puresport/t15Group/fetchGroup")),
+            data:{},
+            dataType:"json",
+            type:"get",
+            timeout:5000,   
+            async : true,
+            cache : true,
+            success:function(groups){
+            	console.log('groups', groups)
+            	var $sel = $("#selSportGroup");
+            	$sel.empty();
+    	        // 获取对应省份城市
+    	        for (var i = 0, len = groups.length; i < len; i++) {
+    	            var item = groups[i];
+    	            var option = $("<option value='" + item.id + "' name='"+item.title+"'>" + item.title + "</option>");
+    	            // 添加到 select 元素中
+    	            $sel.append(option);
+    	        }
+    	        layui.form.render('select');    	        
+            },
+            error:function(){
+            	layui.layer.msg("获取信息失败");
+            }
+        })
+    }
+	
 	var tableRowSelect = null;
 	var tableBtnType = 1;// 1:添加 2:编辑
+	var selectRows = null;
 	var myTable = $('#example2').DataTable({
 		dom : 'Bfrtip',
-		select : false,
+		select : {
+            style: 'multi'
+        },
 		serverSide : true,
 		scrollY : 400,
 		scrollX : true,
@@ -98,7 +130,7 @@ $(document).ready(function() {
             }
 		},
 		buttons : [ 
-//			{
+//		{
 //			text : '添加',
 //			action : function(e, dt, node, config) {
 //				// 清空表单赋值
@@ -109,13 +141,40 @@ $(document).ready(function() {
 //				$("#sporterModal").modal('show');
 //			}
 //		},
+			{
+				extend : 'pageLength',
+				text : '每页行数'
+			},
 		{
+				text : '分组',
+				action : function(e, dt, node, config) {
+					selectRows = myTable.rows( { selected: true } );
+					var count = selectRows.count();
+					if (0 === count) {
+						layer.msg('请先选择某行');
+						return;
+					}
+					console.log("selectRows data", selectRows.data());
+					
+					// 获取分组列表
+					initGroupSelect();
+					
+					$("#sportGroupModal").modal('show');
+				
+				}
+		},{
 			text : '编辑',
 			action : function(e, dt, node, config) {
-				if (null == tableRowSelect) {
-					layer.msg('请先选择某行');
+				var selectRows = myTable.rows( { selected: true } );
+				var count = selectRows.count();
+				if (count===0) {
+					layer.msg('请先选择某一行');
+					return;
+				} else if (count > 0){
+					layer.msg('只能选择一行');
 					return;
 				}
+				tableRowSelect = selectRows.data()[0];
 				// 给表单赋值
 				selectRowToForm(tableRowSelect);
 				// 修改表单提示文字
@@ -127,7 +186,7 @@ $(document).ready(function() {
 			text : '删除',
 			action : function(e, dt, node, config) {
 				if (null == tableRowSelect) {
-					layer.msg('请先选择某行');
+					layui.layer.msg('请先选择某行');
 					return;
 				}
 				// 确认删除
@@ -171,7 +230,6 @@ $(document).ready(function() {
 			buttons : [
 				{ text: 'excel',action: function () {
 					datasrch.exportall = '1';
-//					alert("excel");
 					$.ajax({
 					    url:"/jf/puresport/t1usrBsc/getAllData",
 					    type:'POST', //GET
@@ -182,8 +240,6 @@ $(document).ready(function() {
 					    timeout:5000,    //超时时间
 					    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
 					    beforeSend:function(xhr){
-					        //console.log(xhr)
-					        console.log('发送前');
 					        $("#example2").busyLoad("show", { text: "LOADING ...",
 					    		textPosition: "top"
 					    	});
@@ -201,14 +257,10 @@ $(document).ready(function() {
 					    },
 					    error:function(xhr,textStatus){
 					    	datasrch.exportall = '0';
-					        console.log('错误')
-					        console.log(xhr)
-					        console.log(textStatus)
+					    	layer.msg("文件下载失败！");
 					    },
 					    complete:function(){
-					    	$("#example2").busyLoad("hide");
-					    	datasrch.exportall = '0';
-					        console.log('结束')
+					    	 $("#example2").busyLoad("hide");
 					    }
 					})
 				} }
@@ -218,7 +270,12 @@ $(document).ready(function() {
 //                } }
 			]
 			//buttons : [ 'excel', 'print' ]
-		} ],
+		},{
+			text : '取消选中',
+			action : function(e, dt, node, config) {
+				myTable.rows().deselect();
+			}
+		}],
 		columns : [ {
 			data : "usrid",
 			"visible": false
@@ -263,18 +320,71 @@ $(document).ready(function() {
 	     }]
 	});
 
+	layui.$('#sportGroupSelect_btn').on('click', function(){
+		
+		var group = $('#selSportGroup');
+		var v = group.val();
 
-	// ============选中一行触发
-	$('#example2 tbody').on('click', 'tr', function() {
-		if ($(this).hasClass('selected')) {
-			$(this).removeClass('selected');
-			tableRowSelect = null;
-		} else {
-			myTable.$('tr.selected').removeClass('selected');
-			$(this).addClass('selected');
-			tableRowSelect = myTable.row(this).data();
+		console.log("group", group, "val", v);
+		
+		var data = {};
+		data.id = v;
+		data.userIds=[];
+		var users = selectRows.data();
+		for(var i=0; i< users.length; i++){
+			var user = users[i];
+			data.userIds.push(user.usrid);
 		}
-	});
+		
+		var indexLoading = layer.load();
+		
+		$.ajax({
+            url:encodeURI(encodeURI(cxt + "/jf/puresport/r16GroupUsr/updateUserGroup")),
+            data:{v:JSON.stringify(data)},
+            dataType:"json",
+            type:"post",
+            timeout:60000,   
+            async : true,
+            cache : false,
+            success:function(group){
+            	if(group.hasSuc){
+            		layer.msg('分组成功',{
+            			  icon: 1,
+            			  time: 2000 //2秒关闭（如果不配置，默认是3秒）
+            		}, function(){
+            			$("#sportGroupModal").modal('hide');
+        			    myTable.rows().deselect();
+            		});
+                	
+            	} else {
+            		var tips = data.tipStrings.join("  ");
+            		layer.msg(tips);
+            	}
+            	
+            },
+            error:function(){
+            	layer.msg("操作失败，请稍后重试");
+            },
+            complete:function(){
+            	console.log('complete');
+            	layer.close(indexLoading);
+            }
+        })
+        
+		
+	});// end ui
+    
+	// ============选中一行触发
+//	$('#example2 tbody').on('click', 'tr', function() {
+//		if ($(this).hasClass('selected')) {
+//			$(this).removeClass('selected');
+//			tableRowSelect = null;
+//		} else {
+//			myTable.$('tr.selected').removeClass('selected');
+//			$(this).addClass('selected');
+//			tableRowSelect = myTable.row(this).data();
+//		}
+//	});
 
 	// ================Form表单操作
 	function selectRowToForm(row) {

@@ -66,7 +66,7 @@ public class T1usrBscController extends BaseController {
 	public static final String keyEmailCode = "keyEmailCode";
 
 	public static final String messageTitle = "反兴奋剂在线教育平台";
-	public static final String messageContent = "尊敬的用户您好，您的验证码是:";
+	public static final String messageContent = "【反兴奋剂教育平台】您的验证码是%s，如非本人操作，请忽略，谢谢！";
 
 	@Clear
 	public void index() {
@@ -353,7 +353,7 @@ public class T1usrBscController extends BaseController {
 		authCodeMdl = AuthCodeMdl.createOne(email);
 
 		try {
-			boolean flag = EmailUtils.sendTextMail(email, messageTitle, messageContent + authCodeMdl.getCode());
+			boolean flag = EmailUtils.sendTextMail(email, messageTitle, String.format(messageContent, authCodeMdl.getCode()));
 			if (flag) {
 				setSessionAttr(keyEmailCode, authCodeMdl);
 			} else {
@@ -413,6 +413,21 @@ public class T1usrBscController extends BaseController {
 
 		authCodeMdl = AuthCodeMdl.createOne(phone);
 		// todo send code to phone
+		try {
+			boolean flag = CommFun.sendPhoneMsg(phone, authCodeMdl.getCode());
+			if (flag) {
+				setSessionAttr(keyEmailCode, authCodeMdl);
+			} else {
+				renderTextJson(ResTips.getFailRes("邮件发送失败,请您稍后重试"));
+				return;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			log.debug("--------validateEmail 发送验证码到邮箱失败！！");
+			e.printStackTrace();
+			renderTextJson(ResTips.getFailRes("邮件发送失败,请您联系管理员"));
+			return;
+		}
 
 		setSessionAttr(keyPhoneCode, authCodeMdl);
 
@@ -426,8 +441,9 @@ public class T1usrBscController extends BaseController {
 	public void regist() {
 
 		AuthCodeMdl authCodeMdlPhone = (AuthCodeMdl) getSessionAttr(keyPhoneCode);
-		AuthCodeMdl authCodeMdlEmail = (AuthCodeMdl) getSessionAttr(keyEmailCode);
-		if (Objects.isNull(authCodeMdlPhone) && Objects.isNull(authCodeMdlEmail)) {
+//		AuthCodeMdl authCodeMdlEmail = (AuthCodeMdl) getSessionAttr(keyEmailCode);
+//		if (Objects.isNull(authCodeMdlPhone) && Objects.isNull(authCodeMdlEmail)) {
+		if (Objects.isNull(authCodeMdlPhone)) {
 			renderTextJson(ResTips.getFailRes("验证码已过期，请重新获取验证码"));
 			return;
 		}
@@ -438,7 +454,8 @@ public class T1usrBscController extends BaseController {
 			return;
 		}
 		// 验证输入
-		if (!t1userBscDTO.validate(authCodeMdlPhone, authCodeMdlEmail)) {
+//		if (!t1userBscDTO.validate(authCodeMdlPhone, authCodeMdlEmail)) {
+		if (!t1userBscDTO.validate(authCodeMdlPhone)) {
 			renderTextJson(ResTips.getFailRes(t1userBscDTO.getTipList()));
 			return;
 		}

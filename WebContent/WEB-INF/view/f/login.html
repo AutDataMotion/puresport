@@ -120,7 +120,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 											<div class="form-group">
 												<input type="text" id="form-phone_user" value="130727198707082438"
-													name="form-phone_user" placeholder="账号(手机/邮箱/证件号)"
+													name="form-phone_user" placeholder="身份证件号"
 													class="form-control">
 											</div>
 											<div class="form-group">
@@ -296,11 +296,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												<h4>
 													<strong>运动项目</strong>
 												</h4>
-												<!--select class="improveinfo_select" id="getSportItem_user_Competetion" onchange="changeSelect_user_Competetion(this.selectedIndex)"></select>
-															  <select class="improveinfo_select" id="getSportItem_user_CompetetionItem"></select-->
-												<!--select class="improveinfo_select" id="getSportItem_user_Competetion">
-															  	<option value="省运会" selected>省运会</option>
-															  </select-->
+												
 												<select class="improveinfo_select"
 													id="getSportItem_user_assist_CompetetionItem">
 													<option value="请选择项目" selected>请选择项目</option> <%for (item
@@ -366,7 +362,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 													
 													<input type="text" id="form-phone_admin" value="130727198707082430"
 													name="form-phone_admin" 
-													placeholder="证件号"
+													placeholder="身份证件号"
 													class="form-control" id="form-account">
 													
 											</div>
@@ -494,11 +490,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											<div id="divValEmail_admin" class="layui-form-item" style="display: none;">
 												<label class="layui-form-label">邮箱</label>
 												<div class="layui-input-inline">
-													<input type="text" name="email_admin" lay-verify="required|email"
+													<input type="text" name="email_admin" lay-verify="email"
 														id="email_admin" value='zhongweng.hao@qq.com' autocomplete="off"
 														placeholder="邮箱" class="layui-input">
 												</div>
-
+											<!-- 
 												<div class="layui-input-inline">
 													<input type="text" name="emailValCode_admin"  id="emailValCode_admin"
 														lay-verify="required" autocomplete="off"
@@ -507,7 +503,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 												<button type="button" style="width: 100px;"
 													class="layui-btn layui-btn-normal layui-btn-sm"
-													id="btn-val-email_admin">点击获取</button>
+													id="btn-val-email_admin">点击获取</button> -->
 											</div>
 
 											<div style="margin: 10px;">
@@ -554,8 +550,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<% include("/f/footer.html"){} %>
 
 	<script type="text/javascript" src="${cxt!}/js/commUtil.js"></script>
-	<script type="text/javascript" src="${cxt!}/ui/layui/layui.js"></script>
-	<script type="text/javascript" src="${cxt!}/ui/layer/layer.js"></script>
+	<script type="text/javascript" src="${cxt!}/ui/layui/layui.all.js"></script>
 	<script type="text/javascript" src="${cxt!}/js/sendCodeValidate.js"></script>
 	<script type="text/javascript" src="${cxt!}/js/puresport.js"></script>
 	

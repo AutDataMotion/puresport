@@ -23,26 +23,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </script>
 <!--script type="text/javascript" src="${cxt!}/js/jquery-1.12.4.js"></script-->
 <!-- Bootstrap -->
-<link type="text/css" rel="stylesheet"
-	href="${cxt!}/ui/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-<link href="${cxt!}/css/style.css" rel="stylesheet" type="text/css"
-	media="all" />
+<link type="text/css" rel="stylesheet" href="${cxt!}/ui/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<link rel="stylesheet" href="${cxt!}/ui/layui/css/layui.css" media="all">
+<link href="${cxt!}/css/style.css" rel="stylesheet" type="text/css" media="all" />
 <!----font-Awesome----->
 <link rel="stylesheet" href="${cxt!}/fonts/css/font-awesome.min.css">
-<link rel="stylesheet" type="text/css"
-	href="${cxt!}/ui/DataTables/DataTables-1.10.12/css/jquery.dataTables.min.css" />
-<link rel="stylesheet"
-	href="${cxt!}/ui/DataTables/sport/buttons.dataTables.min.css">
-<link rel="stylesheet"
-	href="${cxt!}/ui/DataTables/sport/select.dataTables.min.css">
-<link rel="stylesheet" type="text/css"
-	href="${cxt!}/ui/Editor-1.7.3/css/editor.dataTables.css">
+<link rel="stylesheet" type="text/css" href="${cxt!}/ui/DataTables/DataTables-1.10.12/css/jquery.dataTables.min.css" />
+<link rel="stylesheet" href="${cxt!}/ui/DataTables/sport/buttons.dataTables.min.css">
+<link rel="stylesheet" href="${cxt!}/ui/DataTables/sport/select.dataTables.min.css">
+<link rel="stylesheet" type="text/css" href="${cxt!}/ui/Editor-1.7.3/css/editor.dataTables.css">
+
 <!----font-Awesome----->
 <!-- start plugins -->
 <link href="${cxt!}/css/owl.carousel.css" rel="stylesheet">
 <link href="${cxt!}/css/owl.theme.css" rel="stylesheet">
-<link rel="stylesheet" type="text/css"
-	href="${cxt!}/ui/loading/app.min.css" />
+<link rel="stylesheet" type="text/css" href="${cxt!}/ui/loading/app.min.css" />
 <script type="text/javascript">
 	var cxt = '${cxt!}';
 </script>
@@ -153,6 +148,53 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	height: 45px;
 	margin-right: 15px;
 }
+.layui-side-scroll {
+    position: relative;
+    height: 100%;
+    overflow-x: hidden;
+}
+
+.layui-side-child .layui-nav {
+    padding: 10px 0;
+    width: 200px;
+    border-radius: 0;
+    background: none;
+}
+.layui-side-child {
+    width: 200px!important;
+    border-right: 1px solid #eee;
+    background-color: #fff;
+}
+
+.layui-side-child .layui-nav .layui-nav-item a {
+    height: 30px;
+    line-height: 30px;
+    color: #666;
+}
+
+.container {
+    width: 90%;
+}
+
+.layui-form-label {
+    width: 100px;
+}
+
+.modal-title {
+    width: 80%;
+    display: inline;
+}
+
+.layui-tree-set {
+    height: 2em;
+}
+
+.layui-tree-entry {
+    height: 2em;
+}
+.layui-tree-txt {
+    color: #000;
+}
 </style>
 
 	<div class="header_bg">
@@ -217,10 +259,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										href="#myTabs_1_0" data-toggle="tab">导入管理员</a></li>
 									<li id="importSporter_btn"><a href="#myTabs_1_1"
 										data-toggle="tab">导入运动员</a></li>
+										
+									<li id="groupSporter_btn"><a href="#myTabs_groupSporter"
+										data-toggle="tab">分组管理</a></li>
 								</ul>
 							</div>
 							<div class="tab-content">
-
+                               <!--  导入管理员 -->
 								<div class="tab-pane fade in active" id="myTabs_1_0">
 									<div class="row">
 										<div class="col-lg-2">
@@ -308,6 +353,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									</table>
 								</div>
 
+								<!--  导入运动员 -->
 								<div class="tab-pane fade" id="myTabs_1_1">
 									<div class="row">
 										<div class="col-lg-2">
@@ -383,7 +429,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										</div>
 									</div>
 
-
 									<table id="example2" class="display nowrap"
 										style="width: 1000px">
 										<thead>
@@ -408,6 +453,46 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										</thead>
 									</table>
 								</div>
+								
+								<!--  运动员分组 -->
+								<div class="tab-pane fade" id="myTabs_groupSporter">
+									
+									<div class="row">
+									  
+									  <div class="col-lg-1 layui-side-child " style="float: left;width: 15%;">
+									    <div class="layui-side-scroll">
+									      <div id="groupTree" class="demo-tree demo-tree-box" style="width: 200px; height: 492px; overflow: scroll;"></div>
+									    </div>
+									  </div>
+									  
+									  <div class="col" style="padding: 15px;float: left;width: 84%;">
+									    <!-- 内容主体区域 -->
+
+										    <table id="tableGroup" class="display nowrap" style="width: 1000px">
+												<thead>
+													<tr>
+														<th>userid</th>
+														<th>人员类型</th>
+														<th>姓名</th>
+														<th>证件类型</th>
+														<th>证件号</th>
+														<th>工作单位</th>
+														<th>职务</th>
+														<th>性别</th>
+														<th>出生日期</th>
+														<th>运动项目</th>
+														<th>级别</th>
+														<th>所属省（自治区）</th>
+														<th>所属市</th>
+														<th>所属协会</th>
+														<th>手机号</th>
+														<th>邮箱</th>
+													</tr>
+												</thead>
+											</table>
+									  </div>
+									</div>
+								</div>
 
 							</div>
 						</div>
@@ -422,6 +507,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<div class="tab-content">
 
 								<div class="tab-pane fade in active" id="myTabs_2_0">
+									
 									<div class="form-inline myTabs_2">
 										<div class="form-group">
 											<label for="name" class="control-label">省：</label> <select
@@ -450,6 +536,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 										</div>
 
 									</div>
+								
 									<div class="row">
 
 										<div class="col-lg-2">
@@ -473,6 +560,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												class="form-control" placeholder="运动项目">
 										</div>
 									</div>
+									
 									<div class="row">
  
 										<div class="col-lg-2">
@@ -516,25 +604,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 									<table id="example3" class="display nowrap" style="width: 100%">
 										<thead>
 											<tr>
-<!-- 												<th>用户类型</th>
-												<th>运动项目</th> -->
-												
+
 												<th>考试名称</th>
 												<th>科目</th>
 												<th>考试成绩</th>
 												<th>合格与否</th>
-												<!-- <th>证件类型</th> -->
 												<th>姓名</th>
 												<th>证件号</th>
 												<th>查看试卷</th>
-<!-- 												<th>性别</th>
-												<th>出生日期</th>
-
-												<th>所属省</th>
-												<th>所属市</th>
-												<th>所属协会</th>
-												<th>手机号</th>
-												<th>邮箱</th> -->
 
 											</tr>
 										</thead>
@@ -542,6 +619,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 								</div>
 
 								<div class="tab-pane fade" id="myTabs_2_1">
+									
 									<div class="form-inline">
 										<div class="form-group">
 											<label for="name" class="control-label">省：</label> <select
@@ -567,6 +645,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 												class="btn col-sm-2 btn-default">查询</button>
 										</div>
 									</div>
+									
 									<table id="example4" class="display nowrap" style="width: 100%">
 										<thead>
 											<tr>
@@ -672,6 +751,40 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</div>
 	</div>
 
+	<!--=======运动员分组 对话框 =========-->
+	<div class="modal fade" id="sportGroupModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">	选择分组</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form class="layui-form form-horizontal">
+						
+						<div class="layui-form-item">
+									<label class="layui-form-label">选择分组</label>
+									<div class="layui-input-block">
+										<select name="selSportGroup" id="selSportGroup" lay-verify="required"
+											lay-filter="selSportGroup"></select>
+									</div>
+									
+						</div>
+
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-primary system_btn" id="sportGroupSelect_btn"  type="button" data-toggle="modal">确定</button>
+					<button class="btn btn-secondary" type="button" data-dismiss="modal">取消</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 	<!--=======编辑对话框 管理员CRUD=========-->
 	<div class="modal fade" id="adminModal" tabindex="-2" role="dialog"
 		aria-labelledby="exampleModalLabelAdmin" aria-hidden="true">
@@ -741,13 +854,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<script src="${cxt!}/js/owl.carousel.js"></script>
 	<script type="text/javascript" src="${cxt!}/jsFile/md5.js"></script>
 	<script src="${cxt!}/js/jquery-json.js"></script>
-	<script type="text/javascript"
-		src="${cxt!}/ui/DataTables/DataTables-1.10.12/js/jquery.dataTables.min.js"></script>
-	<script type="text/javascript"
-		src="${cxt!}/js/dataTables.buttons.min.js"></script>
-	<script type="text/javascript"
-		src="${cxt!}/js/dataTables.select.min.js"></script>
-	<script type="text/javascript" src="${cxt!}/ui/layer3/layer.js"></script>
+	<script type="text/javascript" src="${cxt!}/ui/DataTables/DataTables-1.10.12/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="${cxt!}/js/dataTables.buttons.min.js"></script>
+	<script type="text/javascript" src="${cxt!}/js/dataTables.select.min.js"></script>
+	<script type="text/javascript" src="${cxt!}/ui/layui/layui.all.js"></script>
+<!-- 	<script type="text/javascript" src="${cxt!}/ui/layer3/layer.js"></script> -->
 
 	<script>
 	function loadScriptMy(url, callback) {
@@ -778,6 +889,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 //初始化懒加载标志
 var flagInit_admin = 1;// 最开始就加载
 var flagInit_sport = 0;
+var flagInit_sportGroup = 0;
 var flagInit_staScore = 0;
 var flagInit_staPrj = 0;
 var flagInit_staQue = 0;
@@ -810,6 +922,9 @@ $(function(){
 		} else if(activeTab == '导入运动员'){
 			//lazyLoadMy(flagInit_sport, cxt + "/js/t1sporter.js");
 			//flagInit_sport = 1;
+		}else if(activeTab == '分组管理'){
+			lazyLoadMy(flagInit_sportGroup, cxt + "/js/t1sporterGroup.js");
+			flagInit_sportGroup = 1;
 		}else if(activeTab == '成绩统计' || activeTab == '统计'){
 			lazyLoadMy(flagInit_staScore, cxt + "/js/statis_score.js");
 			flagInit_staScore = 1;
