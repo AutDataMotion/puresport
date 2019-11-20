@@ -415,13 +415,13 @@ function Improve_admin_info() {
 	var mblphValCode = $('#mblphValCode_admin').val().trim();
 	
 	var email = $('#email_admin').val().trim();
-	var emailValCode = $('#emailValCode_admin').val().trim();
+	// var emailValCode = $('#emailValCode_admin').val().trim();
 	
 	if(admin_needValEmail){
-		if(!email || !emailValCode){
-			Tips('myModallyf_content_admin', "邮箱及其验证码不能为空！");
-			return ;
-		}
+//		if(!email || !emailValCode){
+//			Tips('myModallyf_content_admin', "邮箱及其验证码不能为空！");
+//			return ;
+//		}
 		if(!validateEmail(email)){
 			Tips('myModallyf_content_admin', "邮箱格式不正确！");
 			return ;
@@ -448,7 +448,7 @@ function Improve_admin_info() {
 				phone : phone,
 				mblphValCode : mblphValCode,
 				email : email,
-				emailValCode : emailValCode,
+				emailValCode : '',
 			},
 			timeout : 5000, // 超时时间
 			dataType : 'json', // 返回的数据格式：json/xml/html/script/jsonp/text
