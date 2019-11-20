@@ -49,14 +49,24 @@ public class pagesController extends BaseController {
 		
 		
 	}
-	@Clear
+	
 	public void zhunru_index() {
 		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
 		//renderWithPath(pthv+"list.html");
 		//getSession().setAttribute("userid", "100");
 //		setSessionAttr("userID","10");
 
-		renderWithPath(pthv+"zhunru_index_pre.html");
+		renderWithPath(pthv+"zhunru_index.html");
+		
+	}
+
+	public void zhunru_index_common() {
+		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
+		//renderWithPath(pthv+"list.html");
+		//getSession().setAttribute("userid", "100");
+//		setSessionAttr("userID","10");
+
+		renderWithPath(pthv+"zhunru_index_common.html");
 		
 	}
 	@Clear

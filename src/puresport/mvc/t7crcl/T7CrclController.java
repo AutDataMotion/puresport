@@ -193,7 +193,7 @@ public class T7CrclController extends BaseController {
 			String forbiddenColor = "#D87C31";
 			String lockColor = "#707070";
 			if (examedNum > 0 && examedNum < 3) {
-				String testRltDesc = "您已考试" + examedNum + "次，取的学分:" + hightestScore + "分！";
+				String testRltDesc = "您已考试" + examedNum + "次，取得学分:" + hightestScore + "分！";
 				t7.setTestRltDesc(testRltDesc);
 				t7.setTestDisabled("");
 				t7.setTestColor(canDoColor);
@@ -202,7 +202,7 @@ public class T7CrclController extends BaseController {
 				t7.setTestUrl("/course/scormcontent/index.html");
 				System.out.println(testRltDesc);
 			} else if (examedNum >= 3) {
-				String testRltDesc = "您已考试" + examedNum + "次，次数达上限。取的学分:" + hightestScore + "分！";
+				String testRltDesc = "您已考试" + examedNum + "次，次数达上限。取得学分:" + hightestScore + "分！";
 				t7.setTestRltDesc(testRltDesc);
 				t7.setTestDisabled("disabled=\"disabled\"");
 				t7.setTestColor(forbiddenColor);
@@ -217,12 +217,12 @@ public class T7CrclController extends BaseController {
 					t7.setTestDisabled("");
 					t7.setTestColor(canDoColor);
 					t7.setTestLockIcon("fa fa-unlock");
-					t7.setTestTitle("进入考试");
+					t7.setTestTitle("点击进入考试");
 				} else if (Integer.parseInt(t7.getCategory()) > unLockCatagory) {
 					t7.setTestDisabled("disabled=\"disabled\"");
 					t7.setTestColor(lockColor);
 					t7.setTestLockIcon("fa fa-lock");
-					t7.setTestTitle("尚未解锁");
+					t7.setTestTitle("您需按顺序参加先修课程考试，然后才能参加本课程考试。");
 				}
 				t7.setTestUrl("/course/scormcontent/index.html");
 				System.out.println(testRltDesc);
@@ -1332,7 +1332,7 @@ public class T7CrclController extends BaseController {
 						// + "分！");
 						String certificatePath = "";
 						Date date = new Date();
-						DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+						DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
 						String dataTime = format.format(date);
 						// 获取工程路径
 						String webContentPath = "";
@@ -1359,10 +1359,10 @@ public class T7CrclController extends BaseController {
 						LOG.info("srcImg=" + srcImg);
 						LOG.info("dscImg=" + dscImg);
 						LOG.info("certificatePath=" + certificatePath);
-						waterMark(totalScore.toString(), srcImg, dscImg, 1800, 2000);
-						waterMark(t1.getNm(), dscImg, dscImg, 1800, 2050);
-						waterMark(dataTime, dscImg, dscImg, 1800, 2100);
-						waterMark(creditNo, dscImg, dscImg, 1800, 2150);
+						waterMark(t1.getNm(), srcImg, dscImg, 511, 1170, 100);
+						waterMark(dataTime+"(yyyy/mm/dd)", dscImg, dscImg, 1405, 1912, 55);
+						waterMark(totalScore.toString(), dscImg, dscImg, 1090, 2027, 55);
+						waterMark(creditNo, dscImg, dscImg, 923, 2114, 55);
 						LOG.info(totalScore.toString() + t1.getNm() + dataTime);
 						
 						// 记录或者更新证书信息表
@@ -1391,7 +1391,7 @@ public class T7CrclController extends BaseController {
 			// + "分！");
 			String certificatePath = "";
 			Date date = new Date();
-			DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
 			String dataTime = format.format(date);
 			// 获取工程路径
 			String webContentPath = "";
@@ -1408,7 +1408,8 @@ public class T7CrclController extends BaseController {
 			}
 			// DateFormat类的静态工厂方法
 			System.out.println(format.getInstance().format(date));
-			String srcImg = webContentPath + "\\images_zcb\\certificateTemp.jpg";
+			//String srcImg = webContentPath + "\\images_zcb\\certificateTemp.jpg";
+			String srcImg = webContentPath + "\\images_zcb\\certificateTemp01.jpg";
 			// // 取身份证号码第1位+ 最后1位
 			// String crdt_no = t1.getCrdt_no().toString();
 			// String crdt_no_endStr = "";
@@ -1422,9 +1423,32 @@ public class T7CrclController extends BaseController {
 			LOG.info("srcImg=" + srcImg);
 			LOG.info("dscImg=" + dscImg);
 			LOG.info("certificatePath=" + certificatePath);
-			waterMark(totalScore.toString(), srcImg, dscImg, 212, 616);
+/*			waterMark(totalScore.toString(), srcImg, dscImg, 212, 616);
 			waterMark(t1.getNm(), dscImg, dscImg, 212, 671);
-			waterMark(dataTime, dscImg, dscImg, 212, 731);
+			waterMark(dataTime, dscImg, dscImg, 212, 731);*/
+			///
+			waterMark(t1.getNm(), srcImg, dscImg, 511, 1170, 100);
+			waterMark(dataTime+"(yyyy/mm/dd)", dscImg, dscImg, 1405, 1912, 55);
+			waterMark(totalScore.toString(), dscImg, dscImg, 1090, 2027, 55);
+
+			DateFormat formatYear = new SimpleDateFormat("yyyy");
+			String year = formatYear.format(date);
+			// 生成证书编号
+			String creditNo = "02" + year + String.format("%06d", Long.parseLong(t1.getUsrid()));
+			waterMark(creditNo, dscImg, dscImg, 923, 2114, 55);
+			// 记录或者更新证书信息表
+			T17CreditInf t17 = new T17CreditInf();
+			t17.setUsrid(Long.parseLong(t1.getUsrid()));
+			t17.setNm(t1.getNm());
+			t17.setCrdt_tp(t1.getCrdt_tp());
+			t17.setCrdt_no(t1.getCrdt_no());
+			t17.setCredit_no(creditNo);
+			t17.setFile_path(certificatePath);
+			t17.setTms(new Timestamp(date.getTime()));
+			t17.setType("05");
+			t17.setFlag("02");
+			saveCreditInf(t17);
+			///
 			LOG.info(totalScore.toString() + t1.getNm() + dataTime);
 		}
 		// 合格证书加水印
@@ -1454,7 +1478,7 @@ public class T7CrclController extends BaseController {
 	 * 
 	 * @author zhuchaobin 2018-06-01
 	 */
-	public static void waterMark(String waterMsg, String inputImg, String outImg, Integer x, Integer y) {
+	public static void waterMark(String waterMsg, String inputImg, String outImg, Integer x, Integer y, Integer fontSize) {
 		try {
 			// 1.jpg是你的 主图片的路径
 			InputStream is = new FileInputStream(inputImg);
@@ -1470,9 +1494,11 @@ public class T7CrclController extends BaseController {
 			g.setColor(Color.BLACK);
 
 			// 最后一个参数用来设置字体的大小
-			Font f = new Font("黑体", Font.PLAIN, 40);
+			if(null == fontSize || 0 == fontSize)
+				fontSize = 45;
+			Font f = new Font("黑体", Font.BOLD, fontSize);
 	//		Color mycolor = Color.darkGray;// new Color(0, 0, 255);
-			Color mycolor = Color.RED;// new Color(0, 0, 255);
+			Color mycolor = Color.darkGray;
 			g.setColor(mycolor);
 			g.setFont(f);
 
