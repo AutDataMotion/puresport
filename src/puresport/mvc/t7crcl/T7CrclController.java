@@ -1859,7 +1859,7 @@ public class T7CrclController extends BaseController {
 		// 查询用户信息
 		T1usrBsc t1 = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", usrid);// 根据用户名查询数据库中的用户
 		if (t1 != null) {
-			setAttr("usrNm", t1.getUsr_nm());
+			setAttr("usrNm", t1.getNm());
 			setAttr("crdtNo", t1.getCrdt_no());
 		}
 
