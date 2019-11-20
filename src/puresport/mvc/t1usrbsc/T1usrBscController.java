@@ -120,15 +120,15 @@ public class T1usrBscController extends BaseController {
 		// 检查手机号的用户是否存在
 		if (!T1usrBscService.service.isExist(mdl)) {
 			// 不存在则不可以更新
-			ResTips errorTips = ResTips.getFailRes().addErroFiled(T1usrBsc.column_crdt_no, "该证件号用户已存在");
+			ResTips errorTips = ResTips.createFailRes().addErroFiled(T1usrBsc.column_crdt_no, "该证件号用户已存在");
 			renderJson(errorTips);
 			return;
 		}
 		mdl.set(T1usrBsc.column_usr_nm, mdl.get(T1usrBsc.column_nm));
 		if (mdl.update()) {
-			renderJson(ResTips.getSuccRes());
+			renderJson(ResTips.createSuccRes());
 		} else {
-			renderJson(ResTips.getFailRes());
+			renderJson(ResTips.createFailRes());
 		}
 	}
 
@@ -316,14 +316,14 @@ public class T1usrBscController extends BaseController {
 
 		String email = getPara("email");
 		if (StringUtils.isBlank(email) || !RegexUtils.checkEmail(email)) {
-			renderTextJson(ResTips.getFailRes("error, illegal email"));
+			renderTextJson(ResTips.createFailRes("error, illegal email"));
 			return;
 		}
 
 		AuthCodeMdl authCodeMdl = getSessionAttr(keyEmailCode);
 		if (Objects.nonNull(authCodeMdl)) {
 			if (!authCodeMdl.hasTimeOut(ConstantInitMy.AuthCode_TimeOut_Send)) {
-				renderTextJson(ResTips.getFailRes("error, not timeOut"));
+				renderTextJson(ResTips.createFailRes("error, not timeOut"));
 				return;
 			}
 		}
@@ -335,7 +335,7 @@ public class T1usrBscController extends BaseController {
 			if (!StringUtils.isBlank(module)) { // regist module
 				Object item = T1usrBsc.dao.findFirst("select email from t1_usr_bsc where email=? limit 1 ", email);
 				if (item != null) {
-					renderTextJson(ResTips.getFailRes("此邮件地址已存在，请换一个"));
+					renderTextJson(ResTips.createFailRes("此邮件地址已存在，请换一个"));
 					return;
 				}
 			}
@@ -345,7 +345,7 @@ public class T1usrBscController extends BaseController {
 			if (!StringUtils.isBlank(module)) { // regist module
 				Object item = T6MgrAhr.dao.findFirst("select email from t6_mgr_ahr where email=? limit 1 ", email);
 				if (item != null) {
-					renderTextJson(ResTips.getFailRes("此邮件地址已存在，请换一个"));
+					renderTextJson(ResTips.createFailRes("此邮件地址已存在，请换一个"));
 					return;
 				}
 			}
@@ -358,14 +358,14 @@ public class T1usrBscController extends BaseController {
 			if (flag) {
 				setSessionAttr(keyEmailCode, authCodeMdl);
 			} else {
-				renderTextJson(ResTips.getFailRes("邮件发送失败,请您稍后重试"));
+				renderTextJson(ResTips.createFailRes("邮件发送失败,请您稍后重试"));
 				return;
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			log.debug("--------validateEmail 发送验证码到邮箱失败！！");
 			e.printStackTrace();
-			renderTextJson(ResTips.getFailRes("邮件发送失败,请您联系管理员"));
+			renderTextJson(ResTips.createFailRes("邮件发送失败,请您联系管理员"));
 			return;
 		}
 
@@ -377,14 +377,14 @@ public class T1usrBscController extends BaseController {
 
 		String phone = getPara("phone");
 		if (StringUtils.isBlank(phone) || !RegexUtils.checkMobile(phone)) {
-			renderTextJson(ResTips.getFailRes("error, illegal phone"));
+			renderTextJson(ResTips.createFailRes("error, illegal phone"));
 			return;
 		}
 
 		AuthCodeMdl authCodeMdl = (AuthCodeMdl) getSessionAttr(keyPhoneCode);
 		if (Objects.nonNull(authCodeMdl)) {
 			if (!authCodeMdl.hasTimeOut(ConstantInitMy.AuthCode_TimeOut_Send)) {
-				renderTextJson(ResTips.getFailRes("error, not timeOut"));
+				renderTextJson(ResTips.createFailRes("error, not timeOut"));
 				return;
 			}
 		}
@@ -396,7 +396,7 @@ public class T1usrBscController extends BaseController {
 			if (!StringUtils.isBlank(module)) { // regist module
 				T1usrBsc usr = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where mblph_no=? limit 1 ", phone);
 				if (usr != null) {
-					renderTextJson(ResTips.getFailRes("此手机号已存在，请换一个"));
+					renderTextJson(ResTips.createFailRes("此手机号已存在，请换一个"));
 					return;
 				}
 			}
@@ -406,7 +406,7 @@ public class T1usrBscController extends BaseController {
 			if (!StringUtils.isBlank(module)) { // regist module
 				Object item = T6MgrAhr.dao.findFirst("select mblph_no from t6_mgr_ahr where mblph_no=? limit 1 ", phone);
 				if (item != null) {
-					renderTextJson(ResTips.getFailRes("此手机号已存在，请换一个"));
+					renderTextJson(ResTips.createFailRes("此手机号已存在，请换一个"));
 					return;
 				}
 			}
@@ -419,14 +419,14 @@ public class T1usrBscController extends BaseController {
 			if (flag) {
 				setSessionAttr(keyEmailCode, authCodeMdl);
 			} else {
-				renderTextJson(ResTips.getFailRes("邮件发送失败,请您稍后重试"));
+				renderTextJson(ResTips.createFailRes("邮件发送失败,请您稍后重试"));
 				return;
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			log.debug("--------validateEmail 发送验证码到邮箱失败！！");
 			e.printStackTrace();
-			renderTextJson(ResTips.getFailRes("邮件发送失败,请您联系管理员"));
+			renderTextJson(ResTips.createFailRes("邮件发送失败,请您联系管理员"));
 			return;
 		}
 
@@ -445,19 +445,19 @@ public class T1usrBscController extends BaseController {
 //		AuthCodeMdl authCodeMdlEmail = (AuthCodeMdl) getSessionAttr(keyEmailCode);
 //		if (Objects.isNull(authCodeMdlPhone) && Objects.isNull(authCodeMdlEmail)) {
 		if (Objects.isNull(authCodeMdlPhone)) {
-			renderTextJson(ResTips.getFailRes("验证码已过期，请重新获取验证码"));
+			renderTextJson(ResTips.createFailRes("验证码已过期，请重新获取验证码"));
 			return;
 		}
 		// 入参 校验
 		T1userBscDTO t1userBscDTO = getParamWithClass(T1userBscDTO.class);
 		if (Objects.isNull(t1userBscDTO)) {
-			renderTextJson(ResTips.getFailRes());
+			renderTextJson(ResTips.createFailRes());
 			return;
 		}
 		// 验证输入
 //		if (!t1userBscDTO.validate(authCodeMdlPhone, authCodeMdlEmail)) {
 		if (!t1userBscDTO.validate(authCodeMdlPhone)) {
-			renderTextJson(ResTips.getFailRes(t1userBscDTO.getTipList()));
+			renderTextJson(ResTips.createFailRes(t1userBscDTO.getTipList()));
 			return;
 		}
 
@@ -465,15 +465,15 @@ public class T1usrBscController extends BaseController {
 		T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where crdt_no=? limit 1 ",
 				t1userBscDTO.getCrdt_no());
 		if (item != null) {
-			renderTextJson(ResTips.getFailRes(String.format("该证件号【%s】已注册过，请登录！", t1userBscDTO.getCrdt_no())));
+			renderTextJson(ResTips.createFailRes(String.format("该证件号【%s】已注册过，请登录！", t1userBscDTO.getCrdt_no())));
 			return;
 		}
 		// 入库
 		if (T1usrBscService.service.addUserBsc(t1userBscDTO)) {
-			renderTextJson(ResTips.getSuccRes());
+			renderTextJson(ResTips.createSuccRes());
 			return;
 		} else {
-			renderTextJson(ResTips.getFailRes());
+			renderTextJson(ResTips.createFailRes());
 			return;
 		}
 	}
@@ -606,13 +606,13 @@ public class T1usrBscController extends BaseController {
 		// 入参 校验
 		T1userBscDTO t1userBscDTO = getParamWithClass(T1userBscDTO.class);
 		if (Objects.isNull(t1userBscDTO)) {
-			renderTextJson(ResTips.getFailRes());
+			renderTextJson(ResTips.createFailRes());
 			return;
 		}
 		AuthCodeMdl authCodeMdlPhone = getSessionAttr(keyPhoneCode);
 		AuthCodeMdl authCodeMdlEmail = getSessionAttr(keyEmailCode);
 		if (!t1userBscDTO.validateForUpdate(authCodeMdlPhone, authCodeMdlEmail)) {
-			renderTextJson(ResTips.getFailRes(t1userBscDTO.getTipList()));
+			renderTextJson(ResTips.createFailRes(t1userBscDTO.getTipList()));
 			return;
 		}
 
@@ -623,10 +623,10 @@ public class T1usrBscController extends BaseController {
 		}
 
 		if (T1usrBscService.service.updateUserBsc(t1userBscDTO, userBsc)) {
-			renderTextJson(ResTips.getSuccRes());
+			renderTextJson(ResTips.createSuccRes());
 			return;
 		} else {
-			renderTextJson(ResTips.getFailRes());
+			renderTextJson(ResTips.createFailRes());
 			return;
 		}
 	}

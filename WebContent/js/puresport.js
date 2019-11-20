@@ -627,7 +627,7 @@ function resetPwd(userOradmin) {
 						}, function(index) {
 							// do something
 							window.location = cxt
-									+ '/jf/puresport/pagesController/login';
+									+ '/jf/puresport/pagesController/loginout';
 							layer.close(index);
 						});
 					} else {

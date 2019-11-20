@@ -168,10 +168,10 @@ $(document).ready(function() {
 				var selectRows = myTable.rows( { selected: true } );
 				var count = selectRows.count();
 				if (count===0) {
-					layer.msg('请先选择某一行');
+					layer.msg('至少选择一行进行分组');
 					return;
-				} else if (count > 0){
-					layer.msg('只能选择一行');
+				} else if (count > 1){
+					layer.msg('只能选择一行进行编辑');
 					return;
 				}
 				tableRowSelect = selectRows.data()[0];

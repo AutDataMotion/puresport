@@ -67,7 +67,7 @@ public class T15GroupController extends BaseController {
 		
 		String title = getPara("title");
 		if (StringUtils.isBlank(title) || title.length() > 100) {
-			renderTextJson(ResTips.getFailRes("标题格式不正确"));
+			renderTextJson(ResTips.createFailRes("标题格式不正确"));
 			return ;
 		}
 		
@@ -80,7 +80,7 @@ public class T15GroupController extends BaseController {
 		if (res) {
 			renderJson(group);
 		} else {
-			renderTextJson(ResTips.getFailRes());
+			renderTextJson(ResTips.createFailRes());
 		}
 		return ;
 	}
@@ -97,13 +97,13 @@ public class T15GroupController extends BaseController {
 		String title = getPara("title");
 		
 		if (null == id || StringUtils.isBlank(title) || title.length() > 100) {
-			renderTextJson(ResTips.getFailRes("格式不正确"));
+			renderTextJson(ResTips.createFailRes("格式不正确"));
 			return ;
 		}
 		
 		T15Group group = T15Group.dao.findById(id);
 		if (null == group || !group.getMgr_id().equals(mgrSession.getUsrid())) {
-			renderTextJson(ResTips.getFailRes("格式不正确"));
+			renderTextJson(ResTips.createFailRes("格式不正确"));
 			return ;
 		}
 		group.setTitle(title);
@@ -112,7 +112,7 @@ public class T15GroupController extends BaseController {
 		if (res) {
 			renderJson(group);
 		} else {
-			renderTextJson(ResTips.getFailRes());
+			renderTextJson(ResTips.createFailRes());
 		}
 		return ;
 	}
@@ -128,13 +128,13 @@ public class T15GroupController extends BaseController {
 		Long id = getParaToLong("id");
 
 		if (null == id ) {
-			renderTextJson(ResTips.getFailRes("格式不正确"));
+			renderTextJson(ResTips.createFailRes("格式不正确"));
 			return ;
 		}
 		
 		T15Group group = T15Group.dao.findById(id);
 		if (null == group || !group.getMgr_id().equals(mgrSession.getUsrid())) {
-			renderTextJson(ResTips.getFailRes("格式不正确"));
+			renderTextJson(ResTips.createFailRes("格式不正确"));
 			return ;
 		}
 		// 放入一个事务中
@@ -149,9 +149,9 @@ public class T15GroupController extends BaseController {
 		}
 		
 		if (res) {
-			renderTextJson(ResTips.getSuccRes());
+			renderTextJson(ResTips.createSuccRes());
 		} else {
-			renderTextJson(ResTips.getFailRes());
+			renderTextJson(ResTips.createFailRes());
 		}
 		return ;
 	}

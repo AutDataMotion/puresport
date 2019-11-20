@@ -22,7 +22,6 @@
    
 $(function() {
 	
-	layui.use([ 'layer', 'form', 'laydate'], function() {
 		var layer = layui.layer, form = layui.form, laydate=layui.laydate;
 
 		// ========init
@@ -286,62 +285,9 @@ $(function() {
                 }
             })
 	    }
-	}); // end layUI
 
 
 });// end $function
-
-function Tips(contentid, content) {
-	document.getElementById(contentid).style.display = "block";
-	$('#' + contentid).text(content);
-}
-
-function resetPwd(userOradmin) {
-	var oldPwd = $("#resetPwd_oldPwd").val();
-	var newPwd = $("#resetPwd_newPwd").val();
-	var newPwd_confrim = $("#resetPwd_newPwd_confirm").val();
-	if (oldPwd && newPwd && newPwd_confrim) {
-		if (newPwd != newPwd_confrim) {
-			Tips('passwordModal_hint', "密码不一致！！");
-		} else {
-			$.ajax({
-				url : '/jf/puresport/pagesController/ResetPwd',
-				type : 'POST', // GET
-				async : true, // 或false,是否异步
-				data : {
-					// userType:app.userType,
-					oldPwd : oldPwd,
-					newPwd : newPwd,
-					userOradmin : userOradmin
-				},
-				timeout : 5000, // 超时时间
-				dataType : 'json', // 返回的数据格式：json/xml/html/script/jsonp/text
-				beforeSend : function(xhr) {
-					// console.log(xhr)
-					console.log('发送前')
-				},
-				success : function(data, textStatus, jqXHR) {
-					layer.confirm('密码重置成功！请重新登录！', {
-						icon : 3,
-						title : '提示'
-					}, function(index) {
-						// do something
-						window.location = cxt
-								+ '/jf/puresport/pagesController/login';
-						layer.close(index);
-					});
-				},
-				error : function(xhr, textStatus) {
-					console.log('错误')
-					console.log(xhr)
-					console.log(textStatus)
-				}
-			})
-		}
-	} else {
-		Tips('passwordModal_hint', "信息缺失！！");
-	}
-}// 重置密码
 
 function initScoreTable(userID) {
 	// alert(userID);

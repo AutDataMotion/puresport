@@ -61,7 +61,7 @@ public class R16GroupUsrController extends BaseController {
 		
 		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
 		if (null == mgrSession) {
-			renderTextJson(ResTips.getFailRes("页面信息已过期，请刷新页面!"));
+			renderTextJson(ResTips.createFailRes("页面信息已过期，请刷新页面!"));
 			return;
 		}
 		Long mgrId = mgrSession.getUsrid();
@@ -70,7 +70,7 @@ public class R16GroupUsrController extends BaseController {
 		
 		Long groupId = param.getGroupId();
 		if (null == groupId) {
-			renderTextJson(ResTips.getFailRes("格式不正确"));
+			renderTextJson(ResTips.createFailRes("格式不正确"));
 			return ;
 		}
 		List<Long> groupIds = new ArrayList<Long>();
@@ -82,7 +82,7 @@ public class R16GroupUsrController extends BaseController {
 		} else {
 			T15Group group = T15Group.dao.findById(groupId);
 			if (null == group || !group.getMgr_id().equals(mgrId)) {
-				renderTextJson(ResTips.getFailRes("格式不正确"));
+				renderTextJson(ResTips.createFailRes("格式不正确"));
 				return ;
 			}
 			groupIds.add(groupId);
@@ -101,13 +101,13 @@ public class R16GroupUsrController extends BaseController {
 	public void updateUserGroup() {
 		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
 		if (null == mgrSession) {
-			renderTextJson(ResTips.getFailRes("页面信息已过期，请刷新页面!"));
+			renderTextJson(ResTips.createFailRes("页面信息已过期，请刷新页面!"));
 			return;
 		}
 		
 		R16GroupUsrDTO dto = getParamWithClass(R16GroupUsrDTO.class);
 		if (null == dto) {
-			renderTextJson(ResTips.getFailRes("格式不正确"));
+			renderTextJson(ResTips.createFailRes("格式不正确"));
 			return ;
 		}
 		
@@ -116,13 +116,13 @@ public class R16GroupUsrController extends BaseController {
 		List<Long> userIds = dto.getUserIds();
 		
 		if (null == groupId || CollectionUtils.isEmpty(userIds)) {
-			renderTextJson(ResTips.getFailRes("格式不正确"));
+			renderTextJson(ResTips.createFailRes("格式不正确"));
 			return ;
 		}
 		
 		T15Group group = T15Group.dao.findById(groupId);
 		if (null == group || !group.getMgr_id().equals(mgrSession.getUsrid())) {
-			renderTextJson(ResTips.getFailRes("格式不正确"));
+			renderTextJson(ResTips.createFailRes("格式不正确"));
 			return ;
 		}
 
@@ -145,9 +145,9 @@ public class R16GroupUsrController extends BaseController {
 		});
 		
 		if (hasFailed.getObj().equals(true)) {
-			renderTextJson(ResTips.getFailRes("系统繁忙，请稍后重试"));
+			renderTextJson(ResTips.createFailRes("系统繁忙，请稍后重试"));
 		} else {
-			renderTextJson(ResTips.getSuccRes());
+			renderTextJson(ResTips.createSuccRes());
 		}
 		
 		return ;
@@ -159,12 +159,12 @@ public class R16GroupUsrController extends BaseController {
 	public void removeFromGroup() {
 		T6MgrSession mgrSession = getSessionAttr(T6MgrSession.KeyName);
 		if (null == mgrSession) {
-			renderTextJson(ResTips.getFailRes("页面信息已过期，请刷新页面!"));
+			renderTextJson(ResTips.createFailRes("页面信息已过期，请刷新页面!"));
 			return;
 		}
 		R16GroupUsrDTO dto = getParamWithClass(R16GroupUsrDTO.class);
 		if (null == dto) {
-			renderTextJson(ResTips.getFailRes("格式不正确"));
+			renderTextJson(ResTips.createFailRes("格式不正确"));
 			return ;
 		}
 		
@@ -173,19 +173,19 @@ public class R16GroupUsrController extends BaseController {
 		List<Long> userIds = dto.getUserIds();
 		
 		if (null == groupId || CollectionUtils.isEmpty(userIds)) {
-			renderTextJson(ResTips.getFailRes("格式不正确"));
+			renderTextJson(ResTips.createFailRes("格式不正确"));
 			return ;
 		}
 		
 		T15Group group = T15Group.dao.findById(groupId);
 		if (null == group || !group.getMgr_id().equals(mgrSession.getUsrid())) {
-			renderTextJson(ResTips.getFailRes("格式不正确"));
+			renderTextJson(ResTips.createFailRes("格式不正确"));
 			return ;
 		}
 		
 		R16GroupUsrService.service.removeUserFromGroup(groupId, userIds);
 		
-		renderTextJson(ResTips.getSuccRes());
+		renderTextJson(ResTips.createSuccRes());
 		return ;
 	}
 	/**

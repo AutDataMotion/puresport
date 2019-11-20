@@ -56,7 +56,7 @@ public class AreaController extends BaseController {
 	public void fetchCities() {
 		String provinceName = getPara("provinceName");
 		if (StringUtils.isBlank(provinceName) || provinceName.length() > 10) {
-			renderJson(ResTips.getFailRes());
+			renderJson(ResTips.createFailRes());
 		}
 		renderJson(AreaService.service.fetchCities(provinceName));
 	}

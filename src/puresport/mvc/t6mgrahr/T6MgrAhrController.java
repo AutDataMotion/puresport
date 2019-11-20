@@ -297,15 +297,15 @@ public class T6MgrAhrController extends BaseController {
 		// 检查手机号的用户是否存在
 		if (!T6MgrAhrService.service.isExist(mdl)) {
 			// 不存在则不可以更新
-			ResTips errorTips = ResTips.getFailRes().addErroFiled(T6MgrAhr.column_crdt_no, "该证件号用户不存在");
+			ResTips errorTips = ResTips.createFailRes().addErroFiled(T6MgrAhr.column_crdt_no, "该证件号用户不存在");
 			renderJson(errorTips);
 			return;
 		}
 		mdl.set(T6MgrAhr.column_usr_nm, mdl.get(T6MgrAhr.column_nm));
 		if (mdl.update()) {
-			renderJson(ResTips.getSuccRes());
+			renderJson(ResTips.createSuccRes());
 		} else {
-			renderJson(ResTips.getFailRes());
+			renderJson(ResTips.createFailRes());
 		}
 	}
 

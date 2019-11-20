@@ -22,8 +22,8 @@ import puresport.constant.EnumStatus;
  */
 public class ResTips implements Serializable{
 	
-	public final static ResTips SUCCESS = getSuccRes();
-	public final static ResTips FAIL = getFailRes();
+	public final static ResTips SUCCESS = createSuccRes();
+	public final static ResTips FAIL = createFailRes();
 	
 	private boolean hasSuc;
 	private TipMdl status = new TipMdl();
@@ -52,21 +52,21 @@ public class ResTips implements Serializable{
 		return this;
 	}
 	
-	public static ResTips getSuccRes() {
+	public static ResTips createSuccRes() {
 		return new ResTips(EnumStatus.Success);
 	}
 	
-	public static ResTips getSuccRes(Object data) {
+	public static ResTips createSuccRes(Object data) {
 		ResTips res = new ResTips(EnumStatus.Success);
 		res.setData(data);
 		return res;
 	}
 	
-	public static ResTips getFailRes() {
+	public static ResTips createFailRes() {
 		return new ResTips(EnumStatus.Failed);
 	}
 	
-	public static ResTips getFailRes(String ... tips) {
+	public static ResTips createFailRes(String ... tips) {
 		ResTips tip = new ResTips(EnumStatus.Failed);
 		if (Objects.nonNull(tips) && tips.length > 0) {
 			tip.tipStrings = new LinkedList<>();
@@ -78,15 +78,15 @@ public class ResTips implements Serializable{
 		return tip;
 	}
 	
-	public static ResTips getIllegalRes() {
+	public static ResTips createIllegalRes() {
 		return new ResTips(EnumStatus.Illegal);
 	}
 	
-	public static ResTips getFailRes(List<String> tips) {
+	public static ResTips createFailRes(List<String> tips) {
 		return new ResTips(EnumStatus.Failed, tips);
 	}
 	
-	public static ResTips newSimpleTips(String status, String tips) {
+	public static ResTips createSimpleTips(String status, String tips) {
 		return new ResTips().setStatus(new TipMdl(status, tips));
 	}
 
@@ -129,8 +129,6 @@ public class ResTips implements Serializable{
 		this.fieldErrors = fieldErrors;
 	}
 
-
-
 	public List<String> getTipStrings() {
 		return tipStrings;
 	}
@@ -146,8 +144,6 @@ public class ResTips implements Serializable{
 	public void setData(Object data) {
 		this.data = data;
 	}
-
-
 
 	public static class TipMdl implements Serializable{
 		private String name;
