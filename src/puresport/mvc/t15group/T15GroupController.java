@@ -78,7 +78,7 @@ public class T15GroupController extends BaseController {
 		boolean res = ConfMain.db().save(T15Group.tableName, "id", group);
 		
 		if (res) {
-			renderJson(group);
+			renderJson(ResTips.createSuccRes(group));
 		} else {
 			renderTextJson(ResTips.createFailRes());
 		}
@@ -110,7 +110,7 @@ public class T15GroupController extends BaseController {
 		boolean res = group.update();
 		
 		if (res) {
-			renderJson(group);
+			renderJson(ResTips.createSuccRes(group));
 		} else {
 			renderTextJson(ResTips.createFailRes());
 		}

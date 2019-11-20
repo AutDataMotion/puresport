@@ -285,7 +285,7 @@ $(document).ready(function() {
             cache : false,
             success:function(res){
             	console.log('add res', res);
-            	if(!res.hasOwnProperty('hasSuc')){
+            	if(res.hasSuc){
             		curTreeNodeData.id=res.data.id;
             	}else{
             		layer.msg(msgFailed_retry);
@@ -311,7 +311,7 @@ $(document).ready(function() {
             cache : false,
             success:function(res){
             	console.log('update res', res);
-            	if(!res.hasOwnProperty('hasSuc')){
+            	if(res.hasSuc){
             		curTreeNodeData.title=res.data.title;
                 	refreshGroupTree();
             	}else{
@@ -350,25 +350,29 @@ $(document).ready(function() {
 	}
 	
 	var groupTreeNodeSelectActive = function(){
+		
 		if(curTreeNode != null){
-			curTreeNode.find('.layui-tree-main').css("background","rgb(51, 122, 183)");
+			curTreeNode.css("background","rgb(51, 122, 183)");
 		}
 		if(oldTreeNode != null){
-			oldTreeNode.find('.layui-tree-main').css("background","white");
+			oldTreeNode.css("background","white");
 		}
 	}
 	
     var groupTreeRender = function (data){
 
-    	console.log("groupTreeRender", data);
-    	
 		  tree.render({
 		    elem: '#groupTree'
 		    ,data: data
 		    ,edit: ['add', 'update', 'del'] //操作节点的图标
 		    ,click: function(obj){ // 点击事件
+
+		    	if(curTreeNode==obj.elem){
+		    		// 重复点击一个节点 无需变化
+		    		console.log('==');
+		    		return ;
+		    	} 
 		    	
-		    	console.log('click'); 
 		    	oldTreeNode = curTreeNode;
 		    	curTreeNode = obj.elem;
 		    	
@@ -414,7 +418,7 @@ $(document).ready(function() {
 			    		  if(title==treeChildren[i].title){
 			    			  layer.msg("分组名称不能重复，请重新命名");
 			    			  curTreeNodeData.title='未命名';
-			    			  
+			    			  initGroupTree();
 			    			  return;
 			    		  }
 			    	  }
@@ -423,6 +427,7 @@ $(document).ready(function() {
 			      } else {
 			    	  // 更新
 			    	  groupTreeUpdate(id, title);
+			    	  initGroupTree();
 			      }
 			    } else if(type === 'del'){ //删除节点
 			    	console.log('del id', id);
@@ -465,6 +470,7 @@ $(document).ready(function() {
     	});
     	// 移出多余编辑节点
     	$('.layui-tree-btnGroup:first').find('.layui-icon-delete').remove();
+    	$('.layui-tree-btnGroup:first').find('.layui-icon-edit').remove();
     	$('.layui-tree-lineExtend').find('.layui-icon-add-1').remove();
     	
     }
