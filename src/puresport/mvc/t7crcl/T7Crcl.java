@@ -100,8 +100,7 @@ public class T7Crcl extends BaseModel<T7Crcl> {
 	 * 字段类型：String 
 	 * "01":科目1;"02":科目2;"03":科目3;"04":科目4;"05":科目5;"06":科目6;
 	 */
-	public static final String column_category = "category";
-	
+	public static final String column_category = "category";	
 	
 	/**
 	 * sqlId : puresport.t7Crcl.splitPageFrom
@@ -123,48 +122,38 @@ public class T7Crcl extends BaseModel<T7Crcl> {
 	private String type;
 	private String category;
 	
-	private String enterExamUrl;
-	private String oldScoreStr;
+	// 课程禁用
+	private String courseDisabled;
+	// 课程链接提示
+	private String courseTitle;
+	// 课程锁图标
+	private String courseLockIcon;
+	// 课程名颜色
 	private String courseColor;
-	private String courseIcon;
-	private String examColor;
-	private String examIcon;
+	// 课程URL
+	private String courseUrl;
+	
+	// 测试禁用
+	private String testDisabled;
+	// 测试链接提示
+	private String testTitle;
+	// 测试锁图标
+	private String testLockIcon;
+	// 测试名颜色
+	private String testColor;
+	// 测试URL
+	private String testUrl;
+	
+	// examQueryURL
+	private String examQueryUrl;
+	// 测试情况描述
+	private String testRltDesc;
 	
 	public String getCourseColor() {
 		return courseColor;
 	}
 	public void setCourseColor(String courseColor) {
 		this.courseColor = courseColor;
-	}
-	public String getCourseIcon() {
-		return courseIcon;
-	}
-	public void setCourseIcon(String courseIcon) {
-		this.courseIcon = courseIcon;
-	}
-	public String getExamColor() {
-		return examColor;
-	}
-	public void setExamColor(String examColor) {
-		this.examColor = examColor;
-	}
-	public String getExamIcon() {
-		return examIcon;
-	}
-	public void setExamIcon(String examIcon) {
-		this.examIcon = examIcon;
-	}
-	public String getEnterExamUrl() {
-		return enterExamUrl;
-	}
-	public void setEnterExamUrl(String enterExamUrl) {
-		this.enterExamUrl = enterExamUrl;
-	}
-	public String getOldScoreStr() {
-		return oldScoreStr;
-	}
-	public void setOldScoreStr(String oldScoreStr) {
-		this.oldScoreStr = oldScoreStr;
 	}
 	public <T> T  getType() {
 		return get(column_type);
@@ -245,6 +234,72 @@ public class T7Crcl extends BaseModel<T7Crcl> {
 	}
 	public <T> T getTms() {
 		return get(column_tms);
+	}
+	public String getCourseDisabled() {
+		return courseDisabled;
+	}
+	public void setCourseDisabled(String courseDisabled) {
+		this.courseDisabled = courseDisabled;
+	}
+	public String getCourseTitle() {
+		return courseTitle;
+	}
+	public void setCourseTitle(String courseTitle) {
+		this.courseTitle = courseTitle;
+	}
+	public String getCourseLockIcon() {
+		return courseLockIcon;
+	}
+	public void setCourseLockIcon(String courseLockIcon) {
+		this.courseLockIcon = courseLockIcon;
+	}
+	public String getCourseUrl() {
+		return courseUrl;
+	}
+	public void setCourseUrl(String courseUrl) {
+		this.courseUrl = courseUrl;
+	}
+	public String getTestTitle() {
+		return testTitle;
+	}
+	public void setTestTitle(String testTitle) {
+		this.testTitle = testTitle;
+	}
+	public String getTestLockIcon() {
+		return testLockIcon;
+	}
+	public void setTestLockIcon(String testLockIcon) {
+		this.testLockIcon = testLockIcon;
+	}
+	public String getTestColor() {
+		return testColor;
+	}
+	public void setTestColor(String testColor) {
+		this.testColor = testColor;
+	}
+	public String getTestUrl() {
+		return testUrl;
+	}
+	public void setTestUrl(String testUrl) {
+		this.testUrl = testUrl;
+	}
+	public String getExamQueryUrl() {
+		return examQueryUrl;
+	}
+	public void setExamQueryUrl(String examQueryUrl) {
+		this.examQueryUrl = examQueryUrl;
+	}
+	public String getTestRltDesc() {
+		return testRltDesc;
+	}
+	public void setTestRltDesc(String testRltDesc) {
+		this.testRltDesc = testRltDesc;
+	}
+	public String getTestDisabled() {
+		return testDisabled;
+	}
+	public void setTestDisabled(String testDisabled) {
+		this.testDisabled = testDisabled;
 	}
 	
 }
