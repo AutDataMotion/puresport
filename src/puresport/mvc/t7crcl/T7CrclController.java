@@ -222,7 +222,7 @@ public class T7CrclController extends BaseController {
 					t7.setTestDisabled("disabled=\"disabled\"");
 					t7.setTestColor(lockColor);
 					t7.setTestLockIcon("fa fa-lock");
-					t7.setTestTitle("您需按顺序参加先修课程考试，然后才能参加本课程考试。");
+					t7.setTestTitle("尚未解锁");
 				}
 				t7.setTestUrl("/course/scormcontent/index.html");
 				System.out.println(testRltDesc);
@@ -1349,7 +1349,7 @@ public class T7CrclController extends BaseController {
 						}
 						// DateFormat类的静态工厂方法
 						System.out.println(format.getInstance().format(date));
-						String srcImg = webContentPath + "\\images_zcb\\certificateTemp01.jpg";
+						String srcImg = webContentPath + "\\images_zcb\\certificateTemplate01";
 						DateFormat formatYear = new SimpleDateFormat("yyyy");
 						String year = formatYear.format(date);
 						// 生成证书编号
@@ -1409,7 +1409,7 @@ public class T7CrclController extends BaseController {
 			// DateFormat类的静态工厂方法
 			System.out.println(format.getInstance().format(date));
 			//String srcImg = webContentPath + "\\images_zcb\\certificateTemp.jpg";
-			String srcImg = webContentPath + "\\images_zcb\\certificateTemp01.jpg";
+			String srcImg = webContentPath + "\\images_zcb\\certificateTemplate01";
 			// // 取身份证号码第1位+ 最后1位
 			// String crdt_no = t1.getCrdt_no().toString();
 			// String crdt_no_endStr = "";
