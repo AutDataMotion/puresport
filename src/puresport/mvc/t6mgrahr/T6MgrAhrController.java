@@ -25,6 +25,7 @@ import csuduc.platform.util.encrypt.DESUtil;
 import csuduc.platform.util.tuple.Tuple2;
 import puresport.applicat.ExcelParseTool;
 import puresport.applicat.MdlExcelRow;
+import puresport.config.ConfMain;
 import puresport.constant.ConstantInitMy;
 import puresport.constant.EnumStatus;
 import puresport.constant.EnumTypeLevel;
@@ -161,7 +162,7 @@ public class T6MgrAhrController extends BaseController {
 		Boolean needValPhone = (Boolean) getSessionAttr("needValPhone");
 		Boolean needValInstitute = (Boolean) getSessionAttr("needValInstitute");
 		
-		StringBuilder sqlUpdate = new StringBuilder("update puresport.t6_mgr_ahr set nm=? ");
+		StringBuilder sqlUpdate = new StringBuilder("update t6_mgr_ahr set nm=? ");
 		List<Object> argList = new LinkedList<Object>();
 		argList.add(item.getNm());
 		
@@ -226,7 +227,7 @@ public class T6MgrAhrController extends BaseController {
 		sqlUpdate.append(" where usrid=?");
 		argList.add(userID);
 
-		int res = Db.update(sqlUpdate.toString(), argList.toArray());
+		int res = ConfMain.db().update(sqlUpdate.toString(), argList.toArray());
 		if (res > 0) {
 			flag = true;
 			T6MgrAhr newitem = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where usrid=?", userID);// 根据用户名查询数据库中的用户

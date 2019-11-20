@@ -30,6 +30,7 @@ import csuduc.platform.util.lyf.EmailUtils;
 import csuduc.platform.util.tuple.Tuple2;
 import puresport.applicat.ExcelParseTool;
 import puresport.applicat.MdlExcelRow;
+import puresport.config.ConfMain;
 import puresport.constant.ConstantInitMy;
 import puresport.constant.EnumStatus;
 import puresport.mvc.comm.AuthCodeMdl;
@@ -498,7 +499,7 @@ public class T1usrBscController extends BaseController {
 			{
 				Boolean needValEmail = (Boolean) getSessionAttr("needValEmail");
 				Boolean needValPhone = (Boolean) getSessionAttr("needValPhone");
-				StringBuilder sqlUpdate = new StringBuilder("update puresport.t1_usr_bsc set usr_tp=?");
+				StringBuilder sqlUpdate = new StringBuilder("update t1_usr_bsc set usr_tp=?");
 				List<Object> argList = new LinkedList<Object>();
 				argList.add(usertype);
 
@@ -552,7 +553,7 @@ public class T1usrBscController extends BaseController {
 				sqlUpdate.append(" where usrid=?");
 				argList.add(userID);
 
-				int res = Db.update(sqlUpdate.toString(), argList.toArray());
+				int res = ConfMain.db().update(sqlUpdate.toString(), argList.toArray());
 				if (res > 0) {
 					flag = true;
 					setSessionAttr("usr_tp", usertype);
@@ -565,13 +566,13 @@ public class T1usrBscController extends BaseController {
 					String position = getPara("position");
 					String spt_prj = getPara("CompetetionItem_user_assist");
 
-					res = Db.update(
-							"update puresport.t1_usr_bsc set usr_tp=?,spt_prj=?,department=?,post=? where usrid=?",
+					res = ConfMain.db().update(
+							"update t1_usr_bsc set usr_tp=?,spt_prj=?,department=?,post=? where usrid=?",
 							usertype, spt_prj, company, position, userID);
 				} else {
 					String company = getPara("company");// 获取表单数据，这里的参数就是页面表单中的name属性值
 					String position = getPara("position");
-					res = Db.update("update puresport.t1_usr_bsc set usr_tp=?,department=?,post=? where usrid=?",
+					res = ConfMain.db().update("update t1_usr_bsc set usr_tp=?,department=?,post=? where usrid=?",
 							usertype, company, position, userID);
 				}
 

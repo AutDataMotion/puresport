@@ -60,7 +60,7 @@ public class R16GroupUsrService extends BaseService {
 		params.add(groupId);
 		params.addAll(userIds);
 		
-		ConfMain.db().update(sql, params.toArray());
+		ConfMain.db().update(sql, params);
 		
 		return true;
 	}
