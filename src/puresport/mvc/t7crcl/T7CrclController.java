@@ -1839,7 +1839,7 @@ public class T7CrclController extends BaseController {
 		String examid = getPara("examid");
 		String userFlag = getPara("userFlag");//1:管理员 2：普通用户
 		// 考试名称，科目
-		String t11sql = "select * from t11_exam_stat t where t.examid ='" + examid + "'";
+		String t11sql = "select * from t11_exam_stat t where t.examid ='" + examid + "' and t.usrid='" + usrid + "'";
 		T11ExamStat t11 = T11ExamStat.dao.findFirst(t11sql);
 		if (null != t11) {
 			setAttr("exam_name", t11.getExam_nm());
@@ -1860,7 +1860,7 @@ public class T7CrclController extends BaseController {
 		System.out.println("examid=" + examid);
 
 		String sql = "select * from t10_exam_grd t where t.usrid = '" + usrid + "' and t.examid ='" + examid
-				+ "' order by t.prblmid";
+				+ "' order by t.prblmno asc";
 		List<T10ExamGrd> t10List = T10ExamGrd.dao.find(sql);
 		List<ExamEntity> testPaperList01 = new ArrayList<ExamEntity>();
 		List<ExamEntity> testPaperList02 = new ArrayList<ExamEntity>();
