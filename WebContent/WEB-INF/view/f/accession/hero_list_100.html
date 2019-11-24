@@ -131,11 +131,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<tbody>
 	
 		<tr style="${t11SelfDisplay!''}">
-			<td><div style="color:${x.rank!'#FB0101'}"><h5>第${t11Self.id!''}名</h5></div></td>	
-			<td><div style="color:${x.rank!'#454545'}"><h5>${t11Self.exam_grd!''}</h5></div></td>
-			<td><div style="color:${x.rank!'#454545'}"><h5>${t11Self.nm!'虚位以待'}</h5></div></td>
-			<td><div style="color:${x.rank!'#454545'}"><h5>${t11Self.spt_prj!''}</h5></div></td>
-			<td><div style="color:${x.rank!'#454545'}"><h5>${t11Self.province!''}${x.city!''}</h5></div></td>		
+			<td><div style="color:${t11Self.rank!'#FB0101'}"><h5>第${t11Self.id!''}名</h5></div></td>	
+			<td><div style="color:${t11Self.rank!'#454545'}"><h5>${t11Self.exam_grd!''}</h5></div></td>
+			<td><div style="color:${t11Self.rank!'#454545'}"><h5>${t11Self.nm!'虚位以待'}</h5></div></td>
+			<td><div style="color:${t11Self.rank!'#454545'}"><h5>${t11Self.spt_prj!''}</h5></div></td>
+			<td><div style="color:${t11Self.rank!'#454545'}"><h5>${t11Self.province!''}${x.city!''}</h5></div></td>		
 		</tr>
 		
 				<%for(x in heroList10){ %>
@@ -168,19 +168,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </div>
 <div class="col-md-4"></div>
 </div>
-
-<!-- 	<div class="row">
-  <div class="col-md-2 ">.col-md-2</div>
-  <div class="col-md-10 ">
- 
-		<%for(x in heroList){ %>
-		<div class="well well-sm">${x.exam_grd!''} - ${x.nm!''} - ${x.spt_prj!''} - ${x.province!''}- ${x.city!''}</div>
-		<%}%> 
-	</div>
-	start footer
-
-  <div class="col-md-2 ">.col-md-4</div>
-  </div> -->
   
   	<% include("/f/footer.html"){} %>
 </div>
