@@ -39,5 +39,7 @@ hs_err_pid*
 /out/
 .mp4
 */images_zcb/certificates/*
+*.jpg
 count.txt
 WebContent/images_zcb/certificates/*.jpg
+!WebContent/images_zcb/certificates/certificateDefault.jpg

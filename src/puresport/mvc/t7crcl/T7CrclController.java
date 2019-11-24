@@ -1613,10 +1613,23 @@ public class T7CrclController extends BaseController {
 		String useridStr = getSession().getAttribute("usrid") + "";
 		// 插入或者更新成绩统计表最后一次成绩
 		String sql = "select t.*, r.nm, r.spt_prj, r.province, (case r.city when '--' then '' when '-' then '' else r.city end) as city from t11_exam_stat t "
-				+ "JOIN t1_usr_bsc r on t.exam_st = '9' and t.usrid = r.usrid order by exam_grd desc, tms asc limit 100 ";
+				+ "JOIN t1_usr_bsc r on t.exam_st = '9' and t.usrid = r.usrid order by exam_grd desc, tms asc";
 		List<T11ExamStat> heroList = T11ExamStat.dao.find(sql);
 		List<T11ExamStat> heroListRlt10 = new ArrayList<T11ExamStat>();
 		List<T11ExamStat> heroListRlt100 = new ArrayList<T11ExamStat>();
+		T11ExamStat t11Self = new T11ExamStat();
+		String t11SelfDisplay = "display:none;";
+		if (null != useridStr) {
+			for(int j = 0; j < heroList.size(); j++) {				
+					if (useridStr.equals((heroList.get(j).getUsrid() + ""))) {
+						t11Self = heroList.get(j);
+						t11Self.setRank("#FF0202");
+						t11Self.setId(Long.parseLong((j + 1) + ""));
+						t11SelfDisplay = "";
+					}
+			}
+		}
+
 		// 名次，名次缩略图赋值
 		for (int i = 0; i < 100; i++) {
 			T11ExamStat t11 = new T11ExamStat();
@@ -1651,6 +1664,8 @@ public class T7CrclController extends BaseController {
 		}
 		setAttr("heroList10", heroListRlt10);
 		setAttr("heroList100", heroListRlt100);
+		setAttr("t11Self", t11Self);
+		setAttr("t11SelfDisplay", t11SelfDisplay);
 		renderWithPath("/f/accession/hero_list_100.html");
 	}
 
