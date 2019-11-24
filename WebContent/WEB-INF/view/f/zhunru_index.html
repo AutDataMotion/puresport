@@ -52,7 +52,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				
 		// 邀请码校验
 		function invitationCodeVerify(flag) {
-			alert("test");
 			var invitationCode = document.getElementById("invitationCode").value;
 			var url;
 			url = '/jf/puresport/t7Crcl/invitationCodeVerify';
@@ -68,21 +67,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						},
 						success : function(res) {
 								if (res.code == "0000" || res.code == "0002") {				
-									alert("已验证或者验证通过");
 									window.location.href = "${cxt!}/jf/puresport/t7Crcl/study_notify_tokyo_1?which_competition=4";
 								} else if (res.code == "0001") {
-									alert("需要验证");
+									$('#invitCodeVerifyModalTitle').text("请输入邀请码！");
 									document.getElementById("invitationCode").value="";
 									$('#invitCodeVerifyModal').modal('show');
 								}  else if (res.code == "0003") {
-									alert("验证失败");
+									$('#invitCodeVerifyModalTitle').text("邀请码验证失败，请重新输入！");
 									document.getElementById("invitationCode").value="";
 									$('#invitCodeVerifyModal').modal('show');
 								} else if (res.code == "0004") {
-									alert("查询邀请码失败");
-									document.getElementById("invitationCode").value="";
-									document.getElementById("exampleModalLabel").value="xxxxxxxxxxxx";
-									
+									$('#invitCodeVerifyModalTitle').text("邀请码信息获取失败，请与系统管理员联系！");
+									document.getElementById("invitationCode").value="";									
 									$('#invitCodeVerifyModal').modal('show');
 								}  
 								
@@ -152,7 +148,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<div class="modal-dialog" role="document">
 			<div class="modal-content" style="min-width: 700px;">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">请输入邀请码</h5>
+					<h5 class="modal-title" id="invitCodeVerifyModalTitle">请输入邀请码</h5>
 					<button class="close" type="button" data-dismiss="modal"
 						aria-label="Close">
 						<span aria-hidden="true">×</span>
