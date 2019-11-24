@@ -49,6 +49,48 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			});		
 			
 		});
+				
+		// 邀请码校验
+		function invitationCodeVerify(flag) {
+			alert("test");
+			var invitationCode = document.getElementById("invitationCode").value;
+			var url;
+			url = '/jf/puresport/t7Crcl/invitationCodeVerify';
+			$
+					.ajax({
+						type : 'POST',
+						url : url,
+						dataType : "json",
+						traditional : true,
+						data : {
+							"invitationCode" : invitationCode,
+							"flag" : flag
+						},
+						success : function(res) {
+								if (res.code == "0000" || res.code == "0002") {				
+									alert("已验证或者验证通过");
+									window.location.href = "${cxt!}/jf/puresport/t7Crcl/study_notify_tokyo_1?which_competition=4";
+								} else if (res.code == "0001") {
+									alert("需要验证");
+									document.getElementById("invitationCode").value="";
+									$('#invitCodeVerifyModal').modal('show');
+								}  else if (res.code == "0003") {
+									alert("验证失败");
+									document.getElementById("invitationCode").value="";
+									$('#invitCodeVerifyModal').modal('show');
+								} else if (res.code == "0004") {
+									alert("查询邀请码失败");
+									document.getElementById("invitationCode").value="";
+									document.getElementById("exampleModalLabel").value="xxxxxxxxxxxx";
+									
+									$('#invitCodeVerifyModal').modal('show');
+								}  
+								
+						},
+						dataType : "json"
+					});
+		}
+			
 	</script>
 
 
@@ -77,7 +119,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		
 			<div class="col-md-12 span1_of_4">
 				<div class="span4_of_list">
-					<a class="" href="${cxt!}/jf/puresport/t7Crcl/study_notify_tokyo_1?which_competition=4"><img src="${cxt!}/images/dah_entrance.png" class="img-responsive"></a>
+					<a class="" href="javascript:void(0);" onclick="invitationCodeVerify(1)"><img src="${cxt!}/images/dah_entrance.png" class="img-responsive"></a>
 					<!-- a class="" href="#"><img src="${cxt!}/images/yyh_entrance.png" class="img-responsive"></a-->
 				</div>	
 			</div>
@@ -104,5 +146,41 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- start footer -->
 <% include("/f/footer.html"){} %>
 </div>
+
+	<div class="modal fade" id="invitCodeVerifyModal" tabindex="-1"
+		role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content" style="min-width: 700px;">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">请输入邀请码</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form class="form-horizontal">
+						<div class="layui-form-item">
+							<label class="layui-form-label">邀请码</label>
+							<div class="layui-input-block">
+								<input type="text" name="invitationCode" id="invitationCode"
+									lay-verify="identity" value=''
+									autocomplete="off" placeholder="东京奥运会准入学习邀请码" class="layui-input">
+							</div>
+						</div>
+					</form>
+				</div>
+				<div class="modal-footer">
+					<!-- 					<button class="btn btn-primay system_btn" id="resetPwd_btn"
+						onclick="resetPwd('02')" type="button" data-toggle="modal">重置</button> -->
+					<button class="btn  system_btn" id="resetPwd_btn"
+						onclick="invitationCodeVerify(2)" type="button" data-toggle="modal">确定</button>
+					<button class="btn btn-secondary" type="button"
+						data-dismiss="modal">取消</button>
+
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

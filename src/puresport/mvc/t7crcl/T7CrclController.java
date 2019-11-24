@@ -11,26 +11,20 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.InetAddress;
 import java.net.URISyntaxException;
-import java.net.UnknownHostException;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
-import com.jfinal.plugin.activerecord.Db;
 import com.platform.annotation.Controller;
 import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
@@ -39,6 +33,7 @@ import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageDecoder;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
+import puresport.config.ConfMain;
 import puresport.constant.EnumCompetition;
 import puresport.entity.ExamEntity;
 import puresport.entity.ResultEntity;
@@ -47,12 +42,10 @@ import puresport.mvc.t11examstat.T11ExamStat;
 import puresport.mvc.t11examstat.T11ExamStatService;
 import puresport.mvc.t12highestscore.T12HighestScore;
 import puresport.mvc.t1usrbsc.T1usrBsc;
-import puresport.mvc.t1usrbsc.T1usrBscService;
 import puresport.mvc.t5crclstdy.T5CrclStdy;
-import puresport.mvc.t5crclstdy.T5CrclStdyController;
 //import puresport.entity.ExamEntity;
 import puresport.mvc.t9tstlib.T9Tstlib;
-import puresport.mvc.t13tststat.T13TstStat;
+import puresport.mvc.t14invitationcode.T14InvitationCode;
 import puresport.mvc.t17creditInf.T17CreditInf;
 import puresport.mvc.pages.FunctionInterceptor;
 
@@ -1184,14 +1177,14 @@ public class T7CrclController extends BaseController {
 					t10Data.setExam_grd(5);
 					t10Data.setResult("正确");
 					// 更新答对次数
-					Db.update("update puresport.t13_tst_stat t set t.right_num = t.right_num + 1 where prblmid ="
+					ConfMain.db().update("update t13_tst_stat t set t.right_num = t.right_num + 1 where prblmid ="
 							+ prblmId);
 				} else {
 					t10Data.setExam_grd(0);
 					t10Data.setResult("错误");
 					// 更新答对次数
 
-					Db.update("update puresport.t13_tst_stat t set t.wrong_num = t.wrong_num + 1 where prblmid ="
+					ConfMain.db().update("update t13_tst_stat t set t.wrong_num = t.wrong_num + 1 where prblmid ="
 							+ prblmId);
 				}
 				t10Data.setUsr_aswr(usr_aswr);
@@ -1310,8 +1303,8 @@ public class T7CrclController extends BaseController {
 			// 如果本次成绩高于已有最高成绩，则更新最高成绩
 			if (totalScore > Integer.parseInt(t12.getExam_grd())) {
 				// 转入操作
-				Db.update(
-						"update puresport.t12_highest_score t set t.exam_grd = ? , t.tms = ? where usrid = ? and t.exam_nm = ?",
+				ConfMain.db().update(
+						"update t12_highest_score t set t.exam_grd = ? , t.tms = ? where usrid = ? and t.exam_nm = ?",
 						totalScore, new Timestamp(System.currentTimeMillis()), t10.getUsrid(), which_competition);
 			}
 		}
@@ -1957,5 +1950,54 @@ public class T7CrclController extends BaseController {
 		}
 	}
 	
+	
+	public void invitationCodeVerify() {
+		// 处理结果
+		ResultEntity res = null;
+		String useridStr = getSession().getAttribute("usrid") + "";
+		String invitationCode = getPara("invitationCode");
+		String flag = getPara("flag"); // 1:判断是否已经验证过   2：提交邀请码从新验证
+		String sql = "select * from t14_invitation_code t where t.type = '05'";
+		T14InvitationCode t14 = T14InvitationCode.dao.findFirst(sql);
+		if(null != t14) {
+			if("1".equals(flag)) {
+					if(StringUtils.isNoneBlank(t14.getInvited_user_list()+"")) {
+						String[] invitedUserList = ((t14.getInvited_user_list())+"").split(",");
+						if(null != invitedUserList) {
+							for(String usrId : invitedUserList) {
+								if(usrId.equals(useridStr)) {
+									//  已验证
+									res = new ResultEntity("0000", "已验证过邀请码用户.", "", "", "");
+									renderJson(res);
+									return;
+								}
+							}
+						}
+					}
+				// 未验证
+				res = new ResultEntity("0001", "请填写邀请码进行验证.", "", "", "");
+				renderJson(res);
+				return;
+			} else if("2".equals(flag)) {
+				if(t14.getInvitation_code().equals(invitationCode)) {
+					res = new ResultEntity("0002", "邀请码验证通过.", "", "", "");
+					renderJson(res);
+					// 保存已验证用户列表
+					String updateSql = "update t14_invitation_code t set t.invited_user_list=CONCAT(t.invited_user_list, ',"+ useridStr +"') where t.type='05'";
+					ConfMain.db().update(updateSql);
+					return;
+				} else {
+					res = new ResultEntity("0003", "邀请码验证失败.", "", "", "");
+					renderJson(res);
+					return;
+				}
+			}
+		} else {
+			// 查询邀请码失败
+			res = new ResultEntity("0004", "查询邀请码失败.", "", "", "");
+			renderJson(res);
+			return;
+		}
+	}
 
 }

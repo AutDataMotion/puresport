@@ -19,6 +19,7 @@ import csuduc.platform.util.RegexUtils;
 import csuduc.platform.util.encrypt.DESUtil;
 import csuduc.platform.util.lyf.EmailUtils;
 import csuduc.platform.util.lyf.WebsiteSta;
+import puresport.config.ConfMain;
 import puresport.constant.ConstantInitMy;
 import puresport.mvc.sport_item.Sport_Item;
 import puresport.mvc.sport_item.Sport_ItemService;
@@ -366,10 +367,10 @@ public class pagesController extends BaseController {
 				int res = -1;
 	        	if(userOradmin.equals("01"))//运动员及辅助人员
 	            {
-	        		res = Db.update(String.format("update puresport.t1_usr_bsc set pswd=? where %s=?",accountColumnStr),encryptpassword,account); 
+	        		res = ConfMain.db().update(String.format("update t1_usr_bsc set pswd=? where %s=?",accountColumnStr),encryptpassword,account); 
 	            }
 	            else {
-	            	res = Db.update(String.format("update puresport.t6_mgr_ahr set pswd=? where %s=?",accountColumnStr),encryptpassword,account);
+	            	res = ConfMain.db().update(String.format("update t6_mgr_ahr set pswd=? where %s=?",accountColumnStr),encryptpassword,account);
 	            }
 	        	if(res>0)
                 {
@@ -419,7 +420,7 @@ public class pagesController extends BaseController {
 	        	if(item != null) {  
 	                if(oldPwd.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
 	                    //flag = true; 
-	                    int res = Db.update("update puresport.t1_usr_bsc set pswd=? where usrid=?",newPwd,userID);
+	                    int res = ConfMain.db().update("update t1_usr_bsc set pswd=? where usrid=?",newPwd,userID);
 	                    if(res>0)
 	                    {
 	                    	flag = true; 
@@ -438,7 +439,7 @@ public class pagesController extends BaseController {
 	        	T6MgrAhr item = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where usrid=?", userID);
 	        	if(item != null) {  
 	                if(oldPwd.equals(item.getPswd())) {//判断数据库中的密码与用户输入的密码是否一致  
-	                	int res = Db.update("update puresport.t6_mgr_ahr set pswd=? where usrid=?",newPwd,userID);
+	                	int res = ConfMain.db().update("update t6_mgr_ahr set pswd=? where usrid=?",newPwd,userID);
 //	                    flag = true; 
 	                	if(res>0)
 	                    {

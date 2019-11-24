@@ -22,7 +22,7 @@ public class PageViewSta {
 //				Long id = mdl.getId();
 				int count = Integer.valueOf(mdl.getLogin_cnt());
 				Long id = Long.valueOf(mdl.getId());
-				int res = Db.update("update puresport.t3_stat set login_cnt=? where id=?",count+1,id);
+				int res = ConfMain.db().update("update t3_stat set login_cnt=? where id=?",count+1,id);
 			}
 			else {
 				Date dt  = new Date();
