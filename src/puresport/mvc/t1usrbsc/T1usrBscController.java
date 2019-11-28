@@ -1,6 +1,8 @@
 package puresport.mvc.t1usrbsc;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +10,7 @@ import java.util.Objects;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.collections4.ListUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.util.log.Log;
@@ -268,27 +271,36 @@ public class T1usrBscController extends BaseController {
 			setSessionAttr("pwd", pwddd);
 			setSessionAttr("usr_tp", item.getUsr_tp());
 
-			json.put("belongToInstitute", item.getInstitute() != null);
 			String sptPrj = item.getSpt_prj();
 			Integer emailVal = item.getEmailVal();
 			Integer phoneVal = item.getMblPhVal();
 			Boolean needValEmail = (null == emailVal) || (emailVal == 0);
 			Boolean needValPhone = (null == phoneVal) || (phoneVal == 0);
 			Boolean needValSptPrj = StringUtils.isBlank(sptPrj);
-
-			json.put("needValSptPrj", needValSptPrj);
+			Boolean needValDepart = StringUtils.isBlank((String)item.getDepartment()) || StringUtils.isBlank(item.getPost());
+			belongToInstitute = StringUtils.isNotBlank((String)item.getInstitute()); 
+			
+			json.put("belongToInstitute", belongToInstitute);
 			json.put("needValEmail", needValEmail);
 			json.put("needValPhone", needValPhone);
+			json.put("needValSptPrj", needValSptPrj);
+			json.put("needValDepart", needValDepart);
 
-			setSessionAttr("needValSptPrj", needValSptPrj);
+			setSessionAttr("belongToInstitute", belongToInstitute);
 			setSessionAttr("needValEmail", needValEmail);
 			setSessionAttr("needValPhone", needValPhone);
+			setSessionAttr("needValSptPrj", needValSptPrj);
+			setSessionAttr("needValDepart", needValDepart);
 
 			if (userType.equals("运动员"))// 运动员表 这个字段的初始值为运动员！
 			{
-				needImproveInfoOrNot = needValSptPrj || needValEmail || needValPhone;
+				needImproveInfoOrNot = needValSptPrj || needValPhone;
 			} else {
-				needImproveInfoOrNot = (item.getDepartment() == null || item.getPost() == null);
+				if (belongToInstitute) {
+					needImproveInfoOrNot = needValSptPrj || needValPhone|| needValDepart;
+				} else {
+					needImproveInfoOrNot = needValPhone|| needValDepart;
+				}
 			}
 
 			json.put("needImproveInfoOrNot", needImproveInfoOrNot);
@@ -478,6 +490,7 @@ public class T1usrBscController extends BaseController {
 		}
 	}
 
+	private final static List<String> SportRoles = Arrays.asList("运动员", "辅助人员");
 	@Clear
 	public void ImproveUserInfo() {
 		
@@ -492,12 +505,16 @@ public class T1usrBscController extends BaseController {
 		
 		String msg = "";
 		String usertype = getPara("usertype");
+		if (StringUtils.isBlank(usertype)|| !SportRoles.contains(usertype)) {
+			renderJson(CommFun.resJsonFail("illegal"));
+			return;
+		}
 		
 		T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", userID);// 根据用户名查询数据库中的用户
 		if (item != null) {
 			if (usertype.equals("运动员"))// 运动员
 			{
-				Boolean needValEmail = (Boolean) getSessionAttr("needValEmail");
+//				Boolean needValEmail = (Boolean) getSessionAttr("needValEmail");
 				Boolean needValPhone = (Boolean) getSessionAttr("needValPhone");
 				StringBuilder sqlUpdate = new StringBuilder("update t1_usr_bsc set usr_tp=?");
 				List<Object> argList = new LinkedList<Object>();
@@ -505,25 +522,25 @@ public class T1usrBscController extends BaseController {
 
 				boolean haveUpdate = false;
 
-				if (needValEmail != null && needValEmail == Boolean.TRUE) {
-					String email = getPara("email");
-					String emailValCode = getPara("emailValCode");
-					if (StringUtils.isBlank(email) || StringUtils.isBlank(emailValCode)
-							|| !RegexUtils.checkEmail(email)) {
-						renderJson(CommFun.resJsonFail("邮箱或验证码不正确或为空"));
-						return;
-					}
-					AuthCodeMdl authCodeMdlEmail = (AuthCodeMdl) getSessionAttr(keyEmailCode);
-					if (Objects.isNull(authCodeMdlEmail) || authCodeMdlEmail.checkAuthCodeFail(email, emailValCode,
-							ConstantInitMy.AuthCode_TimeOut)) {
-						renderTextJson(CommFun.resJsonFail("邮箱验证码错误或已过期，请重新获取验证"));
-						return;
-					}
-					sqlUpdate.append(", email = ?, email_val=? ");
-					argList.add(email);
-					argList.add(1);
-					haveUpdate = true;
-				}
+//				if (needValEmail != null && needValEmail == Boolean.TRUE) {
+//					String email = getPara("email");
+//					String emailValCode = getPara("emailValCode");
+//					if (StringUtils.isBlank(email) || StringUtils.isBlank(emailValCode)
+//							|| !RegexUtils.checkEmail(email)) {
+//						renderJson(CommFun.resJsonFail("邮箱或验证码不正确或为空"));
+//						return;
+//					}
+//					AuthCodeMdl authCodeMdlEmail = (AuthCodeMdl) getSessionAttr(keyEmailCode);
+//					if (Objects.isNull(authCodeMdlEmail) || authCodeMdlEmail.checkAuthCodeFail(email, emailValCode,
+//							ConstantInitMy.AuthCode_TimeOut)) {
+//						renderTextJson(CommFun.resJsonFail("邮箱验证码错误或已过期，请重新获取验证"));
+//						return;
+//					}
+//					sqlUpdate.append(", email = ?, email_val=? ");
+//					argList.add(email);
+//					argList.add(1);
+//					haveUpdate = true;
+//				}
 
 				if (needValPhone != null && needValPhone == Boolean.TRUE) {
 					String phone = getPara("phone");
@@ -544,7 +561,19 @@ public class T1usrBscController extends BaseController {
 					argList.add(1);
 					haveUpdate = true;
 				}
-
+				
+				Boolean needValSptPrj = (Boolean) getSessionAttr("needValSptPrj");
+				if (needValSptPrj != null && needValSptPrj == Boolean.TRUE) {
+					String sptPrj = getPara("sptPrj");
+					if (StringUtils.isBlank(sptPrj) || sptPrj.length() > 30) {
+						renderJson(CommFun.resJsonFail("运动项目为空或不正确"));
+						return;
+					}
+					sqlUpdate.append(", spt_prj = ? ");
+					argList.add(sptPrj);
+					haveUpdate = true;
+				}
+				
 				if (!haveUpdate) {
 					renderText("!haveUpdate");
 					return;
@@ -559,27 +588,76 @@ public class T1usrBscController extends BaseController {
 					setSessionAttr("usr_tp", usertype);
 				}
 			} else {// 辅助人员
-				String belongToInstitute = getPara("belongToInstitute");
-				int res = 0;
-				if (StringUtil.notEmpty(belongToInstitute) && belongToInstitute.equals("true")) {
-					String company = getPara("company");// 获取表单数据，这里的参数就是页面表单中的name属性值
-					String position = getPara("position");
-					String spt_prj = getPara("CompetetionItem_user_assist");
+				Boolean needValPhone = (Boolean) getSessionAttr("needValPhone");
+				StringBuilder sqlUpdate = new StringBuilder("update t1_usr_bsc set usr_tp=?");
+				List<Object> argList = new LinkedList<Object>();
+				argList.add(usertype);
 
-					res = ConfMain.db().update(
-							"update t1_usr_bsc set usr_tp=?,spt_prj=?,department=?,post=? where usrid=?",
-							usertype, spt_prj, company, position, userID);
-				} else {
-					String company = getPara("company");// 获取表单数据，这里的参数就是页面表单中的name属性值
+				boolean haveUpdate = false;
+				
+				if (needValPhone != null && needValPhone == Boolean.TRUE) {
+					String phone = getPara("phone");
+					String mblphValCode = getPara("mblphValCode");
+					if (StringUtils.isBlank(phone) || StringUtils.isBlank(mblphValCode)
+							|| !RegexUtils.checkMobile(phone)) {
+						renderJson(CommFun.resJsonFail("手机或验证码不正确或为空"));
+						return;
+					}
+					AuthCodeMdl authCodeMdlPhone = (AuthCodeMdl) getSessionAttr(keyPhoneCode);
+					if (Objects.isNull(authCodeMdlPhone) || authCodeMdlPhone.checkAuthCodeFail(phone, mblphValCode,
+							ConstantInitMy.AuthCode_TimeOut)) {
+						renderTextJson(CommFun.resJsonFail("手机验证码错误或已过期，请重新获取验证"));
+						return;
+					}
+					sqlUpdate.append(", mblph_no = ?, mblph_val=? ");
+					argList.add(phone);
+					argList.add(1);
+					haveUpdate = true;
+				}
+				Boolean belongToInstitute = (Boolean)getSessionAttr("belongToInstitute");
+				if (belongToInstitute != null && belongToInstitute == Boolean.TRUE) {
+					Boolean needValSptPrj = (Boolean) getSessionAttr("needValSptPrj");
+					if (needValSptPrj != null && needValSptPrj == Boolean.TRUE) {
+						String sptPrj = getPara("sptPrj");
+						if (StringUtils.isBlank(sptPrj) || sptPrj.length() > 30) {
+							renderJson(CommFun.resJsonFail("运动项目为空或格式不正确"));
+							return;
+						}
+						sqlUpdate.append(", spt_prj = ? ");
+						argList.add(sptPrj);
+						haveUpdate = true;
+					} 
+				}
+				
+				Boolean needValDepart = (Boolean) getSessionAttr("needValDepart");
+				if (needValDepart != null && needValDepart == Boolean.TRUE) {
+					String company = getPara("company");
 					String position = getPara("position");
-					res = ConfMain.db().update("update t1_usr_bsc set usr_tp=?,department=?,post=? where usrid=?",
-							usertype, company, position, userID);
+					if (StringUtils.isBlank(company) || StringUtils.isBlank(position) 
+							|| company.length() > 60 || position.length() > 30) {
+						renderJson(CommFun.resJsonFail("工作单位或职位为空或格式不正确"));
+						return;
+					}
+					sqlUpdate.append(",department=?,post=? ");
+					argList.add(company);
+					argList.add(position);
+					haveUpdate = true;
+				}
+				
+				if (!haveUpdate) {
+					renderText("!haveUpdate");
+					return;
 				}
 
+				sqlUpdate.append(" where usrid=?");
+				argList.add(userID);
+
+				int res = ConfMain.db().update(sqlUpdate.toString(), argList.toArray());
 				if (res > 0) {
 					flag = true;
-					setSessionAttr("usr_tp", usertype);// 设置session，保存登录用户的昵称
+					setSessionAttr("usr_tp", usertype);
 				}
+				
 			}
 		} else {
 			msg = "更新失败，请刷新页面！";

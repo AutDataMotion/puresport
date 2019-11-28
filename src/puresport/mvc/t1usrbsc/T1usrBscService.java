@@ -516,8 +516,6 @@ public class T1usrBscService extends BaseService {
 						.set(T1usrBsc.column_email, excelRow.getByIndex(6))
 						.set(T1usrBsc.column_cty_prov_city_mgrid, mgrSession.getUsrid())
 
-						// .set(T1usrBsc.column_typelevel,
-						// mgrSession.getTypeleve())
 						.set(T1usrBsc.column_province, mgrSession.ggProvince())
 						.set(T1usrBsc.column_city, mgrSession.ggCity());
 				
@@ -666,8 +664,7 @@ public class T1usrBscService extends BaseService {
 					.set(T1usrBsc.column_crdt_no, dto.getCrdt_no())
 					.set(T1usrBsc.column_gnd, dto.getGnd()) // 性别
 					.set(T1usrBsc.column_brth_dt, dto.getBrth_dt())
-					.set(T1usrBsc.column_pswd,
-							DESUtil.encrypt(dto.getPasswd(), ConstantInitMy.SPKEY))// 密码默认身份证后6位
+					.set(T1usrBsc.column_pswd, DESUtil.encrypt(dto.getPasswd(), ConstantInitMy.SPKEY))// 密码默认身份证后6位
 					.set(T1usrBsc.column_mblph_no, dto.getMblph_no())
 					.set(T1usrBsc.column_email, dto.getEmail())
 					.set(T1usrBsc.column_province, dto.getProvince())

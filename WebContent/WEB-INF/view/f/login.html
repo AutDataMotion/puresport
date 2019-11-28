@@ -42,6 +42,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script type="text/javascript" src="${cxt!}/js/jquery.easing.min.js"></script>
 <script type="text/javascript" src="${cxt!}/js/jquery.mixitup.min.js"></script>
 
+<style>
+
+.layui-form-label {
+    width: 100px;
+}
+
+select{
+	width: 100%;
+    height: 37px;
+    line-height: 1.3;
+}
+.layui-input-block {
+    max-width: 505px;
+}
+
+.btn{
+	padding: 14px 48px;
+	width:200px;
+}
+
+</style>
 </head>
 <body>
 
@@ -138,12 +159,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 													class="checkcode_text" style="margin-left: 10px;"
 													onclick="refresh('user')">刷新</span>
 											</div>
-											<div style="margin: 10px;">
-												<a id="frogetPwdBtn_user">忘记密码</a>
+											<div style="margin: 10px; width: 200px;">
+												<a id="frogetPwdBtn_user">忘记密码</a> 
+												<a href='${cxt!}/jf/puresport/pagesController/regist' style="margin-left: 56px;">去注册 → </a>
 											</div>
 
 											<button class="btn btn-primary" onclick="user_login()">登录</button>
-
 										</div>
 									</div>
 
@@ -215,67 +236,74 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 											style="text-align: center; color: red; display: none;">提示信息</h4>
 									</div>
 								</div>
-								<!-- <div class="row" style="display: block;">
-									运动员完善个人信息
-									<div class="col-sm-12 col-xs-12">
-										<div class="form-bottom">
-											<div id="getUserType">
-												<h4><strong>人员类型</strong></h4>
-												<select name="type"
-													onchange="user_ImproveType(this.options[this.options.selectedIndex].value)">
-													<option value="0">请选择人员类型</option>
-													<option value="1">运动员</option>
-													<option value="2">辅助人员</option>
-												</select>
-											</div>
-										</div>
-									</div>
-
-								</div> -->
-								<!-- <div class="row form-loginbox_user_2_1" style="display: none;"> -->
+								
 								<div class="row form-loginbox_user_2_1" style="margin-top:20px;">
 									<!-- 运动员完善个人信息 -->
 									<div class="col-sm-12 col-xs-12">
 
-										<div class="form-bottom">
+										<div class="form-bottom" style="margin: 0 auto;max-width: 650px;">
+										
+											<div id="getUserType" class="layui-form-item" ">
+												<label class="layui-form-label" >人员类型</label>
+												<div class="layui-input-block">
+													<select id="selectUserType" name="type"
+													onchange="user_ImproveType(this.options[this.options.selectedIndex].value)">
+													<option value="请选择人员类型">请选择人员类型</option>
+													<option value="运动员">运动员</option>
+													<option value="辅助人员">辅助人员</option>
+												</select>
+												</div>
+											</div>
+										
+											<div id="divValSport" class="layui-form-item" style="display: none;">
+												<label class="layui-form-label" required>运动项目</label>
+												<div class="layui-input-block">
+													<select id="spt_prj_sporter" name="spt_prj_sporter" lay-verify="required">
+														<option value="请选择项目">请选择项目</option> <%for (item in
+														sport_items_of_shengyunhui){%>
+														<option value=${item.name!}>${item.name!}</option> <%}%>
+													</select>
+												</div>
+											</div>
+											
+											<div id="divDepart" class="layui-form-item" style="display: none;">
+												<label class="layui-form-label" >工作单位</label>
+												<div class="layui-input-block">
+													<input id="form-company_assist" type="text" name="form-company_assist" 
+														autocomplete="off" placeholder="工作单位" class="layui-input">
+												</div>
+											</div>
+											
+											<div id="divPost" class="layui-form-item" style="display: none;">
+												<label class="layui-form-label" >职务/职称</label>
+												<div class="layui-input-block">
+													<input id="form-position_assist" type="text" name="form-position_assist" 
+														autocomplete="off" placeholder="职务/职称" class="layui-input">
+												</div>
+											</div>											
+											
 											<div id="divValPhone" class="layui-form-item" style="display: none;">
 												<label class="layui-form-label">手机</label>
-												<div class="layui-input-inline">
-													<input type="text" name="mblph_no"
-														lay-verify="required|phone" id="mblph_no"
-														 autocomplete="off" placeholder="手机号"
-														class="layui-input">
+												<div class="layui-input-block">
+													<div class="layui-input-inline">
+														<input type="text" name="mblph_no"
+															lay-verify="required|phone" id="mblph_no"
+															 autocomplete="off" placeholder="手机号"
+															class="layui-input">
+													</div>
+	
+													<div class="layui-input-inline">
+														<input type="text" name="mblphValCode" id="mblphValCode"
+															lay-verify="required" autocomplete="off"
+															placeholder="手机验证码" class="layui-input">
+													</div>
+	
+													<button type="button" style="width: 100px;"
+														class="layui-btn layui-btn-normal layui-btn-sm"
+														id="btn-val-phone">点击获取</button>
 												</div>
-
-												<div class="layui-input-inline">
-													<input type="text" name="mblphValCode" id="mblphValCode"
-														lay-verify="required" autocomplete="off"
-														placeholder="手机验证码" class="layui-input">
-												</div>
-
-												<button type="button" style="width: 100px;"
-													class="layui-btn layui-btn-normal layui-btn-sm"
-													id="btn-val-phone">点击获取</button>
 											</div>
-
-											<div id="divValEmail" class="layui-form-item" style="display: none;">
-												<label class="layui-form-label">邮箱</label>
-												<div class="layui-input-inline">
-													<input type="text" name="email" lay-verify="required|email"
-														id="email" autocomplete="off"
-														placeholder="邮箱" class="layui-input">
-												</div>
-
-												<div class="layui-input-inline">
-													<input type="text" name="emailValCode"  id="emailValCode"
-														lay-verify="required" autocomplete="off"
-														placeholder="邮箱验证码" class="layui-input">
-												</div>
-
-												<button type="button" style="width: 100px;"
-													class="layui-btn layui-btn-normal layui-btn-sm"
-													id="btn-val-email">点击获取</button>
-											</div>
+											
 
 											<div style="margin: 10px;">
 												<a id="back2loginBtn_user_2">返回登录</a>
@@ -554,8 +582,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 	<script type="text/javascript">
 		$(function() {
-
-			//initlogin();
 
 			$("#userLoginPanel_btn").click(function() {
 				$("#adminLoginPanel_btn").removeClass("login_tab_active");
