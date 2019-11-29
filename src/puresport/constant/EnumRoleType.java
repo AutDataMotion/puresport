@@ -13,7 +13,9 @@ public enum EnumRoleType {
 	Sporter(0, "运动员"),
 	Coach(10, "教练员"),
 	Doctor(0, "科医员"),
-	Admin(0, "管理员");
+	Admin(0, "管理员"),
+	Assistor(1, "辅助人员");
+	
 	private int id;
 	private String name;
 	

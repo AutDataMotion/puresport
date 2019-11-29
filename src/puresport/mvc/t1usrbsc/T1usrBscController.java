@@ -457,7 +457,7 @@ public class T1usrBscController extends BaseController {
 //		AuthCodeMdl authCodeMdlEmail = (AuthCodeMdl) getSessionAttr(keyEmailCode);
 //		if (Objects.isNull(authCodeMdlPhone) && Objects.isNull(authCodeMdlEmail)) {
 		if (Objects.isNull(authCodeMdlPhone)) {
-			renderTextJson(ResTips.createFailRes("验证码已过期，请重新获取验证码"));
+			renderTextJson(ResTips.createFailRes("验证码不正确或已过期，请重新获取验证码"));
 			return;
 		}
 		// 入参 校验

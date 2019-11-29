@@ -61,6 +61,15 @@
 			<div class="row" style="margin: 20px auto; max-width: 600px;">
 
 				<form id="main" class="layui-form form-horizontal" action="">
+				
+					<div class="layui-form-item">
+						<label class="layui-form-label" required>人员类型</label>
+						<div class="layui-input-block">
+							<input type="radio" name="usr_tp" value="运动员" title="运动员" checked="" lay-filter="filter_usr_tp">
+							<input type="radio" name="usr_tp" value="辅助人员" title="辅助人员" lay-filter="filter_usr_tp">
+						</div>
+					</div>
+					
 					<div class="layui-form-item">
 						<label class="layui-form-label" required>姓名</label>
 						<div class="layui-input-block">
@@ -117,23 +126,40 @@
 						</div>
 					</div>
 
-					<div class="layui-form-item">
+					<div id="divSportor" class="layui-form-item">
 						<label class="layui-form-label" required>运动项目</label>
 						<div class="layui-input-inline">
-							<select name="spt_prj" lay-verify="required">
-								<option value="请选择项目">请选择项目</option> <%for (item in
+							<select name="spt_prj">
+								<option value="">请选择项目</option> <%for (item in
 								sport_items_of_shengyunhui){%>
 								<option value=${item.name!}>${item.name!}</option> <%}%>
 							</select>
 						</div>
 						<label class="layui-form-label" required>级别</label>
 						<div class="layui-input-inline">
-							<select name="typeleve" lay-verify="required">
+							<select name="typeleve" >
 								<option value="国家级">国家级</option>
 								<option value="中心协会级">中心协会级</option>
 								<option value="省级">省级</option>
 								<option value="市级">市级</option>
 							</select>
+						</div>
+					</div>
+					
+					<div id="divAssistor" style="display: none;">
+						<div class="layui-form-item">
+							<label class="layui-form-label" required>工作单位</label>
+							<div class="layui-input-block">
+								<input type="text" name="department" 
+									autocomplete="off" placeholder="工作单位" class="layui-input">
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label" required>职务</label>
+							<div class="layui-input-block">
+								<input type="text" name="post" 
+									autocomplete="off" placeholder="职务" class="layui-input">
+							</div>
 						</div>
 					</div>
 

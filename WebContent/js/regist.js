@@ -39,6 +39,25 @@ $(function() {
             setCityAjax(data.value); 
         });
 		
+		var curUsrType = '运动员';
+		form.on('radio(filter_usr_tp)', function(data){
+			  console.log(data.value); //被点击的radio的value值
+			  var usrType = data.value;
+			  if(curUsrType == usrType){
+				  return ;
+			  }
+			  curUsrType = usrType;
+			  
+			  if(curUsrType == '运动员'){
+				  $('#divSportor').show();
+				  $('#divAssistor').hide();
+			  } else {
+				  $('#divAssistor').show();
+				  $('#divSportor').hide();
+			  }
+			  
+		});  
+		
 		function btnSetDisable(domObj, disabled, text){
 			if(disabled===true){
 				domObj.prop('disabled', true);
@@ -85,8 +104,30 @@ $(function() {
 //		});
 		
 		form.on('submit(btn-submit)', function(data){
+			if(data.field.usr_tp=='运动员'){
+				
+				if(!data.field.spt_prj || data.field.spt_prj == '请选择项目' || data.field.spt_prj == ''){
+					layer.msg('项目不能为空');
+					return false;
+				}
+				if(!data.field.typeleve){
+					layer.msg('级别不能为空');
+					return false;
+				}
+				
+			} else {
+				
+				if(!data.field.department || data.field.department.trim() == ''){
+					layer.msg('工作单位不能为空');
+					return false;
+				}
+				if(!data.field.post || data.field.post.trim() == ''){
+					layer.msg('职务不能为空');
+					return false;
+				}
+			}
+			
 			var jsonStr = JSON.stringify(data.field);
-//		    console.log(jsonStr);
 		    user_regist(jsonStr);
 		    return false;
 		});

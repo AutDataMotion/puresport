@@ -600,8 +600,11 @@ public class T1usrBscService extends BaseService {
 		}
 	}
 	
-	private void resolveLevel(Record record,  String typeLevel){
+	private void resolveLevel(Record record,  String typeLevel, String spt_prj){
 
+		if (StringUtils.isBlank(typeLevel)) {
+			return;
+		}
 		if (typeLevel.equals(EnumTypeLevel.Country.getName())) {
 			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelShow.getIdStr());
 			
@@ -617,11 +620,9 @@ public class T1usrBscService extends BaseService {
 		} else if(typeLevel.equals(EnumTypeLevel.CenterInstitute.getName()))
 		{
 			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelView.getIdStr())
-			.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelShow.getId());
-
-		}
-		else {
-			record.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelUnknown.getId());
+			.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelShow.getId())
+			.set(T1usrBsc.column_institute, spt_prj)
+			;
 		}
 	}
 	
@@ -657,7 +658,7 @@ public class T1usrBscService extends BaseService {
 		Record dbRow;
 		try {
 			dbRow = new Record()
-					.set(T1usrBsc.column_usr_tp, EnumRoleType.Sporter.getName())
+					.set(T1usrBsc.column_usr_tp, dto.getUsr_tp())
 					.set(T1usrBsc.column_usr_nm, dto.getMblph_no())
 					.set(T1usrBsc.column_nm, dto.getNm())
 					.set(T1usrBsc.column_crdt_tp, "身份证")
@@ -669,7 +670,10 @@ public class T1usrBscService extends BaseService {
 					.set(T1usrBsc.column_email, dto.getEmail())
 					.set(T1usrBsc.column_province, dto.getProvince())
 					.set(T1usrBsc.column_city, dto.getCity())
-					.set(T1usrBsc.column_spt_prj, dto.getSpt_prj());
+					.set(T1usrBsc.column_spt_prj, dto.getSpt_prj())
+					.set(T1usrBsc.column_department, dto.getDepartment())
+					.set(T1usrBsc.column_post, dto.getPost())
+					;
 			
 //			if ( dto.getEmailValCode()!= null) {
 //				dbRow.set(T1usrBsc.column_email_val, 1);
@@ -678,7 +682,7 @@ public class T1usrBscService extends BaseService {
 				dbRow.set(T1usrBsc.column_mblph_val, 1);
 			}
 			
-			resolveLevel(dbRow, dto.getTypeleve());
+			resolveLevel(dbRow, dto.getTypeleve(), dto.getSpt_prj());
 			
 			return ConfMain.db().save(tableName, tableKey, dbRow);
 			

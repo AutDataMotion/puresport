@@ -16,6 +16,7 @@ import csuduc.platform.util.ComUtil;
 import csuduc.platform.util.RegexUtils;
 import csuduc.platform.util.StringUtil;
 import puresport.constant.ConstantInitMy;
+import puresport.constant.EnumRoleType;
 import puresport.constant.EnumTypeLevel;
 import puresport.mvc.comm.AuthCodeMdl;
 
@@ -41,6 +42,8 @@ public class T1userBscDTO implements Serializable{
 	private String institute;
     private Integer emailValCode;
     private Integer mblphValCode;
+    private String department;
+    private String post; 
     
     // 级别
     private String typeleve;
@@ -103,7 +106,11 @@ public class T1userBscDTO implements Serializable{
 	
 	public boolean validate(AuthCodeMdl authCodeMdlPhone) {
 		
-		if (ComUtil.haveEmpty(nm, crdt_no, gnd, brth_dt, province, city,spt_prj, mblph_no, passwd, typeleve)) {
+		if(!validateSporterAndAssistor()) {
+			return false;
+		}
+		
+		if (ComUtil.haveEmpty(nm, crdt_no, gnd, brth_dt, province, city, mblph_no,mblphValCode, passwd)) {
 			addTip("have empty");
 			return false;
 		}
@@ -111,19 +118,37 @@ public class T1userBscDTO implements Serializable{
 			addTip("phone invalidate");
 			return false;
 		}
-		if (null == mblphValCode) {
-			addTip("valCode empty");
+		
+		// 手机是否校验
+		if (authCodeMdlPhone.checkAuthCodeFail(mblph_no, mblphValCode.toString(), ConstantInitMy.AuthCode_TimeOut)) {
+			addTip("手机校验码不正确，请重新获取验证");
 			return false;
 		}
 		
-		// 手机是否校验
-		if (mblphValCode!=null) {
-			if (authCodeMdlPhone.checkAuthCodeFail(mblph_no, mblphValCode.toString(), ConstantInitMy.AuthCode_TimeOut)) {
-				addTip("手机校验码不正确，请重新获取验证");
+		return true;
+	}
+	
+	public boolean validateSporterAndAssistor() {
+		
+		if(ComUtil.haveEmpty(usr_tp)) {
+			addTip("usr_tp empty");
+			return false;
+		}
+		
+		if (usr_tp.equals(EnumRoleType.Sporter.getName())) {
+			if (ComUtil.haveEmpty(spt_prj, typeleve)) {
+				addTip("spt_prj, typeleve empty");
 				return false;
 			}
 		}
 		
+		if (usr_tp.equals(EnumRoleType.Assistor.getName())) {
+			if (ComUtil.haveEmpty(department, post)) {
+				addTip("department, post empty");
+				return false;
+			}
+		}
+
 		return true;
 	}
 	
@@ -153,6 +178,23 @@ public class T1userBscDTO implements Serializable{
 		return true;
 	}
 	
+	
+	public String getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(String department) {
+		this.department = department;
+	}
+
+	public String getPost() {
+		return post;
+	}
+
+	public void setPost(String post) {
+		this.post = post;
+	}
+
 	private void addTip(String msg) {
 		if (tipList == null) {
 			tipList = new LinkedList<String>();
