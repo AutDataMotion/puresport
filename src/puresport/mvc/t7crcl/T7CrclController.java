@@ -1478,7 +1478,7 @@ public class T7CrclController extends BaseController {
 			t17.setFile_path(certificatePath);
 			t17.setTms(new Timestamp(date.getTime()));
 			t17.setType("05");
-			t17.setFlag("02");
+			t17.setFlag("01");
 			saveCreditInf(t17);
 			///
 			LOG.info(totalScore.toString() + t1.getNm() + dataTime);
