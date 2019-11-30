@@ -445,7 +445,7 @@ public class T1usrBsc extends BaseModel<T1usrBsc> {
 	public void setMblPhVal(Integer mblphVal){
 		set(column_mblph_val, mblphVal);
 	}
-	public <T> T getMblPhVal() {
+	public Integer getMblPhVal() {
 		return getByType(column_mblph_val);
 	}
 }

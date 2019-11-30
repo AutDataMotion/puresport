@@ -27,8 +27,9 @@ $(function() {
 		// ========init
 		laydate.render({ 
 			  elem: '#brth_dt'
-			  ,min: '1960-1-1'
-			  ,max: '2030-1-1'
+			,format: 'yyyy/MM/dd'
+			,min: '1960/1/1'
+			,max: '2030/1/1'
 			});
 		
         setProvinceAjax();
