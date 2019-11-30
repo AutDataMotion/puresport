@@ -1428,7 +1428,7 @@ public class T7CrclController extends BaseController {
 			// DateFormat类的静态工厂方法
 			System.out.println(format.getInstance().format(date));
 			//String srcImg = webContentPath + "\\images_zcb\\certificateTemp.jpg";
-			String srcImg = webContentPath + "\\images_zcb\\certificateTemplate01";
+			String srcImg = webContentPath + "\\images_zcb\\certificateTemplate01.jpg";
 			// // 取身份证号码第1位+ 最后1位
 			// String crdt_no = t1.getCrdt_no().toString();
 			// String crdt_no_endStr = "";
