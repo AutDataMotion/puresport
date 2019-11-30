@@ -366,6 +366,7 @@ public class T7CrclController extends BaseController {
 			LOG.error("查询用户信息失败.");
 			setAttr("certificatePath", "/images_zcb/certificates/certificateDefault.jpg");
 			LOG.debug("certificatePath=" + certificatePath);
+			setAttr("class", "");
 			renderWithPath("/f/accession/certificate.html");
 			return;
 		} else {
@@ -382,13 +383,25 @@ public class T7CrclController extends BaseController {
 		// 是否有证书
 		boolean isCertificated = false;
 		try {
-			String path = Class.class.getResource("/").toURI().getPath();
-			String filepath = new File(path).getParentFile().getParentFile().getCanonicalPath();
-			File file = new File(filepath + certificatePath);
-			if (!judeFileExists(file)) {
-				setAttr("certificatePath", "/images_zcb/certificates/certificateDefault.jpg");
-			} else {
+			// 优先查询新版证书，是否存在
+			String sql = "select * from t17_credit_inf t where t.usrid = '" + usrid + "' and t.flag ='01'";
+			T17CreditInf t17Rlt = T17CreditInf.dao.findFirst(sql);
+			if(null != t17Rlt) {
+				certificatePath = t17Rlt.getFile_path();
+				setAttr("certificatePath", certificatePath);
+				setAttr("class", "img-thumbnail");
 				isCertificated = true;
+			} else {// 查询旧版证书是否存在			
+				String path = Class.class.getResource("/").toURI().getPath();
+				String filepath = new File(path).getParentFile().getParentFile().getCanonicalPath();
+				File file = new File(filepath + certificatePath);
+				if (!judeFileExists(file)) {
+					setAttr("certificatePath", "/images_zcb/certificates/certificateDefault.jpg");
+					setAttr("class", "");
+				} else {
+					isCertificated = true;
+					setAttr("class", "img-thumbnail");
+				}
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -854,7 +867,7 @@ public class T7CrclController extends BaseController {
 		 */
 		// 查询一共考了多少次，规则修改为不能超过3次，2019-10-30
 		List<T11ExamStat> T11ExamStat_num = T11ExamStat.dao
-				.find("select * from t11_exam_stat t where t.exam_st = '1' and t.usrid='" + usrid + "'");
+				.find("select * from t11_exam_stat t where t.exam_st = '1' and t.usrid='" + usrid + "'  and t.exam_nm = '"+which_competition+"'" );
 		if (T11ExamStat_num.size() >= 3) {
 			LOG.debug("generteTest----" + "总答题次数已满3次！！");
 			setAttr("tpsMsg", "对不起，每人最多只能答题三次。您已答题三次，不能再参加考试。");
@@ -1107,7 +1120,8 @@ public class T7CrclController extends BaseController {
 		String[] ds = getParaValues("dataSet");
 		// 承诺人姓名
 		String commimentNm = getPara("commimentNm");
-
+		// 承诺人姓名全拼
+		String commimentPinyin = getPara("commimentPinyin");
 		// 查询用户信息
 		T1usrBsc t1 = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", usrid);// 根据用户名查询数据库中的用户
 		if (t1 == null) {
@@ -1124,6 +1138,16 @@ public class T7CrclController extends BaseController {
 				renderJson(res);
 				return;
 			}
+			// 2019-11-30 朱朝彬，承诺人姓名全拼校验 
+			if (StringTools.isIgnoreEqueal(commimentPinyin, t1.getNmChar())) {
+				LOG.debug("commimentPinyin= " + commimentPinyin + "用户姓名拼音= " + t1.getNmChar() + "承诺人姓名拼音无误.");
+			} else {
+				LOG.error("commimentPinyin= " + commimentPinyin + "用户姓名拼音= " + t1.getNmChar() + "承诺人姓名拼音与用户姓名拼音不一致，无法提交考试成绩.");
+				res = new ResultEntity("0002", "承诺人姓名拼音与用户姓名拼音不一致，无法提交考试成绩!");
+				renderJson(res);
+				return;
+			}
+			
 		}
 
 		T10ExamGrd t10 = new T10ExamGrd();
@@ -1342,7 +1366,7 @@ public class T7CrclController extends BaseController {
 						}
 						// DateFormat类的静态工厂方法
 						System.out.println(format.getInstance().format(date));
-						String srcImg = webContentPath + "\\images_zcb\\certificateTemplate01";
+						String srcImg = webContentPath + "\\images_zcb\\certificateTemplate01.jpg";
 						DateFormat formatYear = new SimpleDateFormat("yyyy");
 						String year = formatYear.format(date);
 						// 生成证书编号
@@ -1352,10 +1376,11 @@ public class T7CrclController extends BaseController {
 						LOG.info("srcImg=" + srcImg);
 						LOG.info("dscImg=" + dscImg);
 						LOG.info("certificatePath=" + certificatePath);
-						waterMark(t1.getNm(), srcImg, dscImg, 511, 1170, 100);
-						waterMark(dataTime+"(yyyy/mm/dd)", dscImg, dscImg, 1405, 1912, 55);
-						waterMark(totalScore.toString(), dscImg, dscImg, 1090, 2027, 55);
-						waterMark(creditNo, dscImg, dscImg, 923, 2114, 55);
+						waterMark(t1.getNm()+"("+StringTools.strConver(t1.getNmChar())+")", srcImg, dscImg, 943, 2007, 180);
+						waterMark(dataTime+"(yyyy/mm/dd)", dscImg, dscImg, 2230, 3407, 120);
+						waterMark(which_competition, dscImg, dscImg, 1995, 3519, 120);
+						waterMark(totalScore.toString(), dscImg, dscImg, 1911, 3619, 120);
+						waterMark(creditNo, dscImg, dscImg, 1655, 3763, 120);
 						LOG.info(totalScore.toString() + t1.getNm() + dataTime);
 						
 						// 记录或者更新证书信息表
@@ -1410,8 +1435,13 @@ public class T7CrclController extends BaseController {
 			// crdt_no_endStr = crdt_no.substring(0, 1)
 			// + crdt_no.substring(crdt_no.length() - 2, crdt_no.length() - 1);
 			// }
-			certificatePath = "\\images_zcb\\certificates\\" + "反兴奋剂教育准入合格证书_" + t1.getNm() + "_" + t1.getUsrid()
-					+ ".jpg";
+			DateFormat formatYear = new SimpleDateFormat("yyyy");
+			String year = formatYear.format(date);
+			// 生成证书编号
+			String creditNo = "02" + year + String.format("%06d", Long.parseLong(t1.getUsrid()));
+//			certificatePath = "\\images_zcb\\certificates\\" + "反兴奋剂教育准入合格证书_" + t1.getNm() + "_" + t1.getUsrid()
+//					+ ".jpg";
+			certificatePath = "\\images_zcb\\certificates\\" + "反兴奋剂教育准入合格证书_" + t1.getNm() + creditNo + ".jpg";
 			String dscImg = webContentPath + certificatePath;
 			LOG.info("srcImg=" + srcImg);
 			LOG.info("dscImg=" + dscImg);
@@ -1420,15 +1450,16 @@ public class T7CrclController extends BaseController {
 			waterMark(t1.getNm(), dscImg, dscImg, 212, 671);
 			waterMark(dataTime, dscImg, dscImg, 212, 731);*/
 			///
-			waterMark(t1.getNm(), srcImg, dscImg, 511, 1170, 100);
-			waterMark(dataTime+"(yyyy/mm/dd)", dscImg, dscImg, 1405, 1912, 55);
-			waterMark(totalScore.toString(), dscImg, dscImg, 1090, 2027, 55);
-
-			DateFormat formatYear = new SimpleDateFormat("yyyy");
-			String year = formatYear.format(date);
-			// 生成证书编号
-			String creditNo = "02" + year + String.format("%06d", Long.parseLong(t1.getUsrid()));
-			waterMark(creditNo, dscImg, dscImg, 923, 2114, 55);
+//			waterMark(t1.getNm(), srcImg, dscImg, 511, 1170, 100);
+//			waterMark(dataTime+"(yyyy/mm/dd)", dscImg, dscImg, 1405, 1912, 55);
+//			waterMark(totalScore.toString(), dscImg, dscImg, 1090, 2027, 55);
+			
+			waterMark(t1.getNm()+"("+StringTools.strConver(t1.getNmChar())+")", srcImg, dscImg, 943, 2007, 180);
+			waterMark(dataTime+"(yyyy/mm/dd)", dscImg, dscImg, 2230, 3407, 120);
+			waterMark(which_competition, dscImg, dscImg, 1995, 3519, 120);
+			waterMark(totalScore.toString(), dscImg, dscImg, 1911, 3619, 120);
+			//waterMark(creditNo, dscImg, dscImg, 923, 2114, 55);
+			waterMark(creditNo, dscImg, dscImg, 1655, 3763, 120);
 			// 记录或者更新证书信息表
 			T17CreditInf t17 = new T17CreditInf();
 			t17.setUsrid(Long.parseLong(t1.getUsrid()));
@@ -1952,8 +1983,9 @@ public class T7CrclController extends BaseController {
 	}
 	
 	void saveCreditInf(T17CreditInf t17) {
-		String sql = "select * from t17_credit_inf t where t.usrid = '" + t17.getUsrid() + "' and t.flag ='" + t17.getFlag()
-				+ "'";
+//		String sql = "select * from t17_credit_inf t where t.usrid = '" + t17.getUsrid() + "' and t.flag ='" + t17.getFlag()
+//				+ "'";
+		String sql = "select * from t17_credit_inf t where t.usrid = '" + t17.getUsrid() + "'";
 		T17CreditInf t17Rlt = T17CreditInf.dao.findFirst(sql);
 		if(null != t17Rlt) {
 			t17Rlt.setFile_path(t17.getFile_path());
