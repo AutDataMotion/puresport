@@ -126,7 +126,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<!-- 							<img src="/images_zcb/certificates/${crdt_no!''}.jpg" -->
 							<img
 								src="${cxt!''}${certificatePath!'/images_zcb/certificates/certificateDefault.jpg'}"
-								id="certificateImgId" class="img-thumbnail" 
+								id="certificateImgId" class="${class!''}" 
 								>
 						</div>
 						<div class="col-md-2 myTest">
@@ -157,8 +157,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</div>
 							<div class="row">
 								<div align="left">
-									<button
-										onclick="window.location.href='/jf/puresport/t7Crcl/study_notify_1'"
+								<!-- onclick="window.location.href='/jf/puresport/t7Crcl/study_notify_1'" -->
+									<button									
+										onclick="window.location.href='/jf/puresport/pagesController/zhunru_index'" 											
 										class="btn">重新学习</button> 
 <!-- 									<button
 										onclick="window.location.href='/jf/puresport/t7Crcl/generteTest'"
@@ -200,5 +201,19 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<!-- end footer -->
 	<input type="hidden" id="examid" value="${examid!'-1'}">
 	</input>
+	
+<!-- 	<object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" width="100%" height="100%" border="0">IE 
+      <param name="_Version" value="65539"> 
+      <param name="_ExtentX" value="20108"> 
+      <param name="_ExtentY" value="10866"> 
+      <param name="_StockProps" value="0"> 
+      <param name="SRC" value="${cxt!}/materials/pdf/test.pdf"> 
+<embed src="${cxt!}/materials/pdf/test.pdf" width="100%" height="800" href="${cxt!}/materials/pdf/test.pdf"></embed>FF 
+</object>
+
+<object classid="clsid:CA8A9780-280D-11CF-A24D-444553540000" width="800" height="600" border="0"><param name="src" value="${cxt!}/materialspdf/test.pdf"> </object>
+ -->
+<a href="${cxt!}/pdf/web/viewer.html?file=${cxt!}/materials/pdf/test.pdf">Open</a>
+
 </body>
 </html>
