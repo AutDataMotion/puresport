@@ -28,8 +28,6 @@ $(function() {
 		laydate.render({ 
 			  elem: '#brth_dt'
 			,format: 'yyyy/MM/dd'
-			,min: '1960/1/1'
-			,max: '2030/1/1'
 			});
 		
         setProvinceAjax();

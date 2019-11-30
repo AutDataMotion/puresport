@@ -279,27 +279,30 @@ public class T1usrBscController extends BaseController {
 			Boolean needValSptPrj = StringUtils.isBlank(sptPrj);
 			Boolean needValDepart = StringUtils.isBlank((String)item.getDepartment()) || StringUtils.isBlank(item.getPost());
 			belongToInstitute = StringUtils.isNotBlank((String)item.getInstitute()); 
+			Boolean needValNmChar = StringUtils.isBlank((String)item.getNmChar());
 			
 			json.put("belongToInstitute", belongToInstitute);
 			json.put("needValEmail", needValEmail);
 			json.put("needValPhone", needValPhone);
 			json.put("needValSptPrj", needValSptPrj);
 			json.put("needValDepart", needValDepart);
+			json.put("needValNmChar", needValNmChar);
 
 			setSessionAttr("belongToInstitute", belongToInstitute);
 			setSessionAttr("needValEmail", needValEmail);
 			setSessionAttr("needValPhone", needValPhone);
 			setSessionAttr("needValSptPrj", needValSptPrj);
 			setSessionAttr("needValDepart", needValDepart);
+			setSessionAttr("needValNmChar", needValNmChar);
 
 			if (userType.equals("运动员"))// 运动员表 这个字段的初始值为运动员！
 			{
-				needImproveInfoOrNot = needValSptPrj || needValPhone;
+				needImproveInfoOrNot = needValSptPrj || needValPhone||needValNmChar;
 			} else {
 				if (belongToInstitute) {
-					needImproveInfoOrNot = needValSptPrj || needValPhone|| needValDepart;
+					needImproveInfoOrNot = needValSptPrj || needValPhone||needValNmChar|| needValDepart;
 				} else {
-					needImproveInfoOrNot = needValPhone|| needValDepart;
+					needImproveInfoOrNot = needValPhone|| needValNmChar|| needValDepart;
 				}
 			}
 
@@ -510,12 +513,12 @@ public class T1usrBscController extends BaseController {
 			return;
 		}
 		
-		T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", userID);// 根据用户名查询数据库中的用户
+		T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=? limit 1", userID);// 根据用户名查询数据库中的用户
 		if (item != null) {
 			if (usertype.equals("运动员"))// 运动员
 			{
 //				Boolean needValEmail = (Boolean) getSessionAttr("needValEmail");
-				Boolean needValPhone = (Boolean) getSessionAttr("needValPhone");
+				
 				StringBuilder sqlUpdate = new StringBuilder("update t1_usr_bsc set usr_tp=?");
 				List<Object> argList = new LinkedList<Object>();
 				argList.add(usertype);
@@ -541,7 +544,7 @@ public class T1usrBscController extends BaseController {
 //					argList.add(1);
 //					haveUpdate = true;
 //				}
-
+				Boolean needValPhone = (Boolean) getSessionAttr("needValPhone");
 				if (needValPhone != null && needValPhone == Boolean.TRUE) {
 					String phone = getPara("phone");
 					String mblphValCode = getPara("mblphValCode");
@@ -574,6 +577,18 @@ public class T1usrBscController extends BaseController {
 					haveUpdate = true;
 				}
 				
+				Boolean needValNmChar = (Boolean) getSessionAttr("needValNmChar");
+				if (needValNmChar != null && needValNmChar == Boolean.TRUE) {
+					String nmChar = getPara("nmChar");
+					if (StringUtils.isBlank(nmChar) || nmChar.length() > 60) {
+						renderJson(CommFun.resJsonFail("姓名拼音为空或格式不正确"));
+						return;
+					}
+					sqlUpdate.append(", nm_char = ? ");
+					argList.add(nmChar);
+					haveUpdate = true;
+				}
+				
 				if (!haveUpdate) {
 					renderText("!haveUpdate");
 					return;
@@ -588,13 +603,13 @@ public class T1usrBscController extends BaseController {
 					setSessionAttr("usr_tp", usertype);
 				}
 			} else {// 辅助人员
-				Boolean needValPhone = (Boolean) getSessionAttr("needValPhone");
+				
 				StringBuilder sqlUpdate = new StringBuilder("update t1_usr_bsc set usr_tp=?");
 				List<Object> argList = new LinkedList<Object>();
 				argList.add(usertype);
 
 				boolean haveUpdate = false;
-				
+				Boolean needValPhone = (Boolean) getSessionAttr("needValPhone");
 				if (needValPhone != null && needValPhone == Boolean.TRUE) {
 					String phone = getPara("phone");
 					String mblphValCode = getPara("mblphValCode");
@@ -627,6 +642,18 @@ public class T1usrBscController extends BaseController {
 						argList.add(sptPrj);
 						haveUpdate = true;
 					} 
+				}
+				
+				Boolean needValNmChar = (Boolean) getSessionAttr("needValNmChar");
+				if (needValNmChar != null && needValNmChar == Boolean.TRUE) {
+					String nmChar = getPara("nmChar");
+					if (StringUtils.isBlank(nmChar) || nmChar.length() > 60) {
+						renderJson(CommFun.resJsonFail("姓名拼音为空或格式不正确"));
+						return;
+					}
+					sqlUpdate.append(", nm_char = ? ");
+					argList.add(nmChar);
+					haveUpdate = true;
 				}
 				
 				Boolean needValDepart = (Boolean) getSessionAttr("needValDepart");

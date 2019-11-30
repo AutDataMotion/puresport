@@ -22,6 +22,11 @@ function userImproveFormExchange(data){
 	if (data.needValPhone) {
 		$('#divValPhone').show();
 	}
+	
+	if (data.needValNmChar) {
+		$('#divNmChar').show();
+	}
+	
 //	if (data.needValEmail) {
 //		login_needValEmail = true;
 //		$('#divValEmail').show();
@@ -96,6 +101,12 @@ function user_login() {
 					
 					$("#userLoginPanel_1").toggle();
 					$("#userLoginPanel_2").toggle();
+					
+					// header的下拉框调整
+					$("#divDropMenu-login").hide();
+					$("#divDropMenu-regist").hide();
+					$("#divDropMenu-center").show();
+					$("#divDropMenu-logout").show();
 
 					userImproveInitData = data;
 					
@@ -219,6 +230,24 @@ function Improve_user_info() {
 		layui.layer.msg("请选择一种人员类型！");
 		return ;
 	}
+	var nmChar = $('#form-nm_char').val().trim();
+	if(userImproveInitData.needValNmChar){
+		if(!nmChar){
+			layui.layer.msg("姓名拼音不能为空！");
+			return ;
+		}
+		var tokens = nmChar.trim().split(" ");
+		if(tokens.length == 2){
+		  if((!/^[a-zA-Z]+$/.test(tokens[0])) || (!/^[a-zA-Z]+$/.test(tokens[1]))){
+			  layui.layer.msg("姓名拼音都需要为字母");
+			  return ;
+		  }
+		}else {
+			layui.layer.msg("姓和名的拼音 中间需有一个空格，名的拼音无空格");
+			return ;
+		}
+	}
+	
 	var phone = $('#mblph_no').val().trim();
 	var mblphValCode = $('#mblphValCode').val().trim();
 	
@@ -265,6 +294,7 @@ function Improve_user_info() {
 			phone : phone,
 			mblphValCode : mblphValCode,
 			sptPrj:sptPrj,
+			nmChar:nmChar,
 		};
 
 	} else {// 辅助人员
@@ -295,7 +325,8 @@ function Improve_user_info() {
 				mblphValCode : mblphValCode,
 				sptPrj:sptPrj,
 				company : company,
-				position : position
+				position : position,
+				nmChar:nmChar,
 			};
 	}
 	

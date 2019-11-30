@@ -64,18 +64,24 @@
 										<img src="${cxt!}/images/loginbtn.png" class="img-responsive">
 									</a>
 									<ul class="dropdown-menu" id="selfcenterbtn_id">
-									
-										
+										<li id='divDropMenu-login'><a href='${cxt!}/jf/puresport/pagesController/login'>登录</a></li>
+										<li id='divDropMenu-regist'><a href='${cxt!}/jf/puresport/pagesController/regist'>注册</a></li>
+										<li id='divDropMenu-center'><a href='${cxt!}/jf/puresport/pagesController/selfcenter'>个人中心</a></li>
+										<li id='divDropMenu-logout'><a href='${cxt!}/jf/puresport/pagesController/loginout'>注销</a></li>
 										<script>
 										var usrid ='${session["usrid"]}';
 										if(usrid)//已登陆
 										{
-											$("#selfcenterbtn_id").html("<li><a href='${cxt!}/jf/puresport/pagesController/selfcenter'>个人中心</a></li>"
-											+"<li><a href='${cxt!}/jf/puresport/pagesController/loginout'>注销</a></li>");
+											$("#divDropMenu-login").hide();
+											$("#divDropMenu-regist").hide();
+											$("#divDropMenu-center").show();
+											$("#divDropMenu-logout").show();
 										}
 										else{
-											$("#selfcenterbtn_id").append("<li><a href='${cxt!}/jf/puresport/pagesController/login'>登录</a></li>");
-											$("#selfcenterbtn_id").append("<li><a href='${cxt!}/jf/puresport/pagesController/regist'>注册</a></li>");
+											$("#divDropMenu-login").show();
+											$("#divDropMenu-regist").show();
+											$("#divDropMenu-center").hide();
+											$("#divDropMenu-logout").hide();
 										}
 										</script>
 										
@@ -131,36 +137,6 @@
 				           
 				        	</ul>
 						</div>
-						<!-- div>
-							<ul class="menu_right nav navbar-nav">
-				           
-								<li id = "menu_search"><a class="header_bg2_ul_li_a" href="#"><img src="${cxt!}/images/searchbtn.png" class="img-responsive"></a></li>
-								<li id = "menu_about"><a class="header_bg2_ul_li_a" href="${cxt!}/jf/puresport/pagesController/about"><img src="${cxt!}/images/aboutbtn.png" class="img-responsive"></a></li>
-					            <li class="dropdown selfcenterbtn">
-					            
-									<a class="dropdown-toggle header_bg2_ul_li_a" data-toggle="dropdown">
-										<img src="${cxt!}/images/loginbtn.png" class="img-responsive">
-									</a>
-									<ul class="dropdown-menu" id="selfcenterbtn_id">
-									
-										
-										<script>
-										var usrid ='${session["usrid"]}';
-										if(usrid)//已登陆
-										{
-											$("#selfcenterbtn_id").html("<li><a href='${cxt!}/jf/puresport/pagesController/selfcenter'>个人中心</a></li>"
-											+"<li><a href='${cxt!}/jf/puresport/pagesController/loginout'>注销</a></li>");
-										}
-										else{
-											$("#selfcenterbtn_id").html("<li><a href='${cxt!}/jf/puresport/pagesController/login'>登录</a></li>");
-										}
-										</script>
-										
-									</ul>
-								</li>
-				        	</ul>
-						</div-->
-					
 				</div>
 			</div>
 		    
