@@ -198,13 +198,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		}
 		// 承诺人姓名		
 		var commimentNm = document.getElementById("commimentNm").value;
-		// 承诺人姓名全拼	
-		var commimentPinyin = document.getElementById("commimentPinyin").value;
-
-/* 		if (commimentNm == "") {
+ 		if (commimentNm == "") {
 			$('#tip3Modal').modal('show');
 			return;
-		} */
+		}
+		// 承诺人姓名全拼	
+		var commimentPinyin = document.getElementById("commimentPinyin").value;
+ 		if (commimentPinyin == "") {
+			$('#tip3Modal').modal('show');
+			return;
+		}
+
 		var url;
 		url = '/jf/puresport/t7Crcl/submitExam';
 		var examid = document.getElementById("examid").value;
@@ -705,7 +709,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<div class="modal-body" align="center">对不起，必须填写承诺书姓名，请确认！</div>
+					<div class="modal-body" align="center">对不起，必须填写承诺书姓名及拼音，请确认！</div>
 					<div class="modal-footer" align="center">
 						<button type="button" class="btn" data-dismiss="modal">确定</button>
 					</div>

@@ -123,6 +123,8 @@ public class T7Crcl extends BaseModel<T7Crcl> {
 	private String category;
 	
 	// 课程禁用
+	private String courseDisabled_a;
+	// 课程禁用
 	private String courseDisabled;
 	// 课程链接提示
 	private String courseTitle;
@@ -133,6 +135,8 @@ public class T7Crcl extends BaseModel<T7Crcl> {
 	// 课程URL
 	private String courseUrl;
 	
+	// 测试禁用
+	private String testDisabled_a;
 	// 测试禁用
 	private String testDisabled;
 	// 测试链接提示
@@ -149,6 +153,18 @@ public class T7Crcl extends BaseModel<T7Crcl> {
 	// 测试情况描述
 	private String testRltDesc;
 	
+	public String getCourseDisabled_a() {
+		return courseDisabled_a;
+	}
+	public void setCourseDisabled_a(String courseDisabled_a) {
+		this.courseDisabled_a = courseDisabled_a;
+	}
+	public String getTestDisabled_a() {
+		return testDisabled_a;
+	}
+	public void setTestDisabled_a(String testDisabled_a) {
+		this.testDisabled_a = testDisabled_a;
+	}
 	public String getCourseColor() {
 		return courseColor;
 	}

@@ -188,7 +188,8 @@ public class T7CrclController extends BaseController {
 			if (examedNum > 0 && examedNum < 3) {
 				String testRltDesc = "您已考试" + examedNum + "次，取得学分:" + hightestScore + "分！";
 				t7.setTestRltDesc(testRltDesc);
-				t7.setTestDisabled("");
+				t7.setTestDisabled_a("");
+				t7.setTestDisabled("none");
 				t7.setTestColor(canDoColor);
 				t7.setTestLockIcon("fa fa-unlock");
 				t7.setTestTitle("重新考试");
@@ -197,7 +198,8 @@ public class T7CrclController extends BaseController {
 			} else if (examedNum >= 3) {
 				String testRltDesc = "您已考试" + examedNum + "次，次数达上限。取得学分:" + hightestScore + "分！";
 				t7.setTestRltDesc(testRltDesc);
-				t7.setTestDisabled("disabled=\"disabled\"");
+				t7.setTestDisabled_a("none");
+				t7.setTestDisabled("");
 				t7.setTestColor(forbiddenColor);
 				t7.setTestLockIcon("fa fa-ban");
 				t7.setTestTitle("无法再考");
@@ -207,12 +209,14 @@ public class T7CrclController extends BaseController {
 				String testRltDesc = "您尚未参加考试！";
 				t7.setTestRltDesc(testRltDesc);
 				if (Integer.parseInt(t7.getCategory()) == unLockCatagory) {
-					t7.setTestDisabled("");
+					t7.setTestDisabled_a("");
+					t7.setTestDisabled("none");
 					t7.setTestColor(canDoColor);
 					t7.setTestLockIcon("fa fa-unlock");
 					t7.setTestTitle("点击进入考试");
 				} else if (Integer.parseInt(t7.getCategory()) > unLockCatagory) {
-					t7.setTestDisabled("disabled=\"disabled\"");
+					t7.setTestDisabled_a("none");
+					t7.setTestDisabled("");
 					t7.setTestColor(lockColor);
 					t7.setTestLockIcon("fa fa-lock");
 					t7.setTestTitle("尚未解锁");
@@ -223,14 +227,16 @@ public class T7CrclController extends BaseController {
 
 			// 设置课程
 			if (Integer.parseInt(t7.getCategory()) <= unLockCatagory) {
-				t7.setCourseDisabled("");
+				t7.setCourseDisabled_a("");
+				t7.setCourseDisabled("none");
 				t7.setCourseColor(canDoColor);
 				t7.setCourseLockIcon("fa fa-unlock");
 				t7.setCourseTitle("点击进入该课程学习");
 				t7.setCourseUrl("/course/scormcontent/index.html");
 			} else {
 				// 未解锁
-				t7.setCourseDisabled("disabled=\"disabled\"");
+				t7.setCourseDisabled_a("none");
+				t7.setCourseDisabled("");
 				t7.setCourseColor(lockColor);
 				t7.setCourseLockIcon("fa fa-lock");
 				t7.setCourseTitle("该课程尚未解锁，请顺序参加先修课程学习并考试!");
@@ -1378,10 +1384,11 @@ public class T7CrclController extends BaseController {
 						LOG.info("certificatePath=" + certificatePath);
 						LOG.info("证书姓名"+ t1.getNm()+"("+StringTools.strConver(t1.getNmChar().toString().toLowerCase())+")");
 						waterMark(t1.getNm()+"("+StringTools.strConver(t1.getNmChar().toString().toLowerCase())+")", srcImg, dscImg, 943, 2007, 180);
-						waterMark(dataTime+"(yyyy/mm/dd)", dscImg, dscImg, 2230, 3407, 120);
-						waterMark(which_competition, dscImg, dscImg, 1995, 3519, 120);
-						waterMark(totalScore.toString(), dscImg, dscImg, 1911, 3619, 120);
-						waterMark(creditNo, dscImg, dscImg, 1655, 3763, 120);
+						waterMark(dataTime+"(yyyy/mm/dd)", dscImg, dscImg, 2230, 3407, 100);
+						waterMark(which_competition, dscImg, dscImg, 1995, 3519, 100);
+						waterMark(totalScore.toString(), dscImg, dscImg, 1911, 3631, 100);
+						//waterMark(creditNo, dscImg, dscImg, 923, 2114, 55);
+						waterMark(creditNo, dscImg, dscImg, 1655, 3770, 100);
 						LOG.info(totalScore.toString() + t1.getNm() + dataTime);
 						
 						// 记录或者更新证书信息表
@@ -1455,12 +1462,12 @@ public class T7CrclController extends BaseController {
 //			waterMark(dataTime+"(yyyy/mm/dd)", dscImg, dscImg, 1405, 1912, 55);
 //			waterMark(totalScore.toString(), dscImg, dscImg, 1090, 2027, 55);
 			
-			waterMark(t1.getNm()+"("+StringTools.strConver(t1.getNmChar())+")", srcImg, dscImg, 943, 2007, 180);
-			waterMark(dataTime+"(yyyy/mm/dd)", dscImg, dscImg, 2230, 3407, 120);
-			waterMark(which_competition, dscImg, dscImg, 1995, 3519, 120);
-			waterMark(totalScore.toString(), dscImg, dscImg, 1911, 3619, 120);
+			waterMark(t1.getNm()+"("+StringTools.strConver(t1.getNmChar().toString().toLowerCase())+")", srcImg, dscImg, 943, 2007, 180);
+			waterMark(dataTime+"(yyyy/mm/dd)", dscImg, dscImg, 2230, 3407, 100);
+			waterMark(which_competition, dscImg, dscImg, 1995, 3519, 100);
+			waterMark(totalScore.toString(), dscImg, dscImg, 1911, 3631, 100);
 			//waterMark(creditNo, dscImg, dscImg, 923, 2114, 55);
-			waterMark(creditNo, dscImg, dscImg, 1655, 3763, 120);
+			waterMark(creditNo, dscImg, dscImg, 1655, 3770, 100);
 			// 记录或者更新证书信息表
 			T17CreditInf t17 = new T17CreditInf();
 			t17.setUsrid(Long.parseLong(t1.getUsrid()));

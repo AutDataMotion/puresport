@@ -203,7 +203,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		}
 		// 承诺人姓名全拼	
 		var commimentPinyin = document.getElementById("commimentPinyin").value;
-		
+		if (commimentPinyin == "") {
+			$('#tip3Modal').modal('show');
+			return;
+		}
 		var url;
 		url = '/jf/puresport/t7Crcl/submitExam';
 		var examid = document.getElementById("examid").value;
@@ -556,7 +559,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<%for(x in examSelectList){ %>
 				<div>
 					<label>【多项选择】 </label> </br> <label>第${x.prblmno!''}题：
-						${x.ttl!''} <!-- &nbsp${x.prblm_aswr!''} --></label> </br> <label for=${x.prblmid!
+						${x.ttl!''}  &nbsp${x.prblm_aswr!''} </label> </br> <label for=${x.prblmid!
 						''}A class="prblSelect" style="font-weight: lighter"> <input
 						type="checkbox" name=${x.prblmno! ''} value=A id=${x.prblmid! ''}A>
 						${x.optA!}
@@ -592,7 +595,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<%}%> <%for(y in examDeducList){ %>
 				<div>
 					<label>【判断题】 </label> </br> <label> 第${y.prblmno!''}题：
-						${y.ttl!''} <!-- &nbsp${y.prblm_aswr!''} --></label> </br> </br> <label for=${y.prblmid!
+						${y.ttl!''}  &nbsp${y.prblm_aswr!''} </label> </br> </br> <label for=${y.prblmid!
 						''}A class="prblSelect" style="font-weight: lighter"> <input
 						type="radio" name=${y.prblmno! ''} value=A id=${y.prblmid! ''}A>
 						正 确<!-- ${y.prblmid!} -->
@@ -698,7 +701,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							<span aria-hidden="true">&times;</span>
 						</button>
 					</div>
-					<div class="modal-body" align="center">对不起，必须填写承诺书姓名，请确认！</div>
+					<div class="modal-body" align="center">对不起，必须填写承诺书姓名及姓名拼音，请确认！</div>
 					<div class="modal-footer" align="center">
 						<button type="button" class="btn" data-dismiss="modal">确定</button>
 					</div>
