@@ -3,13 +3,13 @@ package puresport.mvc.t7crcl;
 import org.apache.commons.lang3.StringUtils;
 
 public class StringTools {
-/*	public static void main(String[] args) {
+	public static void main(String[] args) {
 
 		// 方法2
-		String str = "this is a test of java";
+		String str = "liu jianguo";
 		
 		System.out.println(strConver(str));
-	}*/
+	}
 // 将字符串中单词首字母转换成大写	
 	public static String strConver(String str) {
 		String[] s = str.split(" ");

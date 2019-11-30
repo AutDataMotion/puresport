@@ -1376,7 +1376,8 @@ public class T7CrclController extends BaseController {
 						LOG.info("srcImg=" + srcImg);
 						LOG.info("dscImg=" + dscImg);
 						LOG.info("certificatePath=" + certificatePath);
-						waterMark(t1.getNm()+"("+StringTools.strConver(t1.getNmChar())+")", srcImg, dscImg, 943, 2007, 180);
+						LOG.info("证书姓名"+ t1.getNm()+"("+StringTools.strConver(t1.getNmChar().toString().toLowerCase())+")");
+						waterMark(t1.getNm()+"("+StringTools.strConver(t1.getNmChar().toString().toLowerCase())+")", srcImg, dscImg, 943, 2007, 180);
 						waterMark(dataTime+"(yyyy/mm/dd)", dscImg, dscImg, 2230, 3407, 120);
 						waterMark(which_competition, dscImg, dscImg, 1995, 3519, 120);
 						waterMark(totalScore.toString(), dscImg, dscImg, 1911, 3619, 120);
