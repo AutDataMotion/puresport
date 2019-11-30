@@ -61,6 +61,7 @@ public class T1userBscDTO implements Serializable{
 		if (null == t1usrBsc) {
 			return;
 		}
+		usr_tp = t1usrBsc.getUsr_tp();
 		nm = t1usrBsc.getNm();
 		crdt_no = t1usrBsc.getCrdt_no();
 		gnd = t1usrBsc.getGnd();
@@ -69,10 +70,14 @@ public class T1userBscDTO implements Serializable{
 		city = t1usrBsc.getCity();
 		mblph_no = t1usrBsc.getMblph_no();
 		email = t1usrBsc.getEmail();
-		spt_prj = t1usrBsc.getSpt_prj();
-		typeleve = EnumTypeLevel.toTypeLevel(t1usrBsc.getTypelevel()
-				, t1usrBsc.getLevelinstitute(), t1usrBsc.getLevelprovince(), t1usrBsc.getLevelcity());
-		
+		if (EnumRoleType.Sporter.getName().equals(usr_tp)) {
+			spt_prj = t1usrBsc.getSpt_prj();
+			typeleve = EnumTypeLevel.toTypeLevel(t1usrBsc.getTypelevel()
+					, t1usrBsc.getLevelinstitute(), t1usrBsc.getLevelprovince(), t1usrBsc.getLevelcity());
+		} else {
+			department = t1usrBsc.getDepartment();
+			post = t1usrBsc.getPost();
+		}
 	}
 
 	public boolean validate(AuthCodeMdl authCodeMdlPhone, AuthCodeMdl authCodeMdlEmail) {
@@ -135,7 +140,7 @@ public class T1userBscDTO implements Serializable{
 			return false;
 		}
 		
-		if (usr_tp.equals(EnumRoleType.Sporter.getName())) {
+		if (EnumRoleType.Sporter.getName().equals(usr_tp)) {
 			if (ComUtil.haveEmpty(spt_prj, typeleve)) {
 				addTip("spt_prj, typeleve empty");
 				return false;
@@ -154,7 +159,11 @@ public class T1userBscDTO implements Serializable{
 	
 	public boolean validateForUpdate(AuthCodeMdl authCodeMdlPhone, AuthCodeMdl authCodeMdlEmail) {
 		
-		if (ComUtil.haveEmpty(nm, crdt_no, gnd, brth_dt, province, city,spt_prj, mblph_no, email, typeleve)) {
+		if(!validateSporterAndAssistor()) {
+			return false;
+		}
+		
+		if (ComUtil.haveEmpty(nm, crdt_no, gnd, brth_dt, province, city, mblph_no, email)) {
 			addTip("have empty");
 			return false;
 		}

@@ -24,6 +24,8 @@ $(function() {
 	
 		var layer = layui.layer, form = layui.form, laydate=layui.laydate;
 
+		var curUsrType = '运动员';
+		
 		// ========init
 		laydate.render({ 
 			  elem: '#brth_dt'
@@ -52,7 +54,8 @@ $(function() {
                 	
                     // 表单赋值
                 	form.val('athleteForm', {
-                        "nm": res.nm
+                		"usr_tp":res.usr_tp
+                        ,"nm": res.nm
                         ,"crdt_no": res.crdt_no
                         ,"gnd": res.gnd
                         ,"brth_dt": res.brth_dt
@@ -62,13 +65,25 @@ $(function() {
                         ,"typeleve": res.typeleve
                         ,"mblph_no": res.mblph_no
                         , "email":res.email
+                        , "department":res.department
+                        , "post":res.post
                       });
+                	
+                	curUsrType = res.usr_tp;
+                	
+                	if(res.usr_tp == '运动员'){
+      				  $('#divSportor').show();
+      				  $('#divAssistor').hide();
+      			  	} else {
+      				  $('#divAssistor').show();
+      				  $('#divSportor').hide();
+      			  	}
+                	
                 },
                 error:function(){
                 	layer.msg(tipFail);
                 }
             });
-        	
           
         });
         
@@ -76,6 +91,25 @@ $(function() {
             setCityAjax(data.value);
            
         });
+		
+		
+		form.on('radio(filter_usr_tp)', function(data){
+			  console.log(data.value); //被点击的radio的value值
+			  var usrType = data.value;
+			  if(curUsrType == usrType){
+				  return ;
+			  }
+			  curUsrType = usrType;
+			  
+			  if(curUsrType == '运动员'){
+				  $('#divSportor').show();
+				  $('#divAssistor').hide();
+			  } else {
+				  $('#divAssistor').show();
+				  $('#divSportor').hide();
+			  }
+			  
+		});  
 		
 		function btnSetDisable(domObj, disabled, text){
 			if(disabled===true){
@@ -120,6 +154,30 @@ $(function() {
 		});
 		
 		form.on('submit(btn-submit-update)', function(data){
+			
+			if(data.field.usr_tp=='运动员'){
+				
+				if(!data.field.spt_prj || data.field.spt_prj == '请选择项目' || data.field.spt_prj == ''){
+					layer.msg('项目不能为空');
+					return false;
+				}
+				if(!data.field.typeleve){
+					layer.msg('级别不能为空');
+					return false;
+				}
+				
+			} else {
+				
+				if(!data.field.department || data.field.department.trim() == ''){
+					layer.msg('工作单位不能为空');
+					return false;
+				}
+				if(!data.field.post || data.field.post.trim() == ''){
+					layer.msg('职务不能为空');
+					return false;
+				}
+			}
+
 			var jsonStr = JSON.stringify(data.field);
 		    user_update(jsonStr);
 		    return false;

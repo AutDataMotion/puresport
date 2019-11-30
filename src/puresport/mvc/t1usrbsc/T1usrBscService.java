@@ -628,6 +628,9 @@ public class T1usrBscService extends BaseService {
 	
 	private void resolveLevel(T1usrBsc userBsc,  String typeLevel){
 
+		if (StringUtils.isBlank(typeLevel)) {
+			return;
+		}
 		if (typeLevel.equals(EnumTypeLevel.Country.getName())) {
 			userBsc.setTypelevel(EnumStatus.LevelShow.getIdStr()); 
 			
@@ -645,9 +648,7 @@ public class T1usrBscService extends BaseService {
 			userBsc.setTypelevel(EnumStatus.LevelView.getIdStr());
 			userBsc.setLevelinstitute(EnumStatus.LevelShow.getId());
 		}
-		else {
-			userBsc.setLevelinstitute(EnumStatus.LevelUnknown.getId());
-		}
+		
 	}
 	
 	public boolean addUserBsc(T1userBscDTO dto) {
@@ -722,10 +723,7 @@ public class T1usrBscService extends BaseService {
 			userBsc.setCity(dto.getCity());
 			hasChange = true;
 		}
-		if (!dto.getSpt_prj().equals(userBsc.spt_prj)) {
-			userBsc.setSpt_prj(dto.getSpt_prj());
-			hasChange = true;
-		}
+
 		if (!dto.getEmail().equals(userBsc.email)) {
 			userBsc.setEmail(dto.getEmail());
 			hasChange = true;
@@ -735,11 +733,18 @@ public class T1usrBscService extends BaseService {
 			hasChange = true;
 		}
 		
-		if (!hasChange) {
-			return true;
+		userBsc.setUsr_tp(dto.getUsr_tp());
+		
+		if (EnumRoleType.Sporter.getName().equals(dto.getUsr_tp())) {
+			userBsc.setSpt_prj(dto.getSpt_prj());
+			resolveLevel(userBsc, dto.getTypeleve());
+			
+		} else {
+			userBsc.setDepartment(dto.getDepartment());
+			userBsc.setPost(dto.getPost());
 		}
 		
-		resolveLevel(userBsc, dto.getTypeleve());
+		
 		return userBsc.update();
 
 	}
