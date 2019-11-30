@@ -1451,7 +1451,7 @@ public class T7CrclController extends BaseController {
 //					+ ".jpg";
 			certificatePath = "\\images_zcb\\certificates\\" + "反兴奋剂教育准入合格证书_" + t1.getNm() + creditNo + ".jpg";
 			String dscImg = webContentPath + certificatePath;
-			LOG.info("srcImg=" + srcImg);
+			LOG.info("srcImg=" + srcImg); 
 			LOG.info("dscImg=" + dscImg);
 			LOG.info("certificatePath=" + certificatePath);
 /*			waterMark(totalScore.toString(), srcImg, dscImg, 212, 616);
