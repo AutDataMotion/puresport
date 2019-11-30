@@ -120,8 +120,6 @@ public class ResTips implements Serializable{
 		return fieldErrors;
 	}
 
-
-
 	/**
 	 * @param fieldErrors the fieldErrors to set
 	 */

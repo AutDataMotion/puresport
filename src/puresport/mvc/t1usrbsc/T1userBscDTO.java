@@ -30,6 +30,7 @@ public class T1userBscDTO implements Serializable{
 	private String usr_tp;
 	private String usr_nm;
 	private String nm;
+	private String nm_char;
 	private String crdt_tp;
 	private String spt_prj;
 	private String crdt_no;
@@ -63,6 +64,7 @@ public class T1userBscDTO implements Serializable{
 		}
 		usr_tp = t1usrBsc.getUsr_tp();
 		nm = t1usrBsc.getNm();
+		nm_char = t1usrBsc.getNmChar();
 		crdt_no = t1usrBsc.getCrdt_no();
 		gnd = t1usrBsc.getGnd();
 		brth_dt = t1usrBsc.getBrth_dt();
@@ -115,7 +117,7 @@ public class T1userBscDTO implements Serializable{
 			return false;
 		}
 		
-		if (ComUtil.haveEmpty(nm, crdt_no, gnd, brth_dt, province, city, mblph_no,mblphValCode, passwd)) {
+		if (ComUtil.haveEmpty(nm, nm_char, crdt_no, gnd, brth_dt, province, city, mblph_no,mblphValCode, passwd)) {
 			addTip("have empty");
 			return false;
 		}
@@ -163,7 +165,7 @@ public class T1userBscDTO implements Serializable{
 			return false;
 		}
 		
-		if (ComUtil.haveEmpty(nm, crdt_no, gnd, brth_dt, province, city, mblph_no, email)) {
+		if (ComUtil.haveEmpty(nm,nm_char, crdt_no, gnd, brth_dt, province, city, mblph_no, email)) {
 			addTip("have empty");
 			return false;
 		}
@@ -187,7 +189,14 @@ public class T1userBscDTO implements Serializable{
 		return true;
 	}
 	
-	
+	public String getNm_char() {
+		return nm_char;
+	}
+
+	public void setNm_char(String nm_char) {
+		this.nm_char = nm_char;
+	}
+
 	public String getDepartment() {
 		return department;
 	}

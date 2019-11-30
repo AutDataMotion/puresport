@@ -407,17 +407,25 @@ function Tips(contentid, content) {
 }
 
 function sendUserAuthCode(){
+	var id = $("#form-id_user_forPwdBack").val().trim();
 	var account = $("#form-email_user_forPwdBack").val().trim();
-	sendAuthCode(account, '01');
+	sendAuthCode(id, account, '01');
 }
 
 function sendAdminAuthCode(){
+	var id = $("#form-id_admin_forPwdBack").val().trim();
 	var account = $("#form-email_admin_forpwdback").val().trim();
-	sendAuthCode(account, '02');
+	sendAuthCode(id, account, '02');
 }
 
-function sendAuthCode(account, userOradmin) {
+function sendAuthCode(id, account, userOradmin) {
 	console.log("sendAuthCode account", account);
+	
+	if(!id || id==''){
+		loginAlert( "请您先输入身份证号！");
+		return;
+	}
+	
 	if(!account || account==''){
 		loginAlert( "手机/邮箱不能为空！");
 		return;
@@ -427,16 +435,17 @@ function sendAuthCode(account, userOradmin) {
 		loginAlert("手机/邮箱格式不正确！");
 		return ;
 	} 
-	sendConfirmcode2Email(account, userOradmin);
+	sendConfirmcode2Email(id, account, userOradmin);
 	
 }
 
-function sendConfirmcode2Email(account, userOradmin) {
+function sendConfirmcode2Email(id, account, userOradmin) {
 	$.ajax({
 		url : '/jf/puresport/pagesController/ForgetPwd_getConfirmcodeByEmail',
 		type : 'POST', // GET
 		async : true, // 或false,是否异步
 		data : {
+			id:id,
 			account : account,
 			userOradmin : userOradmin
 		},
@@ -459,31 +468,33 @@ function sendConfirmcode2Email(account, userOradmin) {
 
 function forgetpwd_getpwdByEmail(userOradmin) {
 	// alert(userOradmin);
+	var id = '';
 	var account = '';
 	var confrimcode = '';
 	var newPwd = '';
 	var newPwd_confirm = '';
 	if (userOradmin == '01')// 运动及辅助人员
 	{
-		account = $("#form-email_user_forPwdBack").val();
-		confrimcode = $('#form-email_user_confirmCode').val();
-		newPwd = $('#form_user_newPwd_forPwdBack').val();
-		newPwd_confirm = $('#form_user_newPwd_confirm_forPwdBack').val();
+		id = $("#form-id_user_forPwdBack").val().trim();
+		account = $("#form-email_user_forPwdBack").val().trim();
+		confrimcode = $('#form-email_user_confirmCode').val().trim();
+		newPwd = $('#form_user_newPwd_forPwdBack').val().trim();
+		newPwd_confirm = $('#form_user_newPwd_confirm_forPwdBack').val().trim();
 	} else {// 管理员
-		account = $("#form-email_admin_forpwdback").val();
-		confrimcode = $('#form-email_admin_confirmcode_forpwaback').val();
-		newPwd = $('#form-admin_newpwd_forpwdback').val();
-		newPwd_confirm = $('#form-admin_confirmcode_forpwdback').val();
+		id = $("#form-id_admin_forPwdBack").val().trim();
+		account = $("#form-email_admin_forpwdback").val().trim();
+		confrimcode = $('#form-email_admin_confirmcode_forpwaback').val().trim();
+		newPwd = $('#form-admin_newpwd_forpwdback').val().trim();
+		newPwd_confirm = $('#form-admin_confirmcode_forpwdback').val().trim();
 	}
-	if (newPwd && newPwd_confirm && account && confrimcode) {
+	if (id && newPwd && newPwd_confirm && account && confrimcode) {
 		if (newPwd == newPwd_confirm) {
-			// alert(newPwd);
 			$.ajax({
 				url : '/jf/puresport/pagesController/ForgetPwd_setPwdByEmail',
 				type : 'POST', // GET
 				async : true, // 或false,是否异步
 				data : {
-					// userType:app.userType,
+					id:id,
 					account : account,
 					confrimcode : confrimcode,
 					newPwd : newPwd,
@@ -513,12 +524,10 @@ function forgetpwd_getpwdByEmail(userOradmin) {
 				}
 			})
 		} else {
-			// alert("两次输入密码不一致！！");
 			$('#myModallyf_content').text("两次输入密码不一致！！");
 			$('#myModallyf').modal('show');
 		}
 	} else {
-		// alert("信息缺失！！");
 		$('#myModallyf_content').text("信息缺失！！");
 		$('#myModallyf').modal('show');
 	}
@@ -531,8 +540,9 @@ function resetPwd(userOradmin) {
 	if (oldPwd && newPwd && newPwd_confrim) {
 		if (newPwd != newPwd_confrim) {
 			Tips('passwordModal_hint', "密码不一致！！");
-		} else {
-			$.ajax({
+			return;
+		}
+		$.ajax({
 				url : '/jf/puresport/pagesController/ResetPwd',
 				type : 'POST', // GET
 				async : true, // 或false,是否异步
@@ -577,8 +587,7 @@ function resetPwd(userOradmin) {
 				complete : function() {
 					console.log('结束')
 				}
-			})
-		}
+		})
 	} else {
 		Tips('passwordModal_hint', "信息缺失！！");
 	}

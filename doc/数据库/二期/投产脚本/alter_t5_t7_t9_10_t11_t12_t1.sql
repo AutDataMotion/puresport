@@ -14,3 +14,6 @@ ALTER TABLE `t1_usr_bsc` ADD COLUMN `mblph_val` INT(11) NULL DEFAULT 0 COMMENT '
 ALTER TABLE `t6_mgr_ahr` ADD COLUMN `email_val` INT(11) NULL DEFAULT 1 COMMENT '邮箱是否验证' AFTER `institute`;
 ALTER TABLE `t6_mgr_ahr` ADD COLUMN `mblph_val` INT(11) NULL DEFAULT 0 COMMENT '手机是否验证' AFTER `email_val`;
 
+ALTER TABLE `t1_usr_bsc` ADD COLUMN `nm_char` VARCHAR(64) NOT NULL DEFAULT '' COMMENT '姓名拼音字母' AFTER `nm`;
+
+

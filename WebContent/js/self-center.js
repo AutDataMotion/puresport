@@ -57,6 +57,7 @@ $(function() {
                 	form.val('athleteForm', {
                 		"usr_tp":res.usr_tp
                         ,"nm": res.nm
+                        ,"nm_char": res.nm_char
                         ,"crdt_no": res.crdt_no
                         ,"gnd": res.gnd
                         ,"brth_dt": res.brth_dt

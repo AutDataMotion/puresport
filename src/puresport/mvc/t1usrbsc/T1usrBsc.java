@@ -47,6 +47,8 @@ public class T1usrBsc extends BaseModel<T1usrBsc> {
 	 */
 	public static final String column_nm = "nm";
 	
+	public static final String column_nm_char = "nm_char";
+	
 	/**
 	 * 字段描述：证件类型 
 	 * 字段类型：char  长度：2
@@ -225,6 +227,7 @@ public class T1usrBsc extends BaseModel<T1usrBsc> {
 	protected String usr_tp;
 	protected String usr_nm;
 	protected String nm;
+	protected String nm_char;
 	protected String crdt_tp;
 	protected String spt_prj;
 	protected String crdt_no;
@@ -278,6 +281,14 @@ public class T1usrBsc extends BaseModel<T1usrBsc> {
 	public <T> T getNm() {
 		return get(column_nm);
 	}
+	
+	public void setNmChar(String nmChar){
+		set(column_nm_char, nmChar);
+	}
+	public <T> T getNmChar() {
+		return get(column_nm_char);
+	}
+	
 	public void setCrdt_tp(String crdt_tp){
 		set(column_crdt_tp, crdt_tp);
 	}

@@ -18,6 +18,9 @@ public interface ConstantInitMy extends ConstantInit{
 	public static final String db_dataSource_main = "db.dataSource.puresport";
 	public static final String SPKEY = "A1B2C3D4E5F60708";
 	
+	public static final String validateKeyCode_Account = "validateKeyCode_Account";
+	public static final String validateKey_UserId = "validateKey_UserId";
+	
 	public static final Integer AuthCode_TimeOut_Send = 61; // 单位秒 即1分钟
 	public static final Integer AuthCode_TimeOut = 61*10; // 单位秒 即10分钟
 	

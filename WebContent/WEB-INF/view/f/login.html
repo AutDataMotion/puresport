@@ -184,13 +184,15 @@ select{
 												<strong>第一步：身份验证</strong>
 											</h4>
 											<div class="form-group">
-												<label class="sr-only" for="form-email_user_forPwdBack">邮箱</label>
+												<input type="text" id="form-id_user_forPwdBack"
+													placeholder="身份证件号" class="form-control">
+											</div>
+											<div class="form-group">
 												<input type="text" id="form-email_user_forPwdBack"
 													name="form-email_user_forPwdBack" placeholder="手机/邮箱"
 													class="form-control">
 											</div>
 											<div class="form-group" style="position: relative;">
-												<label class="sr-only" for="form-email_user_confirmCode">验证码</label>
 												<input type="text" id="form-email_user_confirmCode"
 													name="form-email_user_confirmCode" placeholder="验证码"
 													class="form-control">
@@ -201,17 +203,14 @@ select{
 												<strong>第二步：重置密码</strong>
 											</h4>
 											<div class="form-group">
-												<label class="sr-only" for="form_user_newPwd_forPwdBack">新密码</label>
 												<input type="password" id="form_user_newPwd_forPwdBack"
-													name="form_user_newPwd_forPwdBack" placeholder="新密码..."
+													name="form_user_newPwd_forPwdBack" placeholder="新密码"
 													class="form-control">
 											</div>
 											<div class="form-group" style="position: relative;">
-												<label class="sr-only"
-													for="form_user_newPwd_confirm_forPwdBack">确认新密码</label> <input
-													type="password" id="form_user_newPwd_confirm_forPwdBack"
+											<input type="password" id="form_user_newPwd_confirm_forPwdBack"
 													name="form_user_newPwd_confirm_forPwdBack"
-													placeholder="确认新密码..." class="form-control">
+													placeholder="确认新密码" class="form-control">
 
 											</div>
 											<div style="margin: 10px;">
@@ -427,6 +426,13 @@ select{
 											<h4>
 												<strong>第一步：身份验证</strong>
 											</h4>
+											
+											<div class="form-group">
+												<input type="text" id="form-id_admin_forPwdBack"
+													name="form-phone_user" placeholder="身份证件号"
+													class="form-control">
+											</div>
+											
 											<div class="form-group">
 												
 												<input type="text" id="form-email_admin_forpwdback"
@@ -434,7 +440,7 @@ select{
 													class="form-control">
 											</div>
 											<div class="form-group" style="position: relative;">
-													<input type="text" id="form-email_admin_confirmcode_forpwaback"
+												<input type="text" id="form-email_admin_confirmcode_forpwaback"
 													name="form-email_admin_confirmcode_forpwaback"
 													placeholder="验证码" class="form-control"> <span
 													class="get_email_confirmcode"
@@ -444,15 +450,13 @@ select{
 												<strong>第二步：重置密码</strong>
 											</h4>
 											<div class="form-group">
-												<label class="sr-only" for="form-admin_newpwd_forpwdback">新密码</label>
+												
 												<input type="password" id="form-admin_newpwd_forpwdback"
 													name="form-admin_newpwd_forpwdback" placeholder="新密码"
 													class="form-control">
 											</div>
 											<div class="form-group" style="position: relative;">
-												<label class="sr-only"
-													for="form-admin_confirmcode_forpwdback">确认新密码</label> <input
-													type="password" id="form-admin_confirmcode_forpwdback"
+												<input type="password" id="form-admin_confirmcode_forpwdback"
 													name="form-admin_confirmcode_forpwdback"
 													placeholder="确认新密码" class="form-control">
 

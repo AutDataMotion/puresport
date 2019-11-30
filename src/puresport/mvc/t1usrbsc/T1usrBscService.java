@@ -662,6 +662,7 @@ public class T1usrBscService extends BaseService {
 					.set(T1usrBsc.column_usr_tp, dto.getUsr_tp())
 					.set(T1usrBsc.column_usr_nm, dto.getMblph_no())
 					.set(T1usrBsc.column_nm, dto.getNm())
+					.set(T1usrBsc.column_nm_char, dto.getNm_char())
 					.set(T1usrBsc.column_crdt_tp, "身份证")
 					.set(T1usrBsc.column_crdt_no, dto.getCrdt_no())
 					.set(T1usrBsc.column_gnd, dto.getGnd()) // 性别
@@ -705,6 +706,10 @@ public class T1usrBscService extends BaseService {
 		
 		if (!dto.getNm().equals(userBsc.nm)) {
 			userBsc.setNm(dto.getNm());
+			hasChange = true;
+		}
+		if (!dto.getNm_char().equals(userBsc.nm_char)) {
+			userBsc.setNmChar(dto.getNm_char());
 			hasChange = true;
 		}
 		if (!dto.getGnd().equals(userBsc.gnd)) {
