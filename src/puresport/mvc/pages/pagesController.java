@@ -331,10 +331,10 @@ public class pagesController extends BaseController {
 
 		if (userOradmin.equals("01"))// 运动员及辅助人员
 		{
-			T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=? limit 1", id);
+			T1usrBsc item = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where crdt_no=? limit 1", id);
 			flag = item != null;
 		} else {
-			T6MgrAhr item = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where usrid=? limit 1", id);
+			T6MgrAhr item = T6MgrAhr.dao.findFirst("select * from t6_mgr_ahr where crdt_no=? limit 1", id);
 			flag = item != null;
 		}
 		if (!flag) {
@@ -416,10 +416,10 @@ public class pagesController extends BaseController {
 			int res = -1;
 			if (userOradmin.equals("01"))// 运动员及辅助人员
 			{
-				res = ConfMain.db().update(String.format("update t1_usr_bsc set pswd=?, %s=? where usrid=?", accountColumnStr),
+				res = ConfMain.db().update(String.format("update t1_usr_bsc set pswd=?, %s=? where crdt_no=?", accountColumnStr),
 						encryptpassword, account, id);
 			} else {
-				res = ConfMain.db().update(String.format("update t6_mgr_ahr set pswd=?, %s=? where usrid=? ", accountColumnStr),
+				res = ConfMain.db().update(String.format("update t6_mgr_ahr set pswd=?, %s=? where crdt_no=? ", accountColumnStr),
 						encryptpassword, account, id);
 			}
 			if (res > 0) {
