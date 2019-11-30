@@ -52,9 +52,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 }
 
 .txt_pwd {
-	padding-left: 170px;
+	padding-left: 8px;
 	padding-top: 547px;
-	width: 270px;
+	width: 105px;
+	height: 20px;
+}
+.txt_pinyin {
+	padding-left: 208px;
+	padding-top: -100px;
+	width: 305px;
 	height: 20px;
 }
 </style>
@@ -195,6 +201,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			$('#tip3Modal').modal('show');
 			return;
 		}
+		// 承诺人姓名全拼	
+		var commimentPinyin = document.getElementById("commimentPinyin").value;
+		
 		var url;
 		url = '/jf/puresport/t7Crcl/submitExam';
 		var examid = document.getElementById("examid").value;
@@ -207,6 +216,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					data : {
 						"dataSet" : dataSet,
 						"examid" : examid,
+						"commimentPinyin" : commimentPinyin,
 						"commimentNm" : commimentNm
 					},
 					success : function(res) {
@@ -450,8 +460,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 			<div class="img_one">
 				<div class="txt_pwd">
-					<input type="text" class="form-control" placeholder="姓名全拼"
+					<input type="text" class="form-control" placeholder="张三"
 						id="commimentNm">
+				</div>
+				<div class="txt_pinyin">
+					<input type="text" class="form-control" placeholder="Zhang San"
+						id="commimentPinyin">
 				</div>
 
 				<!--  <input type="text" id="commimentNm" name="commimentNm" value="请输入姓名..."  maxlength="18" size="18" > </div> -->
