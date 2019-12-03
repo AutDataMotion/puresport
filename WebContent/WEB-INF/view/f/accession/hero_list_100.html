@@ -58,6 +58,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	font-size: 25px;
 	height: 600px；
 }
+
+
+
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -104,21 +107,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </head>
 <body>
 	<% include("/f/header.html"){} %>
-	<div class="main_bg">
-		<!-- start main -->
+<!-- 	<div class="main_bg">
+		start main
 		<div class="container">
 			<div class="main_grid1">
 				<h3 class="style pull-left">准入考试英雄榜</h3>
 				<h3 class="style pull-right">${which_competition!''}</h3>
 			</div>
 		</div>
-	</div>
-	<div class="main_btm1">
+	</div> -->
+	<!-- class="alert alert-info" -->
+	<div class="alert alert-info">
 	<div class="row">
-	<div class="col-md-4 "></div>
-	<div class="col-md-4 " align="center" >
+	<div class="col-md-3 "></div>
+	<div class="col-md-6 " align="center" >
 	<div class="span4_of_list" width="100%" >
-	<table class="table table-striped" align="center"> <!-- background="/images_zcb/rank9.png" --> 
+	<table class="table table-striped2" align="center"> <!-- background="/images_zcb/rank9.png" --> 
 	<thead>
 		<tr style="background-image:url('/images_zcb/tr_bg.jpg');">
 			<th align="center"><h3>排名</h3></th>
@@ -126,16 +130,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<th align="center"><h3>姓名</h3></th>
 			<th align="center"><h3>项目</h3></th>
 			<th align="center"><h3>地区</h3></th>
+			<th align="center"><h3>时间</h3></th>
 		</tr>
 	</thead>
 	<tbody>
 	
 		<tr style="${t11SelfDisplay!''}">
-			<td><div style="color:${t11Self.rank!'#FB0101'}"><h5>第${t11Self.id!''}名</h5></div></td>	
+			<td><div style="color:${t11Self.rank!'#454545'}"><h5>第${t11Self.id!''}名</h5></div></td>	
 			<td><div style="color:${t11Self.rank!'#454545'}"><h5>${t11Self.exam_grd!''}</h5></div></td>
 			<td><div style="color:${t11Self.rank!'#454545'}"><h5>${t11Self.nm!'虚位以待'}</h5></div></td>
 			<td><div style="color:${t11Self.rank!'#454545'}"><h5>${t11Self.spt_prj!''}</h5></div></td>
-			<td><div style="color:${t11Self.rank!'#454545'}"><h5>${t11Self.province!''}${x.city!''}</h5></div></td>		
+			<td><div style="color:${t11Self.rank!'#454545'}"><h5>${t11Self.province!''}${t11Self.city!''}</h5></div></td>
+			<td><div style="color:${t11Self.rank!'#454545'}"><h5>${t11Self.tms!''}</h5></div></td>			
 		</tr>
 		
 				<%for(x in heroList10){ %>
@@ -146,7 +152,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<td><div style="color:${x.rank!'#454545'}"><h5>${x.exam_grd!''}</h5></div></td>
 			<td><div style="color:${x.rank!'#454545'}"><h5>${x.nm!'虚位以待'}</h5></div></td>
 			<td><div style="color:${x.rank!'#454545'}"><h5>${x.spt_prj!''}</h5></div></td>
-			<td><div style="color:${x.rank!'#454545'}"><h5>${x.province!''}${x.city!''}</h5></div></td>		
+			<td><div style="color:${x.rank!'#454545'}"><h5>${x.province!''}${x.city!''}</h5></div></td>
+			<td><div style="color:${x.rank!'#454545'}"><h5>${x.tms!''}</h5></div></td>			
 		</tr>
 		<%}%> 
 			<%for(x in heroList100){ %>
@@ -154,11 +161,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- 			<td>
 				<img src="/images_zcb/${x.rankImg!''}" width="35" height="40" >
 			</td>	 -->
-			<td><div style="color:${x.rank!'#FB0101'}"><h5>第${x.id!''}名</h5></div></td>	
+			<td><div style="color:${x.rank!'#454545'}"><h5>第${x.id!''}名</h5></div></td>	
 			<td><div style="color:${x.rank!'#454545'}"><h5>${x.exam_grd!''}</h5></div></td>
 			<td><div style="color:${x.rank!'#454545'}"><h5>${x.nm!'虚位以待'}</h5></div></td>
 			<td><div style="color:${x.rank!'#454545'}"><h5>${x.spt_prj!''}</h5></div></td>
 			<td><div style="color:${x.rank!'#454545'}"><h5>${x.province!''}${x.city!''}</h5></div></td>		
+			<td><div style="color:${x.rank!'#454545'}"><h5>${x.tms!''}</h5></div></td>	
 		</tr>
 		<%}%> 
 		
@@ -166,7 +174,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </table>
 </div>
 </div>
-<div class="col-md-4"></div>
+<div class="col-md-3"></div>
 </div>
   
   	<% include("/f/footer.html"){} %>

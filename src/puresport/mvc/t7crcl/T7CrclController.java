@@ -1384,8 +1384,8 @@ public class T7CrclController extends BaseController {
 						LOG.info("certificatePath=" + certificatePath);
 						LOG.info("证书姓名"+ t1.getNm()+"("+StringTools.strConver(t1.getNmChar().toString().toLowerCase())+")");
 						waterMark(t1.getNm()+"("+StringTools.strConver(t1.getNmChar().toString().toLowerCase())+")", srcImg, dscImg, 943, 2007, 180);
-						waterMark(dataTime+"(yyyy/mm/dd)", dscImg, dscImg, 2230, 3407, 100);
-						waterMark(which_competition, dscImg, dscImg, 1995, 3519, 100);
+						waterMark(dataTime, dscImg, dscImg, 2230, 3407, 100);						
+						waterMark("东京奥运会 2020 Tokyo Olympic Games", dscImg, dscImg, 1995, 3519, 100);
 						waterMark(totalScore.toString(), dscImg, dscImg, 1911, 3631, 100);
 						//waterMark(creditNo, dscImg, dscImg, 923, 2114, 55);
 						waterMark(creditNo, dscImg, dscImg, 1655, 3770, 100);
@@ -1463,8 +1463,15 @@ public class T7CrclController extends BaseController {
 //			waterMark(totalScore.toString(), dscImg, dscImg, 1090, 2027, 55);
 			
 			waterMark(t1.getNm()+"("+StringTools.strConver(t1.getNmChar().toString().toLowerCase())+")", srcImg, dscImg, 943, 2007, 180);
-			waterMark(dataTime+"(yyyy/mm/dd)", dscImg, dscImg, 2230, 3407, 100);
-			waterMark(which_competition, dscImg, dscImg, 1995, 3519, 100);
+			waterMark(dataTime, dscImg, dscImg, 2230, 3407, 100);					
+			String which_competition_eng = which_competition;		
+			if("东京奥运会".equals(which_competition))		
+				which_competition_eng = "东京奥运会 2020 Tokyo Olympic Games";	
+			else if("冬青奥会".equals(which_competition))		
+				which_competition_eng = "冬青奥会 2020 Winter Youth Olympic Games";	
+			else if("十四冬会".equals(which_competition))		
+				which_competition_eng = "十四冬会 14th National Winter Games";	
+			waterMark(which_competition_eng, dscImg, dscImg, 1995, 3519, 100);
 			waterMark(totalScore.toString(), dscImg, dscImg, 1911, 3631, 100);
 			//waterMark(creditNo, dscImg, dscImg, 923, 2114, 55);
 			waterMark(creditNo, dscImg, dscImg, 1655, 3770, 100);
