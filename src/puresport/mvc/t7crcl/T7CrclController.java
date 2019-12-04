@@ -96,7 +96,7 @@ public class T7CrclController extends BaseController {
 		if (StringUtils.isBlank(which_competition)) {
 			getSession().setAttribute("which_competition", which_competition);// 设置session，保存
 			renderWithPath("/f/zhunru_index.html");
-			return;
+			return; 
 		}
 		if (which_competition.equals(EnumCompetition.ShengYunHui.getIndex_str())) {
 			getSession().setAttribute("which_competition", EnumCompetition.ShengYunHui.getCompetitionName());
