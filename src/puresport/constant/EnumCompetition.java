@@ -6,6 +6,9 @@ public enum EnumCompetition {
 	QingAoHui(2,"2","青奥会"),
 	JunYunHui(3,"3","军运会"),
 	DongJingAoYunHui(4,"4","东京奥运会"),
+	//zhuchaobin, 2019-12-04
+	DongQingAoHui(6,"6","冬青奥会"),
+	ShiSiDongHui(7,"7","十四冬会"),
 	;
 	private int index;
 	private String index_str;

@@ -1466,11 +1466,13 @@ th {
 .table-striped > tbody > tr:nth-child(odd) > td,
 .table-striped > tbody > tr:nth-child(odd) > th {
   background-color: #f9f9f9;
+  align:center;
 }
 
 .table-striped2 > tbody > tr:nth-child(odd) > td,
 .table-striped2 > tbody > tr:nth-child(odd) > th {
   background-color: #ECAB77;
+  align:center;
 }
 
 .table-striped2 > tbody > tr:nth-child(even) > td,

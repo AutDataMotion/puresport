@@ -106,6 +106,10 @@ public class T7CrclController extends BaseController {
 			getSession().setAttribute("which_competition", EnumCompetition.QingAoHui.getCompetitionName());
 		} else if (which_competition.equals(EnumCompetition.JunYunHui.getIndex_str())) {
 			getSession().setAttribute("which_competition", EnumCompetition.JunYunHui.getCompetitionName());
+		} else if (which_competition.equals(EnumCompetition.DongQingAoHui.getIndex_str())) {
+			getSession().setAttribute("which_competition", EnumCompetition.DongQingAoHui.getCompetitionName());
+		} else if (which_competition.equals(EnumCompetition.ShiSiDongHui.getIndex_str())) {
+			getSession().setAttribute("which_competition", EnumCompetition.ShiSiDongHui.getCompetitionName());
 		}
 
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
