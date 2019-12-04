@@ -117,6 +117,13 @@ public class T11ExamStat extends BaseModel<T11ExamStat> {
 	public static final String column_category = "category";
 	
 	/**
+	 * 字段描述：成绩时间字符串格式化
+	 * 字段类型：String 
+	 * 
+	 */
+	public static final String column_strTms = "strTms";
+	
+	/**
 	 * sqlId : puresport.t11ExamStat.splitPageFrom
 	 * 描述：分页from
 	 */
@@ -140,10 +147,18 @@ public class T11ExamStat extends BaseModel<T11ExamStat> {
 	protected String city;
 	protected String rankImg;
 	protected String rank;
+
+	
 	// zhuchaobin, 20191025, 二期
 	private String type;
 	private String category;
 
+	public <T> T  getStrTms() {
+		return get(column_strTms);
+	}
+	public void setStrTms(String strTms) {
+		set(column_strTms, strTms);
+	}
 	public <T> T  getType() {
 		return get(column_type);
 	}
