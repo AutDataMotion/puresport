@@ -37,6 +37,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	href="/ui/bootstrap-3.3.7-dist/css/bootstrap.min.css">
 <script type="text/javascript" src="/js/jquery-1.11.1.min.js"></script>
 <script src="/ui/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="${cxt!}/js_zhuchaobin/layer/layer.js"
+	type="text/javascript"></script>
 <!-- 承诺书样式 -->
 <style type="text/css">
 * {
@@ -210,6 +212,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		var url;
 		url = '/jf/puresport/t7Crcl/submitExam';
 		var examid = document.getElementById("examid").value;
+		//loading层
+		var index = layer.load(1, {
+		  shade: [0.1,'#fff'] //0.1透明度的白色背景
+		});
+
+		
 		$
 				.ajax({
 					type : 'POST',
