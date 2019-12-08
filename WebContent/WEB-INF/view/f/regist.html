@@ -137,8 +137,8 @@
 					<div id="divSportor" class="layui-form-item">
 						<label class="layui-form-label" required>运动项目</label>
 						<div class="layui-input-inline">
-							<select name="spt_prj">
-								<option value="">请选择项目</option> <%for (item in
+							<select name="spt_prj" lay-search>
+								<option value="">请选择(或搜索)项目</option> <%for (item in
 								sport_items_of_shengyunhui){%>
 								<option value=${item.name!}>${item.name!}</option> <%}%>
 							</select>
