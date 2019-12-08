@@ -568,7 +568,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<%for(x in examSelectList){ %>
 				<div>
 					<label>【多项选择】 </label> </br> <label>第${x.prblmno!''}题：
-						${x.ttl!''}  &nbsp${x.prblm_aswr!''} </label> </br> <label for=${x.prblmid!
+						${x.ttl!''}  &nbsp<!-- ${x.prblm_aswr!''} --> </label> </br> <label for=${x.prblmid!
 						''}A class="prblSelect" style="font-weight: lighter"> <input
 						type="checkbox" name=${x.prblmno! ''} value=A id=${x.prblmid! ''}A>
 						${x.optA!}
@@ -604,7 +604,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<%}%> <%for(y in examDeducList){ %>
 				<div>
 					<label>【判断题】 </label> </br> <label> 第${y.prblmno!''}题：
-						${y.ttl!''}  &nbsp${y.prblm_aswr!''} </label> </br> </br> <label for=${y.prblmid!
+						${y.ttl!''}  &nbsp<!-- ${y.prblm_aswr!''} --> </label> </br> </br> <label for=${y.prblmid!
 						''}A class="prblSelect" style="font-weight: lighter"> <input
 						type="radio" name=${y.prblmno! ''} value=A id=${y.prblmid! ''}A>
 						正 确<!-- ${y.prblmid!} -->
