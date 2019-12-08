@@ -1926,10 +1926,14 @@ public class T7CrclController extends BaseController {
 
 		String sql = "select * from t10_exam_grd t where t.usrid = '" + usrid + "' and t.examid ='" + examid
 				+ "' order by t.prblmno asc";
+		String sql_bak = "select * from t10_exam_grd_20180801 t where t.usrid = '" + usrid + "' and t.examid ='" + examid
+				+ "' order by t.prblmno asc";
 		List<T10ExamGrd> t10List = T10ExamGrd.dao.find(sql);
+		if((null == t10List) || (0 == t10List.size()))
+			t10List = T10ExamGrd.dao.find(sql_bak);;
 		List<ExamEntity> testPaperList01 = new ArrayList<ExamEntity>();
 		List<ExamEntity> testPaperList02 = new ArrayList<ExamEntity>();
-		if ((null == t10List) || (0 < t10List.size())) {
+		if ((null != t10List) && (0 < t10List.size())) {
 			LOG.debug("查询到试卷，包含考题：" + t10List.size() + "道.");
 			for (T10ExamGrd t10 : t10List) {
 				ExamEntity exam = new ExamEntity();
@@ -1937,7 +1941,10 @@ public class T7CrclController extends BaseController {
 				exam.setPrblmno(Integer.parseInt(t10.getPrblmno()));
 				exam.setPrblmid(Integer.parseInt(t10.getPrblmid()));
 				exam.setUsrid(Integer.parseInt(t10.getUsrid()));
-				exam.setExam_grd(Integer.parseInt(t10.getExam_grd()));				
+				if(null == t10.getExam_grd())
+					exam.setExam_grd(0);
+				else
+					exam.setExam_grd(Integer.parseInt(t10.getExam_grd()));				
 				// 查题目
 				T9Tstlib t9 = T9Tstlib.dao.findById(Long.parseLong(t10.getPrblmid() + ""));
 				if (null != t9) {
@@ -1977,14 +1984,16 @@ public class T7CrclController extends BaseController {
 					exam.setOptB("错误");
 				}
 				// 设置已选选项
-				if (t10.getUsr_aswr().toString().contains("A"))
-					exam.setOptASelct("checked");
-				if (t10.getUsr_aswr().toString().contains("B"))
-					exam.setOptBSelct("checked");
-				if (t10.getUsr_aswr().toString().contains("C"))
-					exam.setOptCSelct("checked");
-				if (t10.getUsr_aswr().toString().contains("D"))
-					exam.setOptDSelct("checked");
+				if(null != t10.getUsr_aswr()){
+					if (t10.getUsr_aswr().toString().contains("A"))
+						exam.setOptASelct("checked");
+					if (t10.getUsr_aswr().toString().contains("B"))
+						exam.setOptBSelct("checked");
+					if (t10.getUsr_aswr().toString().contains("C"))
+						exam.setOptCSelct("checked");
+					if (t10.getUsr_aswr().toString().contains("D"))
+						exam.setOptDSelct("checked");
+				}
 
 				if ("01".equals(t9.getPrblm_tp()))
 					testPaperList01.add(exam);
