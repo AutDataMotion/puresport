@@ -44,7 +44,28 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 			}
 		});
 	};
+	
+	// 获取分组
+	function initSporterGroup() {
+		// 发送查询请求
+		$.ajax({
+			type : "get",
+			url : encodeURI(encodeURI(cxt + "/jf/puresport/t15Group/fetchGroup")),
+			success : function(groups) {
+				$("#src_sport_group option:not(:first)").remove();
+				var selectGroup = $("#src_sport_group");
+				for (var i = 0, len = groups.length; i < len; i++) {
+    	            var item = groups[i];
+    	            var option = $("<option value='" + item.id + "' name='"+item.title+"'>" + item.title + "</option>");
+    	            // 添加到 select 元素中
+    	            selectGroup.append(option);
+    	        }
+			}
+		});
+	};
+	
 	initProvince();
+	initSporterGroup();
 	
 	// =================================
 	// 查询参数
@@ -79,6 +100,7 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 		datasrch.name10 = $("#sta_t1usrBsc_passOrnot option:selected").html();
 		datasrch.name11 = $("#sta_t1usrBsc_gnd option:selected").html();
 		datasrch.name12 = $("#sta_t1usrBsc_examSt option:selected").val();
+		datasrch.name13 = $("#src_sport_group option:selected").val();
 	};
 	var myTable = $('#example3').DataTable({
 		dom: 'Bfrtip',

@@ -34,6 +34,8 @@ public class ParamComm implements Serializable{
 	private String name11;
 	private String name12;
 	
+	private String name13;
+	
 
 	private Long groupId;
 	
@@ -373,5 +375,12 @@ public class ParamComm implements Serializable{
 		this.name12 = name12;
 	}
 
+	public String getName13() {
+		return name13;
+	}
 
+	public void setName13(String name13) {
+		this.name13 = name13;
+	}
+	
 }
