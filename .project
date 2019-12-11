@@ -3,6 +3,7 @@
 	<name>PureSport</name>
 	<comment></comment>
 	<projects>
+		<project>UtilZW</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

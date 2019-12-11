@@ -67,6 +67,7 @@ $(document).ready(function() {
 		"bLengthChange" : true, // 改变每页显示数据数量
 		"bFilter" : false, // 过滤功能
 		"bSort" : true, // 排序功能
+		"bAutoWidth": false, // 不自适应宽
 		"oLanguage" : {
 			"sLengthMenu" : "每页显示 _MENU_ 条记录",
 			"sZeroRecords" : "抱歉， 没有找到",

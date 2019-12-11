@@ -80,7 +80,10 @@ $(document).ready(function() {
 		"bLengthChange" : true, // 改变每页显示数据数量
 		"bFilter" : false, // 过滤功能
 		"bSort" : false, // 排序功能
-		"bAutoWidth": false,
+		"bAutoWidth": true,
+		"fnInitComplete": function() {
+            this.fnAdjustColumnSizing(true);
+        },
 		"oLanguage" : {
 			"sLengthMenu" : "每页显示 _MENU_ 条记录",
 			"sZeroRecords" : "抱歉， 没有找到",
@@ -249,6 +252,7 @@ $(document).ready(function() {
 	          }
 	     }]
 	}); // end Table
+	
 	
 
 	var tree = layui.tree
