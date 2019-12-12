@@ -222,21 +222,25 @@ public class T1usrBscService extends BaseService {
 			+ " ) as s on u.usrid = s.usrid  where 1=1 %s  limit ?,?";*/
 	
 	private static String sql_score = "select u.*, s.examid as examid, s.category as category, s.type as type, s.exam_nm as exam_nm, s.exam_grd as exam_grd, (CASE WHEN s.exam_grd >= 80 THEN '及格'  WHEN s.exam_grd is null THEN '未考试'  ELSE '不及格' END) as passed "
-			+ " from t1_usr_bsc u  left join ("
-			+ " select usrid, exam_nm, exam_grd, examid, exam_st, category, type from t11_exam_stat"
-			+ " ) as s on u.usrid = s.usrid "
-			+ "inner join r16_group_usr g on u.usrid = g.user_id where 1=1 %s  limit ?,?";
+			+ " from t1_usr_bsc u  "
+			+ "left join t11_exam_stat s on u.usrid = s.usrid "
+			+ "left join r16_group_usr g on u.usrid = g.user_id where 1=1 %s  limit ?,?";
 	
 /*	private static String sql_score_total = "select count(1) "
 	+ " from t1_usr_bsc u  left join ("
 	+ " select usrid, exam_nm, exam_grd from t12_highest_score"
 	+ " ) as s on u.usrid = s.usrid  where 1=1  %s ";*/
 	
+//	private static String sql_score_total = "select count(1) "
+//	+ " from t1_usr_bsc u  left join ("
+//	+ " select usrid, exam_nm, exam_grd, exam_st from t11_exam_stat"
+//	+ " ) as s on u.usrid = s.usrid "
+//	+ "inner join r16_group_usr g on u.usrid = g.user_id where 1=1  %s ";
+	
 	private static String sql_score_total = "select count(1) "
-	+ " from t1_usr_bsc u  left join ("
-	+ " select usrid, exam_nm, exam_grd, exam_st from t11_exam_stat"
-	+ " ) as s on u.usrid = s.usrid "
-	+ "inner join r16_group_usr g on u.usrid = g.user_id where 1=1  %s ";
+			+ " from t1_usr_bsc u  "
+			+ "left join t11_exam_stat s on u.usrid = s.usrid "
+			+ "left join r16_group_usr g on u.usrid = g.user_id where 1=1 %s ";
 			
 	public List<Record> selectScoreByPage(T6MgrSession mgrSession, ParamComm paramMdl) {
 		
