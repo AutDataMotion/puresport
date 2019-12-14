@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>学习</title>
+<title>反兴奋剂教育准入合格证书</title>
 <link rel="shortcut icon" href="${cxt!}/images/favicon.ico" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -117,71 +117,31 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		<!-- start main -->
 		<div class="container">
 			<div class="main_grid1">
-				<h3 class="style pull-left">学习</h3>
-				<h3 class="style pull-right">${session['which_competition']}</h3>
+				<h3 class="style pull-left">反兴奋剂教育准入合格证书</h3>
+				<h3 class="style pull-right">${userNm!''}</h3>
 			</div>
 		</div>
 	</div>
-	<!-- start main_btm -->
-	<div class="main_btm1">
-		<!-- start main_btm -->
-		<div class="container">
-			<!-- 必修视频课程一 -->
-			<div class="title" >${course_title!''}</div>
-			<!-- 代码 开始 -->
-			<div id="container">
-				<%for(x in t7List){ %>
-				<div class="banner">
-					<a
-						href="/jf/puresport/t7Crcl/video_play?crcl_attr=${x.crcl_attr!''}&crcl_file_rte=${x.crcl_file_rte!''}&stdy_st=${x.stdy_st!'0'}&stdy_st_hidden=${stdy_st_hidden!'0'}&crclid=${x.crclid!'0'}"
-						target="_self"> <img height="125" width="125"
-						alt="The Best Designs"
-						src="/materials/video/thumbnail_rte/${x.thumbnail_rte!'fyh.jpg'}" />
-					</a>
-					<p class="companyInfo">${x.crcl_nm!''}</p>
-					<div class="cornerTL"></div>
-					<div class="cornerTR"></div>
-					<div class="cornerBL"></div>
-					<div class="cornerBR"></div>
+	
+	<div class="main_bg"><!-- start main -->
+<div class="container">
+	<div class="main_grid_resource">
+			<div class="span_of_4"><!-- start span_of_4 -->
+			<%for(x in T17List){ %>
+			<div class="col-md-4 span1_of_4">
+				<div class="span4_of_list">
+					<a class="" href="/jf/puresport/t7Crcl/showCredit_new?certificatePath=${x.file_path!''}" target="_blank"><img src="${cxt!''}${x.file_path!'/images_zcb/certificates/certificateDefault.jpg'}" class="img-responsive top_grid__res_img"></a>
+					<p class="res_pic_title" style="text-align: center;"><a href="/jf/puresport/t7Crcl/showCredit_new?certificatePath=${x.file_path!''}" target="_blank">${x.name!''}</a></p>
 				</div>
-				<input type="hidden" name="stdy_st_hidden" id="stdy_st_hidden"
-					value="${stdy_st_hidden!'0'}"> <input type="hidden"
-					name="action_hidden" id="action_hidden" value="${action_hidden!''}">
-				</input> <%}%>
-				<!-- Examples body -->
 			</div>
-			<br>
-			<!-- END_CONTAINER -->
-		</div>
-		<div align="center">
-			<button onclick="do_pre()" class="btn">上一步</button>
-			<button onclick="do_jump()" class="btn">下一步</button>
-		</div>
+			<%}%>
+			</div>
+			</div>
+			</div>
+			</div>
+			
 		<br>
 	</div>
-
-	<!-- tip1 Modal-->
-	<div class="modal fade" id="tipModal" tabindex="-1" role="dialog"
-		aria-labelledby="tip1ModalLabel" aria-hidden="true">
-		<div class="modal-dialog" role="document">
-			<div class="modal-content">
-				<div class="modal-header" align="center">
-					<h5 class="modal-title">友情提示</h5>
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-				</div>
-				<div class="modal-body" align="center">对不起，当前课程学习完成才能进行后续环节！</div>
-				<div class="modal-footer" align="center">
-					<button type="button" class="btn" data-dismiss="modal">确定</button>
-				</div>
-			</div>
-			<!-- /.modal-content -->
-		</div>
-		<!-- /.modal-dialog -->
-	</div>
-
 
 	<% include("/f/footer.html"){} %>
 </body>

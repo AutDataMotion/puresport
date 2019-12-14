@@ -139,7 +139,6 @@ public class T11ExamStat extends BaseModel<T11ExamStat> {
 	private Timestamp tms;
 	private String exam_nm;
 	
-	
 	//zhuchaobin
 	protected String nm;
 	protected String spt_prj;
@@ -152,7 +151,15 @@ public class T11ExamStat extends BaseModel<T11ExamStat> {
 	// zhuchaobin, 20191025, 二期
 	private String type;
 	private String category;
+	// 是否已经有证书
+	private String file_path;
 
+	public String getFile_path() {
+		return file_path;
+	}
+	public void setFile_path(String file_path) {
+		this.file_path = file_path;
+	}
 	public <T> T  getStrTms() {
 		return get(column_strTms);
 	}

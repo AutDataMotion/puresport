@@ -154,18 +154,44 @@
 							id="btn-update-userInfo" data-toggle="modal"
 							data-target="#personInfoModal">修改个人信息</button>
 						<a
-							href="${cxt!}/jf/puresport/t7Crcl/queryCetifate?usrid=${session['usrid']}"
+							href="${cxt!}/jf/puresport/t7Crcl/queryCetifateList?usrid=${session['usrid']}"
 							target="_blank" type="button"
 							class="btn  btn-lg btn-block logout_btn" role="button">我的证书</a>
 							
 							<button type="button" class="btn  btn-lg btn-block reset_btn"
 							id="btn-update-userInfo" data-toggle="modal"
-							data-target="#queryCreditModal">证书查询</button>
-							
+							data-target="#queryCreditModal">证书查询</button>							
 							 <a
-							href="${cxt!}/jf/puresport/t7Crcl/heroList100/" target="_blank"
+							href="${cxt!}/jf/puresport/t7Crcl/heroList100?type=0" target="_blank"
 							type="button" class="btn  btn-lg btn-block logout_btn"
-							role="button">准入考试排行榜</a> <a
+							role="button">省运会准入考试英雄榜</a> 
+							
+							<a
+							href="${cxt!}/jf/puresport/t7Crcl/heroList100?type=1" target="_blank"
+							type="button" class="btn  btn-lg btn-block logout_btn"
+							role="button">亚运会准入考试英雄榜</a>
+							<a
+							href="${cxt!}/jf/puresport/t7Crcl/heroList100?type=2" target="_blank"
+							type="button" class="btn  btn-lg btn-block logout_btn"
+							role="button">青奥会准入考试英雄榜</a>
+							<a
+							href="${cxt!}/jf/puresport/t7Crcl/heroList100?type=3" target="_blank"
+							type="button" class="btn  btn-lg btn-block logout_btn"
+							role="button">军运会准入考试英雄榜</a>
+							<a
+							href="${cxt!}/jf/puresport/t7Crcl/heroList100?type=4" target="_blank"
+							type="button" class="btn  btn-lg btn-block logout_btn"
+							role="button">东京奥运会准入考试英雄榜</a>
+							<a
+							href="${cxt!}/jf/puresport/t7Crcl/heroList100?type=6" target="_blank"
+							type="button" class="btn  btn-lg btn-block logout_btn"
+							role="button">冬青奥会准入考试英雄榜</a>
+							<a
+							href="${cxt!}/jf/puresport/t7Crcl/heroList100?type=7" target="_blank"
+							type="button" class="btn  btn-lg btn-block logout_btn"
+							role="button">十四冬会会准入考试英雄榜</a>
+							
+							<a
 							href="${cxt!}/jf/puresport/pagesController/loginout"
 							type="button" class="btn  btn-lg btn-block logout_btn"
 							role="button">注销</a>

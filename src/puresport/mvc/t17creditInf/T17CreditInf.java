@@ -84,6 +84,23 @@ public class T17CreditInf extends BaseModel<T17CreditInf> {
 	 */
 	public static final String column_credit_no = "credit_no";
 	
+	/**
+	 * 字段描述：考试id 
+	 * 字段类型：int  长度：null
+	 */
+	public static final String column_examid = "examid";
+		/**
+	 * 字段描述：考试成绩 
+	 * 字段类型：int  长度：null
+	 */
+	public static final String column_exam_grd = "exam_grd";
+	
+	/**
+ * 字段描述：证书名称
+ * 字段类型：int  长度：null
+ */
+public static final String column_name = "name";
+	
 	
 	/**
 	 * sqlId : puresport.t15CreditInf.splitPageFrom
@@ -101,7 +118,18 @@ public class T17CreditInf extends BaseModel<T17CreditInf> {
 	private String flag;
 	private String file_path;
 	private String credit_no;
+	
+	private Integer examid;
+	private Integer exam_grd;
+	private String name;
 
+	public void setName(String name){
+		set(column_name, name);
+	}
+	public <T> T getName() {
+		return get(column_name);
+	}
+	
 	public void setId(Long id){
 		set(column_id, id);
 	}
@@ -162,5 +190,16 @@ public class T17CreditInf extends BaseModel<T17CreditInf> {
 	public <T> T getCredit_no() {
 		return get(column_credit_no);
 	}
-	
+	public void setExamid(Integer examid){
+		set(column_examid, examid);
+	}
+	public <T> T getExamid() {
+		return get(column_examid);
+	}
+	public void setExam_grd(Integer exam_grd){
+		set(column_exam_grd, exam_grd);
+	}
+	public <T> T getExam_grd() {
+		return get(column_exam_grd);
+	}
 }

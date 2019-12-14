@@ -675,7 +675,7 @@ function initScoreTable(userID) {
 															title : "时间"
 														},
 														{
-															title : "查看试卷",
+															title : "查看试卷22",
 															sortable : false,
 															render : function(
 																	data, type,
@@ -694,7 +694,7 @@ function initScoreTable(userID) {
 																		+ '<span class="badge">查看</span>'
 																		+ '</a>';
 															}
-														}, ]
+														} ]
 											});
 						} else {
 							var dataSet = [];
