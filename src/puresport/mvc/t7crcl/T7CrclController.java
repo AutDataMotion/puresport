@@ -1462,7 +1462,6 @@ public class T7CrclController extends BaseController {
 		LOG.debug("totalScore=" + totalScore);
 
 		////
-		totalScore = 97;
 		if (totalScore >= 80) {
 		} else {
 			res = new ResultEntity("0003", "考试成绩不合格.", totalScore.toString(), "", t1.getUsrid() + "");
