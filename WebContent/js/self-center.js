@@ -432,8 +432,6 @@ function initScoreTable(userID) {
 																if(isHasCreditFlag==0 && parseInt(row[0]) >= 80){
 																return '<a href="/jf/puresport/t7Crcl/generateCredit?totalScore='
 																		+ row[0]
-/*																		+ '&which_competition='
-																		+ row[1]*/
 																		+ '&which_competition_cd='
 																		+ row[5]
 																		+ '&examid='

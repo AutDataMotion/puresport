@@ -1507,6 +1507,7 @@ public class T7CrclController extends BaseController {
 		if(hasCreditInf(t17)) {
 			LOG.debug("已经有证书.....");
 			setAttr("certificatePath", "/images_zcb/certificates/certificateDefault02.jpg");
+			setAttr("creditClass", "");
 			renderWithPath("/f/accession/certificate_new.html");
 			return;
 		}

@@ -124,6 +124,12 @@ public class T11ExamStat extends BaseModel<T11ExamStat> {
 	public static final String column_strTms = "strTms";
 	
 	/**
+	 * 字段描述：省份名称 
+	 * 字段类型：varchar  长度：128
+	 */
+	public static final String column_file_path = "file_path";
+	
+	/**
 	 * sqlId : puresport.t11ExamStat.splitPageFrom
 	 * 描述：分页from
 	 */
@@ -154,11 +160,11 @@ public class T11ExamStat extends BaseModel<T11ExamStat> {
 	// 是否已经有证书
 	private String file_path;
 
-	public String getFile_path() {
-		return file_path;
+	public void setFile_path(String file_path){
+		set(column_file_path, file_path);
 	}
-	public void setFile_path(String file_path) {
-		this.file_path = file_path;
+	public <T> T getFile_path() {
+		return get(column_file_path);
 	}
 	public <T> T  getStrTms() {
 		return get(column_strTms);

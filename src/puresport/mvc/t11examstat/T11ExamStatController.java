@@ -109,7 +109,7 @@ public class T11ExamStatController extends BaseController {
 		boolean flag = false;  
           
         String userID = getPara("userID");//获取表单数据，这里的参数就是页面表单中的name属性值         
-        List<T11ExamStat> itemlist = T11ExamStat.dao.find("select t.*,s.file_path from t11_exam_stat t left join t17_credit_inf s ON t.usrid=s.usrid and t.type = s.type where t.usrid=? and t.exam_st = '1' order by t.tms desc", userID);
+        List<T11ExamStat> itemlist = T11ExamStat.dao.find("select t.*,s.file_path as file_path from t11_exam_stat t left join t17_credit_inf s ON t.usrid=s.usrid and t.type = s.type where t.usrid=? and t.exam_st = '1' order by t.tms desc", userID);
         if(itemlist!=null)
         {
         	flag = true;
