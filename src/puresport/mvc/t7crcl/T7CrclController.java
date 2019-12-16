@@ -330,7 +330,9 @@ public class T7CrclController extends BaseController {
 	@Clear
 	public void showCredit_new() {
 		String certificatePath = getPara("certificatePath");
-		setAttr("certificatePath", certificatePath);
+		String sql = "select * from t17_credit_inf t where t.id = '" + certificatePath + "' and t.flag ='02'";
+		T17CreditInf t17 = T17CreditInf.dao.findFirst(sql);
+		setAttr("certificatePath", t17.getFile_path());
 		setAttr("shareDisplay", "inline");
 		renderWithPath("/f/accession/certificate_new.html");
 	}
