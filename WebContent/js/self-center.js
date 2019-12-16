@@ -429,6 +429,8 @@ function initScoreTable(userID) {
 																var isHasCreditFlag = 1;
 																if(row[6]==null || row[6]=="")
 																	isHasCreditFlag = 0;
+																if(row[5]==null || row[5]=="")
+																	isHasCreditFlag = 1;
 																if(isHasCreditFlag==0 && parseInt(row[0]) >= 80){
 																return '<a href="/jf/puresport/t7Crcl/generateCredit?totalScore='
 																		+ row[0]
@@ -441,6 +443,7 @@ function initScoreTable(userID) {
 																		+ '</a>';
 																} else
 																	return "";
+
 															}
 														} ]
 											});
