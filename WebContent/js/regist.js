@@ -48,11 +48,11 @@ $(function() {
 			  curUsrType = usrType;
 			  
 			  if(curUsrType == '运动员'){
-				  $('#divSportor').show();
+//				  $('#divSportor').show();
 				  $('#divAssistor').hide();
 			  } else {
 				  $('#divAssistor').show();
-				  $('#divSportor').hide();
+//				  $('#divSportor').show();
 			  }
 			  
 		});  
@@ -103,16 +103,17 @@ $(function() {
 //		});
 		
 		form.on('submit(btn-submit)', function(data){
+			
+			if(!data.field.spt_prj || data.field.spt_prj == '请选择项目' || data.field.spt_prj == ''){
+				layer.msg('项目不能为空');
+				return false;
+			}
+			if(!data.field.typeleve){
+				layer.msg('级别不能为空');
+				return false;
+			}
+			
 			if(data.field.usr_tp=='运动员'){
-				
-				if(!data.field.spt_prj || data.field.spt_prj == '请选择项目' || data.field.spt_prj == ''){
-					layer.msg('项目不能为空');
-					return false;
-				}
-				if(!data.field.typeleve){
-					layer.msg('级别不能为空');
-					return false;
-				}
 				
 			} else {
 				

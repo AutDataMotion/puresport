@@ -41,8 +41,8 @@ public class T1userBscDTO implements Serializable{
 	private String province;
 	private String city;
 	private String institute;
-    private Integer emailValCode;
-    private Integer mblphValCode;
+    private String emailValCode;
+    private String mblphValCode;
     private String department;
     private String post; 
     
@@ -72,10 +72,13 @@ public class T1userBscDTO implements Serializable{
 		city = t1usrBsc.getCity();
 		mblph_no = t1usrBsc.getMblph_no();
 		email = t1usrBsc.getEmail();
+		
+		spt_prj = t1usrBsc.getSpt_prj();
+		typeleve = EnumTypeLevel.toTypeLevel(t1usrBsc.getTypelevel()
+				, t1usrBsc.getLevelinstitute(), t1usrBsc.getLevelprovince(), t1usrBsc.getLevelcity());
+		
 		if (EnumRoleType.Sporter.getName().equals(usr_tp)) {
-			spt_prj = t1usrBsc.getSpt_prj();
-			typeleve = EnumTypeLevel.toTypeLevel(t1usrBsc.getTypelevel()
-					, t1usrBsc.getLevelinstitute(), t1usrBsc.getLevelprovince(), t1usrBsc.getLevelcity());
+			
 		} else {
 			department = t1usrBsc.getDepartment();
 			post = t1usrBsc.getPost();
@@ -142,11 +145,13 @@ public class T1userBscDTO implements Serializable{
 			return false;
 		}
 		
+		if (ComUtil.haveEmpty(spt_prj, typeleve)) {
+			addTip("spt_prj, typeleve empty");
+			return false;
+		}
+		
 		if (EnumRoleType.Sporter.getName().equals(usr_tp)) {
-			if (ComUtil.haveEmpty(spt_prj, typeleve)) {
-				addTip("spt_prj, typeleve empty");
-				return false;
-			}
+			
 		}
 		
 		if (usr_tp.equals(EnumRoleType.Assistor.getName())) {
@@ -171,7 +176,7 @@ public class T1userBscDTO implements Serializable{
 		}
 
 		// 邮件是否校验
-		if (emailValCode!=null) {
+		if (!ComUtil.isEmptyStr(emailValCode)) {
 			if (null == authCodeMdlEmail || authCodeMdlEmail.checkAuthCodeFail(email, emailValCode.toString(), ConstantInitMy.AuthCode_TimeOut)) {
 				addTip("邮箱校验码失败，请重新获取验证");
 				return false;
@@ -179,7 +184,7 @@ public class T1userBscDTO implements Serializable{
 		}
 		
 		// 手机是否校验
-		if (mblphValCode!=null) {
+		if (!ComUtil.isEmptyStr(mblphValCode)) {
 			if (null == authCodeMdlPhone || authCodeMdlPhone.checkAuthCodeFail(mblph_no, mblphValCode.toString(), ConstantInitMy.AuthCode_TimeOut)) {
 				addTip("手机校验码不正确，请重新获取验证");
 				return false;
@@ -415,19 +420,19 @@ public class T1userBscDTO implements Serializable{
 		this.institute = institute;
 	}
 
-	public Integer getEmailValCode() {
+	public String getEmailValCode() {
 		return emailValCode;
 	}
 
-	public void setEmailValCode(Integer emailValCode) {
+	public void setEmailValCode(String emailValCode) {
 		this.emailValCode = emailValCode;
 	}
 
-	public Integer getMblphValCode() {
+	public String getMblphValCode() {
 		return mblphValCode;
 	}
 
-	public void setMblphValCode(Integer mblphValCode) {
+	public void setMblphValCode(String mblphValCode) {
 		this.mblphValCode = mblphValCode;
 	}
 

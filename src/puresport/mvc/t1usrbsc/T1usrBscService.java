@@ -747,9 +747,9 @@ public class T1usrBscService extends BaseService {
 		
 		userBsc.setUsr_tp(dto.getUsr_tp());
 		
+		userBsc.setSpt_prj(dto.getSpt_prj());
+		resolveLevel(userBsc, dto.getTypeleve());
 		if (EnumRoleType.Sporter.getName().equals(dto.getUsr_tp())) {
-			userBsc.setSpt_prj(dto.getSpt_prj());
-			resolveLevel(userBsc, dto.getTypeleve());
 			
 		} else {
 			userBsc.setDepartment(dto.getDepartment());
