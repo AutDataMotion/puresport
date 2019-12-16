@@ -30,7 +30,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script type="text/javascript" src="/js/jquery.mixitup.min.js"></script>
 <link href="/css/owl.carousel.css" rel="stylesheet">
 <link href="/css/owl.theme.css" rel="stylesheet">
- 
+
 <!--script type="text/javascript"
 	src="http://code.jquery.com/jquery-latest.min.js"></script-->
 <!-- 弹出框样式及js -->
@@ -44,7 +44,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <style type="text/css">
 * {
 	margin: 0px;
-	
 	padding: 0px;
 }
 
@@ -60,6 +59,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	width: 105px;
 	height: 20px;
 }
+
 .txt_pinyin {
 	padding-left: 208px;
 	padding-top: -100px;
@@ -213,11 +213,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		var url;
 		url = '/jf/puresport/t7Crcl/submitExam';
 		var examid = document.getElementById("examid").value;
-		//loading层
-		var index = layer.load(1, {
-		  shade: [0.1,'#fff'] //0.1透明度的白色背景
-		});
-
 		
 		$
 				.ajax({
@@ -235,6 +230,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						if (res.code == "0000") {
 							 var msg = "您的成绩为" + res.parm2 + "， 已通过准入考试，请确认是否生成准入合格证书！"; 
 							 if (confirm(msg)==true){
+									//loading层
+									var index = layer.load(1, {
+									  shade: [0.1,'#fff'] //0.1透明度的白色背景
+									});
 								 window.location.href = "${cxt!''}/jf/puresport/t7Crcl/generateCredit?which_competition_cd="+ res.desc+"&which_competition="+res.parm1+"&totalScore="+res.parm2+"&examid="+res.parm3;
 							 }else{
 								 //alert("false"); 
@@ -397,7 +396,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	<div class="main_btm1">
 		<!-- 第一页：考试说明 -->
 		<!-- <div id="mannulDiv" class="demo" style="display: none;"> -->
-		<div id="mannulDiv" class="demo" >
+		<div id="mannulDiv" class="demo">
 			<div class="container">
 				<h2 align="center">准入考试说明</h2>
 				</br>
@@ -565,9 +564,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<%for(x in examSelectList){ %>
 				<div>
 					<label>【多项选择】 </label> </br> <label>第${x.prblmno!''}题：
-						${x.ttl!''}  &nbsp<!-- ${x.prblm_aswr!''} --> </label> </br> <label for=${x.prblmid!
-						''}A class="prblSelect" style="font-weight: lighter"> <input
-						type="checkbox" name=${x.prblmno! ''} value=A id=${x.prblmid! ''}A>
+						${x.ttl!''} &nbsp<!-- ${x.prblm_aswr!''} -->
+					</label> </br> <label for=${x.prblmid! ''}A class="prblSelect"
+						style="font-weight: lighter"> <input type="checkbox"
+						name=${x.prblmno! ''} value=A id=${x.prblmid! ''}A>
 						${x.optA!}
 					</label> </br> <label for=${x.prblmid! ''}B class="prblSelect"
 						style="font-weight: lighter"> <input type="checkbox"
@@ -601,10 +601,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 				<%}%> <%for(y in examDeducList){ %>
 				<div>
 					<label>【判断题】 </label> </br> <label> 第${y.prblmno!''}题：
-						${y.ttl!''}  &nbsp<!-- ${y.prblm_aswr!''} --> </label> </br> </br> <label for=${y.prblmid!
-						''}A class="prblSelect" style="font-weight: lighter"> <input
-						type="radio" name=${y.prblmno! ''} value=A id=${y.prblmid! ''}A>
-						正 确<!-- ${y.prblmid!} -->
+						${y.ttl!''} &nbsp<!-- ${y.prblm_aswr!''} -->
+					</label> </br> </br> <label for=${y.prblmid! ''}A class="prblSelect"
+						style="font-weight: lighter"> <input type="radio"
+						name=${y.prblmno! ''} value=A id=${y.prblmid! ''}A> 正 确<!-- ${y.prblmid!} -->
 					</label> </br> </br> <label for=${y.prblmid! ''}B class="prblSelect"
 						style="font-weight: lighter"> <input type="radio"
 						name=${y.prblmno! ''} value=B id=${y.prblmid! ''}B> 错 误<!-- ${y.prblmid!} -->
@@ -716,8 +716,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</div>
 			<!-- /.modal-dialog -->
 		</div>
-		
-<!-- /.modal -->
+
+		<!-- /.modal -->
 
 	</div>
 	<!-- start footer -->
