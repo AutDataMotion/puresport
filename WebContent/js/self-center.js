@@ -378,6 +378,8 @@ function initScoreTable(userID) {
 								score.push(data.itemlist[i].tms);
 								score.push(data.itemlist[i].examid);
 								score.push(data.itemlist[i].usrid);
+								score.push(data.itemlist[i].type);
+								score.push(data.itemlist[i].file_path);
 								dataSet.push(score);
 							}
 							$('#score_excel')
@@ -418,7 +420,31 @@ function initScoreTable(userID) {
 																		+ '<code class="text-success bg-success">答题情况</code>'
 																		+ '</a>';
 															}
-														}, ]
+														}, {
+															title : "生成证书",
+															sortable : false,
+															render : function(
+																	data, type,
+																	row) {
+																var isHasCreditFlag = 1;
+																if(row[6]==null || row[6]=="")
+																	isHasCreditFlag = 0;
+																if(isHasCreditFlag==0 && parseInt(row[0]) >= 80){
+																return '<a href="/jf/puresport/t7Crcl/generateCredit?totalScore='
+																		+ row[0]
+/*																		+ '&which_competition='
+																		+ row[1]*/
+																		+ '&which_competition_cd='
+																		+ row[5]
+																		+ '&examid='
+																		+ row[3]
+																		+ '" target="_blank"  role="button">'
+																		+ '<code class="text-success bg-success">生成</code>'
+																		+ '</a>';
+																} else
+																	return "";
+															}
+														} ]
 											});
 						} else {
 							var dataSet = [];

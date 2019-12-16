@@ -1,14 +1,13 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-<title>${session['which_competition']}反兴奋剂教育准入考试英雄榜</title>
+<title>${pageHead!'反兴奋剂教育准入合格证书'}</title>
 <link rel="shortcut icon" href="${cxt!}/images/favicon.ico" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords"
 	content="Skate Responsive web template, Bootstrap Web Templates, Flat Web Templates, Andriod Compatible web template, 
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyErricsson, Motorola web design" />
-
 <!-- 浏览器不缓存 -->
 <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
 <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache">
@@ -44,10 +43,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	font-size: 20px;
 	padding-left: 5px;
 }
+
 .title {
 	font-family: "微软雅黑", "黑体", "宋体";
 	font-size: 25px;
 }
+
 .score {
 	padding-top: 130px;
 	padding-right: 250px;
@@ -59,8 +60,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	height: 600px；
 }
 
-
-
 </style>
 <script type="text/javascript">
 	$(function() {
@@ -69,8 +68,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		/* 	$('#code').qrcode(str); */
 		$("#code").qrcode({
 			render : "table",
-			width : 130,
-			height : 130,
+			width : 100,
+			height : 100,
 			text : str
 		});
 	})
@@ -95,6 +94,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		return out;
 	}
 </script>
+
 <style type="text/css">
 .prblSelect {
 	width: 850px;
@@ -107,75 +107,44 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </head>
 <body>
 	<% include("/f/header.html"){} %>
- 	<div class="main_bg">
+	<div class="main_bg">
+		<!-- start main -->
 		<div class="container">
 			<div class="main_grid1">
-				<h3 class="style pull-left">${which_competition!''}准入考试英雄榜</h3>
+				<h3 class="style pull-left">合格证书</h3>
+				<h3 class="style pull-right">${which_competition!''}</h3>
 			</div>
 		</div>
 	</div>
-	<!-- class="alert alert-info" -->
-	<div class="alert alert-info">
-	<div class="row">
-	<div class="col-md-3 "></div>
-	<div class="col-md-6 " align="center" >
-	<div class="span4_of_list" width="100%" >
-	<table class="table table-striped2" align="center"> <!-- background="/images_zcb/rank9.png" --> 
-	<thead>
-		<tr style="background-image:url('/images_zcb/tr_bg.jpg');">
-			<th align="center"><h3>排名</h3></th>
-			<th align="center"><h3>分数</h3></th>
-			<th align="center"><h3>姓名</h3></th>
-			<th align="center"><h3>项目</h3></th>
-			<th align="center"><h3>地区</h3></th>
-			<th align="center"><h3>时间</h3></th>
-		</tr>
-	</thead>
-	<tbody>
-	
-		<tr style="${t11SelfDisplay!''}">
-			<td><div style="color:${t11Self.rank!'#454545'}"><h5>第${t11Self.id!''}名</h5></div></td>	
-			<td><div style="color:${t11Self.rank!'#454545'}"><h5>${t11Self.exam_grd!''}</h5></div></td>
-			<td><div style="color:${t11Self.rank!'#454545'}"><h5>${t11Self.nm!'虚位以待'}</h5></div></td>
-			<td><div style="color:${t11Self.rank!'#454545'}"><h5>${t11Self.spt_prj!''}</h5></div></td>
-			<td><div style="color:${t11Self.rank!'#454545'}"><h5>${t11Self.province!''}${t11Self.city!''}</h5></div></td>
-			<td><div style="color:${t11Self.rank!'#454545'}"><h5>${t11Self.strTms!''}</h5></div></td>			
-		</tr>
-		
-				<%for(x in heroList10){ %>
-			<tr>
-			<td>
-				<img src="/images_zcb/${x.rankImg!''}" width="35" height="40" >
-			</td>	
-			<td><div style="color:${x.rank!'#454545'}"><h5>${x.exam_grd!''}</h5></div></td>
-			<td><div style="color:${x.rank!'#454545'}"><h5>${x.nm!'虚位以待'}</h5></div></td>
-			<td><div style="color:${x.rank!'#454545'}"><h5>${x.spt_prj!''}</h5></div></td>
-			<td><div style="color:${x.rank!'#454545'}"><h5>${x.province!''}${x.city!''}</h5></div></td>
-			<td><div style="color:${x.rank!'#454545'}"><h5>${x.strTms!''}</h5></div></td>			
-		</tr>
-		<%}%> 
-			<%for(x in heroList100){ %>
-			<tr>
-<!-- 			<td>
-				<img src="/images_zcb/${x.rankImg!''}" width="35" height="40" >
-			</td>	 -->
-			<td><div style="color:${x.rank!'#454545'}"><h5>第${x.id!''}名</h5></div></td>	
-			<td><div style="color:${x.rank!'#454545'}"><h5>${x.exam_grd!''}</h5></div></td>
-			<td><div style="color:${x.rank!'#454545'}"><h5>${x.nm!'虚位以待'}</h5></div></td>
-			<td><div style="color:${x.rank!'#454545'}"><h5>${x.spt_prj!''}</h5></div></td>
-			<td><div style="color:${x.rank!'#454545'}"><h5>${x.province!''}${x.city!''}</h5></div></td>		
-			<td><div style="color:${x.rank!'#454545'}"><h5>${x.strTms!''}</h5></div></td>	
-		</tr>
-		<%}%> 
-		
-	</tbody>
-</table>
-</div>
-</div>
-<div class="col-md-3"></div>
-</div>
-  
-  	<% include("/f/footer.html"){} %>
-</div>
+	<div class="main_btm1">
+				<!-- 必修视频课程一 -->
+			<!-- <div class="title" >${course_title!''}</div> -->
+			<!-- 代码 开始 -->
+			<div id="container">
+				<%for(x in T17List){ %>
+				<div class="banner">
+					<a
+						href="/jf/puresport/t7Crcl/video_play"
+						target="_self"> <img height="125" width="125"
+						alt="The Best Designs"
+						src="${cxt!''}${x.file_path!'/images_zcb/certificates/certificateDefault.jpg'}" />
+					</a>
+					<p class="companyInfo">${x.name!''}</p>
+					<div class="cornerTL"></div>
+					<div class="cornerTR"></div>
+					<div class="cornerBL"></div>
+					<div class="cornerBR"></div>
+				</div>
+				 <%}%>
+				<!-- Examples body -->
+			</div>
+			<br>
+			<!-- END_CONTAINER -->
+	</div>
+	<!-- start footer -->
+	<% include("/f/footer.html"){} %>
+	<!-- end footer -->
+	<input type="hidden" id="examid" value="${examid!'-1'}">
+	</input>
 </body>
 </html>

@@ -96,20 +96,26 @@ public class T7CrclController extends BaseController {
 		if (StringUtils.isBlank(which_competition)) {
 			getSession().setAttribute("which_competition", which_competition);// 设置session，保存
 			renderWithPath("/f/zhunru_index.html");
-			return; 
+			return;
 		}
 		if (which_competition.equals(EnumCompetition.ShengYunHui.getIndex_str())) {
 			getSession().setAttribute("which_competition", EnumCompetition.ShengYunHui.getCompetitionName());
+			getSession().setAttribute("which_competition_cd", EnumCompetition.ShengYunHui.getIndex_str());
 		} else if (which_competition.equals(EnumCompetition.YaYunHui.getIndex_str())) {
 			getSession().setAttribute("which_competition", EnumCompetition.YaYunHui.getCompetitionName());
+			getSession().setAttribute("which_competition_cd", EnumCompetition.YaYunHui.getIndex_str());
 		} else if (which_competition.equals(EnumCompetition.QingAoHui.getIndex_str())) {
 			getSession().setAttribute("which_competition", EnumCompetition.QingAoHui.getCompetitionName());
+			getSession().setAttribute("which_competition_cd", EnumCompetition.QingAoHui.getIndex_str());
 		} else if (which_competition.equals(EnumCompetition.JunYunHui.getIndex_str())) {
 			getSession().setAttribute("which_competition", EnumCompetition.JunYunHui.getCompetitionName());
+			getSession().setAttribute("which_competition_cd", EnumCompetition.JunYunHui.getIndex_str());
 		} else if (which_competition.equals(EnumCompetition.DongQingAoHui.getIndex_str())) {
 			getSession().setAttribute("which_competition", EnumCompetition.DongQingAoHui.getCompetitionName());
+			getSession().setAttribute("which_competition_cd", EnumCompetition.DongQingAoHui.getIndex_str());
 		} else if (which_competition.equals(EnumCompetition.ShiSiDongHui.getIndex_str())) {
 			getSession().setAttribute("which_competition", EnumCompetition.ShiSiDongHui.getCompetitionName());
+			getSession().setAttribute("which_competition_cd", EnumCompetition.ShiSiDongHui.getIndex_str());
 		}
 
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
@@ -313,6 +319,21 @@ public class T7CrclController extends BaseController {
 		renderJson(res);
 		return;
 	}
+	
+	/**
+	 * 描述：展示证书
+	 * 
+	 * @author zhuchaobin 2019-11-10
+	 * @throws URISyntaxException
+	 * @throws IOException
+	 */
+	@Clear
+	public void showCredit_new() {
+		String certificatePath = getPara("certificatePath");
+		setAttr("certificatePath", certificatePath);
+		setAttr("shareDisplay", "inline");
+		renderWithPath("/f/accession/certificate_new.html");
+	}
 
 	/**
 	 * 描述：展示证书
@@ -350,6 +371,85 @@ public class T7CrclController extends BaseController {
 			e.printStackTrace();
 			return false;
 		}
+	}
+
+	/**
+	 * 描述：查询证书列表
+	 * 
+	 * @author zhuchaobin 2019-12-13
+	 * @throws URISyntaxException
+	 */
+	@Clear
+	public void queryCetifateList() {
+		String usrid = getPara("usrid");
+		setAttr("usrid", usrid);
+		String certificatePath = "";
+		List<T17CreditInf> T17List = new ArrayList<T17CreditInf>();
+		// 查询用户信息
+		T1usrBsc t1 = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", usrid);// 根据用户名查询数据库中的用户
+		if (t1 == null) {
+			LOG.error("查询用户信息失败.");
+			/*
+			 * setAttr("certificatePath",
+			 * "/images_zcb/certificates/certificateDefault.jpg");
+			 * LOG.debug("certificatePath=" + certificatePath); setAttr("class", "");
+			 * renderWithPath("/f/accession/certificate.html");
+			 */
+			return;
+		}
+		
+		setAttr("userNm", t1.getNm());
+		try {
+			// 优先查询新版证书，是否存在
+			String sql = "select * from t17_credit_inf t where t.usrid = '" + usrid + "' and t.flag ='02'";
+			T17List = T17CreditInf.dao.find(sql);
+			certificatePath = "/images_zcb/certificates/" + "反兴奋剂教育准入合格证书_" + t1.getNm() + "_" + usrid + ".jpg";
+			// 查询旧版证书是否存在
+			String path = Class.class.getResource("/").toURI().getPath();
+			String filepath = new File(path).getParentFile().getParentFile().getCanonicalPath();
+			File file = new File(filepath + certificatePath);
+			if (judeFileExists(file)) {
+				T17CreditInf t17 = new T17CreditInf();
+				t17.setUsrid(Long.parseLong(usrid));
+				t17.setFile_path(certificatePath);
+				t17.setName("反兴奋剂教育准入合格证书");
+				if (null == T17List)
+					T17List = new ArrayList<T17CreditInf>();
+				T17List.add(t17);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		setAttr("pageHead", "反兴奋剂教育准入合格证书-" + t1.getNm());
+		setAttr("T17List", T17List);
+		if (T17List.size() == 1) {
+			// 根据是否有证书和是否参加过考试，决定显示效果
+			// if (isCertificated) {
+			// setAttr("shareDisplay", "inline");
+			// setAttr("rankDisplay", "inline");
+			// setAttr("disappointDisplay", "inline");
+			// } else if (isExamed) {
+			// setAttr("rankDisplay", "inline");
+			// setAttr("disappointDisplay", "inline");
+			// } else {
+			// setAttr("startDisplay", "inline");
+			// }
+			setAttr("certificatePath", T17List.get(0).getFile_path());
+			setAttr("shareDisplay", "inline");
+			renderWithPath("/f/accession/certificate_new.html");
+		} else if (T17List.size() > 1) {
+			setAttr("certificatePath", T17List.get(0).getFile_path());
+			renderWithPath("/f/accession/certificate_list.html");
+		} else {
+			setAttr("startDisplay", "inline");
+			renderWithPath("/f/accession/certificate_new.html");
+		}
+
 	}
 
 	/**
@@ -396,12 +496,12 @@ public class T7CrclController extends BaseController {
 			// 优先查询新版证书，是否存在
 			String sql = "select * from t17_credit_inf t where t.usrid = '" + usrid + "' and t.flag ='01'";
 			T17CreditInf t17Rlt = T17CreditInf.dao.findFirst(sql);
-			if(null != t17Rlt) {
+			if (null != t17Rlt) {
 				certificatePath = t17Rlt.getFile_path();
 				setAttr("certificatePath", certificatePath);
 				setAttr("class", "img-thumbnail");
 				isCertificated = true;
-			} else {// 查询旧版证书是否存在			
+			} else {// 查询旧版证书是否存在
 				String path = Class.class.getResource("/").toURI().getPath();
 				String filepath = new File(path).getParentFile().getParentFile().getCanonicalPath();
 				File file = new File(filepath + certificatePath);
@@ -494,14 +594,15 @@ public class T7CrclController extends BaseController {
 			 * (!StringUtils.isBlank(crdt_no)) { crdt_no_endStr = crdt_no.substring(0, 1) +
 			 * crdt_no.substring(crdt_no.length() - 2, crdt_no.length() - 1); }
 			 */
-//			certificatePath = "/images_zcb/certificates/" + "反兴奋剂教育准入合格证书_" + t1.getNm() + "_" + usrid + ".jpg";
-			
+			// certificatePath = "/images_zcb/certificates/" + "反兴奋剂教育准入合格证书_" + t1.getNm()
+			// + "_" + usrid + ".jpg";
+
 			String sql = "select * from t17_credit_inf t where t.usrid = '" + usrid + "' and t.flag ='01'";
 			T17CreditInf t17Rlt = T17CreditInf.dao.findFirst(sql);
-			if(null != t17Rlt) {
+			if (null != t17Rlt) {
 				certificatePath = t17Rlt.getFile_path();
-			} 
-	
+			}
+
 			setAttr("certificatePath", certificatePath);
 		}
 		// 判定证书文件是否存在,不存在则返回默认未取得证书路径
@@ -877,7 +978,8 @@ public class T7CrclController extends BaseController {
 		 */
 		// 查询一共考了多少次，规则修改为不能超过3次，2019-10-30
 		List<T11ExamStat> T11ExamStat_num = T11ExamStat.dao
-				.find("select * from t11_exam_stat t where t.exam_st = '1' and t.usrid='" + usrid + "'  and t.exam_nm = '"+which_competition+"'" );
+				.find("select * from t11_exam_stat t where t.exam_st = '1' and t.usrid='" + usrid
+						+ "'  and t.exam_nm = '" + which_competition + "'");
 		if (T11ExamStat_num.size() >= 3) {
 			LOG.debug("generteTest----" + "总答题次数已满3次！！");
 			setAttr("tpsMsg", "对不起，每人最多只能答题三次。您已答题三次，不能再参加考试。");
@@ -1061,8 +1163,10 @@ public class T7CrclController extends BaseController {
 	public void submitExam() {
 
 		String which_competition = (String) getSession().getAttribute("which_competition");
+		String which_competition_cd = (String) getSession().getAttribute("which_competition_cd");
 
-		String type = getPara("type");
+		// String type = getPara("type");
+		String type = which_competition_cd;
 		String category = getPara("category");
 
 		System.out.println("type=" + type);
@@ -1072,38 +1176,27 @@ public class T7CrclController extends BaseController {
 		ResultEntity res = null;
 		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 
-		if (which_competition.equals("青奥会")) {
-			// 查询一共考了多少次，规则修改为青奥会考试次数不能超过3次，2018-09-04
-			List<T11ExamStat> T11ExamStat_num = T11ExamStat.dao
-					.find("select * from t11_exam_stat t where t.exam_st = '1' and t.exam_nm = '青奥会' and t.usrid='"
-							+ usrid + "'");
-			if (T11ExamStat_num.size() >= 3) {
-				LOG.debug("generteTest----" + "总答题次数已满3次！！");
-				setAttr("tpsMsg", "对不起，每人最多只能答题三次。您已答题三次，不能再参加考试。");
-				renderWithPath("/f/tips.html");
-				return;
-			}
-		} else if (which_competition.equals("东京奥运会")) {
-			// 查询一共考了多少次，没门课程不超过3次
-			List<T11ExamStat> T11ExamStat_num = T11ExamStat.dao.find("select * from t11_exam_stat t where t.type = '"
-					+ type + "' and t.category = '" + category + "' and t.usrid='" + usrid + "' and t.exam_st != '9'");
-			if (T11ExamStat_num.size() >= 3) {
-				LOG.debug("generteTest----" + "总答题次数已满3次！！");
-				setAttr("tpsMsg", "对不起，该课程只能答题三次。您已答题三次，不能再参加考试。");
-				renderWithPath("/f/tips.html");
-				return;
-			}
-		} else {// 省运会、亚运会
-			// 查询当天已经考试了几次
-			List<T11ExamStat> T11ExamStat_num = T11ExamStatService.service.SelectByUserIdAndTime(usrid,
-					which_competition);
-			if (T11ExamStat_num.size() >= 3) {
-				LOG.debug("generteTest----" + "今日答题次数已满！！");
-				setAttr("tpsMsg", "对不起，每日最多只能答题三次。您今天已答题三次，请明日再答。");
-				renderWithPath("/f/tips.html");
-				return;
-			}
-		}
+		/*
+		 * if (which_competition.equals("青奥会")) { //
+		 * 查询一共考了多少次，规则修改为青奥会考试次数不能超过3次，2018-09-04 List<T11ExamStat> T11ExamStat_num =
+		 * T11ExamStat.dao
+		 * .find("select * from t11_exam_stat t where t.exam_st = '1' and t.exam_nm = '青奥会' and t.usrid='"
+		 * + usrid + "'"); if (T11ExamStat_num.size() >= 3) {
+		 * LOG.debug("generteTest----" + "总答题次数已满3次！！"); setAttr("tpsMsg",
+		 * "对不起，每人最多只能答题三次。您已答题三次，不能再参加考试。"); renderWithPath("/f/tips.html"); return; }
+		 * } else if (which_competition.equals("东京奥运会")) { // 查询一共考了多少次，没门课程不超过3次
+		 * List<T11ExamStat> T11ExamStat_num =
+		 * T11ExamStat.dao.find("select * from t11_exam_stat t where t.type = '" + type
+		 * + "' and t.category = '" + category + "' and t.usrid='" + usrid +
+		 * "' and t.exam_st != '9'"); if (T11ExamStat_num.size() >= 3) {
+		 * LOG.debug("generteTest----" + "总答题次数已满3次！！"); setAttr("tpsMsg",
+		 * "对不起，该课程只能答题三次。您已答题三次，不能再参加考试。"); renderWithPath("/f/tips.html"); return; } }
+		 * else {// 省运会、亚运会 // 查询当天已经考试了几次 List<T11ExamStat> T11ExamStat_num =
+		 * T11ExamStatService.service.SelectByUserIdAndTime(usrid, which_competition);
+		 * if (T11ExamStat_num.size() >= 3) { LOG.debug("generteTest----" +
+		 * "今日答题次数已满！！"); setAttr("tpsMsg", "对不起，每日最多只能答题三次。您今天已答题三次，请明日再答。");
+		 * renderWithPath("/f/tips.html"); return; } }
+		 */
 
 		// 查询一共考了多少次，规则修改为所有赛事都考试次数不能超过3次，2018-09-04
 		// List<T11ExamStat> T11ExamStat_num = T11ExamStat.dao.find("select * from
@@ -1123,6 +1216,28 @@ public class T7CrclController extends BaseController {
 		 * setAttr("tpsMsg", "对不起，每日最多只能答题三次。您今天已答题三次，请明日再答。");
 		 * renderWithPath("/f/tips.html"); }
 		 */
+
+		if (which_competition.equals("东京奥运会")) { // 查询一共考了多少次，没门课程不超过3次
+			List<T11ExamStat> T11ExamStat_num = T11ExamStat.dao.find("select * from t11_exam_stat t where t.type = '" + type
+			  + "' and t.category = '" + category + "' and t.usrid='" + usrid +
+			  "' and t.exam_st != '9'"); 
+			  if (T11ExamStat_num.size() >= 3) {
+			  LOG.debug("generteTest----" + "总答题次数已满3次！！"); setAttr("tpsMsg",
+			  "对不起，该课程只能答题三次。您已答题三次，不能再参加考试。"); 
+			  renderWithPath("/f/tips.html"); return; 
+			  } 
+		  } else {
+			// 2019-12-12改为所有赛事都只能参加三次考试
+			List<T11ExamStat> T11ExamStat_num = T11ExamStat.dao
+					.find("select * from t11_exam_stat t where t.exam_st = '1' and t.exam_nm = '" + which_competition
+							+ "' and t.usrid='" + usrid + "'");
+			if (T11ExamStat_num.size() >= 3) {
+				LOG.debug("generteTest----" + "总答题次数已满3次！！");
+				setAttr("tpsMsg", "对不起，每人最多只能答题三次。您已答题三次，不能再参加考试。");
+				renderWithPath("/f/tips.html");
+				return;
+			}
+		  }
 
 		// else {
 
@@ -1148,16 +1263,17 @@ public class T7CrclController extends BaseController {
 				renderJson(res);
 				return;
 			}
-			// 2019-11-30 朱朝彬，承诺人姓名全拼校验 
+			// 2019-11-30 朱朝彬，承诺人姓名全拼校验
 			if (StringTools.isIgnoreEqueal(commimentPinyin, t1.getNmChar())) {
 				LOG.debug("commimentPinyin= " + commimentPinyin + "用户姓名拼音= " + t1.getNmChar() + "承诺人姓名拼音无误.");
 			} else {
-				LOG.error("commimentPinyin= " + commimentPinyin + "用户姓名拼音= " + t1.getNmChar() + "承诺人姓名拼音与用户姓名拼音不一致，无法提交考试成绩.");
+				LOG.error("commimentPinyin= " + commimentPinyin + "用户姓名拼音= " + t1.getNmChar()
+						+ "承诺人姓名拼音与用户姓名拼音不一致，无法提交考试成绩.");
 				res = new ResultEntity("0002", "承诺人姓名拼音与用户姓名拼音不一致，无法提交考试成绩!");
 				renderJson(res);
 				return;
 			}
-			
+
 		}
 
 		T10ExamGrd t10 = new T10ExamGrd();
@@ -1211,15 +1327,15 @@ public class T7CrclController extends BaseController {
 					t10Data.setExam_grd(5);
 					t10Data.setResult("正确");
 					// 更新答对次数
-					ConfMain.db().update("update t13_tst_stat t set t.right_num = t.right_num + 1 where prblmid ="
-							+ prblmId);
+					ConfMain.db().update(
+							"update t13_tst_stat t set t.right_num = t.right_num + 1 where prblmid =" + prblmId);
 				} else {
 					t10Data.setExam_grd(0);
 					t10Data.setResult("错误");
 					// 更新答对次数
 
-					ConfMain.db().update("update t13_tst_stat t set t.wrong_num = t.wrong_num + 1 where prblmid ="
-							+ prblmId);
+					ConfMain.db().update(
+							"update t13_tst_stat t set t.wrong_num = t.wrong_num + 1 where prblmid =" + prblmId);
 				}
 				t10Data.setUsr_aswr(usr_aswr);
 				t10Data.setExam_st("1");
@@ -1344,176 +1460,127 @@ public class T7CrclController extends BaseController {
 		}
 
 		LOG.debug("totalScore=" + totalScore);
-		// 东京奥运会积分制合格证书生成
-		if ("东京奥运会".equals(which_competition)) {
-			// 判断是否可以取得合格证书
-/*						if (totalScore >= 80) {
-						} else {
-							res = new ResultEntity("0003", "考试成绩不合格.", totalScore.toString(), "", t1.getUsrid() + "");
-							// setAttr("certificatePath", certificatePath);
-							// renderWithPath("/f/accession/certificate.html");
-							renderJson(res);
-							return;
-						}*/
-						// ResultEntity res = new ResultEntity("0000", "恭喜您！您已完成测试，您的成绩为：" + toltalScore
-						// + "分！");
-						String certificatePath = "";
-						Date date = new Date();
-						DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-						String dataTime = format.format(date);
-						// 获取工程路径
-						String webContentPath = "";
-						try {
-							String path = Class.class.getResource("/").toURI().getPath();
-							webContentPath = new File(path).getParentFile().getParentFile().getCanonicalPath();
-							LOG.info("webContentPath=" + webContentPath);
-						} catch (URISyntaxException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						// DateFormat类的静态工厂方法
-						System.out.println(format.getInstance().format(date));
-						String srcImg = webContentPath + "\\images_zcb\\certificateTemplate01.jpg";
-						DateFormat formatYear = new SimpleDateFormat("yyyy");
-						String year = formatYear.format(date);
-						// 生成证书编号
-						String creditNo = "01" + year + String.format("%06d", Long.parseLong(t1.getUsrid()));
-						certificatePath = "\\images_zcb\\certificates\\" + "反兴奋剂教育准入合格证书_" + t1.getNm() + creditNo + ".jpg";
-						String dscImg = webContentPath + certificatePath;
-						LOG.info("srcImg=" + srcImg);
-						LOG.info("dscImg=" + dscImg);
-						LOG.info("certificatePath=" + certificatePath);
-						LOG.info("证书姓名"+ t1.getNm()+"("+StringTools.strConver(t1.getNmChar().toString().toLowerCase())+")");
-						waterMark(t1.getNm()+"("+StringTools.strConver(t1.getNmChar().toString().toLowerCase())+")", srcImg, dscImg, 943, 2007, 180);
-						waterMark(dataTime, dscImg, dscImg, 2230, 3407, 100);						
-						waterMark("东京奥运会 2020 Tokyo Olympic Games", dscImg, dscImg, 1995, 3519, 100);
-						waterMark(totalScore.toString(), dscImg, dscImg, 1911, 3631, 100);
-						//waterMark(creditNo, dscImg, dscImg, 923, 2114, 55);
-						waterMark(creditNo, dscImg, dscImg, 1655, 3770, 100);
-						LOG.info(totalScore.toString() + t1.getNm() + dataTime);
-						
-						// 记录或者更新证书信息表
-						T17CreditInf t17 = new T17CreditInf();
-						t17.setUsrid(Long.parseLong(t1.getUsrid()));
-						t17.setNm(t1.getNm());
-						t17.setCrdt_tp(t1.getCrdt_tp());
-						t17.setCrdt_no(t1.getCrdt_no());
-						t17.setCredit_no(creditNo);
-						t17.setFile_path(certificatePath);
-						t17.setTms(new Timestamp(date.getTime()));
-						t17.setType("05");
-						t17.setFlag("01");
-						saveCreditInf(t17);
-		} else {// 通用模块合格证书生成
-			// 判断是否可以取得合格证书
-			if (totalScore >= 80) {
-			} else {
-				res = new ResultEntity("0003", "考试成绩不合格.", totalScore.toString(), "", t1.getUsrid() + "");
-				// setAttr("certificatePath", certificatePath);
-				// renderWithPath("/f/accession/certificate.html");
-				renderJson(res);
-				return;
-			}
-			// ResultEntity res = new ResultEntity("0000", "恭喜您！您已完成测试，您的成绩为：" + toltalScore
-			// + "分！");
-			String certificatePath = "";
-			Date date = new Date();
-			DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-			String dataTime = format.format(date);
-			// 获取工程路径
-			String webContentPath = "";
-			try {
-				String path = Class.class.getResource("/").toURI().getPath();
-				webContentPath = new File(path).getParentFile().getParentFile().getCanonicalPath();
-				LOG.info("webContentPath=" + webContentPath);
-			} catch (URISyntaxException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			// DateFormat类的静态工厂方法
-			System.out.println(format.getInstance().format(date));
-			//String srcImg = webContentPath + "\\images_zcb\\certificateTemp.jpg";
-			String srcImg = webContentPath + "\\images_zcb\\certificateTemplate01.jpg";
-			// // 取身份证号码第1位+ 最后1位
-			// String crdt_no = t1.getCrdt_no().toString();
-			// String crdt_no_endStr = "";
-			// if (!StringUtils.isBlank(crdt_no)) {
-			// crdt_no_endStr = crdt_no.substring(0, 1)
-			// + crdt_no.substring(crdt_no.length() - 2, crdt_no.length() - 1);
-			// }
-			DateFormat formatYear = new SimpleDateFormat("yyyy");
-			String year = formatYear.format(date);
-			// 生成证书编号
-			String creditNo = "02" + year + String.format("%06d", Long.parseLong(t1.getUsrid()));
-//			certificatePath = "\\images_zcb\\certificates\\" + "反兴奋剂教育准入合格证书_" + t1.getNm() + "_" + t1.getUsrid()
-//					+ ".jpg";
-			certificatePath = "\\images_zcb\\certificates\\" + "反兴奋剂教育准入合格证书_" + t1.getNm() + creditNo + ".jpg";
-			String dscImg = webContentPath + certificatePath;
-			LOG.info("srcImg=" + srcImg); 
-			LOG.info("dscImg=" + dscImg);
-			LOG.info("certificatePath=" + certificatePath);
-/*			waterMark(totalScore.toString(), srcImg, dscImg, 212, 616);
-			waterMark(t1.getNm(), dscImg, dscImg, 212, 671);
-			waterMark(dataTime, dscImg, dscImg, 212, 731);*/
-			///
-//			waterMark(t1.getNm(), srcImg, dscImg, 511, 1170, 100);
-//			waterMark(dataTime+"(yyyy/mm/dd)", dscImg, dscImg, 1405, 1912, 55);
-//			waterMark(totalScore.toString(), dscImg, dscImg, 1090, 2027, 55);
-			
-			waterMark(t1.getNm()+"("+StringTools.strConver(t1.getNmChar().toString().toLowerCase())+")", srcImg, dscImg, 943, 2007, 180);
-			waterMark(dataTime, dscImg, dscImg, 2230, 3407, 100);					
-			String which_competition_eng = which_competition;		
-			if("东京奥运会".equals(which_competition))		
-				which_competition_eng = "东京奥运会 2020 Tokyo Olympic Games";	
-			else if("冬青奥会".equals(which_competition))		
-				which_competition_eng = "冬青奥会 2020 Winter Youth Olympic Games";	
-			else if("十四冬会".equals(which_competition))		
-				which_competition_eng = "十四冬会 14th National Winter Games";	
-			waterMark(which_competition_eng, dscImg, dscImg, 1995, 3519, 100);
-			waterMark(totalScore.toString(), dscImg, dscImg, 1911, 3631, 100);
-			//waterMark(creditNo, dscImg, dscImg, 923, 2114, 55);
-			waterMark(creditNo, dscImg, dscImg, 1655, 3770, 100);
-			// 记录或者更新证书信息表
-			T17CreditInf t17 = new T17CreditInf();
-			t17.setUsrid(Long.parseLong(t1.getUsrid()));
-			t17.setNm(t1.getNm());
-			t17.setCrdt_tp(t1.getCrdt_tp());
-			t17.setCrdt_no(t1.getCrdt_no());
-			t17.setCredit_no(creditNo);
-			t17.setFile_path(certificatePath);
-			t17.setTms(new Timestamp(date.getTime()));
-			t17.setType("05");
-			t17.setFlag("01");
-			saveCreditInf(t17);
-			///
-			LOG.info(totalScore.toString() + t1.getNm() + dataTime);
-		}
-		// 合格证书加水印
-		// String hostAddress = "";
-		// try {
-		// InetAddress address = InetAddress.getLocalHost();// 获取的是本地的IP地址
-		// //PC-20140317PXKX/192.168.0.121
-		// hostAddress = address.getHostAddress();// 192.168.0.121
-		//
-		// } catch (UnknownHostException e) {
-		// e.printStackTrace();
-		// }
-		// res = new ResultEntity("0000", "考试成绩提交成功.", certificatePath, hostAddress,
-		// t1.getCrdt_no());
-		res = new ResultEntity("0000", "考试成绩提交成功.", "", category, t1.getUsrid() + "");
 
-		// setAttr("certificatePath", certificatePath);
-		// renderWithPath("/f/accession/certificate.html");
+		////
+		if (totalScore >= 80) {
+		} else {
+			res = new ResultEntity("0003", "考试成绩不合格.", totalScore.toString(), "", t1.getUsrid() + "");
+			renderJson(res);
+			return;
+		}				
+		res = new ResultEntity("0000", which_competition_cd, which_competition, totalScore+"", examid + "");
 		renderJson(res);
+	}
 
+	/**
+	 * 描述：生成证书
+	 * 
+	 * @author zhuchaobin 2019-12-14
+	 */
+	@Before(FunctionInterceptor.class)
+	public void generateCredit() {
+		// 处理结果
+		ResultEntity res = null;
+		Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));		
+		String which_competition_cd = getPara("which_competition_cd");
+		String which_competition = EnumCompetition.getCompetitionName(which_competition_cd);
+		Integer totalScore = Integer.parseInt(getPara("totalScore"));
+		String examid = getPara("examid");
+		LOG.debug("totalScore=" + totalScore);
+		// 查询用户信息
+		T1usrBsc t1 = T1usrBsc.dao.findFirst("select * from t1_usr_bsc where usrid=?", usrid);// 根据用户名查询数据库中的用户
+		if (t1 == null) {
+			LOG.error("查询用户信息失败，无法生成证书.");
+			return;
+		}
+
+		if (totalScore >= 80) {
+		} else {
+			res = new ResultEntity("0003", "考试成绩不合格.", totalScore.toString(), "", t1.getUsrid() + "");
+			renderJson(res);
+			return;
+		}
+		T17CreditInf t17 = new T17CreditInf();
+		t17.setUsrid(Long.parseLong(t1.getUsrid()));
+		t17.setType(which_competition_cd);
+		// 判断是否可以生成证书
+		if(hasCreditInf(t17)) {
+			LOG.debug("已经有证书.....");
+			setAttr("certificatePath", "/images_zcb/certificates/certificateDefault02.jpg");
+			renderWithPath("/f/accession/certificate_new.html");
+			return;
+		}
+		// ResultEntity res = new ResultEntity("0000", "恭喜您！您已完成测试，您的成绩为：" + toltalScore
+		// + "分！");
+		String certificatePath = "";
+		Date date = new Date();
+		DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+		String dataTime = format.format(date);
+		// 获取工程路径
+		String webContentPath = "";
+		try {
+			String path = Class.class.getResource("/").toURI().getPath();
+			webContentPath = new File(path).getParentFile().getParentFile().getCanonicalPath();
+			LOG.info("webContentPath=" + webContentPath);
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// DateFormat类的静态工厂方法
+		System.out.println(format.getInstance().format(date));
+		// String srcImg = webContentPath + "\\images_zcb\\certificateTemp.jpg";
+		String srcImg = webContentPath + "\\images_zcb\\certificateTemplate01.jpg";
+		DateFormat formatYear = new SimpleDateFormat("yyyy");
+		String year = formatYear.format(date);
+		// 生成证书编号
+		String creditNo = which_competition_cd + year + String.format("%06d", Long.parseLong(t1.getUsrid()));
+		// certificatePath = "\\images_zcb\\certificates\\" + "反兴奋剂教育准入合格证书_" +
+		// t1.getNm() + "_" + t1.getUsrid()
+		// + ".jpg";
+		certificatePath = "\\images_zcb\\certificates\\" + "反兴奋剂教育准入合格证书_" + t1.getNm() + creditNo + ".jpg";
+		String dscImg = webContentPath + certificatePath;
+		LOG.info("srcImg=" + srcImg);
+		LOG.info("dscImg=" + dscImg);
+		LOG.info("certificatePath=" + certificatePath);
+		waterMark(t1.getNm() + "(" + StringTools.strConver(t1.getNmChar().toString().toLowerCase()) + ")", srcImg,
+				dscImg, 471, 1003, 85);
+		waterMark(dataTime, dscImg, dscImg, 1115, 1703, 50);
+		String which_competition_eng = which_competition;
+		if ("东京奥运会".equals(which_competition))
+			which_competition_eng = "东京奥运会 2020 Tokyo Olympic Games";
+		else if ("冬青奥会".equals(which_competition))
+			which_competition_eng = "冬青奥会 2020 Winter Youth Olympic Games";
+		else if ("十四冬会".equals(which_competition))
+			which_competition_eng = "十四冬会 14th National Winter Games";
+		else if ("东京奥运会 2020 Tokyo Olympic Games".equals(which_competition))
+			which_competition_eng = "东京奥运会 2020 Tokyo Olympic Games";
+		waterMark(which_competition_eng, dscImg, dscImg, 997, 1759, 50);
+		waterMark(totalScore.toString(), dscImg, dscImg, 955, 1815, 50);
+		// waterMark(creditNo, dscImg, dscImg, 923, 2114, 55);
+		waterMark(creditNo, dscImg, dscImg, 827, 1885, 50);
+		// 记录或者更新证书信息表
+		t17.setNm(t1.getNm());
+		t17.setCrdt_tp(t1.getCrdt_tp());
+		t17.setCrdt_no(t1.getCrdt_no());
+		t17.setCredit_no(creditNo);
+		t17.setFile_path(certificatePath);
+		t17.setTms(new Timestamp(date.getTime()));
+		t17.setFlag("02");// 01:2019年前旧版证书； 02：2019新版证书
+		t17.setExamid(Integer.parseInt(examid));
+		t17.setExam_grd(totalScore);
+		t17.setName(year + "年" + which_competition + "准入合格证书");
+		saveCreditInf(t17);
+		///
+		LOG.info(totalScore.toString() + t1.getNm() + dataTime);
+//		res = new ResultEntity("0000", "合格证书生成成功.", "", "", t1.getUsrid() + "");
+//		renderJson(res);
+		setAttr("certificatePath", certificatePath);
+		setAttr("shareDisplay", "inline");
+		renderWithPath("/f/accession/certificate_new.html");
 		// }
-
 	}
 
 	/**
@@ -1521,7 +1588,8 @@ public class T7CrclController extends BaseController {
 	 * 
 	 * @author zhuchaobin 2018-06-01
 	 */
-	public static void waterMark(String waterMsg, String inputImg, String outImg, Integer x, Integer y, Integer fontSize) {
+	public static void waterMark(String waterMsg, String inputImg, String outImg, Integer x, Integer y,
+			Integer fontSize) {
 		try {
 			// 1.jpg是你的 主图片的路径
 			InputStream is = new FileInputStream(inputImg);
@@ -1537,10 +1605,10 @@ public class T7CrclController extends BaseController {
 			g.setColor(Color.BLACK);
 
 			// 最后一个参数用来设置字体的大小
-			if(null == fontSize || 0 == fontSize)
+			if (null == fontSize || 0 == fontSize)
 				fontSize = 45;
 			Font f = new Font("黑体", Font.BOLD, fontSize);
-	//		Color mycolor = Color.darkGray;// new Color(0, 0, 255);
+			// Color mycolor = Color.darkGray;// new Color(0, 0, 255);
 			Color mycolor = Color.darkGray;
 			g.setColor(mycolor);
 			g.setFont(f);
@@ -1659,24 +1727,26 @@ public class T7CrclController extends BaseController {
 		String crdt_no = getPara("crdt_no");
 		setAttr("crdt_no", crdt_no);
 		String certificatePath = "";
-
+		String type = getPara("type");
+		String which_competition = EnumCompetition.getCompetitionName(type);		
+		setAttr("which_competition", which_competition);
 		String useridStr = getSession().getAttribute("usrid") + "";
 		// 插入或者更新成绩统计表最后一次成绩
 		String sql = "select t.*, date_FORMAT(t.tms, '%Y-%m-%d %H:%i:%s') as strTms, r.nm, r.spt_prj, r.province, (case r.city when '--' then '' when '-' then '' else r.city end) as city from t11_exam_stat t "
-				+ "JOIN t1_usr_bsc r on t.exam_st = '9' and t.usrid = r.usrid order by exam_grd desc, tms asc";
+				+ " , t1_usr_bsc r where t.exam_st = '9' and t.usrid = r.usrid and t.type = '"+ type +"' order by t.exam_grd desc, t.tms asc";
 		List<T11ExamStat> heroList = T11ExamStat.dao.find(sql);
 		List<T11ExamStat> heroListRlt10 = new ArrayList<T11ExamStat>();
 		List<T11ExamStat> heroListRlt100 = new ArrayList<T11ExamStat>();
 		T11ExamStat t11Self = new T11ExamStat();
 		String t11SelfDisplay = "display:none;";
 		if (null != useridStr) {
-			for(int j = 0; j < heroList.size(); j++) {				
-					if (useridStr.equals((heroList.get(j).getUsrid() + ""))) {
-						t11Self = heroList.get(j);
-						t11Self.setRank("#FF0202");
-						t11Self.setId(Long.parseLong((j + 1) + ""));
-						t11SelfDisplay = "";
-					}
+			for (int j = 0; j < heroList.size(); j++) {
+				if (useridStr.equals((heroList.get(j).getUsrid() + ""))) {
+					t11Self = heroList.get(j);
+					t11Self.setRank("#FF0202");
+					t11Self.setId(Long.parseLong((j + 1) + ""));
+					t11SelfDisplay = "";
+				}
 			}
 		}
 
@@ -1902,7 +1972,7 @@ public class T7CrclController extends BaseController {
 	public void queryTestPaper() {
 		String usrid = getPara("usrid");
 		String examid = getPara("examid");
-		String userFlag = getPara("userFlag");//1:管理员 2：普通用户
+		String userFlag = getPara("userFlag");// 1:管理员 2：普通用户
 		// 考试名称，科目
 		String t11sql = "select * from t11_exam_stat t where t.examid ='" + examid + "' and t.usrid='" + usrid + "'";
 		T11ExamStat t11 = T11ExamStat.dao.findFirst(t11sql);
@@ -1926,14 +1996,10 @@ public class T7CrclController extends BaseController {
 
 		String sql = "select * from t10_exam_grd t where t.usrid = '" + usrid + "' and t.examid ='" + examid
 				+ "' order by t.prblmno asc";
-		String sql_bak = "select * from t10_exam_grd_20180801 t where t.usrid = '" + usrid + "' and t.examid ='" + examid
-				+ "' order by t.prblmno asc";
 		List<T10ExamGrd> t10List = T10ExamGrd.dao.find(sql);
-		if((null == t10List) || (0 == t10List.size()))
-			t10List = T10ExamGrd.dao.find(sql_bak);;
 		List<ExamEntity> testPaperList01 = new ArrayList<ExamEntity>();
 		List<ExamEntity> testPaperList02 = new ArrayList<ExamEntity>();
-		if ((null != t10List) && (0 < t10List.size())) {
+		if ((null == t10List) || (0 < t10List.size())) {
 			LOG.debug("查询到试卷，包含考题：" + t10List.size() + "道.");
 			for (T10ExamGrd t10 : t10List) {
 				ExamEntity exam = new ExamEntity();
@@ -1941,29 +2007,27 @@ public class T7CrclController extends BaseController {
 				exam.setPrblmno(Integer.parseInt(t10.getPrblmno()));
 				exam.setPrblmid(Integer.parseInt(t10.getPrblmid()));
 				exam.setUsrid(Integer.parseInt(t10.getUsrid()));
-				if(null == t10.getExam_grd())
-					exam.setExam_grd(0);
-				else
-					exam.setExam_grd(Integer.parseInt(t10.getExam_grd()));				
+				exam.setExam_grd(Integer.parseInt(t10.getExam_grd()));
 				// 查题目
 				T9Tstlib t9 = T9Tstlib.dao.findById(Long.parseLong(t10.getPrblmid() + ""));
 				if (null != t9) {
 					exam.setTtl(t9.getTtl());
-					if("1".equals(userFlag)) {
+					if ("1".equals(userFlag)) {
 						exam.setPrblm_aswr("【正确答案：" + t9.getPrblm_aswr() + "】");
 						if ("02".equals(t9.getPrblm_tp())) {
-							if(t9.getPrblm_aswr().equals("A"))
+							if (t9.getPrblm_aswr().equals("A"))
 								exam.setPrblm_aswr("	【正确答案：正确】");
-							else if(t9.getPrblm_aswr().equals("B"))
+							else if (t9.getPrblm_aswr().equals("B"))
 								exam.setPrblm_aswr("	【正确答案：错误】");
 						}
 					}
 				}
-/*				if (Integer.parseInt(t10.getExam_grd() + "") > 0)
-					exam.setRltDesc("<code class=\"text-success bg-success\">答案正确</code>");
-				else
-					exam.setRltDesc("<code class=\"text-danger bg-danger\">答案错误</code>");*/
-				
+				/*
+				 * if (Integer.parseInt(t10.getExam_grd() + "") > 0)
+				 * exam.setRltDesc("<code class=\"text-success bg-success\">答案正确</code>"); else
+				 * exam.setRltDesc("<code class=\"text-danger bg-danger\">答案错误</code>");
+				 */
+
 				if (t9.getPrblm_aswr().equals(t10.getUsr_aswr())) {
 					exam.setRltDesc("<code class=\"text-success bg-success\">答案正确</code>");
 					exam.setPrblm_aswr("");
@@ -1984,16 +2048,14 @@ public class T7CrclController extends BaseController {
 					exam.setOptB("错误");
 				}
 				// 设置已选选项
-				if(null != t10.getUsr_aswr()){
-					if (t10.getUsr_aswr().toString().contains("A"))
-						exam.setOptASelct("checked");
-					if (t10.getUsr_aswr().toString().contains("B"))
-						exam.setOptBSelct("checked");
-					if (t10.getUsr_aswr().toString().contains("C"))
-						exam.setOptCSelct("checked");
-					if (t10.getUsr_aswr().toString().contains("D"))
-						exam.setOptDSelct("checked");
-				}
+				if (t10.getUsr_aswr().toString().contains("A"))
+					exam.setOptASelct("checked");
+				if (t10.getUsr_aswr().toString().contains("B"))
+					exam.setOptBSelct("checked");
+				if (t10.getUsr_aswr().toString().contains("C"))
+					exam.setOptCSelct("checked");
+				if (t10.getUsr_aswr().toString().contains("D"))
+					exam.setOptDSelct("checked");
 
 				if ("01".equals(t9.getPrblm_tp()))
 					testPaperList01.add(exam);
@@ -2010,12 +2072,28 @@ public class T7CrclController extends BaseController {
 		}
 	}
 	
+	boolean hasCreditInf(T17CreditInf t17) {
+		// String sql = "select * from t17_credit_inf t where t.usrid = '" +
+		// t17.getUsrid() + "' and t.flag ='" + t17.getFlag()
+		// + "'";
+		String sql = "select * from t17_credit_inf t where t.usrid = '" + t17.getUsrid() + "' and t.type='"
+				+ t17.getType() + "' and t.flag = '02'";
+		List<T17CreditInf> t17RltList = T17CreditInf.dao.find(sql);
+		if (null != t17RltList && t17RltList.size() > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	void saveCreditInf(T17CreditInf t17) {
-//		String sql = "select * from t17_credit_inf t where t.usrid = '" + t17.getUsrid() + "' and t.flag ='" + t17.getFlag()
-//				+ "'";
-		String sql = "select * from t17_credit_inf t where t.usrid = '" + t17.getUsrid() + "'";
+		// String sql = "select * from t17_credit_inf t where t.usrid = '" +
+		// t17.getUsrid() + "' and t.flag ='" + t17.getFlag()
+		// + "'";
+		String sql = "select * from t17_credit_inf t where t.usrid = '" + t17.getUsrid() + "' and t.type='"
+				+ t17.getType() + "' and t.flag = '02'";
 		T17CreditInf t17Rlt = T17CreditInf.dao.findFirst(sql);
-		if(null != t17Rlt) {
+		if (null != t17Rlt) {
 			t17Rlt.setFile_path(t17.getFile_path());
 			t17Rlt.setCredit_no(t17.getCredit_no());
 			t17Rlt.setTms(new Timestamp(System.currentTimeMillis()));
@@ -2024,41 +2102,41 @@ public class T7CrclController extends BaseController {
 			t17.saveGenIntId();
 		}
 	}
-	
-	
+
 	public void invitationCodeVerify() {
 		// 处理结果
 		ResultEntity res = null;
 		String useridStr = getSession().getAttribute("usrid") + "";
 		String invitationCode = getPara("invitationCode");
-		String flag = getPara("flag"); // 1:判断是否已经验证过   2：提交邀请码从新验证
+		String flag = getPara("flag"); // 1:判断是否已经验证过 2：提交邀请码从新验证
 		String sql = "select * from t14_invitation_code t where t.type = '05'";
 		T14InvitationCode t14 = T14InvitationCode.dao.findFirst(sql);
-		if(null != t14) {
-			if("1".equals(flag)) {
-					if(StringUtils.isNoneBlank(t14.getInvited_user_list()+"")) {
-						String[] invitedUserList = ((t14.getInvited_user_list())+"").split(",");
-						if(null != invitedUserList) {
-							for(String usrId : invitedUserList) {
-								if(usrId.equals(useridStr)) {
-									//  已验证
-									res = new ResultEntity("0000", "已验证过邀请码用户.", "", "", "");
-									renderJson(res);
-									return;
-								}
+		if (null != t14) {
+			if ("1".equals(flag)) {
+				if (StringUtils.isNoneBlank(t14.getInvited_user_list() + "")) {
+					String[] invitedUserList = ((t14.getInvited_user_list()) + "").split(",");
+					if (null != invitedUserList) {
+						for (String usrId : invitedUserList) {
+							if (usrId.equals(useridStr)) {
+								// 已验证
+								res = new ResultEntity("0000", "已验证过邀请码用户.", "", "", "");
+								renderJson(res);
+								return;
 							}
 						}
 					}
+				}
 				// 未验证
 				res = new ResultEntity("0001", "请填写邀请码进行验证.", "", "", "");
 				renderJson(res);
 				return;
-			} else if("2".equals(flag)) {
-				if(t14.getInvitation_code().equals(invitationCode)) {
+			} else if ("2".equals(flag)) {
+				if (t14.getInvitation_code().equals(invitationCode)) {
 					res = new ResultEntity("0002", "邀请码验证通过.", "", "", "");
 					renderJson(res);
 					// 保存已验证用户列表
-					String updateSql = "update t14_invitation_code t set t.invited_user_list=CONCAT(t.invited_user_list, ',"+ useridStr +"') where t.type='05'";
+					String updateSql = "update t14_invitation_code t set t.invited_user_list=CONCAT(t.invited_user_list, ',"
+							+ useridStr + "') where t.type='05'";
 					ConfMain.db().update(updateSql);
 					return;
 				} else {

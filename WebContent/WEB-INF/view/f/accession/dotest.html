@@ -233,16 +233,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					},
 					success : function(res) {
 						if (res.code == "0000") {
-							/*showDiv(5);
-							 var t2 = document.getElementById('pageTitle');
-							 t2.innerText = "成绩证书";					
-							 var pic = document.getElementById("certificateImgId");//picture是img的id
-							 pic.src = res.parm1;					
-							 var pic = document.getElementById("erweima");//picture是img的id
-							 pic.src = "http://qr.liantu.com/api.php?text=" + res.parm2"; */
-							//					http://qr.liantu.com/api.php?text=http://m.qpic.cn/psb?/V10zsTr30tgqVO/JjLdVKa1q7ZJAlpFtcuGqVvutgKH1cvPUeTuDeTpKBY!/b/dCIBAAAAAAAA&bo=TwIgAwAAAAARF04!&rf=viewer_4&t=5&bg=ffffff&200					
-							window.location.href = "${cxt!''}/jf/puresport/t7Crcl/queryCetifate?flag=1&usrid="
-									+ res.parm3;
+							 var msg = "您的成绩为" + res.parm2 + "， 已通过准入考试，请确认是否生成准入合格证书！"; 
+							 if (confirm(msg)==true){
+								 window.location.href = "${cxt!''}/jf/puresport/t7Crcl/generateCredit?which_competition_cd="+ res.desc+"&which_competition="+res.parm1+"&totalScore="+res.parm2+"&examid="+res.parm3;
+							 }else{
+								 //alert("false"); 
+							 }						
+							//window.location.href = "${cxt!''}/jf/puresport/t7Crcl/generateCredit?which_competition_cd="+ res.desc+"&which_competition="+res.parm1+"&totalScore="+res.parm2+"&examid="+res.parm3;
 						} else if (res.code == "0002") {
 							$('#tip2Modal').modal('show');
 						} else if (res.code == "0003") {
@@ -719,6 +716,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			</div>
 			<!-- /.modal-dialog -->
 		</div>
+		
+<!-- /.modal -->
 
 	</div>
 	<!-- start footer -->
