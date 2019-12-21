@@ -12,6 +12,8 @@ public class StringTools {
 	}
 // 将字符串中单词首字母转换成大写	
 	public static String strConver(String str) {
+		if(StringUtils.isBlank(str))
+			return "";
 		String[] s = str.split(" ");
 		// 以空格为分隔符进行分割
 		// 用于接收转成大写的单词

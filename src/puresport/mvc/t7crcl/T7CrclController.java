@@ -1548,7 +1548,11 @@ public class T7CrclController extends BaseController {
 		LOG.info("srcImg=" + srcImg);
 		LOG.info("dscImg=" + dscImg);
 		LOG.info("certificatePath=" + certificatePath);
-		waterMark(t1.getNm() + "(" + StringTools.strConver(t1.getNmChar().toString().toLowerCase()) + ")", srcImg,
+		if(StringUtils.isBlank(t1.getNmChar())){
+			waterMark(t1.getNm(), srcImg,
+					dscImg, 471, 1003, 85);
+		} else
+			waterMark(t1.getNm() + "(" + StringTools.strConver(t1.getNmChar().toString().toLowerCase()) + ")", srcImg,
 				dscImg, 471, 1003, 85);
 		waterMark(dataTime, dscImg, dscImg, 1115, 1703, 50);
 		String which_competition_eng = which_competition;
