@@ -48,4 +48,28 @@ public class StringTools {
 		else
 			return false;
 	}
+	
+
+//	**
+//    * 每个单词第一个字母大写
+//    * @param str
+//    * @return
+//    */
+   public static String toUpperFirstCode(String str) {
+	   try {
+	       String[] strs = str.split(" ");
+	       StringBuilder sb = new StringBuilder();
+	       for (String strTmp : strs) {
+	           char[] ch = strTmp.toCharArray();
+	           if (ch[0] >= 'a' && ch[0] <= 'z') {
+	               ch[0] = (char) (ch[0] - 32);
+	           }
+	           String strT = new String(ch);
+	           sb.append(strT).append(" ");
+	       }
+	       return sb.toString().trim();
+	   } catch (Exception e) {
+		   return str;
+	   }
+   }
 }

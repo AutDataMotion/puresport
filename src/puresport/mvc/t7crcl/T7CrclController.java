@@ -1552,7 +1552,7 @@ public class T7CrclController extends BaseController {
 			waterMark(t1.getNm(), srcImg,
 					dscImg, 471, 1003, 85);
 		} else
-			waterMark(t1.getNm() + "(" + StringTools.strConver(t1.getNmChar().toString().toLowerCase()) + ")", srcImg,
+			waterMark(t1.getNm() + "(" + StringTools.toUpperFirstCode(t1.getNmChar().toString().toLowerCase()) + ")", srcImg,
 				dscImg, 471, 1003, 85);
 		waterMark(dataTime, dscImg, dscImg, 1115, 1703, 50);
 		String which_competition_eng = which_competition;
