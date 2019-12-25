@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.tuple.Triple;
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.util.log.Log;
 
@@ -240,21 +241,21 @@ public class T1usrBscService extends BaseService {
 	private static String sql_score_total = "select count(1) "
 			+ " from t1_usr_bsc u  "
 			+ "left join %s s on u.usrid = s.usrid "
-			+ " %s where 1=1 %s ) y";
+			+ " %s where 1=1 %s ";
 			
 	public List<Record> selectScoreByPage(T6MgrSession mgrSession, ParamComm paramMdl) {
 		
 		List<Object> listArgs = new ArrayList<>();
-		Tuple2<String, String> cntSqlTuple = getSearchSql_Score(sql_score_total, mgrSession, paramMdl, listArgs, true);
-		Long countTotal = ConfMain.db().queryLong(String.format(cntSqlTuple.first, cntSqlTuple.second), listArgs.toArray());
+		Triple<String, String, String> cntSqlTuple = getSearchSql_Score(mgrSession, paramMdl, listArgs, true);
+		Long countTotal = ConfMain.db().queryLong(String.format(sql_score_total, cntSqlTuple.getLeft(), cntSqlTuple.getMiddle(), cntSqlTuple.getRight())
+				, listArgs.toArray());
 		paramMdl.setTotal(countTotal);
 		List<Record> userScoreRecords = null;
 		if (countTotal > 0) {
-			listArgs.clear();
-			Tuple2<String, String> listSqlTuple = getSearchSql_Score(sql_score, mgrSession, paramMdl, listArgs, true);
 			listArgs.add(paramMdl.getPageIndex());
 			listArgs.add(paramMdl.getPageSize());
-			userScoreRecords = ConfMain.db().find(String.format(listSqlTuple.first, listSqlTuple.second) , listArgs.toArray());
+			userScoreRecords = ConfMain.db().find(String.format(sql_score, cntSqlTuple.getLeft(), cntSqlTuple.getMiddle(), cntSqlTuple.getRight())
+					, listArgs.toArray());
 		} else {
 			userScoreRecords = new ArrayList<>();
 		}
@@ -268,10 +269,12 @@ public class T1usrBscService extends BaseService {
 		return s + "%";
 	}
 	
-	public static Tuple2<String, String> getSearchSql_Score(String tableStr, T6MgrSession mgrSession, ParamComm paramMdl, List<Object> listArgs, boolean isAddRoleWhere) {
+	public static Triple<String, String, String> getSearchSql_Score(T6MgrSession mgrSession, ParamComm paramMdl, List<Object> listArgs, boolean isAddRoleWhere) {
 		
 		StringBuilder whereStr = new StringBuilder();
-		boolean hasSet = false;
+		String table_exam = "t11_exam_stat";
+		String table_group = "";
+
 		if (StringUtil.notEmptyOrDefault(paramMdl.getName1(), defSelect)) {
 			whereStr.append(" and province like ? ");
 			listArgs.add(getStringLikeLeft(paramMdl.getName1()));
@@ -321,29 +324,24 @@ public class T1usrBscService extends BaseService {
 		
 		if (StringUtil.notEmptyOrDefault(paramMdl.getName12(), defSelect)) {
 			if("9".equals(paramMdl.getName12())){//查询最高成绩
-				tableStr = String.format(tableStr, "t12_highest_score");
+				table_exam = "t12_highest_score";
 			} else {//查询所有成绩
 				whereStr.append(" and exam_st = ? ");
 				listArgs.add(paramMdl.getName12());
-				tableStr = String.format(tableStr, "t11_exam_stat");
 			}
-		}else {
-			tableStr = String.format(tableStr, "t11_exam_stat");
 		}
 		
 		if (StringUtil.notEmptyOrDefault(paramMdl.getName13(), defSelect)) {
 			whereStr.append(" and group_id = ? ");
 			listArgs.add(Integer.valueOf(paramMdl.getName13()));
-			tableStr =  String.format(tableStr, "left join r16_group_usr g on u.usrid = g.user_id");
-		} else {
-			tableStr =  String.format(tableStr, "");
+			table_group =  "left join r16_group_usr g on u.usrid = g.user_id";
 		}
 		
 		if (isAddRoleWhere) {
 			whereStr.append(" and ")
 			.append(mgrSession.selectRoleStr_UserBasic());
 		}
-		return Tuple2.with(tableStr, whereStr.toString());
+		return Triple.of(table_exam, table_group, whereStr.toString());
 	}
 
 	public static String getSearchWhereSta(T6MgrSession mgrSession, ParamComm paramMdl, List<Object> listArgs, boolean isAddRoleWhere) {
