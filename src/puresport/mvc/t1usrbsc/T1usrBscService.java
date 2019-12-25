@@ -221,10 +221,10 @@ public class T1usrBscService extends BaseService {
 			+ " select usrid, exam_nm, exam_grd from t12_highest_score"
 			+ " ) as s on u.usrid = s.usrid  where 1=1 %s  limit ?,?";*/
 	
-	private static String sql_score = "select distinct u.*, s.examid as examid, s.category as category, s.type as type, s.exam_nm as exam_nm, s.exam_grd as exam_grd, (CASE WHEN s.exam_grd >= 80 THEN '及格'  WHEN s.exam_grd is null THEN '未考试'  ELSE '不及格' END) as passed "
+	private static String sql_score = "select u.*, s.examid as examid, s.category as category, s.type as type, s.exam_nm as exam_nm, s.exam_grd as exam_grd, (CASE WHEN s.exam_grd >= 80 THEN '及格'  WHEN s.exam_grd is null THEN '未考试'  ELSE '不及格' END) as passed "
 			+ " from t1_usr_bsc u  "
-			+ "left join t11_exam_stat s on u.usrid = s.usrid "
-			+ "left join r16_group_usr g on u.usrid = g.user_id where 1=1 %s  limit ?,?";
+			+ "left join %s s on u.usrid = s.usrid "
+			+ " %s where 1=1 %s  limit ?,?";
 	
 /*	private static String sql_score_total = "select count(1) "
 	+ " from t1_usr_bsc u  left join ("
@@ -237,22 +237,24 @@ public class T1usrBscService extends BaseService {
 //	+ " ) as s on u.usrid = s.usrid "
 //	+ "inner join r16_group_usr g on u.usrid = g.user_id where 1=1  %s ";
 	
-	private static String sql_score_total = "select count(1) from (select distinct u.*, s.examid as examid, s.category as category, s.type as type, s.exam_nm as exam_nm, s.exam_grd as exam_grd, (CASE WHEN s.exam_grd >= 80 THEN '及格'  WHEN s.exam_grd is null THEN '未考试'  ELSE '不及格' END) as passed  "
+	private static String sql_score_total = "select count(1) "
 			+ " from t1_usr_bsc u  "
-			+ "left join t11_exam_stat s on u.usrid = s.usrid "
-			+ "left join r16_group_usr g on u.usrid = g.user_id where 1=1 %s ) y";
+			+ "left join %s s on u.usrid = s.usrid "
+			+ " %s where 1=1 %s ) y";
 			
 	public List<Record> selectScoreByPage(T6MgrSession mgrSession, ParamComm paramMdl) {
 		
 		List<Object> listArgs = new ArrayList<>();
-		String whereSql = getSearchWhereSta(mgrSession, paramMdl, listArgs, true);
-		Long countTotal = ConfMain.db().queryLong(String.format(sql_score_total, whereSql), listArgs.toArray());
+		Tuple2<String, String> cntSqlTuple = getSearchSql_Score(sql_score_total, mgrSession, paramMdl, listArgs, true);
+		Long countTotal = ConfMain.db().queryLong(String.format(cntSqlTuple.first, cntSqlTuple.second), listArgs.toArray());
 		paramMdl.setTotal(countTotal);
 		List<Record> userScoreRecords = null;
 		if (countTotal > 0) {
+			listArgs.clear();
+			Tuple2<String, String> listSqlTuple = getSearchSql_Score(sql_score, mgrSession, paramMdl, listArgs, true);
 			listArgs.add(paramMdl.getPageIndex());
 			listArgs.add(paramMdl.getPageSize());
-			userScoreRecords = ConfMain.db().find(String.format(sql_score, whereSql) , listArgs.toArray());
+			userScoreRecords = ConfMain.db().find(String.format(listSqlTuple.first, listSqlTuple.second) , listArgs.toArray());
 		} else {
 			userScoreRecords = new ArrayList<>();
 		}
@@ -264,6 +266,84 @@ public class T1usrBscService extends BaseService {
 
 	private final static String getStringLikeLeft(String s) {
 		return s + "%";
+	}
+	
+	public static Tuple2<String, String> getSearchSql_Score(String tableStr, T6MgrSession mgrSession, ParamComm paramMdl, List<Object> listArgs, boolean isAddRoleWhere) {
+		
+		StringBuilder whereStr = new StringBuilder();
+		boolean hasSet = false;
+		if (StringUtil.notEmptyOrDefault(paramMdl.getName1(), defSelect)) {
+			whereStr.append(" and province like ? ");
+			listArgs.add(getStringLikeLeft(paramMdl.getName1()));
+		}
+		if (StringUtil.notEmptyOrDefault(paramMdl.getName2(), defSelect)) {
+			whereStr.append(" and city like ? ");
+			listArgs.add(getStringLikeLeft(paramMdl.getName2()));
+		}
+		if (StringUtil.notEmptyOrDefault(paramMdl.getName3(), defSelect)) {
+			whereStr.append(" and institute like ? ");
+			listArgs.add(getStringLikeLeft(paramMdl.getName3()));
+		}
+		if (StringUtil.notEmptyOrDefault(paramMdl.getName4(), defSelect)) {
+			whereStr.append(" and nm like ? ");
+			listArgs.add(getStringLikeLeft(paramMdl.getName4()));
+		}
+		if (StringUtil.notEmptyOrDefault(paramMdl.getName5(), defSelect)) {
+			whereStr.append(" and crdt_no like ? ");
+			listArgs.add(getStringLikeLeft(paramMdl.getName5()));
+		}
+		if (StringUtil.notEmptyOrLikeDefault(paramMdl.getName6(), defSelect)) {
+			whereStr.append(" and usr_tp like ? ");
+			listArgs.add(getStringLikeLeft(paramMdl.getName6()));
+		}
+		if (StringUtil.notEmptyOrDefault(paramMdl.getName7(), defSelect)) {
+			whereStr.append(" and spt_prj like ? ");
+			listArgs.add(getStringLikeLeft(paramMdl.getName7()));
+		}
+		if (StringUtil.notEmptyOrLikeDefault(paramMdl.getName11(), defSelect)) {
+			whereStr.append(" and gnd like ? ");
+			listArgs.add(getStringLikeLeft(paramMdl.getName11()));
+		}
+		
+		if (StringUtil.notEmptyOrLikeDefault(paramMdl.getName8(), defSelect)) {
+			whereStr.append(" and exam_nm like ? ");
+			listArgs.add(getStringLikeLeft(paramMdl.getName8()));
+		}
+		if (StringUtil.notEmptyOrLikeDefault(paramMdl.getName10(), defSelect)) {
+			if (paramMdl.getName10().equals("合格")) {
+				whereStr.append(" and exam_grd >= 80 ");
+			}else if (paramMdl.getName10().equals("不合格")){
+				whereStr.append(" and exam_grd < 80 and exam_grd>=0 ");
+			} else {
+				whereStr.append(" and exam_grd is  null ");
+			}
+		}
+		
+		if (StringUtil.notEmptyOrDefault(paramMdl.getName12(), defSelect)) {
+			if("9".equals(paramMdl.getName12())){//查询最高成绩
+				tableStr = String.format(tableStr, "t12_highest_score");
+			} else {//查询所有成绩
+				whereStr.append(" and exam_st = ? ");
+				listArgs.add(paramMdl.getName12());
+				tableStr = String.format(tableStr, "t11_exam_stat");
+			}
+		}else {
+			tableStr = String.format(tableStr, "t11_exam_stat");
+		}
+		
+		if (StringUtil.notEmptyOrDefault(paramMdl.getName13(), defSelect)) {
+			whereStr.append(" and group_id = ? ");
+			listArgs.add(Integer.valueOf(paramMdl.getName13()));
+			tableStr =  String.format(tableStr, "left join r16_group_usr g on u.usrid = g.user_id");
+		} else {
+			tableStr =  String.format(tableStr, "");
+		}
+		
+		if (isAddRoleWhere) {
+			whereStr.append(" and ")
+			.append(mgrSession.selectRoleStr_UserBasic());
+		}
+		return Tuple2.with(tableStr, whereStr.toString());
 	}
 
 	public static String getSearchWhereSta(T6MgrSession mgrSession, ParamComm paramMdl, List<Object> listArgs, boolean isAddRoleWhere) {
@@ -296,6 +376,11 @@ public class T1usrBscService extends BaseService {
 			whereStr.append(" and spt_prj like ? ");
 			listArgs.add(getStringLikeLeft(paramMdl.getName7()));
 		}
+		if (StringUtil.notEmptyOrLikeDefault(paramMdl.getName11(), defSelect)) {
+			whereStr.append(" and gnd like ? ");
+			listArgs.add(getStringLikeLeft(paramMdl.getName11()));
+		}
+		
 		if (StringUtil.notEmptyOrLikeDefault(paramMdl.getName8(), defSelect)) {
 			whereStr.append(" and exam_nm like ? ");
 			listArgs.add(getStringLikeLeft(paramMdl.getName8()));
@@ -309,10 +394,7 @@ public class T1usrBscService extends BaseService {
 				whereStr.append(" and exam_grd is  null ");
 			}
 		}
-		if (StringUtil.notEmptyOrLikeDefault(paramMdl.getName11(), defSelect)) {
-			whereStr.append(" and gnd like ? ");
-			listArgs.add(getStringLikeLeft(paramMdl.getName11()));
-		}
+		
 		
 		if (StringUtil.notEmptyOrDefault(paramMdl.getName12(), defSelect)) {
 			if("9".equals(paramMdl.getName12())){//查询最高成绩
