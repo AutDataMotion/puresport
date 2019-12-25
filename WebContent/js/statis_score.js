@@ -171,9 +171,8 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 			data : "exam_grd"
 		}, {
 			data : "passed"
-		} /*, {
-			data : "crdt_tp"
-		}*/,{
+		} 
+		,{
 			data : "nm"
 		}, {
 			data : "crdt_no"
