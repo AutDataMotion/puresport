@@ -167,9 +167,6 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 		},*/ {
 			data : "exam_nm"
 		}
-//		,{
-//			data : "category"
-//		}
 		, {
 			data : "exam_grd"
 		}, {
