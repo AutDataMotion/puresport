@@ -162,8 +162,6 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 		}  ],
 		columns : [  /*{
 			data : "usr_tp"
-		}, {
-			data : "spt_prj"
 		},*/ {
 			data : "exam_nm"
 		}
@@ -176,6 +174,8 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 			data : "nm"
 		}, {
 			data : "crdt_no"
+		}, {
+			data : "spt_prj"
 		}, /*{
 			data : "gnd"
 		}, {
