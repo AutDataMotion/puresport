@@ -59,7 +59,14 @@ select{
 
 .btn{
 	padding: 14px 48px;
-	width:200px;
+	width: 100%;
+    max-width: 200px;
+}
+
+@media screen and (max-width: 450px)
+.layui-form-item .layui-input-inline {
+    width: 100%;
+    margin: 0 0 10px 0px;
 }
 
 </style>
@@ -84,7 +91,7 @@ select{
 		<div class="container-fluid">
 
 			<div class="row">
-				<div class="col-xs-4 col-sm-4 col-md-6" style="text-align: center;">
+				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" style="text-align: center;">
 
 					<div class="row">
 						<!--div style="height:150px">
@@ -113,7 +120,7 @@ select{
 						</div>
 					</div>
 				</div>
-				<div class="col-xs-8 col-sm-8 col-md-6">
+				<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 					<div id="myTabContent" class="tab-content">
 						<div class="tab-pane fade in active" id="userLoginPanel">
 
@@ -151,7 +158,7 @@ select{
 											<div class="form-group">
 												<input type="text" id="authCode_user" name="authCode"
 													class="form-control"
-													style="width: 400px; float: left; margin-top: 0;"
+													style="width: 100%; float: left; margin-top: 0;"
 													placeholder="验证码"> <img id="autoCode_user"
 													onclick="refresh('user')"
 													style="width: 75px; border-radius: 3px; height: 32px; margin-left: 10px; cursor: pointer;"
@@ -290,24 +297,34 @@ select{
 											</div>											
 											
 											<div id="divValPhone" class="layui-form-item" style="display: none;">
+
 												<label class="layui-form-label">手机</label>
 												<div class="layui-input-block">
-													<div class="layui-input-inline">
-														<input type="text" name="mblph_no"
-															lay-verify="required|phone" id="mblph_no"
-															 autocomplete="off" placeholder="手机号"
-															class="layui-input">
-													</div>
-	
-													<div class="layui-input-inline">
+													<input type="text" name="mblph_no"
+														lay-verify="required|phone" id="mblph_no"
+														autocomplete="off" placeholder="手机号" class="layui-input">
+												</div>
+											</div>
+											
+											<div id="divValPhoneCode" class="layui-form-item" style="display: none;">
+
+												<div class="layui-inline">
+													<label class="layui-form-label">验证码</label>
+													<div class="layui-input-block">
 														<input type="text" name="mblphValCode" id="mblphValCode"
 															lay-verify="required" autocomplete="off"
 															placeholder="手机验证码" class="layui-input">
 													</div>
-	
-													<button type="button" style="width: 100px;"
-														class="layui-btn layui-btn-normal layui-btn-sm"
-														id="btn-val-phone">点击获取</button>
+									
+												</div>
+												
+												<div class="layui-inline">
+													<div class="layui-input-block">
+														<button type="button" style="width: 100px;"
+															class="layui-btn layui-btn-normal layui-btn-sm"
+															id="btn-val-phone">点击获取</button>
+													</div>
+														
 												</div>
 											</div>
 											
@@ -406,7 +423,7 @@ select{
 											<div class="form-group">
 												<input type="text" id="authCode_admin" name="authCode"
 													class="form-control"
-													style="width: 400px; float: left; margin-top: 0;"
+													style="width: 100%; float: left; margin-top: 0;"
 													placeholder="验证码"> <img id="autoCode_admin"
 													onclick="refresh('admin')"
 													style="width: 75px; border-radius: 3px; height: 32px; margin-left: 10px; cursor: pointer;"
@@ -504,7 +521,7 @@ select{
 												</div>
 											</div>
 											
-											<div id="divValPhone_admin" class="layui-form-item" style="display: none;">
+											<!-- <div id="divValPhone_admin" class="layui-form-item" style="display: none;">
 												<label class="layui-form-label">手机</label>
 												<div class="layui-input-inline">
 													<input type="text" name="mblph_no_admin"
@@ -522,7 +539,43 @@ select{
 												<button type="button" style="width: 100px;"
 													class="layui-btn layui-btn-normal layui-btn-sm"
 													id="btn-val-phone_admin">点击获取</button>
+											</div> -->
+											
+											
+											<div id="divValPhone_admin" class="layui-form-item" style="display: none;">
+
+												<label class="layui-form-label">手机</label>
+												<div class="layui-input-block">
+													<input type="text" name="mblph_no_admin"
+														lay-verify="required|phone" id="mblph_no_admin"
+														autocomplete="off" placeholder="手机号" class="layui-input">
+												</div>
 											</div>
+											
+											<div id="divValPhoneCode_admin" class="layui-form-item" style="display: none;">
+
+												<div class="layui-inline">
+													<label class="layui-form-label">验证码</label>
+													<div class="layui-input-block">
+														<input type="text" name="mblphValCode_admin" id="mblphValCode_admin"
+															lay-verify="required" autocomplete="off"
+															placeholder="手机验证码" class="layui-input">
+													</div>
+									
+												</div>
+												
+												<div class="layui-inline">
+													<div class="layui-input-block">
+														<button type="button" style="width: 100px;"
+															class="layui-btn layui-btn-normal layui-btn-sm"
+															id="btn-val-phone_admin">点击获取</button>
+													</div>
+														
+												</div>
+											</div>
+											
+											
+											
 
 											<div id="divValEmail_admin" class="layui-form-item" style="display: none;">
 												<label class="layui-form-label">邮箱</label>

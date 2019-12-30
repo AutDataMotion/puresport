@@ -21,6 +21,7 @@ function userImproveFormExchange(data){
 	
 	if (data.needValPhone) {
 		$('#divValPhone').show();
+		$('#divValPhoneCode').show();
 	}
 	
 	if (data.needValNmChar) {
@@ -189,6 +190,7 @@ function admin_login() {
 							if (data.needValPhone) {
 								admin_needValPhone = true;
 								$('#divValPhone_admin').show();
+								$('#divValPhoneCode_admin').show();
 							}
 							if (data.needValEmail) {
 								admin_needValEmail = true;
