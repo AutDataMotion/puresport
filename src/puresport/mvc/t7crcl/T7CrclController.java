@@ -1979,9 +1979,16 @@ public class T7CrclController extends BaseController {
 	public void queryTestPaper() {
 		String usrid = getPara("usrid");
 		String examid = getPara("examid");
-		String userFlag = getPara("userFlag");// 1:管理员 2：普通用户
+		String userFlag = getPara("userFlag");// 1:管理员 2：普通用户		
+		String exam_grd = getPara("exam_grd");
+		String type = getPara("type");
+		
 		// 考试名称，科目
-		String t11sql = "select * from t11_exam_stat t where t.examid ='" + examid + "' and t.usrid='" + usrid + "'";
+		String t11sql = "";
+		if(StringUtils.isBlank(exam_grd) || exam_grd.equals("null"))
+			t11sql = "select * from t11_exam_stat t where t.examid ='" + examid + "' and t.usrid='" + usrid + "' and t.type='" + type +"'" ;
+		else
+			t11sql = "select * from t11_exam_stat t where t.examid ='" + examid + "' and t.usrid='" + usrid + "' and t.type='" + type+ "' and t.exam_grd='" + exam_grd +"'" ;
 		T11ExamStat t11 = T11ExamStat.dao.findFirst(t11sql);
 		if (null != t11) {
 			setAttr("exam_name", t11.getExam_nm());
@@ -2014,7 +2021,10 @@ public class T7CrclController extends BaseController {
 				exam.setPrblmno(Integer.parseInt(t10.getPrblmno()));
 				exam.setPrblmid(Integer.parseInt(t10.getPrblmid()));
 				exam.setUsrid(Integer.parseInt(t10.getUsrid()));
-				exam.setExam_grd(Integer.parseInt(t10.getExam_grd()));
+				if(null != t10.getExam_grd())
+					exam.setExam_grd(Integer.parseInt(t10.getExam_grd()));
+				else
+					exam.setExam_grd(0);
 				// 查题目
 				T9Tstlib t9 = T9Tstlib.dao.findById(Long.parseLong(t10.getPrblmid() + ""));
 				if (null != t9) {

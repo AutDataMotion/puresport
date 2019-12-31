@@ -203,6 +203,10 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 						+ row.usrid
 						+ '&examid='
 						+ row.examid
+						+ '&type='
+						+ row.type
+						+ '&exam_grd='
+						+ row.exam_grd
 						+ '&userFlag=1" target="_blank"  role="button">'
 						/*+ '<code class="text-success bg-success">答题情况</code>'*/
 						+ '<span class="badge">查看</span>'
