@@ -100,7 +100,7 @@ public class T7Crcl extends BaseModel<T7Crcl> {
 	 * 字段类型：String 
 	 * "01":科目1;"02":科目2;"03":科目3;"04":科目4;"05":科目5;"06":科目6;
 	 */
-	public static final String column_category = "category";	
+	public static final String column_category = "category";
 	
 	/**
 	 * sqlId : puresport.t7Crcl.splitPageFrom
