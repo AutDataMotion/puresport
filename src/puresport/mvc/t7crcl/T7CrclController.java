@@ -203,7 +203,7 @@ public class T7CrclController extends BaseController {
 				t7.setTestColor(canDoColor);
 				t7.setTestLockIcon("fa fa-unlock");
 				t7.setTestTitle("重新考试");
-				t7.setTestUrl("/course/scormcontent/index.html");
+			//	t7.setTestUrl("/course/scormcontent/index.html");
 				System.out.println(testRltDesc);
 			} else if (examedNum >= 3) {
 				String testRltDesc = "您已考试" + examedNum + "次，次数达上限。取得学分:" + hightestScore + "分！";
@@ -213,7 +213,7 @@ public class T7CrclController extends BaseController {
 				t7.setTestColor(forbiddenColor);
 				t7.setTestLockIcon("fa fa-ban");
 				t7.setTestTitle("无法再考");
-				t7.setTestUrl("/course/scormcontent/index.html");
+			//	t7.setTestUrl("/course/scormcontent/index.html");
 				System.out.println(testRltDesc);
 			} else {
 				String testRltDesc = "您尚未参加考试！";
@@ -231,7 +231,7 @@ public class T7CrclController extends BaseController {
 					t7.setTestLockIcon("fa fa-lock");
 					t7.setTestTitle("尚未解锁");
 				}
-				t7.setTestUrl("/course/scormcontent/index.html");
+			//	t7.setTestUrl("/course/scormcontent/index.html");
 				System.out.println(testRltDesc);
 			}
 
@@ -242,7 +242,7 @@ public class T7CrclController extends BaseController {
 				t7.setCourseColor(canDoColor);
 				t7.setCourseLockIcon("fa fa-unlock");
 				t7.setCourseTitle("点击进入该课程学习");
-				t7.setCourseUrl("/course/scormcontent/index.html");
+		//		t7.setCourseUrl("/course/scormcontent/index.html");
 			} else {
 				// 未解锁
 				t7.setCourseDisabled_a("none");
@@ -1000,7 +1000,7 @@ public class T7CrclController extends BaseController {
 		// } else {
 
 		// 选择题
-		String sql = "select * from t9_tstlib t where t.prblm_tp ='01' order by rand() limit 10";
+		String sql = "select * from t9_tstlib t where t.prblm_tp ='01' and t.type='00' order by rand() limit 10";	
 		List<T9Tstlib> t9List = T9Tstlib.dao.find(sql);
 		List<ExamEntity> examEntityList = new ArrayList<ExamEntity>();
 		Integer questionNum = 0;
@@ -1031,7 +1031,7 @@ public class T7CrclController extends BaseController {
 
 		// 判断题
 		List<ExamEntity> examEntityList2 = new ArrayList<ExamEntity>();
-		sql = "select * from t9_tstlib t where t.prblm_tp ='02' order by rand() limit 10";
+		sql = "select * from t9_tstlib t where t.prblm_tp ='02' and t.type='00' order by rand() limit 10";
 		t9List = T9Tstlib.dao.find(sql);
 		for (T9Tstlib t9Tstlib : t9List) {
 			ExamEntity examEntity = new ExamEntity();
