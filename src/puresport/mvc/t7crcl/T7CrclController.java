@@ -1034,7 +1034,7 @@ public class T7CrclController extends BaseController {
 		sql = "select * from t9_tstlib t where t.prblm_tp ='02' and t.type='00' order by rand() limit 10";
 		t9List = T9Tstlib.dao.find(sql);
 		for (T9Tstlib t9Tstlib : t9List) {
-			ExamEntity examEntity = new ExamEntity();
+			ExamEntity examEntity = new ExamEntity(); 
 			examEntity.setTtl((String) t9Tstlib.getTtl());
 			examEntity.setPrblmid(Integer.parseInt((String) t9Tstlib.getPrblmid()));
 			// 答案
