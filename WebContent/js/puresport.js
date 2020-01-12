@@ -655,6 +655,7 @@ function initScoreTable(userID) {
 								score.push(data.itemlist[i].tms);
 								score.push(data.itemlist[i].examid);
 								score.push(data.itemlist[i].usrid);
+								score.push(data.itemlist[i].type);
 								dataSet.push(score);
 							}
 							$('#score_excel')
@@ -689,6 +690,8 @@ function initScoreTable(userID) {
 																		+ row[2]
 																		+ '&usrid='
 																		+ row[4]
+																+ '&type='
+																+ row[5]
 																		+ '&examid='
 																		+ row[3]
 																		+ '" target="_blank"  role="button">'

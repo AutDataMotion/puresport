@@ -1,0 +1,41 @@
+
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">邀请码</label>
+	<div class="col-sm-7">
+		<input type="text" name="t18ExtrasPoints.scor" value="${t18ExtrasPoints.scor!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">赛事类型</label>
+	<div class="col-sm-7">
+		<input type="text" name="t18ExtrasPoints.type" value="${escapeXml(t18ExtrasPoints.type!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">用户id</label>
+	<div class="col-sm-7">
+		<input type="text" name="t18ExtrasPoints.usrid" value="${t18ExtrasPoints.usrid!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">科目</label>
+	<div class="col-sm-7">
+		<input type="text" name="t18ExtrasPoints.category" value="${escapeXml(t18ExtrasPoints.category!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>

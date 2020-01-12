@@ -15,22 +15,18 @@ import com.jfinal.aop.Clear;
 
 import puresport.constant.ConstantInitMy;
 import puresport.mvc.t10examgrd.T10ExamGrd;
-
+import puresport.mvc.t12highestscore.T12HighestScore;
 
 /**
- * XXX 管理	
- * 描述：
+ * XXX 管理 描述：
  * 
- * /jf/puresport/t11ExamStat
- * /jf/puresport/t11ExamStat/save
- * /jf/puresport/t11ExamStat/edit
- * /jf/puresport/t11ExamStat/update
- * /jf/puresport/t11ExamStat/view
- * /jf/puresport/t11ExamStat/delete
+ * /jf/puresport/t11ExamStat /jf/puresport/t11ExamStat/save
+ * /jf/puresport/t11ExamStat/edit /jf/puresport/t11ExamStat/update
+ * /jf/puresport/t11ExamStat/view /jf/puresport/t11ExamStat/delete
  * /puresport/t11ExamStat/add.html
  * 
  */
-//@Controller(controllerKey = "/jf/puresport/t11ExamStat")
+// @Controller(controllerKey = "/jf/puresport/t11ExamStat")
 public class T11ExamStatController extends BaseController {
 
 	@SuppressWarnings("unused")
@@ -43,34 +39,35 @@ public class T11ExamStatController extends BaseController {
 	 * 列表
 	 */
 	public void index() {
-		paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T11ExamStat.sqlId_splitPage_from);
-		renderWithPath(pthv+"list.html");
+		paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select,
+				T11ExamStat.sqlId_splitPage_from);
+		renderWithPath(pthv + "list.html");
 	}
-	
+
 	/**
 	 * 保存
 	 */
 	@Before(T11ExamStatValidator.class)
 	public void save() {
 		T11ExamStat t11ExamStat = getModel(T11ExamStat.class);
-		//other set 
-		
-		//t11ExamStat.save();		//guiid
-		t11ExamStat.saveGenIntId();	//serial int id
-		renderWithPath(pthv+"add.html");
+		// other set
+
+		// t11ExamStat.save(); //guiid
+		t11ExamStat.saveGenIntId(); // serial int id
+		renderWithPath(pthv + "add.html");
 	}
-	
+
 	/**
 	 * 准备更新
 	 */
 	public void edit() {
-		//T11ExamStat t11ExamStat = T11ExamStat.dao.findById(getPara());	//guuid
-		T11ExamStat t11ExamStat = T11ExamStatService.service.SelectById(getParaToInt());		//serial int id
+		// T11ExamStat t11ExamStat = T11ExamStat.dao.findById(getPara()); //guuid
+		T11ExamStat t11ExamStat = T11ExamStatService.service.SelectById(getParaToInt()); // serial int id
 		setAttr("t11ExamStat", t11ExamStat);
-		renderWithPath(pthv+"update.html");
+		renderWithPath(pthv + "update.html");
 
 	}
-	
+
 	/**
 	 * 更新
 	 */
@@ -84,59 +81,107 @@ public class T11ExamStatController extends BaseController {
 	 * 查看
 	 */
 	public void view() {
-		//T11ExamStat t11ExamStat = T11ExamStat.dao.findById(getPara());	//guuid
-		T11ExamStat t11ExamStat = T11ExamStatService.service.SelectById(getParaToInt());		//serial int id
+		// T11ExamStat t11ExamStat = T11ExamStat.dao.findById(getPara()); //guuid
+		T11ExamStat t11ExamStat = T11ExamStatService.service.SelectById(getParaToInt()); // serial int id
 		setAttr("t11ExamStat", t11ExamStat);
-		renderWithPath(pthv+"view.html");
+		renderWithPath(pthv + "view.html");
 	}
-	
+
 	/**
 	 * 删除
 	 */
 	public void delete() {
-		//T11ExamStatService.service.delete("t11_exam_stat", getPara() == null ? ids : getPara());	//guuid
-		T11ExamStatService.service.deleteById("t11_exam_stat", getPara() == null ? ids : getPara());	//serial int id
+		// T11ExamStatService.service.delete("t11_exam_stat", getPara() == null ? ids :
+		// getPara()); //guuid
+		T11ExamStatService.service.deleteById("t11_exam_stat", getPara() == null ? ids : getPara()); // serial int id
 		redirect(pthc);
 	}
-	
-	public void setViewPath(){
+
+	public void setViewPath() {
 		setAttr(ConstantRender.PATH_CTL_NAME, pthc);
 		setAttr(ConstantRender.PATH_VIEW_NAME, pthv);
 	}
+
 	@Clear
-	public void get_exam_grd()
-	{
-		boolean flag = false;  
-          
-        String userID = getPara("userID");//获取表单数据，这里的参数就是页面表单中的name属性值         
-        List<T11ExamStat> itemlist = T11ExamStat.dao.find("select t.*,s.id as file_path from t11_exam_stat t left join t17_credit_inf s ON t.usrid=s.usrid and t.type = s.type where t.usrid=? and t.exam_st = '1' order by t.tms desc", userID);
-        if(itemlist!=null)
-        {
-        	flag = true;
-        	JSONObject resjson = new JSONObject();
-        	resjson.put("flag", flag);
-//        	json.put("itemlist", itemlist);
-//        	renderJson(json);
-        	JSONArray jsonArray = new JSONArray();
-        	for(T11ExamStat item:itemlist)
-        	{
-        		JSONObject json = new JSONObject();
-        		json.put("exam_grd", item.getExam_grd());
-        		json.put("exam_name", item.getExam_nm());
-        		json.put("tms", item.getTms());
-        		json.put("examid", item.getExamid());
-        		json.put("usrid", item.getUsrid());
-        		json.put("type", item.getType());
-        		json.put("file_path", item.getFile_path());
-        		jsonArray.add(json);
-        	}
-        	resjson.put("itemlist", jsonArray);
-        	renderJson(resjson);
-        }
-        else {
-        	JSONObject json = new JSONObject();
-        	json.put("flag", flag);
-        	renderJson(json);
-        }
+	public void get_exam_grd() {
+		boolean flag = false;
+		JSONObject resjson = new JSONObject();
+		JSONArray jsonArray = new JSONArray();
+		String userID = getPara("userID");// 获取表单数据，这里的参数就是页面表单中的name属性值
+		List<T11ExamStat> itemlist = T11ExamStat.dao.find(
+				"select t.*,s.id as file_path from t11_exam_stat t left join t17_credit_inf s ON t.usrid=s.usrid and t.type = s.type where t.usrid=? and t.exam_st = '1' and t.type != '4' order by t.tms desc",
+				userID);
+		if (itemlist != null) {
+			for (T11ExamStat item : itemlist) {
+				JSONObject json = new JSONObject();
+				json.put("exam_grd", item.getExam_grd());
+				json.put("exam_name", item.getExam_nm());
+				json.put("tms", item.getTms());
+				json.put("examid", item.getExamid());
+				json.put("usrid", item.getUsrid());
+				json.put("type", item.getType());
+				json.put("file_path", item.getFile_path());
+				jsonArray.add(json);
+			}
+		}
+		// 积分制部分的成绩
+		List<T12HighestScore> itemlist2 = T12HighestScore.dao.find(
+				"select t.*,s.id as file_path from t12_highest_score t left join t17_credit_inf s ON t.usrid=s.usrid and t.type = s.type where t.usrid=? and t.type = '4' order by t.tms desc",
+				userID);
+		if (itemlist2 != null) {
+			for (T12HighestScore item : itemlist2) {
+				JSONObject json = new JSONObject();
+				json.put("exam_grd", item.getExam_grd());
+				json.put("exam_name", item.getExam_nm());
+				json.put("tms", item.getTms());
+				json.put("examid", item.getExamid());
+				json.put("usrid", item.getUsrid());
+				json.put("type", item.getType());
+				json.put("file_path", item.getFile_path());
+				jsonArray.add(json);
+			}
+		}
+		if (itemlist2 != null || itemlist != null) {
+			resjson.put("itemlist", jsonArray);
+			renderJson(resjson);
+		} else {
+			JSONObject json = new JSONObject();
+			json.put("flag", flag);
+			renderJson(json);
+		}
+	}
+
+	// 查询积分制课程考试情况列表
+	@Clear
+	public void get_exam_grd_category() {
+		boolean flag = false;
+		String useridStr = (String) getSession().getAttribute("usrid");
+		String type = getPara("type");// 获取表单数据，这里的参数就是页面表单中的name属性值
+		List<T11ExamStat> itemlist = T11ExamStat.dao.find(
+				"select t.* from t11_exam_stat t where t.usrid=? and t.exam_st = '1' and t.type='4' order by t.tms desc",
+				useridStr);
+		if (itemlist != null) {
+			flag = true;
+			JSONObject resjson = new JSONObject();
+			resjson.put("flag", flag);
+			JSONArray exam_grd_category_list = new JSONArray();
+			for (T11ExamStat item : itemlist) {
+				JSONObject json = new JSONObject();
+				json.put("exam_grd", item.getExam_grd());
+				json.put("exam_name", item.getExam_nm());
+				json.put("tms", item.getTms());
+				json.put("examid", item.getExamid());
+				json.put("usrid", item.getUsrid());
+				json.put("type", item.getType());
+				json.put("file_path", item.getFile_path());
+				exam_grd_category_list.add(json);
+			}
+			resjson.put("itemlist", exam_grd_category_list);
+			renderJson(resjson);
+		} else {
+			JSONObject json = new JSONObject();
+			json.put("flag", flag);
+			renderJson(json);
+		}
 	}
 }

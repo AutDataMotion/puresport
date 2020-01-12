@@ -43,9 +43,9 @@ public abstract class GenerateBase {
 	 */
 
 	public static String[][] tableArr = {
-			{ null, "t15_group", null, "T15Group", "分组表" },
-			{ null, "r16_group_usr", null, "R16GroupUsr", "运动员所属分组表" },
-			{ null, "t15_credit_inf", null, "T15CreditInf", "准入证书信息表" },
+//			{ null, "t15_group", null, "T15Group", "分组表" },
+//			{ null, "r16_group_usr", null, "R16GroupUsr", "运动员所属分组表" },
+			{ null, "t18_extras_points", null, "T18ExtrasPoints", "附加分信息表" },
 //			{ null, "t14_invitation_code", null, "T14InvitationCode", "运动项目表" },
 
 //			{ null, "dt_area", null, "Area", "全国省市表" },

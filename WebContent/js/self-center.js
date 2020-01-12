@@ -414,6 +414,8 @@ function initScoreTable(userID) {
 																		+ row[2]
 																		+ '&usrid='
 																		+ row[4]
+																+ '&type='
+																+ row[5]
 																		+ '&examid='
 																		+ row[3]
 																		+ '" target="_blank"  role="button">'
