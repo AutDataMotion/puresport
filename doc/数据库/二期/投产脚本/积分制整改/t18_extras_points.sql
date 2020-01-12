@@ -21,9 +21,9 @@ SET FOREIGN_KEY_CHECKS=0;
 DROP TABLE IF EXISTS `t18_extras_points`;
 CREATE TABLE `t18_extras_points` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'id',
-  `scor` int(3) DEFAULT NULL COMMENT '邀请码',
+  `scor` int(3) DEFAULT NULL COMMENT '分数',
   `type` char(2) DEFAULT '' COMMENT '赛事类型',
   `usrid` int(10) NOT NULL COMMENT '用户id',
   `category` char(2) DEFAULT '' COMMENT '科目',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='邀请码信息表';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='附加分信息表';
