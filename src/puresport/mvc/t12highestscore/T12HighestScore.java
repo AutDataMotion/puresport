@@ -90,6 +90,12 @@ public class T12HighestScore extends BaseModel<T12HighestScore> {
 	 * 描述：分页from
 	 */
 	public static final String sqlId_splitPage_from = "puresport.t12HighestScore.splitPageFrom";
+	
+	/**
+	 * 字段描述：省份名称 
+	 * 字段类型：varchar  长度：128
+	 */
+	public static final String column_file_path = "file_path";
 
 	private Long id;
 	private Integer usrid;
@@ -101,6 +107,15 @@ public class T12HighestScore extends BaseModel<T12HighestScore> {
 	private Timestamp tms;
 	private String exam_nm;
 	private String type;
+	// 是否已经有证书
+	private String file_path;
+
+	public void setFile_path(String file_path){
+		set(column_file_path, file_path);
+	}
+	public <T> T getFile_path() {
+		return get(column_file_path);
+	}
 
 	public <T> T  getType() {
 		return get(column_type);
