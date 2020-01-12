@@ -72,14 +72,14 @@ public class T9Tstlib extends BaseModel<T9Tstlib> {
 	/**
 	 * 字段描述：赛事类型
 	 * 字段类型：String 
-	 * "":通用赛事; "05"东京奥运会
+	 * "0","省运会","1","亚运会","2","青奥会","3","军运会","4","东京奥运会","6","冬青奥会","7","十四冬会"
 	 */
 	public static final String column_type = "type";
 	
 	/**
 	 * 字段描述：科目
 	 * 字段类型：String 
-	 * "01":科目1;"02":科目2;"03":科目3;"04":科目4;"05":科目5;"06":科目6;
+	 * "1":科目1;"2":科目2;"3":科目3;"4":科目4;"5":科目5;"6":科目6;
 	 */
 	public static final String column_category = "category";
 	

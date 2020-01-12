@@ -47,6 +47,7 @@ import puresport.mvc.t5crclstdy.T5CrclStdy;
 import puresport.mvc.t9tstlib.T9Tstlib;
 import puresport.mvc.t14invitationcode.T14InvitationCode;
 import puresport.mvc.t17creditInf.T17CreditInf;
+import puresport.mvc.t18extraspoints.T18ExtrasPoints;
 import puresport.mvc.pages.FunctionInterceptor;
 
 /**
@@ -172,7 +173,7 @@ public class T7CrclController extends BaseController {
 		List<T7Crcl> t7List = queryCrcl(5, usrid);
 		// if(null != t11List && t11List.size() > 0
 		// 查询考试情况,来源t11,判定当前各课程考试情况
-		String sql = "select * from t11_exam_stat t where  t.type = '05' and t.usrid = '" + usrid
+		String sql = "select * from t11_exam_stat t where  t.type = '4' and t.usrid = '" + usrid
 				+ "'order by t.category desc";
 		List<T11ExamStat> t11List = T11ExamStat.dao.find(sql);
 		List<T7Crcl> t7ListRlt = new ArrayList<T7Crcl>();
@@ -629,7 +630,7 @@ public class T7CrclController extends BaseController {
 		// 是否参加过考试
 		boolean isExamed = false;
 		// 查询个人排名
-		String sql = "select * from t11_exam_stat t where  t.exam_st = '9' and t.type ='05' order by exam_grd desc";
+		String sql = "select * from t11_exam_stat t where  t.exam_st = '9' and t.type ='4' order by exam_grd desc";
 		List<T11ExamStat> t11List = T11ExamStat.dao.find(sql);
 		int mingci = 0;
 		for (T11ExamStat t11 : t11List) {
@@ -1000,7 +1001,7 @@ public class T7CrclController extends BaseController {
 		// } else {
 
 		// 选择题
-		String sql = "select * from t9_tstlib t where t.prblm_tp ='01' and t.type='00' order by rand() limit 10";	
+		String sql = "select * from t9_tstlib t where t.prblm_tp ='01' and t.type='0' order by rand() limit 10";	
 		List<T9Tstlib> t9List = T9Tstlib.dao.find(sql);
 		List<ExamEntity> examEntityList = new ArrayList<ExamEntity>();
 		Integer questionNum = 0;
@@ -1031,7 +1032,7 @@ public class T7CrclController extends BaseController {
 
 		// 判断题
 		List<ExamEntity> examEntityList2 = new ArrayList<ExamEntity>();
-		sql = "select * from t9_tstlib t where t.prblm_tp ='02' and t.type='00' order by rand() limit 10";
+		sql = "select * from t9_tstlib t where t.prblm_tp ='02' and t.type='0' order by rand() limit 10";
 		t9List = T9Tstlib.dao.find(sql);
 		for (T9Tstlib t9Tstlib : t9List) {
 			ExamEntity examEntity = new ExamEntity(); 
@@ -1377,7 +1378,7 @@ public class T7CrclController extends BaseController {
 		String sql = "select * from t11_exam_stat t where t.usrid = '" + t10.getUsrid() + "' and t.exam_st = '9'";
 		if ("东京奥运会".equals(which_competition)) {
 			sql = "select * from t11_exam_stat t where t.usrid = '" + t10.getUsrid()
-					+ "' and t.exam_st = '9' and t.category = '" + category + "' and t.type='05'";
+					+ "' and t.exam_st = '9' and t.category = '" + category + "' and t.type = '4'";
 		}
 		T11ExamStat t11Rlt = T11ExamStat.dao.findFirst(sql);
 		if (null == t11Rlt) {
@@ -1420,12 +1421,22 @@ public class T7CrclController extends BaseController {
 		if ("东京奥运会".equals(which_competition)) {
 			// 计算东京奥运会最高成绩
 			String sql2 = "select * from t11_exam_stat t where t.usrid='" + usrid
-					+ "' and t.type='05' and t.exam_st='9'";
+					+ "' and t.type='4' and t.exam_st='9'";
 			List<T11ExamStat> t11List = T11ExamStat.dao.find(sql2);
 			totalScore = 0;
 			if (null != t11List && t11List.size() > 0) {
 				for (T11ExamStat t11Ele : t11List) {
 					totalScore += (Integer.parseInt(t11Ele.getExam_grd()));
+				}
+			}
+			//查询附加题分数
+			String sql3 = "select * from t18_extras_points t where t.usrid='" + usrid
+					+ "' and t.type='4'";
+			List<T18ExtrasPoints> t18List = T18ExtrasPoints.dao.find(sql3);
+			if (null != t11List && t11List.size() > 0) {
+				for (T18ExtrasPoints t18Ele : t18List) {
+					if(StringUtils.isNotBlank(t18Ele.getScor()))
+						totalScore += (Integer.parseInt(t18Ele.getScor()));
 				}
 			}
 		}
@@ -2126,7 +2137,7 @@ public class T7CrclController extends BaseController {
 		String useridStr = getSession().getAttribute("usrid") + "";
 		String invitationCode = getPara("invitationCode");
 		String flag = getPara("flag"); // 1:判断是否已经验证过 2：提交邀请码从新验证
-		String sql = "select * from t14_invitation_code t where t.type = '05'";
+		String sql = "select * from t14_invitation_code t where t.type = '4'";
 		T14InvitationCode t14 = T14InvitationCode.dao.findFirst(sql);
 		if (null != t14) {
 			if ("1".equals(flag)) {
@@ -2153,7 +2164,7 @@ public class T7CrclController extends BaseController {
 					renderJson(res);
 					// 保存已验证用户列表
 					String updateSql = "update t14_invitation_code t set t.invited_user_list=CONCAT(t.invited_user_list, ',"
-							+ useridStr + "') where t.type='05'";
+							+ useridStr + "') where t.type = '4'";
 					ConfMain.db().update(updateSql);
 					return;
 				} else {

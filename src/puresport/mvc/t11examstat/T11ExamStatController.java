@@ -139,4 +139,42 @@ public class T11ExamStatController extends BaseController {
         	renderJson(json);
         }
 	}
+	
+	//查询积分制课程考试情况列表
+	@Clear
+	public void get_exam_grd_category()
+	{
+		boolean flag = false;  
+		String useridStr = (String) getSession().getAttribute("usrid");
+        String type = getPara("type");//获取表单数据，这里的参数就是页面表单中的name属性值         
+        List<T11ExamStat> itemlist = T11ExamStat.dao.find("select t.* from t11_exam_stat t where t.usrid=? and t.exam_st = '1' order by t.tms desc", useridStr);
+        if(itemlist!=null)
+        {
+        	flag = true;
+        	JSONObject resjson = new JSONObject();
+        	resjson.put("flag", flag);
+//        	json.put("itemlist", itemlist);
+//        	renderJson(json);
+        	JSONArray jsonArray = new JSONArray();
+        	for(T11ExamStat item:itemlist)
+        	{
+        		JSONObject json = new JSONObject();
+        		json.put("exam_grd", item.getExam_grd());
+        		json.put("exam_name", item.getExam_nm());
+        		json.put("tms", item.getTms());
+        		json.put("examid", item.getExamid());
+        		json.put("usrid", item.getUsrid());
+        		json.put("type", item.getType());
+        		json.put("file_path", item.getFile_path());
+        		jsonArray.add(json);
+        	}
+        	resjson.put("itemlist", jsonArray);
+        	renderJson(resjson);
+        }
+        else {
+        	JSONObject json = new JSONObject();
+        	json.put("flag", flag);
+        	renderJson(json);
+        }
+	}
 }
