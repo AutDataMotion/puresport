@@ -160,9 +160,9 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 			buttons : [ 'excel']
 			//buttons : [ 'excel', 'print' ]
 		}  ],
-		columns : [  /*{
+		columns : [  {
 			data : "usr_tp"
-		},*/ {
+		}, {
 			data : "exam_nm"
 		}
 		, {
@@ -176,7 +176,28 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 			data : "crdt_no"
 		}, {
 			data : "spt_prj"
-		}, /*{
+		}, {
+			data : "province"
+		}, {
+			data : "city"
+		},{
+
+				render : function(
+						data, type,
+						row) {
+					if("0"==row.typelevel)
+						return "国家级";
+					if("1"==row.typelevel)
+						return "中心协会级";
+					if("2"==row.typelevel)
+						return "省级";
+					if("3"==row.typelevel)
+						return "市级";
+					else
+						return "无";
+				}
+		},
+		/*{
 			data : "gnd"
 		}, {
 			data : "brth_dt"
