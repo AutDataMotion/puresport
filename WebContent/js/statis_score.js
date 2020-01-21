@@ -185,7 +185,7 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 				render : function(
 						data, type,
 						row) {
-					if("0"==row.typelevel)
+/*					if("0"==row.typelevel)
 						return "国家级";
 					if("1"==row.typelevel)
 						return "中心协会级";
@@ -193,8 +193,8 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 						return "省级";
 					if("3"==row.typelevel)
 						return "市级";
-					else
-						return "无";
+					else*/
+						return "";
 				}
 		},
 		/*{
