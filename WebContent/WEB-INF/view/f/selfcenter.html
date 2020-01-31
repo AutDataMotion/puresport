@@ -114,6 +114,15 @@
 .modal-title {
     display: inline;
 }
+
+td.details-control {
+    background: url('${cxt!}/ui/DataTables/details_open.png') no-repeat center center;
+    cursor: pointer;
+}
+tr.shown td.details-control {
+    background: url('${cxt!}/ui/DataTables/details_close.png') no-repeat center center;
+}
+
 </style>
 	<% include("/f/header.html"){} %>
 	<!--div class="main_bg">

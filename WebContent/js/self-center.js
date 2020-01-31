@@ -349,11 +349,87 @@ $(function() {
 
 });// end $function
 
+function testScoreTableData(){
+	var jsonData = {
+		"flag": true,
+		"itemlist": [{
+			"file_path": "20",
+			"examid": "6",
+			"usrid": "204896",
+			"tms": "2019-12-16 13:20:20.0",
+			"exam_grd": "95",
+			"exam_name": "十四冬会",
+			"type": "6"
+		}, {
+			"file_path": "20",
+			"examid": "2",
+			"usrid": "204896",
+			"tms": "2019-12-16 13:20:20.0",
+			"exam_grd": "95",
+			"exam_name": "冬青奥会",
+			"type": "6"
+		}]
+	};
+	
+	return jsonData;
+}
+
+function fetchIntegralData(){
+	return {
+		"itemlist": [{
+			"file_path": "20",
+			"examid": "6",
+			"usrid": "204896",
+			"tms": "2019-12-16 13:20:20.0",
+			"exam_grd": "95",
+			"exam_name": "十四冬会",
+			"type": "6",
+			category:'科目1'
+		}, {
+			"file_path": "20",
+			"examid": "2",
+			"usrid": "204896",
+			"tms": "2019-12-16 13:20:20.0",
+			"exam_grd": "95",
+			"exam_name": "冬青奥会",
+			"type": "6",
+			category:'科目2'
+		}]
+	};
+}
+
+function createPaperLink(exam_grd, tms, usrid, type, examid){
+	return '<a href="/jf/puresport/t7Crcl/queryTestPaper?exam_grd=' + exam_grd
+			+ '&tms=' + tms + '&usrid=' + usrid + '&type=' + type + '&examid=' + examid
+			+ '" target="_blank"  role="button"> <code class="text-success bg-success">答题情况</code></a>';
+}
+
+function integralFormat(rowData){
+	console.log('integralFormat', rowData);
+	integralData = fetchIntegralData();
+	var strTable = '<table cellpadding="5" cellspacing="0" border="1" style="padding-left:50px;width: 100%;">';
+	var list = integralData.itemlist;
+	if(list && list.length > 0){
+		strTable += '<tr><td>成绩</td><td>科目</td><td>考试时间</td><td>答题情况</td></tr>';
+		for(var i = 0; i< list.length; i++){
+			var strRow = '<tr><td>'+list[i].exam_grd +'</td><td>'
+									+list[i].category+'</td><td>'
+									+list[i].tms + '</td><td>' 
+									+createPaperLink(list[i].exam_grd, list[i].tms, list[i].usrid, list[i].type, list[i].examid)+'</td></tr>';
+			strTable += strRow;
+		}
+	}else {
+		strTable += '<tr><td>没有数据</td></tr>';
+	}
+	strTable += '</table>';
+	
+	return strTable;
+}
+
 function initScoreTable(userID) {
 	// alert(userID);
 	if (userID) {
-		$
-				.ajax({
+		$.ajax({
 					url : '/jf/puresport/T11ExamStat/get_exam_grd',
 					type : 'POST', // GET
 					async : true, // 或false,是否异步
@@ -363,13 +439,12 @@ function initScoreTable(userID) {
 					timeout : 5000, // 超时时间
 					dataType : 'json', // 返回的数据格式：json/xml/html/script/jsonp/text
 					beforeSend : function(xhr) {
-						// console.log(xhr)
 						console.log('发送前')
 					},
 					success : function(data, textStatus, jqXHR) {
+						// todo now is test data
+						data = testScoreTableData();
 						if (data.flag) {
-							// alert(data);
-							// console.log(data.itemlist[0].exam_grd);
 							var dataSet = [];
 							for (var i = 0; i < data.itemlist.length; i++) {
 								var score = [];
@@ -382,73 +457,105 @@ function initScoreTable(userID) {
 								score.push(data.itemlist[i].file_path);
 								dataSet.push(score);
 							}
-							$('#score_excel')
-									.DataTable(
-											{
-												data : dataSet,
-												language : {
-													url : "/ui/DataTables/Chinese.json"
-												},
-												// "filter": false,
-												// "destroy": true,
-												columns : [
-														{
-															title : "成绩"
-														},
-														{
-															title : "赛事"
-														},
-														{
-															title : "时间"
-														},
-														{
-															title : "查看试卷",
-															sortable : false,
-															render : function(
-																	data, type,
-																	row) {
-																
-																return '<a href="/jf/puresport/t7Crcl/queryTestPaper?exam_grd='
-																		+ row[0]
-																		+ '&tms='
-																		+ row[2]
-																		+ '&usrid='
-																		+ row[4]
-																+ '&type='
-																+ row[5]
-																		+ '&examid='
-																		+ row[3]
-																		+ '" target="_blank"  role="button">'
-																		+ '<code class="text-success bg-success">答题情况</code>'
-																		+ '</a>';
-															}
-														}, {
-															title : "生成证书",
-															sortable : false,
-															render : function(
-																	data, type,
-																	row) {
-																var isHasCreditFlag = 1;
-																if(row[6]==null || row[6]=="")
-																	isHasCreditFlag = 0;
-																if(row[5]==null || row[5]=="")
-																	isHasCreditFlag = 1;
-																if(isHasCreditFlag==0 && parseInt(row[0]) >= 80){
-																return '<a href="/jf/puresport/t7Crcl/generateCredit?totalScore='
-																		+ row[0]
-																		+ '&which_competition_cd='
-																		+ row[5]
-																		+ '&examid='
-																		+ row[3]
-																		+ '" target="_blank"  role="button">'
-																		+ '<code class="text-success bg-success">生成</code>'
-																		+ '</a>';
-																} else
-																	return "";
-
-															}
-														} ]
-											});
+							var scoreTable = $('#score_excel').DataTable({
+								data : dataSet,
+								language : {
+									url : "/ui/DataTables/Chinese.json"
+								},
+								// "filter": false,
+								// "destroy": true,
+								columns : [
+										{
+							                "className":      'details-control',
+							                "orderable":      false,
+							                "data":           null,
+							                "defaultContent": ''
+							            },
+										{
+											title : "成绩"
+										},
+										{
+											title : "赛事"
+										},
+										{
+											title : "时间"
+										},
+										{
+											title : "查看试卷",
+											sortable : false,
+											render : function(
+													data, type,
+													row) {
+												
+												return '<a href="/jf/puresport/t7Crcl/queryTestPaper?exam_grd='
+														 + row[0]
+//														+ row[1]
+														+ '&tms='
+														 + row[2]
+//														+ row[3]
+														+ '&usrid='
+														 + row[4]
+//														+ row[5]
+												+ '&type='
+												 + row[5]
+//												+ row[6]
+														+ '&examid='
+														+ row[3]
+//														+ row[4]
+														+ '" target="_blank"  role="button">'
+														+ '<code class="text-success bg-success">答题情况</code>'
+														+ '</a>';
+											}
+										}, {
+											title : "生成证书",
+											sortable : false,
+											render : function(
+													data, type,
+													row) {
+												var isHasCreditFlag = 1;
+												if(row[6]==null || row[6]=="")
+//												if(row[7]==null || row[7]=="")
+													isHasCreditFlag = 0;
+												if(row[5]==null || row[5]=="")
+//												if(row[6]==null || row[6]=="")
+													isHasCreditFlag = 1;
+												if(isHasCreditFlag==0 && parseInt(row[0]) >= 80){
+//												if(isHasCreditFlag==0 && parseInt(row[1]) >= 80){
+												return '<a href="/jf/puresport/t7Crcl/generateCredit?totalScore='
+														+ row[0]
+//														+ row[1]
+														+ '&which_competition_cd='
+														+ row[5]
+//												+ row[6]
+														+ '&examid='
+														+ row[3]
+//												+ row[4]
+														+ '" target="_blank"  role="button">'
+														+ '<code class="text-success bg-success">生成</code>'
+														+ '</a>';
+												} else
+													return "";
+											}
+										} ]
+							});// end $('#score_excel').DataTable
+							
+							// Add event listener for opening and closing details
+						    $('#score_excel tbody').on('click', 'td.details-control', function () {
+						        var tr = $(this).closest('tr');
+						        var row = scoreTable.row( tr );
+						 
+						        if ( row.child.isShown() ) {
+						            // This row is already open - close it
+						            row.child.hide();
+						            tr.removeClass('shown');
+						        }
+						        else {
+						            // Open this row
+						            row.child(integralFormat(row.data())).show();
+						            tr.addClass('shown');
+						        }
+						    } );
+						    
 						} else {
 							var dataSet = [];
 							$('#score_excel').DataTable({
