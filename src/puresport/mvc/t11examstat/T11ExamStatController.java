@@ -6,6 +6,7 @@ import com.platform.mvc.base.BaseModel;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
 import com.alibaba.fastjson.JSONArray;
@@ -152,7 +153,7 @@ public class T11ExamStatController extends BaseController {
 	}
 
 	// 查询积分制课程考试情况列表
-	@Clear
+/*	@Clear
 	public void get_exam_grd_category() {
 		boolean flag = false;
 		String useridStr = (String) getSession().getAttribute("usrid");
@@ -183,5 +184,53 @@ public class T11ExamStatController extends BaseController {
 			json.put("flag", flag);
 			renderJson(json);
 		}
+	}
+	*/
+
+	// 2020-2-6 added by zhuchaobin
+	// 查询积分制课程考试情况列表
+	void get_exam_grd_category() {
+		JSONObject jsonRlt = new JSONObject();
+		JSONArray jsonArray = new JSONArray();		
+		JSONObject json = new JSONObject();
+		try {
+			String useridStr = getSession().getAttribute("usrid") + "";
+			if(StringUtils.isBlank(useridStr)) {
+				jsonRlt.put("code", "0002");
+				jsonRlt.put("desc", "获取用户ID失败!");
+				renderJson(jsonRlt);
+			}
+			String type = getPara("type");
+			if(StringUtils.isBlank(type)) {
+				jsonRlt.put("code", "0003");
+				jsonRlt.put("desc", "获取赛事类别失败!");
+				renderJson(jsonRlt);
+			}
+			String sql = "select * from t11_exam_stat t where t.type = '"+ type +"' and usrid = '" + useridStr + "'";
+			List<T11ExamStat> tll_list = T11ExamStat.dao.find(sql);
+			if (null != tll_list && tll_list.size() > 0) {
+				for(T11ExamStat t11 : tll_list) {
+					json.put("exam_grd", t11.getExam_grd());
+					json.put("exam_name", t11.getExam_nm());
+					json.put("examid", t11.getExamid());
+					json.put("type", t11.getType());
+					json.put("category", t11.getCategory());
+					json.put("usrid", t11.getUsrid());
+					json.put("tms", t11.getTms());
+					jsonArray.add(json);
+				}
+				jsonRlt.put("exam_grd_category_list", jsonArray);
+				jsonRlt.put("code", "0000");
+				renderJson(jsonRlt);
+			} else {
+				jsonRlt.put("code", "0002");
+				jsonRlt.put("desc", "没有查询到附加题信息.");
+				renderJson(jsonRlt);
+			}
+		} catch (Exception e) {
+			jsonRlt.put("code", "0001");
+			jsonRlt.put("desc", e.getStackTrace());
+			renderJson(jsonRlt);
+		}	
 	}
 }

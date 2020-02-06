@@ -23,6 +23,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
@@ -2265,6 +2266,175 @@ public class T7CrclController extends BaseController {
 			json.put("code", "0001");
 			json.put("desc", e.getStackTrace());
 			renderJson(json);
+		}	
+	}
+	
+	// 查询积分制课程准入学习情况
+	void query_category_status_05() {
+		JSONObject jsonRlt = new JSONObject();
+		JSONArray jsonArray = new JSONArray();		
+		JSONObject json = new JSONObject();
+		
+		try {
+			Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
+			jsonRlt.put("usrid", usrid);
+			String category = getPara("category");
+			if(StringUtils.isBlank(category)) {
+				jsonRlt.put("code", "0003");
+				jsonRlt.put("desc", "获取科目编号失败!");
+				renderJson(jsonRlt);
+			}
+			
+			List<T7Crcl> t7List = queryCrcl(5, usrid);
+			// if(null != t11List && t11List.size() > 0
+			// 查询考试情况,来源t11,判定当前各课程考试情况
+			String sql = "select * from t11_exam_stat t where  t.type = '4' and t.usrid = '" + usrid
+					+ "'order by t.category desc";
+			List<T11ExamStat> t11List = T11ExamStat.dao.find(sql);
+			List<T7Crcl> t7ListRlt = new ArrayList<T7Crcl>();
+			Integer unLockCatagory = 1;
+			for (T7Crcl t7 : t7List) {
+				// 解锁
+				// 查询考试次数及最高成绩
+				Integer examedNum = 0;
+				Integer hightestScore = 0;
+				json.put("crcl_nm", t7.getCrcl_nm());
+				json.put("category", t7.getCategory());
+				for (T11ExamStat t11 : t11List) {
+					if (t11.getCategory().equals(t7.getCategory())) {
+						if (t11.getExam_st().equals("9"))
+							hightestScore = Integer.parseInt(t11.getExam_grd());
+						else
+							examedNum++;
+						if (unLockCatagory < (Integer.parseInt(t11.getCategory()) + 1))
+							unLockCatagory = Integer.parseInt(t11.getCategory()) + 1;
+					}
+				}
+				String canDoColor = "#0065AC";
+				String forbiddenColor = "#D87C31";
+				String lockColor = "#707070";
+				if (examedNum > 0 && examedNum < 3) {
+					String testRltDesc = "您已考试" + examedNum + "次，取得学分:" + hightestScore + "分！";
+					t7.setTestRltDesc(testRltDesc);
+					t7.setTestDisabled_a("");
+					t7.setTestDisabled("none");
+					t7.setTestColor(canDoColor);
+					t7.setTestLockIcon("fa fa-unlock");
+					t7.setTestTitle("重新考试");
+				//	t7.setTestUrl("/course/scormcontent/index.html");
+					System.out.println(testRltDesc);
+					json.put("stdy_st", "2");
+				} else if (examedNum >= 3) {
+					String testRltDesc = "您已考试" + examedNum + "次，次数达上限。取得学分:" + hightestScore + "分！";
+					t7.setTestRltDesc(testRltDesc);
+					t7.setTestDisabled_a("none");
+					t7.setTestDisabled("");
+					t7.setTestColor(forbiddenColor);
+					t7.setTestLockIcon("fa fa-ban");
+					t7.setTestTitle("无法再考");
+				//	t7.setTestUrl("/course/scormcontent/index.html");
+					System.out.println(testRltDesc);
+					json.put("stdy_st", "2");
+				} else {
+					String testRltDesc = "您尚未参加考试！";
+					t7.setTestRltDesc(testRltDesc);
+					if (Integer.parseInt(t7.getCategory()) == unLockCatagory) {
+						t7.setTestDisabled_a("");
+						t7.setTestDisabled("none");
+						t7.setTestColor(canDoColor);
+						t7.setTestLockIcon("fa fa-unlock");
+						t7.setTestTitle("点击进入考试");
+						json.put("stdy_st", "1");
+					} else if (Integer.parseInt(t7.getCategory()) > unLockCatagory) {
+						t7.setTestDisabled_a("none");
+						t7.setTestDisabled("");
+						t7.setTestColor(lockColor);
+						t7.setTestLockIcon("fa fa-lock");
+						t7.setTestTitle("尚未解锁");
+						json.put("stdy_st", "3");
+					}
+				//	t7.setTestUrl("/course/scormcontent/index.html");
+					System.out.println(testRltDesc);
+				}
+
+				// 设置课程
+				if (Integer.parseInt(t7.getCategory()) <= unLockCatagory) {
+					t7.setCourseDisabled_a("");
+					t7.setCourseDisabled("none");
+					t7.setCourseColor(canDoColor);
+					t7.setCourseLockIcon("fa fa-unlock");
+					t7.setCourseTitle("点击进入该课程学习");
+			//		t7.setCourseUrl("/course/scormcontent/index.html");
+				} else {
+					// 未解锁
+					t7.setCourseDisabled_a("none");
+					t7.setCourseDisabled("");
+					t7.setCourseColor(lockColor);
+					t7.setCourseLockIcon("fa fa-lock");
+					t7.setCourseTitle("该课程尚未解锁，请顺序参加先修课程学习并考试!");
+					json.put("stdy_st", "3");
+				}
+				jsonArray.add(json);
+			}
+
+			setAttr("t7", t7List);
+			LOG.debug("t7List.size() = " + t7List.size());
+			
+			jsonRlt.put("category_status_list", jsonArray);
+			jsonRlt.put("code", "0000");
+			jsonRlt.put("desc", "查询成功");
+			renderJson(jsonRlt);
+			
+		} catch (Exception e) {
+			jsonRlt.put("code", "0001");
+			jsonRlt.put("desc", e.getStackTrace());
+			renderJson(jsonRlt);
+		}	
+	}
+	
+	// 查询积分制课程考试情况列表
+	void get_exam_grd_category() {
+		JSONObject jsonRlt = new JSONObject();
+		JSONArray jsonArray = new JSONArray();		
+		JSONObject json = new JSONObject();
+		try {
+			String useridStr = getSession().getAttribute("usrid") + "";
+			if(StringUtils.isBlank(useridStr)) {
+				jsonRlt.put("code", "0002");
+				jsonRlt.put("desc", "获取用户ID失败!");
+				renderJson(jsonRlt);
+			}
+			String type = getPara("type");
+			if(StringUtils.isBlank(type)) {
+				jsonRlt.put("code", "0003");
+				jsonRlt.put("desc", "获取赛事类别失败!");
+				renderJson(jsonRlt);
+			}
+			String sql = "select * from t11_exam_stat t where t.type = '"+ type +"' and usrid = '" + useridStr + "'";
+			List<T11ExamStat> tll_list = T11ExamStat.dao.find(sql);
+			if (null != tll_list && tll_list.size() > 0) {
+				for(T11ExamStat t11 : tll_list) {
+					json.put("exam_grd", t11.getExam_grd());
+					json.put("exam_name", t11.getExam_nm());
+					json.put("examid", t11.getExamid());
+					json.put("type", t11.getType());
+					json.put("category", t11.getCategory());
+					json.put("usrid", t11.getUsrid());
+					json.put("tms", t11.getTms());
+					jsonArray.add(json);
+				}
+				jsonRlt.put("exam_grd_category_list", jsonArray);
+				jsonRlt.put("code", "0000");
+				renderJson(jsonRlt);
+			} else {
+				jsonRlt.put("code", "0002");
+				jsonRlt.put("desc", "没有查询到附加题信息.");
+				renderJson(jsonRlt);
+			}
+		} catch (Exception e) {
+			jsonRlt.put("code", "0001");
+			jsonRlt.put("desc", e.getStackTrace());
+			renderJson(jsonRlt);
 		}	
 	}
 
