@@ -23,6 +23,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.alibaba.fastjson.JSONObject;
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
 import com.platform.annotation.Controller;
@@ -1419,26 +1420,7 @@ public class T7CrclController extends BaseController {
 		}
 		// 更新最高成绩
 		if ("东京奥运会".equals(which_competition)) {
-			// 计算东京奥运会最高成绩
-			String sql2 = "select * from t11_exam_stat t where t.usrid='" + usrid
-					+ "' and t.type='4' and t.exam_st='9'";
-			List<T11ExamStat> t11List = T11ExamStat.dao.find(sql2);
-			totalScore = 0;
-			if (null != t11List && t11List.size() > 0) {
-				for (T11ExamStat t11Ele : t11List) {
-					totalScore += (Integer.parseInt(t11Ele.getExam_grd()));
-				}
-			}
-			//查询附加题分数
-			String sql3 = "select * from t18_extras_points t where t.usrid='" + usrid
-					+ "' and t.type='4'";
-			List<T18ExtrasPoints> t18List = T18ExtrasPoints.dao.find(sql3);
-			if (null != t11List && t11List.size() > 0) {
-				for (T18ExtrasPoints t18Ele : t18List) {
-					if(StringUtils.isNotBlank(t18Ele.getScor()))
-						totalScore += (Integer.parseInt(t18Ele.getScor()));
-				}
-			}
+			totalScore = getTotalScore_05(usrid);
 		}
 
 		// 插入或者更新成绩统计表最后一次成绩
@@ -1484,6 +1466,32 @@ public class T7CrclController extends BaseController {
 		res = new ResultEntity("0000", which_competition_cd, which_competition, totalScore+"", examid + "");
 		renderJson(res);
 	}
+	
+	// 获取积分制总成绩
+	public Integer getTotalScore_05(Integer usrid) {
+		// 计算东京奥运会最高成绩
+		String sql2 = "select * from t11_exam_stat t where t.usrid='" + usrid
+				+ "' and t.type='4' and t.exam_st='9'";
+		List<T11ExamStat> t11List = T11ExamStat.dao.find(sql2);
+		Integer totalScore = 0;
+		if (null != t11List && t11List.size() > 0) {
+			for (T11ExamStat t11Ele : t11List) {
+				totalScore += (Integer.parseInt(t11Ele.getExam_grd()));
+			}
+		}
+		//查询附加题分数
+		String sql3 = "select * from t18_extras_points t where t.usrid='" + usrid
+				+ "' and t.type='4'";
+		List<T18ExtrasPoints> t18List = T18ExtrasPoints.dao.find(sql3);
+		if (null != t11List && t11List.size() > 0) {
+			for (T18ExtrasPoints t18Ele : t18List) {
+				if(StringUtils.isNotBlank(t18Ele.getScor()))
+					totalScore += (Integer.parseInt(t18Ele.getScor()));
+			}
+		}
+		return totalScore;
+	}
+	
 
 	/**
 	 * 描述：生成证书
@@ -2179,6 +2187,85 @@ public class T7CrclController extends BaseController {
 			renderJson(res);
 			return;
 		}
+	}
+	
+	// 查询积分制准入学习总成绩
+	public void query_score_05() {
+		JSONObject json = new JSONObject();
+		try {
+			Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
+			Integer totalScore = getTotalScore_05(usrid);
+			json.put("exam_grd", totalScore);
+			json.put("usrid", usrid);
+			json.put("code", "0000");
+			renderJson(json);
+		} catch (Exception e) {
+			json.put("code", "0001");
+			json.put("desc", e.getStackTrace());
+			renderJson(json);
+		}		
+	}
+	
+	// 积分制附加分获取
+	public void get_bonus() {
+		JSONObject json = new JSONObject();
+		try {
+			String useridStr = getSession().getAttribute("usrid") + "";
+			String category = getPara("category");
+			if(StringUtils.isBlank(useridStr)) {
+				json.put("code", "0002");
+				json.put("desc", "获取用户ID失败!");
+				renderJson(json);
+			}
+			if(StringUtils.isBlank(category)) {
+				json.put("code", "0003");
+				json.put("desc", "获取科目编号失败!");
+				renderJson(json);
+			}
+			String sql = "select * from t18_extras_points t where t.type = '4' and category = '" + category + "' and usrid = '" + useridStr + "'";
+			T18ExtrasPoints t18 = T18ExtrasPoints.dao.findFirst(sql);
+			if (null != t18) {
+				t18.setScor(1);
+				t18.update();
+			} else {
+				t18.saveGenIntId();
+			}
+			json.put("score", 1);
+			json.put("code", "0000");
+			renderJson(json);
+		} catch (Exception e) {
+			json.put("code", "0001");
+			json.put("desc", e.getStackTrace());
+			renderJson(json);
+		}		
+	}
+	
+	// 查询积分制附加题学习情况
+	void query_bonus_status_05() {
+		JSONObject json = new JSONObject();
+		try {
+			String useridStr = getSession().getAttribute("usrid") + "";
+			if(StringUtils.isBlank(useridStr)) {
+				json.put("code", "0002");
+				json.put("desc", "获取用户ID失败!");
+				renderJson(json);
+			}
+			String sql = "select * from t18_extras_points t where t.type = '4' and usrid = '" + useridStr + "'";
+			List<T18ExtrasPoints> bonus_status_list = T18ExtrasPoints.dao.find(sql);
+			if (null != bonus_status_list) {
+				json.put("bonus_status_list", bonus_status_list);
+				json.put("code", "0000");
+				renderJson(json);
+			} else {
+				json.put("code", "0002");
+				json.put("desc", "没有查询到附加题信息.");
+				renderJson(json);
+			}
+		} catch (Exception e) {
+			json.put("code", "0001");
+			json.put("desc", e.getStackTrace());
+			renderJson(json);
+		}	
 	}
 
 }
