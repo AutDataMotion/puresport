@@ -255,3 +255,18 @@ i{
 	background-image: url(../images/tt6_dis.png);
 }
 
+
+.badge {
+	padding: 2px 5px;
+    line-height: 20px;
+    text-align: center;
+    background-color: #0aa50a7d;
+    color: white;
+    font-size: 12px;
+    font-weight: 700;
+    border-radius: 50%;
+    position: absolute;
+    bottom: 1.2em;
+    right: 1em;
+}
+
