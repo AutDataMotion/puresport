@@ -286,7 +286,7 @@ public class T7CrclController extends BaseController {
 		LOG.debug("t7List.size() = " + t7List.size());
 		
 		String type = getPara("t");
-		if (StringUtils.isEmpty(type) || type.contentEquals("2") || isMobile()) {
+		if ((StringUtils.isNotBlank(type) && type.contentEquals("2")) || isMobile()) {
 			renderWithPath("/f/accession/jifen_m/index.html");
 		} else {
 			renderWithPath("/f/accession/jifen_pc/index.html");
