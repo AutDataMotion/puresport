@@ -2530,7 +2530,7 @@ public class T7CrclController extends BaseController {
 			} else {
 				// 未解锁
 				t7.setCourseDisabled_a("none");
-				t7.setCourseDisabled("");
+				t7.setCourseDisabled(""); 
 				t7.setCourseColor(lockColor);
 				t7.setCourseLockIcon("fa fa-lock");
 				t7.setCourseTitle("该课程尚未解锁，请顺序参加先修课程学习并考试!");
