@@ -262,7 +262,7 @@ public class T7CrclController extends BaseController {
 		if(StringUtils.isEmpty(pcType) || pcType.contentEquals("1")) {
 			// pc
 			renderWithPath("/f/accession/jifen_pc/index.html");
-		} else if(pcType.contentEquals("1")) {
+		} else if(pcType.contentEquals("2")) {
 			// mobile
 			renderWithPath("/f/accession/jifen_m/index.html");
 		} else {

@@ -3,47 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
-    <title></title>
+    <title>学习</title>
     <link rel="stylesheet" href="style/style.css"/>
-	<script src="js/jquery.min.js"></script>
-	<script src="js/flexible.js"></script>
+	<!-- Bootstrap -->
+<link href="${cxt!}/ui/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel='stylesheet' type='text/css' />
+<link href="${cxt!}/css/style.css" rel="stylesheet" type="text/css" media="all" />
+<!-- 字体图标，zhuchaobin 20191027-->
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<!-- start plugins -->
+<script type="text/javascript" src="${cxt!}/js/puresport.js"></script>
+<script type="text/javascript" src="${cxt!}/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<!--start slider -->
+<link rel="stylesheet" href="${cxt!}/css/fwslider.css" media="all">
+<script src="${cxt!}/js/fwslider.js"></script>
+<!--end slider -->
+
+<script src="${cxt!}/js/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
+<script src="${cxt!}/js/allinone_carousel.js" type="text/javascript"></script>
+
+
+	<script src="${cxt!}/ui/jifen_course/m/js/flexible.js"></script>
+	<link href="${cxt!}/ui/jifen_course/m/style/style.css" rel="stylesheet" type="text/css" media="all" />
+	
 </head>
+
 <body ontouchstart>
-	<div class="wrap">
-		<a href="javascript:;" class="yun-box yun1 disable"></a>
-		<a href="" class="yun-box yun2"></a>
-		<a href="" class="yun-box yun3"></a>
-		<a href="" class="yun-box yun4"></a>
-		<a href="" class="yun-box yun5"></a>
-		<a href="" class="yun-box yun6"></a>
-		<a href="" class="yun-box yun7"></a>
-		<a href="" class="yun-box yun8"></a>
-		<a href="" class="yun-box yun9"></a>
-		<a href="" class="yun-box yun10"></a>
-		<a href="" class="cat-box cat1"></a>
-		<a href="" class="cat-box cat2"></a>
-		<a href="" class="cat-box cat3"></a>
-		<a href="" class="cat-box cat4"></a>
-		<a href="javascript:;" class="cat-box cat5 disable"></a>
-		<a href="javascript:;" class="cat-box cat6 disable"></a>
-		<!-- 进度条 -->
-		<div class="progress">
-		  <div class="progress-bar progress-bar-info progress-bar-striped" style="height: 20%">
-		  </div>
-		  <div class="progress-value">
-			  <div>100%</div>
-			  <div>90%</div>
-			  <div>80%</div>
-			  <div>70%</div>
-			  <div>60%</div>
-			  <div>50%</div>
-			  <div>40%</div>
-			  <div>30%</div>
-			  <div>20%</div>
-			  <div>10%</div>
-			  <div>0%</div>
-		  </div>
+	
+	<% include("/f/header.html"){} %>
+	<div class="main_bg">
+		<div class="container">
+			<div class="wrap">
+				<a href="javascript:;" class="yun-box yun1 disable"></a>
+				<a href="" class="yun-box yun2"></a>
+				<a href="" class="yun-box yun3"></a>
+				<a href="" class="yun-box yun4"></a>
+				<a href="" class="yun-box yun5"></a>
+				<a href="" class="yun-box yun6"></a>
+				<a href="" class="yun-box yun7"></a>
+				<a href="" class="yun-box yun8"></a>
+				<a href="" class="yun-box yun9"></a>
+				<a href="" class="yun-box yun10"></a>
+				<a href="" class="cat-box cat1"></a>
+				<a href="" class="cat-box cat2"></a>
+				<a href="" class="cat-box cat3"></a>
+				<a href="" class="cat-box cat4"></a>
+				<a href="javascript:;" class="cat-box cat5 disable"></a>
+				<a href="javascript:;" class="cat-box cat6 disable"></a>
+				<!-- 进度条 -->
+				<div class="progress">
+				  <div class="progress-bar progress-bar-info progress-bar-striped" style="height: 20%">
+				  </div>
+				  <div class="progress-value">
+					  <div>100%</div>
+					  <div>90%</div>
+					  <div>80%</div>
+					  <div>70%</div>
+					  <div>60%</div>
+					  <div>50%</div>
+					  <div>40%</div>
+					  <div>30%</div>
+					  <div>20%</div>
+					  <div>10%</div>
+					  <div>0%</div>
+				  </div>
+				</div>
+			</div>
 		</div>
 	</div>
+	
+	<% include("/f/footer.html"){} %>
+	
 </body>
 </html>

@@ -35,7 +35,7 @@ i{
 	font-style: normal;
 }
 .wrap{
-	position: fixed;
+	position: relative;
 	left: 50%;
 	top: 50%;
 	margin-left: -600px;
@@ -87,7 +87,7 @@ i{
 }
 .progress-value{
 	position: absolute;
-	top: 119%;
+	top: 16%;
 	width: 100%;
 	z-index: 8;
 	display: flex;
