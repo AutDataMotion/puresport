@@ -1477,7 +1477,8 @@ public class T7CrclController extends BaseController {
 		Integer totalScore = 0;
 		if (null != t11List && t11List.size() > 0) {
 			for (T11ExamStat t11Ele : t11List) {
-				totalScore += (Integer.parseInt(t11Ele.getExam_grd()));
+				if(null != t11Ele.getExam_grd())
+					totalScore += (Integer.parseInt(t11Ele.getExam_grd()));
 			}
 		}
 		//查询附加题分数
@@ -1487,7 +1488,8 @@ public class T7CrclController extends BaseController {
 		if (null != t11List && t11List.size() > 0) {
 			for (T18ExtrasPoints t18Ele : t18List) {
 				if(StringUtils.isNotBlank(t18Ele.getScor()))
-					totalScore += (Integer.parseInt(t18Ele.getScor()));
+					if(null != t18Ele.getScor())
+						totalScore += (Integer.parseInt(t18Ele.getScor()));
 			}
 		}
 		return totalScore;
