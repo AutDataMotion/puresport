@@ -2202,7 +2202,7 @@ public class T7CrclController extends BaseController {
 			renderJson(json);
 		} catch (Exception e) {
 			json.put("code", "0001");
-			json.put("desc", e.getStackTrace());
+			json.put("desc", e);
 			renderJson(json);
 		}		
 	}
