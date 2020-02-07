@@ -2277,7 +2277,7 @@ public class T7CrclController extends BaseController {
 	}
 	
 	// 查询积分制附加题学习情况
-	void query_bonus_status_05() {
+	public void query_bonus_status_05() {
 		JSONObject json = new JSONObject();
 		try {
 			String useridStr = getSession().getAttribute("usrid") + "";
@@ -2305,7 +2305,7 @@ public class T7CrclController extends BaseController {
 	}
 	
 	// 查询积分制课程准入学习情况
-	void query_category_status_05() {
+	public void query_category_status_05() {
 		JSONObject jsonRlt = new JSONObject();
 		JSONArray jsonArray = new JSONArray();		
 		JSONObject json = new JSONObject();

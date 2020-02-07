@@ -83,6 +83,61 @@ function getAllScoreAjax(){
 }
 
 
+function getCourseUrl(id){
+	return cxt + '/jf/puresport/t7Crcl/study_notify_tokyo_1?which_competition=4&category=' + id;
+}
+
+var studyStatusMap = {
+		'1':{
+			name:'未考试', 
+			cssAble:'',
+			funUrl: function(id){
+					return getCourseUrl(id);
+				},
+			fun:function(){
+				
+			}
+		},
+		'2':{
+			name:'已考试',
+			cssAble:'',
+			funUrl: function(id){
+				return getCourseUrl(id);
+			},
+			fun:function(){
+				
+			}
+		},
+		'3':{
+			name:'未解锁', 
+			cssAble:'disable',
+			funUrl: function(id){
+				return 'javascript:;';
+			},
+			fun:function(){
+				
+			}
+		},
+		'4':{
+			name:'未上线', 
+			cssAble:'disable',
+			funUrl: function(id){
+				return 'javascript:;';
+			},
+			fun:function(){
+				
+			}
+		},
+};
+function setStudyStatus(id, statusId){
+	var catDiv = $('#cat'+id);
+	var statusDiv = $('#cat-status'+id);
+	var statusFun = studyStatusMap[statusId];
+	
+	catDiv.attr('href',statusFun.funUrl(id));
+	catDiv.addClass(statusFun.cssAble);
+	statusDiv.html(statusFun.name);
+}
 function getCourseListAjax(){
 	// 查询积分制课程准入学习情况
 	url = '/jf/puresport/t7Crcl/query_category_status_05';
@@ -91,6 +146,11 @@ function getCourseListAjax(){
 	};
 	funSucc = function(data){
 		jifenDataModel.category_status_list = data.category_status_list;
+		catList = jifenDataModel.category_status_list;
+		for(var i=0; i< catList.length; i++){
+			// category 1~6 对应
+			setStudyStatus(catList[i].category, catList[i].stdy_st);
+		}
 	}
 	
 	funFail = function(){
