@@ -2437,5 +2437,108 @@ public class T7CrclController extends BaseController {
 			renderJson(jsonRlt);
 		}	
 	}
+	
+	
+	/**
+	 * 描述：东京奥运会学习
+	 * 
+	 * @author zhuchaobin 2019-10-20
+	 */
+	public void get_study_notify_tokyo() {
+		String which_competition = getPara("which_competition");
+		String category = getPara("category");
+				
+		System.out.println("get_study_notify_tokyo");
+		Integer usrid = Integer.parseInt(getSession().getAttribute("usrid") + "");
+		System.out.println(usrid);
+		List<T7Crcl> t7List = queryCrcl(5, usrid);
+		// if(null != t11List && t11List.size() > 0
+		// 查询考试情况,来源t11,判定当前各课程考试情况
+		String sql = "select * from t11_exam_stat t where  t.type = '"+ which_competition  +"' and t.usrid = '" + usrid
+				+ "' and category='" + category +"'";
+		List<T11ExamStat> t11List = T11ExamStat.dao.find(sql);
+		List<T7Crcl> t7ListRlt = new ArrayList<T7Crcl>();
+		Integer unLockCatagory = 1;
+		for (T7Crcl t7 : t7List) {
+			// 解锁
+			// 查询考试次数及最高成绩
+			Integer examedNum = 0;
+			Integer hightestScore = 0;
+			for (T11ExamStat t11 : t11List) {
+				if (t11.getCategory().equals(t7.getCategory())) {
+					if (t11.getExam_st().equals("9"))
+						hightestScore = Integer.parseInt(t11.getExam_grd());
+					else
+						examedNum++;
+					if (unLockCatagory < (Integer.parseInt(t11.getCategory()) + 1))
+						unLockCatagory = Integer.parseInt(t11.getCategory()) + 1;
+				}
+			}
+			String canDoColor = "#0065AC";
+			String forbiddenColor = "#D87C31";
+			String lockColor = "#707070";
+			if (examedNum > 0 && examedNum < 3) {
+				String testRltDesc = "您已考试" + examedNum + "次，取得学分:" + hightestScore + "分！";
+				t7.setTestRltDesc(testRltDesc);
+				t7.setTestDisabled_a("");
+				t7.setTestDisabled("none");
+				t7.setTestColor(canDoColor);
+				t7.setTestLockIcon("fa fa-unlock");
+				t7.setTestTitle("重新考试");
+			//	t7.setTestUrl("/course/scormcontent/index.html");
+				System.out.println(testRltDesc);
+			} else if (examedNum >= 3) {
+				String testRltDesc = "您已考试" + examedNum + "次，次数达上限。取得学分:" + hightestScore + "分！";
+				t7.setTestRltDesc(testRltDesc);
+				t7.setTestDisabled_a("none");
+				t7.setTestDisabled("");
+				t7.setTestColor(forbiddenColor);
+				t7.setTestLockIcon("fa fa-ban");
+				t7.setTestTitle("无法再考");
+			//	t7.setTestUrl("/course/scormcontent/index.html");
+				System.out.println(testRltDesc);
+			} else {
+				String testRltDesc = "您尚未参加考试！";
+				t7.setTestRltDesc(testRltDesc);
+				if (Integer.parseInt(t7.getCategory()) == unLockCatagory) {
+					t7.setTestDisabled_a("");
+					t7.setTestDisabled("none");
+					t7.setTestColor(canDoColor);
+					t7.setTestLockIcon("fa fa-unlock");
+					t7.setTestTitle("点击进入考试");
+				} else if (Integer.parseInt(t7.getCategory()) > unLockCatagory) {
+					t7.setTestDisabled_a("none");
+					t7.setTestDisabled("");
+					t7.setTestColor(lockColor);
+					t7.setTestLockIcon("fa fa-lock");
+					t7.setTestTitle("尚未解锁");
+				}
+			//	t7.setTestUrl("/course/scormcontent/index.html");
+				System.out.println(testRltDesc);
+			}
+
+			// 设置课程
+			if (Integer.parseInt(t7.getCategory()) <= unLockCatagory) {
+				t7.setCourseDisabled_a("");
+				t7.setCourseDisabled("none");
+				t7.setCourseColor(canDoColor);
+				t7.setCourseLockIcon("fa fa-unlock");
+				t7.setCourseTitle("点击进入该课程学习");
+		//		t7.setCourseUrl("/course/scormcontent/index.html");
+			} else {
+				// 未解锁
+				t7.setCourseDisabled_a("none");
+				t7.setCourseDisabled("");
+				t7.setCourseColor(lockColor);
+				t7.setCourseLockIcon("fa fa-lock");
+				t7.setCourseTitle("该课程尚未解锁，请顺序参加先修课程学习并考试!");
+			}
+		}
+
+		setAttr("t7", t7List);
+		LOG.debug("t7List.size() = " + t7List.size());
+		renderWithPath("/f/accession/course_tokyo_2.html");
+		// renderWithPath("/f/accession/tokyo/course/scormcontent/index.html");
+	}
 
 }
