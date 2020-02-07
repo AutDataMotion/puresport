@@ -157,12 +157,17 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 		},{
 			extend : 'collection',
 			text : '导出',
-			buttons : [ 'excel']
+			buttons : [{
+				extend: 'excel',
+				 exportOptions: {
+					 "columns": [0, 1,2, 3, 4, 5],//设置需要导出的列索引
+				 }
+			}]
 			//buttons : [ 'excel', 'print' ]
 		}  ],
-		columns : [  {
+		columns : [  /*{
 			data : "usr_tp"
-		}, {
+		},*/ {
 			data : "exam_nm"
 		}
 		, {
@@ -176,14 +181,7 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 			data : "crdt_no"
 		}, {
 			data : "spt_prj"
-		}, {
-			data : "province"
-		}, {
-			data : "city"
-		},{
-			data : "typelevel2"
-		},
-		/*{
+		}, /*{
 			data : "gnd"
 		}, {
 			data : "brth_dt"
@@ -219,14 +217,14 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 						+ '<span class="badge">查看</span>'
 						+ '</a>';
 			}
-		}],
-/*		"columnDefs" : [ {
-			"targets" : [ 7 ], // 目标列位置，下标从0开始
+		}],	
+		columnDefs : [ {
+			"targets" : [4], // 目标列位置，下标从0开始
 			"data" : "crdt_no", // 数据列名
 			"render" : function(data, type, full) { // 返回自定义内容
 				return "\u200C" + data ; 
 			}
-		} ]*/
+		} ]
 	});
 
 	// 查询按钮
