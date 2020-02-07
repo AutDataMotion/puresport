@@ -4,7 +4,7 @@
 function ajaxCommon(getOrPost, url, dataJson, funSucc, funFail){
 	// 通用Ajax
 	$.ajax({
-		url : url,
+		url : encodeURI(encodeURI(cxt + url)),
 		type : getOrPost, // GET
 		async : true, // 或false,是否异步
 		data : dataJson,
@@ -90,6 +90,7 @@ function getCourseListAjax(){
 			type: 4
 	};
 	funSucc = function(data){
+		jifenDataModel.category_status_list = data.category_status_list;
 	}
 	
 	funFail = function(){
