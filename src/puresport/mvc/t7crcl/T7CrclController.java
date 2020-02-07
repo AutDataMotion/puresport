@@ -2204,18 +2204,18 @@ public class T7CrclController extends BaseController {
 	// 查询积分制准入学习总成绩
 	public void query_score_05() {
 		JSONObject json = new JSONObject();
-		try {
+	/*	try {*/
 			Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 			Integer totalScore = getTotalScore_05(usrid);
 			json.put("exam_grd", totalScore);
 			json.put("usrid", usrid);
 			json.put("code", "0000");
 			renderJson(json);
-		} catch (Exception e) {
+/*		} catch (Exception e) {
 			json.put("code", "0001");
 			json.put("desc", e);
 			renderJson(json);
-		}		
+		}*/		
 	}
 	
 	// 积分制附加分获取
