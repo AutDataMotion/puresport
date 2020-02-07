@@ -4,13 +4,10 @@
 function ajaxCommon(getOrPost, url, dataJson, funSucc, funFail){
 	// 通用Ajax
 	$.ajax({
-		url : '/jf/puresport/t7Crcl/query_score_05',
-		type : 'GET', // GET
+		url : url,
+		type : getOrPost, // GET
 		async : true, // 或false,是否异步
-		data : {
-			// userType:app.userType,
-			type : 4
-		},
+		data : dataJson,
 		timeout : 5000, // 超时时间
 		dataType : 'json', // 返回的数据格式：json/xml/html/script/jsonp/text
 		success : function(data, textStatus, jqXHR) {
