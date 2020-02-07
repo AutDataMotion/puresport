@@ -256,7 +256,18 @@ public class T7CrclController extends BaseController {
 
 		setAttr("t7", t7List);
 		LOG.debug("t7List.size() = " + t7List.size());
-		renderWithPath("/f/accession/course_list_tokyo_2.html");
+		String pcType = getPara("t");
+		if(StringUtils.isEmpty(pcType) || pcType.contentEquals("1")) {
+			// pc
+			renderWithPath("/f/accession/jifen_pc/index.html");
+		} else if(pcType.contentEquals("1")) {
+			// mobile
+			renderWithPath("/f/accession/jifen_m/index.html");
+		} else {
+			// unknown
+			renderWithPath("/f/accession/course_list_tokyo_2.html");
+		}
+		
 		// renderWithPath("/f/accession/tokyo/course/scormcontent/index.html");
 	}
 
