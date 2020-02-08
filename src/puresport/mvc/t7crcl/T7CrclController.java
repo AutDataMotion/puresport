@@ -189,6 +189,7 @@ public class T7CrclController extends BaseController {
 		}
 		return false;
 	}
+	
 	/**
 	 * 描述：东京奥运会学习
 	 * 
@@ -291,7 +292,7 @@ public class T7CrclController extends BaseController {
 		} else {
 			renderWithPath("/f/accession/jifen_pc/index.html");
 		}
-		// renderWithPath("/f/accession/course_list_tokyo_2.html");
+		//renderWithPath("/f/accession/course_list_tokyo_2.html");
 		// renderWithPath("/f/accession/tokyo/course/scormcontent/index.html");
 	}
 
@@ -2228,27 +2229,28 @@ public class T7CrclController extends BaseController {
 	// 查询积分制准入学习总成绩
 	public void query_score_05() {
 		JSONObject json = new JSONObject();
-	/*	try {*/
+		try {
 			Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 			Integer totalScore = getTotalScore_05(usrid);
 			json.put("exam_grd", totalScore);
 			json.put("usrid", usrid);
 			json.put("code", "0000");
+			json.put("desc", "查询积分制准入学习总成绩成功");
 			renderJson(json);
-/*		} catch (Exception e) {
+		} catch (Exception e) {
 			json.put("code", "0001");
 			json.put("desc", e);
 			renderJson(json);
-		}*/		
+		}	
 	}
 	
 	// 积分制附加分获取
 	public void get_bonus() {
 		JSONObject json = new JSONObject();
 		try {
-			String useridStr = getSession().getAttribute("usrid") + "";
+			Integer userid = Integer.parseInt(getSession().getAttribute("usrid")+"");
 			String category = getPara("category");
-			if(StringUtils.isBlank(useridStr)) {
+			if(null != userid) {
 				json.put("code", "0002");
 				json.put("desc", "获取用户ID失败!");
 				renderJson(json);
@@ -2258,26 +2260,33 @@ public class T7CrclController extends BaseController {
 				json.put("desc", "获取科目编号失败!");
 				renderJson(json);
 			}
-			String sql = "select * from t18_extras_points t where t.type = '4' and category = '" + category + "' and usrid = '" + useridStr + "'";
+			String sql = "select * from t18_extras_points t where t.type = '4' and category = '" + category + "' and usrid = '" + userid + "'";
 			T18ExtrasPoints t18 = T18ExtrasPoints.dao.findFirst(sql);
 			if (null != t18) {
 				t18.setScor(1);
 				t18.update();
 			} else {
+				t18 = new T18ExtrasPoints();
+				t18.setUsrid(userid);
+				t18.setType("4");
+				t18.setScor(1);
+				t18.setCategory(category);
 				t18.saveGenIntId();
 			}
 			json.put("score", 1);
 			json.put("code", "0000");
+			json.put("desc", "获取附加分成功");
 			renderJson(json);
 		} catch (Exception e) {
 			json.put("code", "0001");
-			json.put("desc", e.getStackTrace());
+			json.put("desc", "获取附加分失败：" + e);
 			renderJson(json);
 		}		
 	}
 	
 	// 查询积分制附加题学习情况
 	public void query_bonus_status_05() {
+		System.out.println("query_bonus_status_05");
 		JSONObject json = new JSONObject();
 		try {
 			String useridStr = getSession().getAttribute("usrid") + "";
@@ -2286,11 +2295,12 @@ public class T7CrclController extends BaseController {
 				json.put("desc", "获取用户ID失败!");
 				renderJson(json);
 			}
-			String sql = "select * from t18_extras_points t where t.type = '4' and usrid = '" + useridStr + "'";
+			String sql = "select * from t18_extras_points t where t.type = '4' and usrid = '" + useridStr + "' order by category";
 			List<T18ExtrasPoints> bonus_status_list = T18ExtrasPoints.dao.find(sql);
 			if (null != bonus_status_list) {
 				json.put("bonus_status_list", bonus_status_list);
 				json.put("code", "0000");
+				json.put("desc", "查询积分制附加题学习情况成功");
 				renderJson(json);
 			} else {
 				json.put("code", "0002");
@@ -2299,7 +2309,7 @@ public class T7CrclController extends BaseController {
 			}
 		} catch (Exception e) {
 			json.put("code", "0001");
-			json.put("desc", e.getStackTrace());
+			json.put("desc", "查询积分制附加题学习情况异常：" + e);
 			renderJson(json);
 		}	
 	}
@@ -2313,14 +2323,21 @@ public class T7CrclController extends BaseController {
 		try {
 			Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
 			jsonRlt.put("usrid", usrid);
-			String category = getPara("category");
-			if(StringUtils.isBlank(category)) {
+			String type = getPara("type");
+			if(StringUtils.isBlank(type)) {
 				jsonRlt.put("code", "0003");
-				jsonRlt.put("desc", "获取科目编号失败!");
+				jsonRlt.put("desc", "赛事类别获取失败!");
 				renderJson(jsonRlt);
 			}
-			
-			List<T7Crcl> t7List = queryCrcl(5, usrid);
+			// 必修课程1
+			String sql4 = "select t.* from t7_crcl t where t.usrid='" + usrid + "' and t.type='"+ type+ "' order by t.category";
+			List<T7Crcl> t7List = T7Crcl.dao.find(sql4);
+			if ((t7List == null) || (t7List.size() == 0)) {
+				jsonRlt.put("code", "0004");
+				jsonRlt.put("desc", "查询不到课程信息.");
+				renderJson(jsonRlt);				
+			}
+
 			// if(null != t11List && t11List.size() > 0
 			// 查询考试情况,来源t11,判定当前各课程考试情况
 			String sql = "select * from t11_exam_stat t where  t.type = '4' and t.usrid = '" + usrid
@@ -2329,14 +2346,22 @@ public class T7CrclController extends BaseController {
 			List<T7Crcl> t7ListRlt = new ArrayList<T7Crcl>();
 			Integer unLockCatagory = 1;
 			for (T7Crcl t7 : t7List) {
+				json.put("crcl_nm", t7.getCrcl_nm());
+				json.put("category", t7.getCategory());
+				// 无学分或者为-1表示未上线
+				if(null == t7.getTy_grd() || -1==Integer.parseInt(t7.getTy_grd())) {
+					json.put("stdy_st", "4");
+					jsonArray.add(json);
+					continue;
+				}
 				// 解锁
 				// 查询考试次数及最高成绩
 				Integer examedNum = 0;
 				Integer hightestScore = 0;
-				json.put("crcl_nm", t7.getCrcl_nm());
-				json.put("category", t7.getCategory());
+
 				for (T11ExamStat t11 : t11List) {
-					if (t11.getCategory().equals(t7.getCategory())) {
+					if (StringUtils.isNotBlank(t11.getCategory()) && StringUtils.isNotBlank(t7.getCategory()) &&
+							t11.getCategory().equals(t7.getCategory())) {
 						if (t11.getExam_st().equals("9"))
 							hightestScore = Integer.parseInt(t11.getExam_grd());
 						else
@@ -2417,7 +2442,7 @@ public class T7CrclController extends BaseController {
 			
 			jsonRlt.put("category_status_list", jsonArray);
 			jsonRlt.put("code", "0000");
-			jsonRlt.put("desc", "查询成功");
+			jsonRlt.put("desc", "查询积分制课程准入学习情况成功");
 			renderJson(jsonRlt);
 			
 		} catch (Exception e) {
@@ -2428,7 +2453,7 @@ public class T7CrclController extends BaseController {
 	}
 	
 	// 查询积分制课程考试情况列表
-	void get_exam_grd_category() {
+	public void get_exam_grd_category() {
 		JSONObject jsonRlt = new JSONObject();
 		JSONArray jsonArray = new JSONArray();		
 		JSONObject json = new JSONObject();
@@ -2460,6 +2485,7 @@ public class T7CrclController extends BaseController {
 				}
 				jsonRlt.put("exam_grd_category_list", jsonArray);
 				jsonRlt.put("code", "0000");
+				jsonRlt.put("desc", "查询积分制课程考试情况列表成功");
 				renderJson(jsonRlt);
 			} else {
 				jsonRlt.put("code", "0002");
@@ -2567,7 +2593,7 @@ public class T7CrclController extends BaseController {
 				t7.setCourseColor(lockColor);
 				t7.setCourseLockIcon("fa fa-lock");
 				t7.setCourseTitle("该课程尚未解锁，请顺序参加先修课程学习并考试!");
-			}
+			} 
 		}
 
 		setAttr("t7", t7List);

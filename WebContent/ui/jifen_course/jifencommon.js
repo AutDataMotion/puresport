@@ -88,7 +88,7 @@ var testDataBonus = {
 		"desc": "查询成功"
 	};
 
-function ajaxCommonFunSuc(data, funSucc, funFail){
+function ajaxCommonFunSuc(data, funSucc, funFail, url){
 	if(data.code==undefined || data.code != '0000'){
 		// fail
 		layer.confirm('抱歉，系统开小差了，请稍后重试！', {
@@ -98,7 +98,7 @@ function ajaxCommonFunSuc(data, funSucc, funFail){
 			typeof funFail === "function" ? funFail() : false;
 			layer.close(index);
 		});
-		console.log(data.desc);
+		console.log(url, data.desc);
 	}else{
 		// success
 		typeof funSucc === "function" ? funSucc(data) : false;
@@ -108,7 +108,7 @@ function ajaxCommonFunSuc(data, funSucc, funFail){
 function ajaxCommon(getOrPost, url, dataJson, funSucc, funFail, rspTestData){
 	
 	if(jifenTest){
-		ajaxCommonFunSuc(rspTestData, funSucc, funFail);
+		ajaxCommonFunSuc(rspTestData, funSucc, funFail, url);
 		return;
 	}
 	// 通用Ajax
@@ -120,7 +120,7 @@ function ajaxCommon(getOrPost, url, dataJson, funSucc, funFail, rspTestData){
 		timeout : 5000, // 超时时间
 		dataType : 'json', // 返回的数据格式：json/xml/html/script/jsonp/text
 		success : function(data, textStatus, jqXHR) {
-			ajaxCommonFunSuc(data, funSucc, funFail);
+			ajaxCommonFunSuc(data, funSucc, funFail, url);
 		},
 		error : function(xhr, textStatus) {
 			layer.msg('抱歉，系统开小差了，请稍后重试！');
