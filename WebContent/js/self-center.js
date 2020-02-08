@@ -1,4 +1,4 @@
-
+selfCenterTest = false;
       // -----validate
         function validateComm(rule, v,lenMin, lenMax){
         	if(!v) return false;
@@ -353,15 +353,15 @@ function testScoreTableData(){
 	var jsonData = {
 		"flag": true,
 		"itemlist": [{
-			"file_path": "20",
+			"file_path": "",
 			"examid": "6",
 			"usrid": "204896",
 			"tms": "2019-12-16 13:20:20.0",
 			"exam_grd": "95",
 			"exam_name": "十四冬会",
-			"type": "6"
+			"type": "4"
 		}, {
-			"file_path": "20",
+			"file_path": "",
 			"examid": "2",
 			"usrid": "204896",
 			"tms": "2019-12-16 13:20:20.0",
@@ -374,56 +374,102 @@ function testScoreTableData(){
 	return jsonData;
 }
 
-function fetchIntegralData(){
-	return {
-		"itemlist": [{
-			"file_path": "20",
-			"examid": "6",
-			"usrid": "204896",
-			"tms": "2019-12-16 13:20:20.0",
-			"exam_grd": "95",
-			"exam_name": "十四冬会",
-			"type": "6",
-			category:'科目1'
-		}, {
-			"file_path": "20",
-			"examid": "2",
-			"usrid": "204896",
-			"tms": "2019-12-16 13:20:20.0",
-			"exam_grd": "95",
-			"exam_name": "冬青奥会",
-			"type": "6",
-			category:'科目2'
-		}]
-	};
+function fetchIntegralData(rowData, funAppendToChild, funTableStrGenerator){
+	if(selfCenterTest){
+		var tableStr = funTableStrGenerator({
+			"itemlist": [{
+				"file_path": "",
+				"examid": "6",
+				"usrid": "204896",
+				"tms": "2019-12-16 13:20:20.0",
+				"exam_grd": "95",
+				"exam_name": "十四冬会",
+				"type": "4",
+				category:'科目1'
+			}, {
+				"file_path": "20",
+				"examid": "2",
+				"usrid": "204896",
+				"tms": "2019-12-16 13:20:20.0",
+				"exam_grd": "95",
+				"exam_name": "冬青奥会",
+				"type": "6",
+				category:'科目2'
+			}]
+		});
+		funAppendToChild(tableStr);
+		return ;
+	}
+	
+	$.ajax({
+        url:encodeURI(encodeURI(cxt + "/jf/puresport/T11ExamStat/get_exam_grd_category")),
+        data:{type:'4'},
+        dataType:"json",
+        type:"get",
+        timeout:5000,   
+        async : false,
+        cache : false,
+        success:function(data){
+        	var tableStr = funTableStrGenerator(data.itemlist);
+        	funAppendToChild(tableStr);
+        },
+        error:function(){
+        	layer.msg("获取信息失败");
+        }
+    })
 }
 
-function createPaperLink(exam_grd, tms, usrid, type, examid){
-	return '<a href="/jf/puresport/t7Crcl/queryTestPaper?exam_grd=' + exam_grd
-			+ '&tms=' + tms + '&usrid=' + usrid + '&type=' + type + '&examid=' + examid
+// 查看试卷
+function createPaperLink(rowData){
+	return '<a href="/jf/puresport/t7Crcl/queryTestPaper?exam_grd=' + rowData.exam_grd
+			+ '&tms=' + rowData.tms + '&usrid=' + rowData.usrid + '&type=' + rowData.type + '&examid=' + rowData.examid
 			+ '" target="_blank"  role="button"> <code class="text-success bg-success">答题情况</code></a>';
 }
 
-function integralFormat(rowData){
-	console.log('integralFormat', rowData);
-	integralData = fetchIntegralData();
-	var strTable = '<table cellpadding="5" cellspacing="0" border="1" style="padding-left:50px;width: 100%;">';
-	var list = integralData.itemlist;
-	if(list && list.length > 0){
-		strTable += '<tr><td>成绩</td><td>科目</td><td>考试时间</td><td>答题情况</td></tr>';
-		for(var i = 0; i< list.length; i++){
-			var strRow = '<tr><td>'+list[i].exam_grd +'</td><td>'
-									+list[i].category+'</td><td>'
-									+list[i].tms + '</td><td>' 
-									+createPaperLink(list[i].exam_grd, list[i].tms, list[i].usrid, list[i].type, list[i].examid)+'</td></tr>';
-			strTable += strRow;
-		}
-	}else {
-		strTable += '<tr><td>没有数据</td></tr>';
+// 生成证书 0 5 3
+function createCertificate(row){
+	var isHasCreditFlag = 1;
+	if(row.file_path==null || row.file_path=="")
+		isHasCreditFlag = 0;
+	if(row.type==null || row.type=="")
+		isHasCreditFlag = 1;
+	if(isHasCreditFlag==0 && parseInt(row.exam_grd) >= 80){
+		return '<a href="/jf/puresport/t7Crcl/generateCredit?totalScore=' + row.exam_grd
+		+ '&which_competition_cd=' + row.type
+		+ '&examid=' + row.examid
+		+ '" target="_blank"  role="button"><code class="text-success bg-success">生成</code>'
+		+ '</a>';
+	} else {
+		return "";
 	}
-	strTable += '</table>';
+}
+
+function integralFormat(rowData, funAppendToChild){
+	console.log('integralFormat', rowData);
+	if(rowData.type!='4'){
+		funAppendToChild('"该课程没有子科目"');
+		return ;
+	}
+	fetchIntegralData(rowData, funAppendToChild, function(integralData){
+		var strTable = '<table cellpadding="5" cellspacing="0" border="1" style="padding-left:50px;width: 100%;">';
+		var list = integralData.itemlist;
+		if(list && list.length > 0){
+			strTable += '<tr><td>成绩</td><td>科目</td><td>考试时间</td><td>答题情况</td></tr>';
+			for(var i = 0; i< list.length; i++){
+				var strRow = '<tr><td>'+list[i].exam_grd +'</td><td>'
+										+list[i].category+'</td><td>'
+										+list[i].tms + '</td><td>' 
+										+createPaperLink(list[i])+'</td></tr>';
+				strTable += strRow;
+			}
+		}else {
+			strTable += '<tr><td>没有数据</td></tr>';
+		}
+		strTable += '</table>';
+		
+		return strTable;
+	});
 	
-	return strTable;
 }
 
 function initScoreTable(userID) {
@@ -442,21 +488,14 @@ function initScoreTable(userID) {
 						console.log('发送前')
 					},
 					success : function(data, textStatus, jqXHR) {
-						// todo now is test data
-						data = testScoreTableData();
+						
+						if (selfCenterTest){
+							// mock数据
+							data = testScoreTableData();
+						}
+						
 						if (data.flag) {
-							var dataSet = [];
-							for (var i = 0; i < data.itemlist.length; i++) {
-								var score = [];
-								score.push(data.itemlist[i].exam_grd);
-								score.push(data.itemlist[i].exam_name);
-								score.push(data.itemlist[i].tms);
-								score.push(data.itemlist[i].examid);
-								score.push(data.itemlist[i].usrid);
-								score.push(data.itemlist[i].type);
-								score.push(data.itemlist[i].file_path);
-								dataSet.push(score);
-							}
+							var dataSet = data.itemlist;
 							var scoreTable = $('#score_excel').DataTable({
 								data : dataSet,
 								language : {
@@ -472,87 +511,55 @@ function initScoreTable(userID) {
 							                "defaultContent": ''
 							            },
 										{
-											title : "成绩"
+											title : "成绩",
+											data: 'exam_grd',
 										},
 										{
-											title : "赛事"
+											title : "赛事",
+											data: 'exam_name',
 										},
 										{
-											title : "时间"
+											title : "时间",
+											data: 'tms',
 										},
 										{
 											title : "查看试卷",
 											sortable : false,
-											render : function(
-													data, type,
-													row) {
-												
-												return '<a href="/jf/puresport/t7Crcl/queryTestPaper?exam_grd='
-														 + row[0]
-//														+ row[1]
-														+ '&tms='
-														 + row[2]
-//														+ row[3]
-														+ '&usrid='
-														 + row[4]
-//														+ row[5]
-												+ '&type='
-												 + row[5]
-//												+ row[6]
-														+ '&examid='
-														+ row[3]
-//														+ row[4]
-														+ '" target="_blank"  role="button">'
-														+ '<code class="text-success bg-success">答题情况</code>'
-														+ '</a>';
+											render : function(data, type,row) {
+												if(row.type == '4'){
+													// 有下一级 则不显示查看试卷
+													return '';
+												}
+												return createPaperLink(row);
 											}
 										}, {
 											title : "生成证书",
 											sortable : false,
-											render : function(
-													data, type,
-													row) {
-												var isHasCreditFlag = 1;
-												if(row[6]==null || row[6]=="")
-//												if(row[7]==null || row[7]=="")
-													isHasCreditFlag = 0;
-												if(row[5]==null || row[5]=="")
-//												if(row[6]==null || row[6]=="")
-													isHasCreditFlag = 1;
-												if(isHasCreditFlag==0 && parseInt(row[0]) >= 80){
-//												if(isHasCreditFlag==0 && parseInt(row[1]) >= 80){
-												return '<a href="/jf/puresport/t7Crcl/generateCredit?totalScore='
-														+ row[0]
-//														+ row[1]
-														+ '&which_competition_cd='
-														+ row[5]
-//												+ row[6]
-														+ '&examid='
-														+ row[3]
-//												+ row[4]
-														+ '" target="_blank"  role="button">'
-														+ '<code class="text-success bg-success">生成</code>'
-														+ '</a>';
-												} else
-													return "";
+											render : function(data, type,row) {
+												return createCertificate(row);
 											}
 										} ]
 							});// end $('#score_excel').DataTable
 							
 							// Add event listener for opening and closing details
+							// see https://datatables.net/examples/api/row_details.html
 						    $('#score_excel tbody').on('click', 'td.details-control', function () {
 						        var tr = $(this).closest('tr');
 						        var row = scoreTable.row( tr );
-						 
+						        var rowData = row.data();
+						        
 						        if ( row.child.isShown() ) {
 						            // This row is already open - close it
 						            row.child.hide();
 						            tr.removeClass('shown');
 						        }
 						        else {
-						            // Open this row
-						            row.child(integralFormat(row.data())).show();
-						            tr.addClass('shown');
+						        	integralFormat(rowData, function(tableStr){
+						        		row.child(tableStr).show();
+						        		tr.addClass('shown');
+						        	});
+						        	
+						            
 						        }
 						    } );
 						    

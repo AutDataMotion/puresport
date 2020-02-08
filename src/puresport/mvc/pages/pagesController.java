@@ -521,4 +521,41 @@ public class pagesController extends BaseController {
 //		
 //		List<Sport_Item> sport_items_of_shengyunhui = Sport_ItemService.service.SelectByItemId(2);
 //	}
+	
+	private final static String[] mobileAgents = { "iphone", "android", "phone", "mobile", "wap", "netfront", "java", "opera mobi",
+			"opera mini", "ucweb", "windows ce", "symbian", "series", "webos", "sony", "blackberry", "dopod",
+			"nokia", "samsung", "palmsource", "xda", "pieplus", "meizu", "midp", "cldc", "motorola", "foma",
+			"docomo", "up.browser", "up.link", "blazer", "helio", "hosin", "huawei", "novarra", "coolpad", "webos",
+			"techfaith", "palmsource", "alcatel", "amoi", "ktouch", "nexian", "ericsson", "philips", "sagem",
+			"wellcom", "bunjalloo", "maui", "smartphone", "iemobile", "spice", "bird", "zte-", "longcos",
+			"pantech", "gionee", "portalmmm", "jig browser", "hiptop", "benq", "haier", "^lct", "320x320",
+			"240x320", "176x220", "w3c ", "acs-", "alav", "alca", "amoi", "audi", "avan", "benq", "bird", "blac",
+			"blaz", "brew", "cell", "cldc", "cmd-", "dang", "doco", "eric", "hipt", "inno", "ipaq", "java", "jigs",
+			"kddi", "keji", "leno", "lg-c", "lg-d", "lg-g", "lge-", "maui", "maxo", "midp", "mits", "mmef", "mobi",
+			"mot-", "moto", "mwbp", "nec-", "newt", "noki", "oper", "palm", "pana", "pant", "phil", "play", "port",
+			"prox", "qwap", "sage", "sams", "sany", "sch-", "sec-", "send", "seri", "sgh-", "shar", "sie-", "siem",
+			"smal", "smar", "sony", "sph-", "symb", "t-mo", "teli", "tim-", "tosh", "tsm-", "upg1", "upsi", "vk-v",
+			"voda", "wap-", "wapa", "wapi", "wapp", "wapr", "webc", "winw", "winw", "xda", "xda-",
+			"Googlebot-Mobile", "MicroMessenger"};
+	
+	private boolean isMobile() {
+		
+		String userAgent = getRequest().getHeader("user-agent");
+		for (int i = 0; i < mobileAgents.length; i++) {
+			if (userAgent.indexOf(mobileAgents[i]) != -1) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Clear
+	public void jifenPageRedirect() {
+		String type = getPara("t");
+		if ((StringUtils.isNotBlank(type) && type.contentEquals("2")) || isMobile()) {
+			renderWithPath("/f/accession/jifen_m/index.html");
+		} else {
+			renderWithPath("/f/accession/jifen_pc/index.html");
+		}
+	}
 }

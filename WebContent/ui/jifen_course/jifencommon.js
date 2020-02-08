@@ -1,6 +1,6 @@
 // depend on  layui.js
 
-jifenTest = true;
+jifenTest = false;
 
 var testDataScore = {
 		"code": "0000",
