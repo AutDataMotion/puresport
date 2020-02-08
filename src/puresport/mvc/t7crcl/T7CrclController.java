@@ -2297,7 +2297,7 @@ public class T7CrclController extends BaseController {
 				renderJson(jsonRlt);
 			}
 			// 必修课程1
-			String sql4 = "select t.* from t7_crcl t where t.usrid='" + usrid + "' and t.type='"+ type+ "' order by t.category";
+			String sql4 = "select t.* from t7_crcl t where t.type='"+ type+ "' order by t.category";
 			List<T7Crcl> t7List = T7Crcl.dao.find(sql4);
 			if ((t7List == null) || (t7List.size() == 0)) {
 				jsonRlt.put("code", "0004");
