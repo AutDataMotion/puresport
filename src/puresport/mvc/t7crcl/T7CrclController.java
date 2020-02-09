@@ -2285,7 +2285,7 @@ public class T7CrclController extends BaseController {
 	public void query_category_status_05() {
 		JSONObject jsonRlt = new JSONObject();
 		JSONArray jsonArray = new JSONArray();		
-		JSONObject json = new JSONObject();
+
 		
 		try {
 			Integer usrid = Integer.parseInt((String) getSession().getAttribute("usrid"));
@@ -2313,6 +2313,7 @@ public class T7CrclController extends BaseController {
 			List<T7Crcl> t7ListRlt = new ArrayList<T7Crcl>();
 			Integer unLockCatagory = 1;
 			for (T7Crcl t7 : t7List) {
+				JSONObject json = new JSONObject();
 				json.put("crcl_nm", t7.getCrcl_nm());
 				json.put("category", t7.getCategory());
 				// 无学分或者为-1表示未上线
