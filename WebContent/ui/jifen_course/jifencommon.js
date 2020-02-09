@@ -88,16 +88,23 @@ var testDataBonus = {
 		"desc": "查询成功"
 	};
 
+function tipsAlert(msg) {
+	$('#tip_content').text(msg);
+	$('#tipModal').modal('show');
+}
+
 function ajaxCommonFunSuc(data, funSucc, funFail, url){
 	if(data.code==undefined || data.code != '0000'){
 		// fail
-		layer.confirm('抱歉，系统开小差了，请稍后重试！', {
-			icon : 3,
-			title : '系统提示'
-		}, function(index) {
-			typeof funFail === "function" ? funFail() : false;
-			layer.close(index);
-		});
+//		layer.confirm('抱歉，系统开小差了，请稍后重试！', {
+//			icon : 3,
+//			title : '系统提示'
+//		}, function(index) {
+//			typeof funFail === "function" ? funFail() : false;
+//			layer.close(index);
+//		});
+		tipsAlert('抱歉，系统开小差了，请稍后重试！');
+		typeof funFail === "function" ? funFail() : false;
 		console.log(url, data.desc);
 	}else{
 		// success
@@ -123,7 +130,7 @@ function ajaxCommon(getOrPost, url, dataJson, funSucc, funFail, rspTestData){
 			ajaxCommonFunSuc(data, funSucc, funFail, url);
 		},
 		error : function(xhr, textStatus) {
-			layer.msg('抱歉，系统开小差了，请稍后重试！');
+			tipsAlert('抱歉，系统开小差了，请稍后重试！');
 		}
 	})
 }
@@ -245,18 +252,19 @@ var bonusStatusMap = {
 		'0':{
 			name:'未学习', 
 			cssAble:'disable',
-			target:'blank',
-			funUrl: function(id){
-					return getBonusUrl(id);
-			},
+			target:'',
+			funClick:function(id){
+				//layer.msg('此项目未上线');
+				tipsAlert('此项目未上线');
+			}
 		},
 		'1':{
 			name:'已学习',
 			cssAble:'',
 			target:'blank',
-			funUrl: function(id){
-				return getBonusUrl(id);
-			},
+			funClick:function(id){
+				window.location.href= getBonusUrl(id);
+			}
 		},
 };
 function setBonusStatus(id, score){
@@ -264,7 +272,7 @@ function setBonusStatus(id, score){
 	var imgDiv = $('#yun'+id);
 	var statusFun = bonusStatusMap[score];
 	
-	imgDiv.attr('href',statusFun.funUrl(id));
+	imgDiv.click(statusFun.funClick);
 	imgDiv.attr('target',statusFun.target);
 	imgDiv.addClass(statusFun.cssAble);
 }
@@ -278,8 +286,8 @@ function getBonusAjax(){
 		jifenDataModel.bonus_status_list = data.bonus_status_list;
 		list = jifenDataModel.bonus_status_list;
 		for(var i=0; i< list.length; i++){
-			// bonus 1~10 对应
-			setBonusStatus(list[i].category, list[i].score);
+			// bonus 1~10 对应  scor 这里少个e的
+			setBonusStatus(list[i].category, list[i].scor);
 		}
 	}
 	

@@ -25,7 +25,12 @@
 
 	<script src="${cxt!}/ui/jifen_course/m/js/flexible.js"></script>
 	<link href="${cxt!}/ui/jifen_course/m/style/style.css" rel="stylesheet" type="text/css" media="all" />
+	<style>
+	.modal-dialog {
+    	margin-top: 2em;
+	}
 	
+	</style>
 </head>
 
 <body ontouchstart>
@@ -67,6 +72,26 @@
 					  <div>10%</div>
 					  <div>0%</div>
 				  </div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	
+	<!--system message modal-->
+	<div class="modal fade" id="tipModal" tabindex="-1" role="dialog" aria-labelledby="systemModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">提示</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body" id="tip_content"></div>
+				<div class="modal-footer" style="text-align: center;">
+					<button class="btn  go_btn" type="button" data-dismiss="modal">我知道了</button>
 				</div>
 			</div>
 		</div>
