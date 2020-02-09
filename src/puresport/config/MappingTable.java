@@ -33,6 +33,7 @@ import puresport.mvc.t13tststat.T13TstStat;
 import puresport.mvc.t14invitationcode.T14InvitationCode;
 import puresport.mvc.t15group.T15Group;
 import puresport.mvc.t17creditInf.T17CreditInf;
+import puresport.mvc.t18extraspoints.T18ExtrasPoints;
 import puresport.mvc.t1usrbsc.T1usrBsc;
 import puresport.mvc.t2adiv.T2Adiv;
 import puresport.mvc.t3statl.T3Statl;
@@ -77,6 +78,7 @@ public class MappingTable {
 		arp.addMapping("t15_group", "id", T15Group.class);
 		arp.addMapping("r16_group_usr", "id", R16GroupUsr.class);
 		arp.addMapping("t17_credit_inf", "id", T17CreditInf.class);
+		arp.addMapping("t18_extras_points", "id", T18ExtrasPoints.class);
 		log.info("puresport MappingTable 表手工注册-----end");
 
 	}
