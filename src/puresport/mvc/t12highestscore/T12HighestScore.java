@@ -96,6 +96,38 @@ public class T12HighestScore extends BaseModel<T12HighestScore> {
 	 * 字段类型：varchar  长度：128
 	 */
 	public static final String column_file_path = "file_path";
+	
+	/**
+	 * 字段描述：姓名 
+	 * 字段类型：varchar  长度：32
+	 */
+	public static final String column_nm = "nm";
+		
+	/**
+	 * 字段描述：运动项目 
+	 * 字段类型：varchar  长度：512
+	 */
+	public static final String column_spt_prj = "spt_prj";
+	
+	/**
+	 * 字段描述：省份名称 
+	 * 字段类型：varchar  长度：128
+	 */
+	public static final String column_province = "province";
+	
+	/**
+	 * 字段描述：城市名称 
+	 * 字段类型：varchar  长度：128
+	 */
+	public static final String column_city = "city";
+	
+	
+	/**
+	 * 字段描述：科目
+	 * 字段类型：String 
+	 * "01":科目1;"02":科目2;"03":科目3;"04":科目4;"05":科目5;"06":科目6;
+	 */
+	public static final String column_category = "category";
 
 	private Long id;
 	private Integer usrid;
@@ -122,31 +154,34 @@ public class T12HighestScore extends BaseModel<T12HighestScore> {
 	// zhuchaobin, 20191025, 二期
 	private String category;
 
+	
+	// zhuchaobin
+		public void setNm(String nm){
+			set(column_nm, nm);
+		}
+		public <T> T getNm() {
+			return get(column_nm);
+		}
+		public void setSpt_prj(String spt_prj){
+			set(column_spt_prj, spt_prj);
+		}
+		public <T> T getSpt_prj() {
+			return get(column_spt_prj);
+		}
+			public void setProvince(String province){
+			set(column_province, province);
+		}
+		public <T> T getProvince() {
+			return get(column_province);
+		}
+		public void setCity(String city){
+			set(column_city, city);
+		}	
+		public <T> T getCity() {
+			return get(column_city);
+		}
 
-	public String getNm() {
-		return nm;
-	}
-	public void setNm(String nm) {
-		this.nm = nm;
-	}
-	public String getSpt_prj() {
-		return spt_prj;
-	}
-	public void setSpt_prj(String spt_prj) {
-		this.spt_prj = spt_prj;
-	}
-	public String getProvince() {
-		return province;
-	}
-	public void setProvince(String province) {
-		this.province = province;
-	}
-	public String getCity() {
-		return city;
-	}
-	public void setCity(String city) {
-		this.city = city;
-	}
+
 	public String getRankImg() {
 		return rankImg;
 	}

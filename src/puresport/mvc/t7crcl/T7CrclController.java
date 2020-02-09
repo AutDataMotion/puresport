@@ -1365,9 +1365,11 @@ public class T7CrclController extends BaseController {
 		}
 		// 更新成绩统计表
 		Integer totalScore = 0;
+		Integer currScore = 0;
 		// 东京奥运会每题1分
 		if ("东京奥运会".equals(which_competition)) {
 			totalScore = score;
+			currScore = score;
 		} else 
 			totalScore = score * 5;
 		T11ExamStat t11 = new T11ExamStat();
@@ -1476,14 +1478,21 @@ public class T7CrclController extends BaseController {
 		LOG.debug("totalScore=" + totalScore);
 
 		////
-		if (totalScore >= 80) {
-		} else {
-			res = new ResultEntity("0003", "考试成绩不合格.", totalScore.toString(), "", t1.getUsrid() + "");
+		if ("东京奥运会".equals(which_competition)) {
+			System.out.println("currScore.toString()=" + currScore.toString());
+			res = new ResultEntity("0003", "考试成绩不合格.", currScore.toString(), "", t1.getUsrid() + "");
 			renderJson(res);
 			return;
-		}				
-		res = new ResultEntity("0000", which_competition_cd, which_competition, totalScore+"", examid + "");
-		renderJson(res);
+		} else {
+			if (totalScore >= 80) {
+			} else {
+				res = new ResultEntity("0003", "考试成绩不合格.", totalScore.toString(), "", t1.getUsrid() + "");
+				renderJson(res);
+				return;
+			}				
+			res = new ResultEntity("0000", which_competition_cd, which_competition, totalScore+"", examid + "");
+			renderJson(res);
+		}
 	}
 	
 	// 获取积分制总成绩
