@@ -9,6 +9,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.jfinal.aop.Before;
@@ -142,8 +143,11 @@ public class T11ExamStatController extends BaseController {
 				jsonArray.add(json);
 			}
 		}
+		System.out.println("get_exam_grd=" +JSON.toJSONString(jsonArray));
 		if (itemlist2 != null || itemlist != null) {
 			resjson.put("itemlist", jsonArray);
+			flag=true;
+			resjson.put("flag", flag);
 			renderJson(resjson);
 		} else {
 			JSONObject json = new JSONObject();
@@ -189,7 +193,7 @@ public class T11ExamStatController extends BaseController {
 
 	// 2020-2-6 added by zhuchaobin
 	// 查询积分制课程考试情况列表
-	void get_exam_grd_category() {
+	public void get_exam_grd_category() {
 		JSONObject jsonRlt = new JSONObject();
 		JSONArray jsonArray = new JSONArray();		
 		JSONObject json = new JSONObject();

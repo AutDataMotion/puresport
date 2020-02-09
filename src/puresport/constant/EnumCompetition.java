@@ -64,4 +64,24 @@ public enum EnumCompetition {
 		else
 			return "";
 	}
+	
+	public static String getCompetitionCd(String competitionName)
+	{
+		if("省运会".equals(competitionName))
+			return "0";
+		else if("亚运会".equals(competitionName))
+			return "1";
+		else if("青奥会".equals(competitionName))
+			return "2";
+		else if("军运会".equals(competitionName))
+			return "3";
+		else if("冬青奥会".equals(competitionName))
+			return "6";
+		else if("东京奥运会".equals(competitionName))
+			return "4";
+		else if("十四冬会".equals(competitionName))
+			return "7";
+		else
+			return "";
+	}
 }

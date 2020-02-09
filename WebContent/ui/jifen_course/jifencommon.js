@@ -169,7 +169,7 @@ function getAllScoreAjax(){
 
 
 function getCourseUrl(id){
-	return cxt + '/jf/puresport/t7Crcl/study_notify_tokyo_1?which_competition=4&category=' + id;
+	return cxt + '/jf/puresport/t7Crcl/get_study_notify_tokyo?which_competition=4&category=' + id;
 }
 
 var studyStatusMap = {

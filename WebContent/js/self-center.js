@@ -377,7 +377,7 @@ function testScoreTableData(){
 function fetchIntegralData(rowData, funAppendToChild, funTableStrGenerator){
 	if(selfCenterTest){
 		var tableStr = funTableStrGenerator({
-			"itemlist": [{
+			"exam_grd_category_list": [{
 				"file_path": "",
 				"examid": "6",
 				"usrid": "204896",
@@ -410,7 +410,7 @@ function fetchIntegralData(rowData, funAppendToChild, funTableStrGenerator){
         async : false,
         cache : false,
         success:function(data){
-        	var tableStr = funTableStrGenerator(data.itemlist);
+        	var tableStr = funTableStrGenerator(data);
         	funAppendToChild(tableStr);
         },
         error:function(){
@@ -452,7 +452,7 @@ function integralFormat(rowData, funAppendToChild){
 	}
 	fetchIntegralData(rowData, funAppendToChild, function(integralData){
 		var strTable = '<table cellpadding="5" cellspacing="0" border="1" style="padding-left:50px;width: 100%;">';
-		var list = integralData.itemlist;
+		var list = integralData.exam_grd_category_list;
 		if(list && list.length > 0){
 			strTable += '<tr><td>成绩</td><td>科目</td><td>考试时间</td><td>答题情况</td></tr>';
 			for(var i = 0; i< list.length; i++){

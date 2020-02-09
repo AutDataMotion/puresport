@@ -101,7 +101,7 @@ public class T10ExamGrd extends BaseModel<T10ExamGrd> {
 	/**
 	 * 字段描述：赛事类型
 	 * 字段类型：String 
-	 * "":通用赛事; "05"东京奥运会
+	 * "":通用赛事; "4"东京奥运会
 	 */
 	public static final String column_type = "type";
 	

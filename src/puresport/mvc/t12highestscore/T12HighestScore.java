@@ -109,7 +109,62 @@ public class T12HighestScore extends BaseModel<T12HighestScore> {
 	private String type;
 	// 是否已经有证书
 	private String file_path;
+	
+	//zhuchaobin
+	protected String nm;
+	protected String spt_prj;
+	protected String province;
+	protected String city;
+	protected String rankImg;
+	protected String rank;
 
+	
+	// zhuchaobin, 20191025, 二期
+	private String category;
+
+
+	public String getNm() {
+		return nm;
+	}
+	public void setNm(String nm) {
+		this.nm = nm;
+	}
+	public String getSpt_prj() {
+		return spt_prj;
+	}
+	public void setSpt_prj(String spt_prj) {
+		this.spt_prj = spt_prj;
+	}
+	public String getProvince() {
+		return province;
+	}
+	public void setProvince(String province) {
+		this.province = province;
+	}
+	public String getCity() {
+		return city;
+	}
+	public void setCity(String city) {
+		this.city = city;
+	}
+	public String getRankImg() {
+		return rankImg;
+	}
+	public void setRankImg(String rankImg) {
+		this.rankImg = rankImg;
+	}
+	public String getRank() {
+		return rank;
+	}
+	public void setRank(String rank) {
+		this.rank = rank;
+	}
+	public String getCategory() {
+		return category;
+	}
+	public void setCategory(String category) {
+		this.category = category;
+	}
 	public void setFile_path(String file_path){
 		set(column_file_path, file_path);
 	}

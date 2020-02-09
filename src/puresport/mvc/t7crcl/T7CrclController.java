@@ -151,6 +151,7 @@ public class T7CrclController extends BaseController {
 		}
 		if (which_competition.equals(EnumCompetition.DongJingAoYunHui.getIndex_str())) {
 			getSession().setAttribute("which_competition", EnumCompetition.DongJingAoYunHui.getCompetitionName());
+			getSession().setAttribute("which_competition_cd", "4");
 		}
 
 		Integer usrid = Integer.parseInt(getSession().getAttribute("usrid") + "");
@@ -576,8 +577,12 @@ public class T7CrclController extends BaseController {
 	public void queryCetifate_tokyo_5() {
 		String flag = getPara("flag");
 		String category = getPara("category");
+		
+		setAttr("totalScore", getPara("totalScore"));
+		renderWithPath("/f/accession/failed_tokyo_5.html");
+		
 		// 考试不及格的情况
-		if ("2".equals(flag)) {
+	/*	if ("2".equals(flag)) {
 			setAttr("totalScore", getPara("totalScore"));
 			renderWithPath("/f/accession/failed_tokyo_5.html");
 			return;
@@ -595,11 +600,11 @@ public class T7CrclController extends BaseController {
 			return;
 		} else {
 			setAttr("pageHead", "反兴奋剂教育准入合格证书-" + t1.getNm());
-			/*
+			
 			 * // 取身份证号码第1位+ 最后1位 String crdt_no_endStr = ""; if
 			 * (!StringUtils.isBlank(crdt_no)) { crdt_no_endStr = crdt_no.substring(0, 1) +
 			 * crdt_no.substring(crdt_no.length() - 2, crdt_no.length() - 1); }
-			 */
+			 
 			// certificatePath = "/images_zcb/certificates/" + "反兴奋剂教育准入合格证书_" + t1.getNm()
 			// + "_" + usrid + ".jpg";
 
@@ -667,7 +672,7 @@ public class T7CrclController extends BaseController {
 		String koPercent = nf.format(percent);
 		setAttr("koPercent", koPercent);
 		LOG.debug("certificatePath=" + certificatePath);
-		renderWithPath("/f/accession/certificate_tokyo.html");
+		renderWithPath("/f/accession/certificate_tokyo.html");*/
 	}
 
 	/**
@@ -1171,11 +1176,18 @@ public class T7CrclController extends BaseController {
 		String which_competition = (String) getSession().getAttribute("which_competition");
 		String which_competition_cd = (String) getSession().getAttribute("which_competition_cd");
 
-		// String type = getPara("type");
 		String type = which_competition_cd;
+		// String type = getPara("type");
+/*		if(StringUtils.isBlank(which_competition_cd)) {
+			type = EnumCompetition.getCompetitionCd(which_competition);
+			which_competition_cd = type;
+		}*/
+		
 		String category = getPara("category");
 
-		System.out.println("type=" + type);
+		System.out.println("submitExam which_competition=" + which_competition);
+		System.out.println("submitExam which_competition_cd=" + which_competition_cd);
+		System.out.println("submitExam type=" + type);
 		System.out.println("category=" + category);
 
 		// // 处理结果
@@ -1352,7 +1364,12 @@ public class T7CrclController extends BaseController {
 			}
 		}
 		// 更新成绩统计表
-		Integer totalScore = score * 5;
+		Integer totalScore = 0;
+		// 东京奥运会每题1分
+		if ("东京奥运会".equals(which_competition)) {
+			totalScore = score;
+		} else 
+			totalScore = score * 5;
 		T11ExamStat t11 = new T11ExamStat();
 		t11.setUsrid(usrid);// 用户id
 		t11.setExamid(Integer.parseInt(examid));// 考试id
@@ -1427,7 +1444,7 @@ public class T7CrclController extends BaseController {
 
 		// 插入或者更新成绩统计表最后一次成绩
 		String sql_highest_score = "select * from t12_highest_score t where t.usrid = '" + t10.getUsrid()
-				+ "' and t.exam_nm = '" + which_competition + "'";
+				+ "' and t.exam_nm = '" + which_competition + "' and type='"+type+"'";
 		T12HighestScore t12 = T12HighestScore.dao.findFirst(sql_highest_score);
 		if (null == t12) {
 			t12 = new T12HighestScore();
@@ -1451,8 +1468,8 @@ public class T7CrclController extends BaseController {
 			if (totalScore > Integer.parseInt(t12.getExam_grd())) {
 				// 转入操作
 				ConfMain.db().update(
-						"update t12_highest_score t set t.exam_grd = ? , t.tms = ? where usrid = ? and t.exam_nm = ?",
-						totalScore, new Timestamp(System.currentTimeMillis()), t10.getUsrid(), which_competition);
+						"update t12_highest_score t set t.exam_grd = ? , t.tms = ?, t.type=? where usrid = ? and t.exam_nm = ?",
+						totalScore, new Timestamp(System.currentTimeMillis()), type,t10.getUsrid(), which_competition);
 			}
 		}
 
@@ -1753,7 +1770,7 @@ public class T7CrclController extends BaseController {
 	 * @throws URISyntaxException
 	 */
 	@Clear
-	public void heroList100() {
+/*	public void heroList100() {
 		String crdt_no = getPara("crdt_no");
 		setAttr("crdt_no", crdt_no);
 		String certificatePath = "";
@@ -1783,6 +1800,72 @@ public class T7CrclController extends BaseController {
 		// 名次，名次缩略图赋值
 		for (int i = 0; i < 100; i++) {
 			T11ExamStat t11 = new T11ExamStat();
+			if (i < heroList.size()) {
+				t11 = heroList.get(i);
+			} else {
+				if (i >= 10)
+					break;
+			}
+
+			LOG.debug("t11.getUsrid()" + t11.getUsrid());
+			if (null != useridStr) {
+				if (useridStr.equals((t11.getUsrid() + ""))) {
+					t11.setRank("#FF0202");
+				}
+			}
+
+			if (i < 10) {
+				String rankImg = "rank" + (i + 1) + ".png";
+				t11.setRankImg(rankImg);
+				heroListRlt10.add(t11);
+			} else {
+				t11.setId(Long.parseLong((i + 1) + ""));
+				heroListRlt100.add(t11);
+			}
+
+			// // 默认city没有的话，默认值是“--”，特殊处理
+			// if(t11.getCity().toString().contains("-")) {
+			// t11.setCity(null);
+			// }
+
+		}
+		setAttr("heroList10", heroListRlt10);
+		setAttr("heroList100", heroListRlt100);
+		setAttr("t11Self", t11Self);
+		setAttr("t11SelfDisplay", t11SelfDisplay);
+		renderWithPath("/f/accession/hero_list_100.html");
+	}*/
+	
+	public void heroList100() {
+		String crdt_no = getPara("crdt_no");
+		setAttr("crdt_no", crdt_no);
+		String certificatePath = "";
+		String type = getPara("type");
+		String which_competition = EnumCompetition.getCompetitionName(type);		
+		setAttr("which_competition", which_competition);
+		String useridStr = getSession().getAttribute("usrid") + "";
+		// 插入或者更新成绩统计表最后一次成绩
+		String sql = "select t.*, date_FORMAT(t.tms, '%Y-%m-%d %H:%i:%s') as strTms, r.nm, r.spt_prj, r.province, (case r.city when '--' then '' when '-' then '' else r.city end) as city from t12_highest_score t "
+				+ " , t1_usr_bsc r where t.usrid = r.usrid and t.type = '"+ type +"' order by t.exam_grd desc, t.tms asc";
+		List<T12HighestScore> heroList = T12HighestScore.dao.find(sql);
+		List<T12HighestScore> heroListRlt10 = new ArrayList<T12HighestScore>();
+		List<T12HighestScore> heroListRlt100 = new ArrayList<T12HighestScore>();
+		T12HighestScore t11Self = new T12HighestScore();
+		String t11SelfDisplay = "display:none;";
+		if (null != useridStr) {
+			for (int j = 0; j < heroList.size(); j++) {
+				if (useridStr.equals((heroList.get(j).getUsrid() + ""))) {
+					t11Self = heroList.get(j);
+					t11Self.setRank("#FF0202");
+					t11Self.setId(Long.parseLong((j + 1) + ""));
+					t11SelfDisplay = "";
+				}
+			}
+		}
+
+		// 名次，名次缩略图赋值
+		for (int i = 0; i < 100; i++) {
+			T12HighestScore t11 = new T12HighestScore();
 			if (i < heroList.size()) {
 				t11 = heroList.get(i);
 			} else {
@@ -2240,6 +2323,39 @@ public class T7CrclController extends BaseController {
 				t18.setCategory(category);
 				t18.saveGenIntId();
 			}
+			// 更新最高成绩
+			
+			// 插入或者更新成绩统计表最后一次成绩
+			String sql_highest_score = "select * from t12_highest_score t where t.usrid = '" + userid 
+					+ "' and type='4'";
+			T12HighestScore t12 = T12HighestScore.dao.findFirst(sql_highest_score);
+			Integer totalScore = getTotalScore_05(userid);
+			if (null == t12) {
+				t12 = new T12HighestScore();
+				t12.setUsrid(userid);// 用户id
+			//t12.setExamid(Integer.parseInt(examid));// 考试id
+				t12.setExam_grd(totalScore);// 考试成绩
+				t12.setExam_st("1");// 考试状态
+				t12.setExam_channel("01");// 考试渠道,01:互联网站
+				t12.setExam_num(0);// 考试次数
+				t12.setTms(new Timestamp(System.currentTimeMillis()));// 维护时间
+				t12.setExam_nm("东京奥运会");
+				t12.setType("4");
+				t12.saveGenIntId();
+			} else {
+				/*
+				 * t11.setExam_st("9");// 考试状态，9表示最终成绩
+				 * t11.setId(Long.parseLong(t11Rlt.getId()));
+				 */
+				// t11Rlt.setUsrid(usrid);// 用户id
+				// 如果本次成绩高于已有最高成绩，则更新最高成绩
+				if (totalScore > Integer.parseInt(t12.getExam_grd())) {
+					// 转入操作
+					ConfMain.db().update(
+							"update t12_highest_score t set t.exam_grd = ? , t.tms = ?, t.type=? where usrid = ? and t.exam_nm = ?",
+							totalScore, new Timestamp(System.currentTimeMillis()), "4",userid, "东京奥运会");
+				}
+			}
 			json.put("score", 1);
 			json.put("code", "0000");
 			json.put("desc", "获取附加分成功");
@@ -2264,8 +2380,25 @@ public class T7CrclController extends BaseController {
 			}
 			String sql = "select * from t18_extras_points t where t.type = '4' and usrid = '" + useridStr + "' order by category";
 			List<T18ExtrasPoints> bonus_status_list = T18ExtrasPoints.dao.find(sql);
+			List<T18ExtrasPoints> bonus_status_list2 = new ArrayList<T18ExtrasPoints>();
+			for(int i =1; i < 11; i++) {
+				
+				boolean isIn = false;
+				for(T18ExtrasPoints t18:bonus_status_list) {
+					if(t18.getCategory().equals(i+"")) {
+						bonus_status_list2.add(t18);
+						isIn = true;
+					}
+				}
+				if(!isIn) {
+					T18ExtrasPoints t18elem = new T18ExtrasPoints();
+					t18elem.setCategory(i+"");
+					t18elem.setScor(0);
+					bonus_status_list2.add(t18elem);
+				}
+			}
 			if (null != bonus_status_list) {
-				json.put("bonus_status_list", bonus_status_list);
+				json.put("bonus_status_list", bonus_status_list2);
 				json.put("code", "0000");
 				json.put("desc", "查询积分制附加题学习情况成功");
 				renderJson(json);
@@ -2480,7 +2613,16 @@ public class T7CrclController extends BaseController {
 		System.out.println("get_study_notify_tokyo");
 		Integer usrid = Integer.parseInt(getSession().getAttribute("usrid") + "");
 		System.out.println(usrid);
-		List<T7Crcl> t7List = queryCrcl(5, usrid);
+//		List<T7Crcl> t7List = queryCrcl(5, usrid);
+		
+		// 必修课程1
+		String sql4 = "select t.* from t7_crcl t where t.type='"+ which_competition+ "' and category ='"+category+"' order by t.category";
+		List<T7Crcl> t7List = T7Crcl.dao.find(sql4);
+		if ((t7List == null) || (t7List.size() == 0)) {
+
+			System.out.println("查询不到课程信息.");
+		}
+		
 		// if(null != t11List && t11List.size() > 0
 		// 查询考试情况,来源t11,判定当前各课程考试情况
 		String sql = "select * from t11_exam_stat t where  t.type = '"+ which_competition  +"' and t.usrid = '" + usrid
