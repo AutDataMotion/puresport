@@ -164,7 +164,12 @@ function getAllScoreAjax(){
 	funSucc = function(data){
 		jifenDataModel.usrid = data.usrid;
 		jifenDataModel.exam_grd = data.exam_grd;
-		$("#score").css("width",jifenDataModel.exam_grd+"%");
+		if(globalIsMobile=='1'){
+			$("#score").css("height",jifenDataModel.exam_grd+"%");
+		} else {
+			$("#score").css("width",jifenDataModel.exam_grd+"%");
+		}
+		
 	}
 	
 	funFail = function(){

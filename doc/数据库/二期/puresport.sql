@@ -343,54 +343,78 @@ CREATE TABLE `t9_tstlib` (
   PRIMARY KEY (`prblmid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=utf8 COMMENT='试题库';
 
--- ----------------------------
--- View structure for prjgroupansweredcnt
--- ----------------------------
-DROP VIEW IF EXISTS `prjgroupansweredcnt`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `prjgroupansweredcnt` AS select `p`.`spt_prj` AS `spt_prj`,`p`.`province` AS `province`,`p`.`city` AS `city`,count(1) AS `cnt` from `sporterscorestatis` `p` where (`p`.`exam_grd` is not null) group by `p`.`spt_prj`,`p`.`province`,`p`.`city` ;
 
--- ----------------------------
--- View structure for prjgroupcnt
--- ----------------------------
-DROP VIEW IF EXISTS `prjgroupcnt`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `prjgroupcnt` AS select `p`.`spt_prj` AS `spt_prj`,`p`.`province` AS `province`,`p`.`city` AS `city`,count(1) AS `cnt` from `sporterscorestatis` `p` group by `p`.`spt_prj`,`p`.`province`,`p`.`city` ;
+use jfz_20200209;
 
--- ----------------------------
--- View structure for prjgrouppassedcnt
--- ----------------------------
-DROP VIEW IF EXISTS `prjgrouppassedcnt`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `prjgrouppassedcnt` AS select `p`.`spt_prj` AS `spt_prj`,`p`.`province` AS `province`,`p`.`city` AS `city`,count(1) AS `cnt` from `sporterscorestatis` `p` where (`p`.`exam_grd` >= 80) group by `p`.`spt_prj`,`p`.`province`,`p`.`city` ;
-
--- ----------------------------
--- View structure for prjgroupstatis
--- ----------------------------
-DROP VIEW IF EXISTS `prjgroupstatis`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `prjgroupstatis` AS select `t`.`spt_prj` AS `spt_prj`,`t`.`province` AS `province`,`t`.`city` AS `city`,`t`.`cnt` AS `cnt_total`,`a`.`cnt` AS `cnt_answered`,`p`.`cnt` AS `cnt_passed` from ((`prjgroupcnt` `t` left join `prjgroupansweredcnt` `a` on(((`t`.`spt_prj` = `a`.`spt_prj`) and (`t`.`province` = `a`.`province`) and (`t`.`city` = `a`.`city`)))) left join `prjgrouppassedcnt` `p` on(((`t`.`spt_prj` = `p`.`spt_prj`) and (`t`.`province` = `p`.`province`) and (`t`.`city` = `p`.`city`)))) ;
-
--- ----------------------------
--- View structure for problemcnt
--- ----------------------------
-DROP VIEW IF EXISTS `problemcnt`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `problemcnt` AS select `t10_exam_grd`.`prblmid` AS `prblmid`,count(1) AS `cnt` from `t10_exam_grd` group by `t10_exam_grd`.`prblmid` ;
-
--- ----------------------------
--- View structure for problemstatis
--- ----------------------------
-DROP VIEW IF EXISTS `problemstatis`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `problemstatis` AS select `b`.`prblmid` AS `prblmid`,`b`.`prblm_ppl` AS `prblm_ppl`,`b`.`prblm_tp` AS `prblm_tp`,`b`.`opt` AS `opt`,`b`.`ttl` AS `ttl`,`b`.`prblm_aswr` AS `prblm_aswr`,`b`.`scor` AS `scor`,`b`.`tms` AS `tms`,(`ca`.`right_num` + `ca`.`wrong_num`) AS `cntall`,`ca`.`wrong_num` AS `cntwrong` from (`t9_tstlib` `b` left join `t13_tst_stat` `ca` on((`b`.`prblmid` = `ca`.`prblmid`))) order by `ca`.`wrong_num` desc ;
-
--- ----------------------------
--- View structure for problemwrongcnt
--- ----------------------------
-DROP VIEW IF EXISTS `problemwrongcnt`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `problemwrongcnt` AS select `t10_exam_grd`.`prblmid` AS `prblmid`,count(1) AS `cnt` from `t10_exam_grd` where (`t10_exam_grd`.`result` = '错误') group by `t10_exam_grd`.`prblmid` ;
 
 -- ----------------------------
 -- View structure for sporterscorestatis
 -- ----------------------------
 DROP VIEW IF EXISTS `sporterscorestatis`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sporterscorestatis` AS select `u`.`usrid` AS `usrid`,`u`.`usr_tp` AS `usr_tp`,`u`.`usr_nm` AS `usr_nm`,`u`.`nm` AS `nm`,`u`.`crdt_tp` AS `crdt_tp`,`u`.`spt_prj` AS `spt_prj`,`u`.`crdt_no` AS `crdt_no`,`u`.`gnd` AS `gnd`,`u`.`pswd` AS `pswd`,`u`.`brth_dt` AS `brth_dt`,`u`.`adiv_cd` AS `adiv_cd`,`u`.`asscid` AS `asscid`,`u`.`mblph_no` AS `mblph_no`,`u`.`tms` AS `tms`,`u`.`cty_prov_city_mgrid` AS `cty_prov_city_mgrid`,`u`.`rmrk` AS `rmrk`,`u`.`assc_mgrid` AS `assc_mgrid`,`u`.`email` AS `email`,`u`.`bloodtp` AS `bloodtp`,`u`.`ethnct` AS `ethnct`,`u`.`remark` AS `remark`,`u`.`typelevel` AS `typelevel`,`u`.`province` AS `province`,`u`.`city` AS `city`,`u`.`institute` AS `institute`,`u`.`department` AS `department`,`u`.`post` AS `post`,`s`.`examid` AS `examid`,`s`.`exam_nm` AS `exam_nm`,`s`.`exam_grd` AS `exam_grd` from (`t1_usr_bsc` `u` left join `t12_highest_score` `s` on((`u`.`usrid` = `s`.`usrid`))) ;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `sporterscorestatis` AS 
+	select `u`.`usrid` AS `usrid`,`u`.`usr_tp` AS `usr_tp`,`u`.`usr_nm` AS `usr_nm`,`u`.`nm` AS `nm`,`u`.`crdt_tp` AS `crdt_tp`,`u`.`spt_prj` AS `spt_prj`,`u`.`crdt_no` AS `crdt_no`,`u`.`gnd` AS `gnd`,`u`.`pswd` AS `pswd`,`u`.`brth_dt` AS `brth_dt`,`u`.`adiv_cd` AS `adiv_cd`,`u`.`asscid` AS `asscid`,`u`.`mblph_no` AS `mblph_no`,`u`.`tms` AS `tms`,`u`.`cty_prov_city_mgrid` AS `cty_prov_city_mgrid`,`u`.`rmrk` AS `rmrk`,`u`.`assc_mgrid` AS `assc_mgrid`,`u`.`email` AS `email`,`u`.`bloodtp` AS `bloodtp`,`u`.`ethnct` AS `ethnct`,`u`.`remark` AS `remark`,`u`.`typelevel` AS `typelevel`,`u`.`province` AS `province`,`u`.`city` AS `city`,`u`.`institute` AS `institute`,`u`.`department` AS `department`,`u`.`post` AS `post`,`s`.`examid` AS `examid`,`s`.`exam_nm` AS `exam_nm`,`s`.`exam_grd` AS `exam_grd` 
+	from (`t1_usr_bsc` `u` left join `t12_highest_score` `s` on((`u`.`usrid` = `s`.`usrid`))) ;
 
+
+-- ----------------------------
+-- View structure for prjgroupansweredcnt
+-- ----------------------------
+DROP VIEW IF EXISTS `prjgroupansweredcnt`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `prjgroupansweredcnt` AS 
+	select `p`.`spt_prj` AS `spt_prj`,`p`.`province` AS `province`,`p`.`city` AS `city`,count(1) AS `cnt` from `sporterscorestatis` `p` 
+    where (`p`.`exam_grd` is not null) group by `p`.`spt_prj`,`p`.`province`,`p`.`city` ;
+
+-- ----------------------------
+-- View structure for prjgroupcnt
+-- ----------------------------
+DROP VIEW IF EXISTS `prjgroupcnt`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `prjgroupcnt` AS 
+	select `p`.`spt_prj` AS `spt_prj`,`p`.`province` AS `province`,`p`.`city` AS `city`,count(1) AS `cnt` 
+    from `sporterscorestatis` `p` group by `p`.`spt_prj`,`p`.`province`,`p`.`city` ;
+
+-- ----------------------------
+-- View structure for prjgrouppassedcnt
+-- ----------------------------
+DROP VIEW IF EXISTS `prjgrouppassedcnt`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `prjgrouppassedcnt` AS 
+	select `p`.`spt_prj` AS `spt_prj`,`p`.`province` AS `province`,`p`.`city` AS `city`,count(1) AS `cnt` 
+    from `sporterscorestatis` `p` where (`p`.`exam_grd` >= 80) group by `p`.`spt_prj`,`p`.`province`,`p`.`city` ;
+
+
+-- ----------------------------
+-- View structure for problemcnt
+-- ----------------------------
+DROP VIEW IF EXISTS `problemcnt`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `problemcnt` AS 
+	select `t10_exam_grd`.`prblmid` AS `prblmid`,count(1) AS `cnt` 
+    from `t10_exam_grd` group by `t10_exam_grd`.`prblmid` ;
+
+-- ----------------------------
+-- View structure for problemstatis
+-- ----------------------------
+DROP VIEW IF EXISTS `problemstatis`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `problemstatis` AS 
+	select `b`.`prblmid` AS `prblmid`,`b`.`prblm_ppl` AS `prblm_ppl`,`b`.`prblm_tp` AS `prblm_tp`,`b`.`opt` AS `opt`,`b`.`ttl` AS `ttl`,`b`.`prblm_aswr` AS `prblm_aswr`,`b`.`scor` AS `scor`,`b`.`tms` AS `tms`,(`ca`.`right_num` + `ca`.`wrong_num`) AS `cntall`,`ca`.`wrong_num` AS `cntwrong` 
+    from (`t9_tstlib` `b` left join `t13_tst_stat` `ca` on((`b`.`prblmid` = `ca`.`prblmid`))) order by `ca`.`wrong_num` desc ;
+
+-- ----------------------------
+-- View structure for problemwrongcnt
+-- ----------------------------
+DROP VIEW IF EXISTS `problemwrongcnt`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `problemwrongcnt` AS 
+	select `t10_exam_grd`.`prblmid` AS `prblmid`,count(1) AS `cnt` from `t10_exam_grd` 
+    where (`t10_exam_grd`.`result` = '错误') group by `t10_exam_grd`.`prblmid` ;
+    
+-- ----------------------------
+-- View structure for prjgroupstatis
+-- ----------------------------
+DROP VIEW IF EXISTS `prjgroupstatis`;
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `prjgroupstatis` AS 
+	select `t`.`spt_prj` AS `spt_prj`,`t`.`province` AS `province`,`t`.`city` AS `city`,`t`.`cnt` AS `cnt_total`,`a`.`cnt` AS `cnt_answered`,`p`.`cnt` AS `cnt_passed` 
+    from ((`prjgroupcnt` `t` left join `prjgroupansweredcnt` `a` on(((`t`.`spt_prj` = `a`.`spt_prj`) and (`t`.`province` = `a`.`province`) and (`t`.`city` = `a`.`city`)))) left join `prjgrouppassedcnt` `p` on(((`t`.`spt_prj` = `p`.`spt_prj`) and (`t`.`province` = `p`.`province`) and (`t`.`city` = `p`.`city`)))) ;
+
+
+    
 -- ----------------------------
 -- Procedure structure for array
 -- ----------------------------

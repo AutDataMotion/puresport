@@ -57,7 +57,7 @@
 				<a id='cat6' href="javascript:;" class="cat-box cat6"><span class="badge" id='cat-status6'></span></a>
 				<!-- 进度条 -->
 				<div class="progress">
-				  <div class="progress-bar progress-bar-info progress-bar-striped" style="height: 20%">
+				  <div id="score"  class="progress-bar progress-bar-info progress-bar-striped" style="height: 0%; width:80%">
 				  </div>
 				  <div class="progress-value">
 					  <div>100%</div>
@@ -98,8 +98,13 @@
 	</div>
 	
 	<% include("/f/footer.html"){} %>
+	<script>
+		var globalIsMobile = '${isMobile!}';
+	
+	</script>
 	<script src="${cxt!}/ui/layer3/layer.js"></script>
 	<script src="${cxt!}/js/commUtil.js"></script>
 	<script src="${cxt!}/ui/jifen_course/jifencommon.js" type="text/javascript"></script>
+	
 </body>
 </html>

@@ -534,7 +534,7 @@ public class pagesController extends BaseController {
 			"kddi", "keji", "leno", "lg-c", "lg-d", "lg-g", "lge-", "maui", "maxo", "midp", "mits", "mmef", "mobi",
 			"mot-", "moto", "mwbp", "nec-", "newt", "noki", "oper", "palm", "pana", "pant", "phil", "play", "port",
 			"prox", "qwap", "sage", "sams", "sany", "sch-", "sec-", "send", "seri", "sgh-", "shar", "sie-", "siem",
-			"smal", "smar", "sony", "sph-", "symb", "t-mo", "teli", "tim-", "tosh", "tsm-", "upg1", "upsi", "vk-v",
+			"smal", "smar", "sony", "sph-", "symb", "t-mo", "teli", "tim-", "tsm-", "upg1", "upsi", "vk-v",
 			"voda", "wap-", "wapa", "wapi", "wapp", "wapr", "webc", "winw", "winw", "xda", "xda-",
 			"Googlebot-Mobile", "MicroMessenger"};
 	
@@ -553,8 +553,10 @@ public class pagesController extends BaseController {
 	public void jifenPageRedirect() {
 		String type = getPara("t");
 		if ((StringUtils.isNotBlank(type) && type.contentEquals("2")) || isMobile()) {
+			setAttr("isMobile", 1);
 			renderWithPath("/f/accession/jifen_m/index.html");
 		} else {
+			setAttr("isMobile", 0);
 			renderWithPath("/f/accession/jifen_pc/index.html");
 		}
 	}
