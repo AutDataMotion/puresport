@@ -111,18 +111,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 	 } */
 
 	//
-	function openCourse() {
-		alert("xxxx");
-		//iframe窗
-		layer.open({
-			type : 2,
-			title : '订单列表',
-			shadeClose : true,
-			shade : true,
-			maxmin : true, //开启最大化最小化按钮
-			area : [ '1024px', '800px' ],
-			content : '${cxt!}/course/scormcontent/index.html'
-		});
+	function openTest() {
+		window.location.href="${cxt!}/jf/puresport/t7Crcl/generteTest_tokyo_5?type=${x.type!''}&category=${x.category!''}";
 	}
 </script>
 </head>
@@ -162,21 +152,34 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="container">
 				<h2 align="center">课程及考试情况</h2>
 				</br>
-				<div class="row">
-					<div class="col-md-1 myTest"></div>
-					<div class="col-md-10  myTest">
+				<div class="row" align="center">
+					<div class="col-md-1 "></div>
+					<div class="col-md-10  ">
 						<%for(x in t7){ %>
-						<div class="top_grid"> 
+						
+						<p><a href="${cxt!}${x.crcl_file_rte!''}" target="_blank"  title="${x.courseTitle!''}"><h4
+										style="font-weight: bold; color: ${x.courseColor!'#0065ac'}; text-align: center; margin-top: 10px; margin-left: 20px;margin-bottom: 0px; "><i class="${x.courseLockIcon!''}"></i> 课程：${x.crcl_nm!''}</h4>
+									</a></p>
+						<p><h5 style="text-indent: 2em;">${x.oldScoreStr!''}</h5>
+						<h5 style="text-indent: 2em;color: ${x.testColor!'#0065ac'}">${x.testRltDesc!''} </h5></p>
+						<br>
+						<!-- <button onclick="openTest()" class="btn"> <i class="${x.testLockIcon!''}"></i> ${x.testTitle!'进入考试'}</button> -->
+						
+						
+						<a
+									href="${cxt!}/jf/puresport/t7Crcl/generteTest_tokyo_5?type=${x.type!''}&category=${x.category!''}"
+									target="_blank"   title="${x.testTitle!''}" type="button"><h4 style="color: ${x.testColor!'#0065ac'}" class="btn"><i class="${x.testLockIcon!''}"></i> ${x.testTitle!'进入考试'}</h4></a>
+						<!-- <div class="top_grid"> 
  							<div class="col-md-5 span1_of_1" style="display:${x.courseDisabled_a!''}">
-								<a href="${cxt!}${x.crcl_file_rte!''}" target="_blank"  title="${x.courseTitle!''}"><h2
-										style="font-weight: bold; color: ${x.courseColor!'#0065ac'}; text-align: left; margin-top: 10px; margin-left: 20px;margin-bottom: 0px; border-right: 3px solid #0065ac;"><i class="${x.courseLockIcon!''}"></i> 课程：${x.crcl_nm!''}</h2>
-									<!--  <h4 style="text-indent: 2em;text-align: left; margin-left: 20px; color: ${x.courseColor!'#0065ac'};">介绍：${x.crcl_brf!''}</h4>  --></a>
+								<a href="${cxt!}${x.crcl_file_rte!''}" target="_blank"  title="${x.courseTitle!''}"><h5
+										style="font-weight: bold; color: ${x.courseColor!'#0065ac'}; text-align: left; margin-top: 10px; margin-left: 20px;margin-bottom: 0px; border-right: 3px solid #0065ac;"><i class="${x.courseLockIcon!''}"></i> 课程：${x.crcl_nm!''}</h5>
+									 <h4 style="text-indent: 2em;text-align: left; margin-left: 20px; color: ${x.courseColor!'#0065ac'};">介绍：${x.crcl_brf!''}</h4> </a>
 
 							</div>
 							<div class="col-md-5 span1_of_1" style="display:${x.courseDisabled!''}">
-								<h2
-										style="font-weight: bold; color: ${x.courseColor!'#0065ac'}; text-align: left; margin-top: 10px; margin-left: 20px;margin-bottom: 0px; border-right: 3px solid #0065ac;"><i class="${x.courseLockIcon!''}"></i> 课程：${x.crcl_nm!''}</h2>
-									 <!-- <h4 style="text-indent: 2em;text-align: left; margin-left: 20px; color: ${x.courseColor!'#0065ac'};">介绍：${x.crcl_brf!''}</h4>  -->
+								<h5
+										style="font-weight: bold; color: ${x.courseColor!'#0065ac'}; text-align: left; margin-top: 10px; margin-left: 20px;margin-bottom: 0px; border-right: 3px solid #0065ac;"><i class="${x.courseLockIcon!''}"></i> 课程：${x.crcl_nm!''}</h5>
+									 <h4 style="text-indent: 2em;text-align: left; margin-left: 20px; color: ${x.courseColor!'#0065ac'};">介绍：${x.crcl_brf!''}</h4> 
 							</div>
 							
 							<div class="col-md-7 span1_of_2" style="display:${x.testDisabled_a!''}">
@@ -192,7 +195,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</div>
 							
 							<div class="clearfix"></div>
-						</div>
+						</div> -->
 						<%}%>
 					</div>
 					<div class="col-md-2 myTest"></div>
