@@ -157,18 +157,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<div class="col-md-10  ">
 						<%for(x in t7){ %>
 						
-						<p><a href="${cxt!}${x.crcl_file_rte!''}" target="_blank"  title="${x.courseTitle!''}"><h4
-										style="font-weight: bold; color: ${x.courseColor!'#0065ac'}; text-align: center; margin-top: 10px; margin-left: 20px;margin-bottom: 0px; "><i class="${x.courseLockIcon!''}"></i> 课程：${x.crcl_nm!''}</h4>
-									</a></p>
-						<p><h5 style="text-indent: 2em;">${x.oldScoreStr!''}</h5>
-						<h5 style="text-indent: 2em;color: ${x.testColor!'#0065ac'}">${x.testRltDesc!''} </h5></p>
+						<a
+									href="${cxt!}${x.crcl_file_rte!''}"
+									target="_blank"   title="${x.courseTitle!''}"  type="button"><h4 style="color: ${x.testColor!'#0065ac'}" class="btn"><i class="${x.testLockIcon!''}"></i> 课程：${x.crcl_nm!''}</h4></a>
+						<br>
+							<a
+									href="${cxt!}/jf/puresport/t7Crcl/generteTest_tokyo_5?type=${x.type!''}&category=${x.category!''}"
+									target="_blank"   title="${x.testTitle!''}" type="button"><h4 style="color: ${x.testColor!'#0065ac'}" class="btn"><i class="${x.testLockIcon!''}"></i> ${x.testTitle!'进入考试'}</h4></a>
+									
+						<!-- <p><a href="${cxt!}${x.crcl_file_rte!''}" target="_blank"  title="${x.courseTitle!''}" type="button"><h4><i class="${x.courseLockIcon!''}"></i> 课程：${x.crcl_nm!''}</h4>
+									</a></p> -->
+						<p><h5 style="color: '#E38F32'">${x.oldScoreStr!''}</h5>
+						<h5 style="text-indent: 2em;color: '#E38F32'">${x.testRltDesc!''} </h5></p>
 						<br>
 						<!-- <button onclick="openTest()" class="btn"> <i class="${x.testLockIcon!''}"></i> ${x.testTitle!'进入考试'}</button> -->
 						
 						
-						<a
-									href="${cxt!}/jf/puresport/t7Crcl/generteTest_tokyo_5?type=${x.type!''}&category=${x.category!''}"
-									target="_blank"   title="${x.testTitle!''}" type="button"><h4 style="color: ${x.testColor!'#0065ac'}" class="btn"><i class="${x.testLockIcon!''}"></i> ${x.testTitle!'进入考试'}</h4></a>
+					
 						<!-- <div class="top_grid"> 
  							<div class="col-md-5 span1_of_1" style="display:${x.courseDisabled_a!''}">
 								<a href="${cxt!}${x.crcl_file_rte!''}" target="_blank"  title="${x.courseTitle!''}"><h5
