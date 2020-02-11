@@ -2720,5 +2720,17 @@ public class T7CrclController extends BaseController {
 		renderWithPath("/f/accession/course_tokyo_2.html");
 		// renderWithPath("/f/accession/tokyo/course/scormcontent/index.html");
 	}
+	@Clear
+	public void video_play2() {
+		// 插入
+		T5CrclStdy t5 = new T5CrclStdy();
+		t5.setUsrid(88888888);
+		t5.setCrclid(888);
+		t5.setStdy_st("1");
+		t5.setTms(new Timestamp(System.currentTimeMillis()));
+		t5.saveGenIntId();		
+		renderWithPath("/f/video/yi/yi.html");
+
+	}
 
 }
