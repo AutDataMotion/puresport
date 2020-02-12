@@ -8,7 +8,6 @@ var testDataScore = {
 		"exam_grd": 80,
 	};
 
-
 var testDataCategory = {
 		"code": "0000",
 		"usrid": 444,
@@ -88,13 +87,44 @@ var testDataBonus = {
 		"desc": "查询成功"
 	};
 
-function tipsAlert(msg) {
-	$('#tip_content').text(msg);
-	$('#tipModal').modal('show');
+function tipsAlert(msg, title, btnText, btnFunCallBack, height) {
+	$('#tip_content').html(msg);
+	var _title = '提示';
+	var _btnText = '确定';
+	
+	if(title){
+		_title = title;
+	}
+	if(btnText){
+		_btnText = btnText;
+	}
+	
+	if(height){
+		$('#tip_content').css('height', height);
+	} else {
+		$('#tip_content').css('height', '');
+	}
+	
+	var tipModal = $('#tipModal');
+	var tipBtn = $('#tip_btn_ok');
+	if(btnFunCallBack  && typeof btnFunCallBack === "function"){
+		tipBtn.click(function(){
+			btnFunCallBack();
+			// tipModal.modal('hide');
+		});
+	} else {
+		tipBtn.click(function(){
+			// tipModal.modal('hide');
+		});
+	}
+	$('#tips_title').text(_title);
+	$('#tip_btn_ok').text(_btnText);
+	tipModal.modal('show');
+	
 }
 
 function ajaxCommonFunSuc(data, funSucc, funFail, url){
-	if(data.code==undefined || data.code != '0000'){
+	if(data==undefined || data.code==undefined || data.code != '0000'){
 		// fail
 //		layer.confirm('抱歉，系统开小差了，请稍后重试！', {
 //			icon : 3,
@@ -253,9 +283,34 @@ function getCourseListAjax(){
 function getBonusUrl(id){
 	return cxt + '/jf/puresport/t7Crcl/study_notify_tokyo_1?which_competition=4&category=' + id;
 }
+
+function getYunHtmlUrl(id){
+	var htmlUrl = cxt + '/ui/jifen_course/yundoc/doc'+id+'.html';
+	return '<div class="modal-body embed-responsive embed-responsive-4by3" style="height:500px;">' 
+			+ '<iframe class="embed-responsive-item" src="'+htmlUrl +'"></iframe>'
+			+ '</div>';
+}
+
+function ajaxBonusClick(id){
+	// 查询积分制附加题学习情况
+	url = '/jf/puresport/t7Crcl/get_bonus';
+	dataJson = {
+			category: id
+	};
+	funSucc = function(data){
+		// 成功后不可再点击
+		setBonusStatus(id, 1);
+	}
+	
+	funFail = function(){	
+	}
+	
+	ajaxGet(url, dataJson, funSucc, funFail);
+}
+
 var bonusStatusMap = {
-		'0':{
-			name:'未学习', 
+		'-1':{
+			name:'未上线', 
 			cssAble:'disable',
 			target:'',
 			funClick:function(id){
@@ -263,23 +318,51 @@ var bonusStatusMap = {
 				tipsAlert('此项目未上线');
 			}
 		},
+		'0':{
+			name:'未学习', 
+			cssAble:'',
+			target:'',
+			funClick:function(id){
+				tipsAlert(getYunHtmlUrl(id), '附加题', '确定', function(){
+					ajaxBonusClick(id);
+				},'500px');
+			}
+		},
 		'1':{
 			name:'已学习',
 			cssAble:'',
-			target:'blank',
+			target:'',
 			funClick:function(id){
-				window.location.href= getBonusUrl(id);
+				tipsAlert('此项目您已学习');
 			}
 		},
 };
+// 上线bonus 从1 开始 到 10
+var bonusOnline = [1];
+
 function setBonusStatus(id, score){
 	console.log('setBonusStatus', id, score);
 	var imgDiv = $('#yun'+id);
 	var statusFun = bonusStatusMap[score];
-	
-	imgDiv.click(statusFun.funClick);
+	for(var i= 0; i< bonusOnline.length; i++){
+		if(bonusOnline[i]==id){
+			// 上线了
+			imgDiv.click(function(){
+				statusFun.funClick(id)
+				});
+			imgDiv.attr('target',statusFun.target);
+			imgDiv.addClass(statusFun.cssAble);
+			return ;
+		}
+	}
+	// 未上线
+	statusFun = bonusStatusMap['-1'];
+	imgDiv.click(function(){
+		statusFun.funClick(id)
+	});
 	imgDiv.attr('target',statusFun.target);
 	imgDiv.addClass(statusFun.cssAble);
+	
 }
 function getBonusAjax(){
 	// 查询积分制附加题学习情况

@@ -549,7 +549,6 @@ public class pagesController extends BaseController {
 		return false;
 	}
 	
-	@Clear
 	public void jifenPageRedirect() {
 		String type = getPara("t");
 		if ((StringUtils.isNotBlank(type) && type.contentEquals("2")) || isMobile()) {

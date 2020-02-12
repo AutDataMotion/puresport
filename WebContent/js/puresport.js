@@ -214,17 +214,17 @@ function admin_login() {
 
 }
 
-//$(function(){
-//	
-//	// user 
-//	setValPhoneBtn('#btn-val-phone', '#mblph_no');
-//	setValEmailBtn('#btn-val-email', '#email');
-//
-//	// admin
-//	setValPhoneBtn('#btn-val-phone_admin', '#mblph_no_admin', "a");
-//	setValEmailBtn('#btn-val-email_admin', '#email_admin', "a");
-//	
-//});
+$(function(){
+	
+	// user 
+	setValPhoneBtn('#btn-val-phone', '#mblph_no');
+	setValEmailBtn('#btn-val-email', '#email');
+
+	// admin
+	setValPhoneBtn('#btn-val-phone_admin', '#mblph_no_admin', "a");
+	setValEmailBtn('#btn-val-email_admin', '#email_admin', "a");
+	
+});
 
 function Improve_user_info() {
 	
