@@ -107,6 +107,7 @@ function tipsAlert(msg, title, btnText, btnFunCallBack, height) {
 	
 	var tipModal = $('#tipModal');
 	var tipBtn = $('#tip_btn_ok');
+	tipBtn.unbind("click");
 	if(btnFunCallBack  && typeof btnFunCallBack === "function"){
 		tipBtn.click(function(){
 			// $('#tipModal').modal('hide');
@@ -300,11 +301,11 @@ function ajaxBonusClick(id){
 	funSucc = function(data){
 		// 成功后不可再点击
 		setBonusStatus(id, 1);
-		initAll();
+		initScoreAndBonus();
 	}
 	
 	funFail = function(){
-		initAll();
+		initScoreAndBonus();
 	}
 	
 	ajaxGet(url, dataJson, funSucc, funFail);
@@ -346,6 +347,7 @@ function setBonusStatus(id, score){
 	console.log('setBonusStatus', id, score);
 	var imgDiv = $('#yun'+id);
 	var statusFun = bonusStatusMap[score];
+	imgDiv.unbind("click");
 	for(var i= 0; i< bonusOnline.length; i++){
 		if(bonusOnline[i]==id){
 			// 上线了
@@ -388,14 +390,18 @@ function getBonusAjax(){
 	ajaxGet(url, dataJson, funSucc, funFail, testDataBonus);
 }
 
+function initScoreAndBonus(){
+	// 初始化页面
+	getAllScoreAjax();
+	getBonusAjax();
+}
 
 function initAll(){
 	// 初始化页面
 	var indexLoading = layer.load();
 	
-	getAllScoreAjax();
 	getCourseListAjax();
-	getBonusAjax();
+	initScoreAndBonus();
 	
 	layer.close(indexLoading);
 }
