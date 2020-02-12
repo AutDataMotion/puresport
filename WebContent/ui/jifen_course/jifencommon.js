@@ -109,12 +109,12 @@ function tipsAlert(msg, title, btnText, btnFunCallBack, height) {
 	var tipBtn = $('#tip_btn_ok');
 	if(btnFunCallBack  && typeof btnFunCallBack === "function"){
 		tipBtn.click(function(){
+			// $('#tipModal').modal('hide');
 			btnFunCallBack();
-			// tipModal.modal('hide');
 		});
 	} else {
 		tipBtn.click(function(){
-			// tipModal.modal('hide');
+			tipModal.modal('hide');
 		});
 	}
 	$('#tips_title').text(_title);
@@ -133,7 +133,7 @@ function ajaxCommonFunSuc(data, funSucc, funFail, url){
 //			typeof funFail === "function" ? funFail() : false;
 //			layer.close(index);
 //		});
-		tipsAlert('抱歉，系统开小差了，请稍后重试！');
+		// tipsAlert('抱歉，系统开小差了，请稍后重试！');
 		typeof funFail === "function" ? funFail() : false;
 		console.log(url, data.desc);
 	}else{
@@ -300,9 +300,11 @@ function ajaxBonusClick(id){
 	funSucc = function(data){
 		// 成功后不可再点击
 		setBonusStatus(id, 1);
+		initAll();
 	}
 	
-	funFail = function(){	
+	funFail = function(){
+		initAll();
 	}
 	
 	ajaxGet(url, dataJson, funSucc, funFail);
