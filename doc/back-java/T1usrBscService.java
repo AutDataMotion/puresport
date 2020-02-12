@@ -59,21 +59,19 @@ public class T1usrBscService extends BaseService {
 		}
 		return true;
 	}
-
-	public Tuple2<Boolean, String> delete(T6MgrSession mgrSession, ParamComm paramComm) {
+	public Tuple2<Boolean, String> delete(T6MgrSession mgrSession, ParamComm paramComm){
 		Long usrId = paramComm.getId();
 		try {
 			// 查询待删除信息
 			T1usrBsc sporter = SelectById(usrId);
 			if (Objects.isNull(sporter)) {
-				log.error("delete sporter not exist ,param:" + paramComm);
+				log.error("delete sporter not exist ,param:" +paramComm);
 				return TupleUtil.tuple(false, "该用户不存在");
 			}
 			// 比较省市是否可删
 			if (ValidateComm.inv_deleteProvince_sporter(mgrSession, sporter)) {
-				log.error(String.format("delete sporter inv_deleteProvince param:%s  session:%s ", paramComm,
-						mgrSession));
-				return TupleUtil.tuple(false, "您没有权限");
+				log.error(String.format("delete sporter inv_deleteProvince param:%s  session:%s " , paramComm, mgrSession));
+				return TupleUtil.tuple(false, "您没有权限"); 
 			}
 			sporter.update();
 		} catch (Exception e) {
@@ -84,137 +82,122 @@ public class T1usrBscService extends BaseService {
 		}
 		return TupleUtil.tuple(false, "删除成功");
 	}
-
 	public static String getSearchWhere(T6MgrSession mgrSession, ParamComm paramMdl, List<Object> listArgs) {
 		StringBuilder whereStr = new StringBuilder();
-		if (StringUtil.notEmpty(paramMdl.getName1())) {
-			whereStr.append(" and nm like ? ");
-			listArgs.add(getStringLikeLeft(paramMdl.getName1()));
-		}
-		if (StringUtil.notEmpty(paramMdl.getName2())) {
-			whereStr.append(" and crdt_no like ? ");
-			listArgs.add(getStringLikeLeft(paramMdl.getName2()));
-		}
-		if (StringUtil.notEmpty(paramMdl.getName3())) {
-			whereStr.append(" and province like ? ");
-			listArgs.add(getStringLikeLeft(paramMdl.getName3()));
-		}
-		if (StringUtil.notEmpty(paramMdl.getName4())) {
-			whereStr.append(" and city like ? ");
-			listArgs.add(getStringLikeLeft(paramMdl.getName4()));
-		}
-		if (StringUtil.notEmpty(paramMdl.getName5())) {
-			whereStr.append(" and usr_tp like ? ");
-			listArgs.add(getStringLikeLeft(paramMdl.getName5()));
-		}
-		if (StringUtil.notEmpty(paramMdl.getName6())) {
-			whereStr.append(" and spt_prj like ? ");
-			listArgs.add(getStringLikeLeft(paramMdl.getName6()));
-		}
-		if (StringUtil.notEmpty(paramMdl.getName7())) {
-			if ("国家级".equals(paramMdl.getName7())) {
-				whereStr.append(" and (levelinstitute = 2 or typelevel = '2') ");
+			if (StringUtil.notEmpty(paramMdl.getName1())) {
+				whereStr.append(" and nm like ? ");
+				listArgs.add(getStringLikeLeft(paramMdl.getName1()));
 			}
-			if ("省级".equals(paramMdl.getName7())) {
-				whereStr.append(" and levelprovince = 2 ");
-				// listArgs.add(getStringLikeLeft(paramMdl.getName7()));
+			if (StringUtil.notEmpty(paramMdl.getName2())) {
+				whereStr.append(" and crdt_no like ? ");
+				listArgs.add(getStringLikeLeft(paramMdl.getName2()));
 			}
-			if ("市级".equals(paramMdl.getName7())) {
-				whereStr.append(" and levelcity = 2 ");
+			if (StringUtil.notEmpty(paramMdl.getName3())) {
+				whereStr.append(" and province like ? ");
+				listArgs.add(getStringLikeLeft(paramMdl.getName3()));
 			}
-			// whereStr.append(" and typelevel like ? ");
-			// listArgs.add(getStringLikeLeft(paramMdl.getName7()));
-		}
-		if (StringUtil.notEmpty(paramMdl.getName8())) {
-			whereStr.append(" and gnd like ? ");
-			listArgs.add(getStringLikeLeft(paramMdl.getName8()));
-		}
-		return whereStr.toString();
+			if (StringUtil.notEmpty(paramMdl.getName4())) {
+				whereStr.append(" and city like ? ");
+				listArgs.add(getStringLikeLeft(paramMdl.getName4()));
+			}
+			if (StringUtil.notEmpty(paramMdl.getName5())) {
+				whereStr.append(" and usr_tp like ? ");
+				listArgs.add(getStringLikeLeft(paramMdl.getName5()));
+			}
+			if (StringUtil.notEmpty(paramMdl.getName6())) {
+				whereStr.append(" and spt_prj like ? ");
+				listArgs.add(getStringLikeLeft(paramMdl.getName6()));
+			}
+			if (StringUtil.notEmpty(paramMdl.getName7())) {
+				if("国家级".equals(paramMdl.getName7()))
+				{
+					whereStr.append(" and (levelinstitute = 2 or typelevel = '2') ");
+				}
+				if("省级".equals(paramMdl.getName7()))
+				{
+					whereStr.append(" and levelprovince = 2 ");
+//					listArgs.add(getStringLikeLeft(paramMdl.getName7()));
+				}
+				if("市级".equals(paramMdl.getName7()))
+				{
+					whereStr.append(" and levelcity = 2 ");
+				}
+//				whereStr.append(" and typelevel like ? ");
+//				listArgs.add(getStringLikeLeft(paramMdl.getName7()));
+			}
+			if (StringUtil.notEmpty(paramMdl.getName8())) {
+				whereStr.append(" and gnd like ? ");
+				listArgs.add(getStringLikeLeft(paramMdl.getName8()));
+			}
+			return whereStr.toString();
 	}
-
+	
 	public List<T1usrBsc> selectByPage(T6MgrSession mgrSession, ParamComm paramMdl) {
 		final String roleStr = mgrSession.selectRoleStr_UserBasic();
 		List<Object> listArgs = new ArrayList<>();
 		final String searchStr = getSearchWhere(mgrSession, paramMdl, listArgs);
-		Long countTotal = ConfMain.db().queryLong(
-				String.format("select count(1) from %s where %s %s", tableName, roleStr, searchStr),
-				listArgs.toArray());
-		log.debug("selectByPage----" + countTotal + "," + paramMdl.getDraw());
-
+		Long countTotal = ConfMain.db()
+				.queryLong(String.format("select count(1) from %s where %s %s", tableName, roleStr, searchStr), listArgs.toArray());
+		log.debug("selectByPage----"+countTotal+","+paramMdl.getDraw());
+		
 		paramMdl.setTotal(countTotal);
 		List<T1usrBsc> resList = Collections.EMPTY_LIST;
 		if (countTotal > 0) {
-			if (paramMdl.getExportall().equals("1"))// 全量导出
+			if(paramMdl.getExportall().equals("1"))//全量导出
 			{
 				listArgs.add(0);
 				listArgs.add(countTotal);
-			} else {
+			}
+			else {
 				listArgs.add(paramMdl.getPageIndex());
 				listArgs.add(paramMdl.getPageSize());
 			}
-
+			
 			resList = T1usrBsc.dao.find(String.format(
 					"select usrid,usr_tp, nm,crdt_tp, crdt_no,department,post, gnd,brth_dt,spt_prj, typelevel, province, city,institute, mblph_no, email,levelprovince,levelcity,levelinstitute  from %s where %s %s  limit ?,?",
 					tableName, roleStr, searchStr), listArgs.toArray());
-
+			
 			resolveTypeLeve(resList);
-
+		
 		}
 		return resList;
 	}
-
-	private String getTypeLevel(String countryLevel, String instituteLevel, String provLevel, String cityLevel) {
-		// 单独处理级别显示
-		StringBuilder levelAll = new StringBuilder(" ");
-
-		if ((EnumStatus.LevelShow.getIdStr().equals(countryLevel))
-				|| (EnumStatus.LevelShow.getIdStr().equals(instituteLevel))) {
-			levelAll.append(EnumTypeLevel.Country.getName()).append(" ");
-		}
-		if (EnumStatus.LevelShow.getIdStr().equals(provLevel)) {
-			levelAll.append(EnumTypeLevel.Province.getName()).append(" ");
-		}
-		if (EnumStatus.LevelShow.getIdStr().equals(cityLevel)) {
-			levelAll.append(EnumTypeLevel.City.getName()).append(" ");
-		}
-		return levelAll.toString();
-	}
-
-	public List<T1usrBsc> resolveTypeLeve(List<T1usrBsc> users) {
-		if (CollectionUtils.isEmpty(users)) {
-			return users;
-		}
-		users.forEach(e -> {
-			e.setTypelevel(getTypeLevel((String) e.getTypelevel(), (String) e.getLevelinstitute(), (String) e.getLevelprovince(), (String) e.getLevelcity()));
-		});
-
-		return users;
-	}
 	
-	private List<Record> resolveTypeLevelRecords(List<Record> users){
-		if (CollectionUtils.isEmpty(users)) {
+	public List<T1usrBsc> resolveTypeLeve(List<T1usrBsc> users){
+		if(CollectionUtils.isEmpty(users)) {
 			return users;
 		}
-		users.forEach(e -> {
-			e.set("typelevel2", getTypeLevel(e.getStr(T1usrBsc.column_typelevel)
-					, String.valueOf(e.getInt(T1usrBsc.column_levelinstitute))
-					, String.valueOf(e.getInt(T1usrBsc.column_levelprovince))
-					, String.valueOf(e.getInt(T1usrBsc.column_levelcity))));
+		users.forEach(e->{
+			// 单独处理级别显示
+			StringBuilder levelAll = new StringBuilder();
+
+			if ((EnumStatus.LevelShow.getIdStr().equals((String)e.getTypelevel()))
+					||(EnumStatus.LevelShow.getIdStr().equals((String)e.getLevelinstitute()))) {
+				levelAll.append( EnumTypeLevel.Country.getName()).append(" ");
+			}
+			if(EnumStatus.LevelShow.getIdStr().equals((String)e.getLevelprovince()))
+			{
+				levelAll.append( EnumTypeLevel.Province.getName()).append(" ");
+			}
+			if(EnumStatus.LevelShow.getIdStr().equals((String)e.getLevelcity()))
+			{
+				levelAll.append( EnumTypeLevel.City.getName()).append(" ");
+			}
+			e.setTypelevel(levelAll.toString());
 		});
 		
 		return users;
 	}
-	
-	public List<T1usrBsc> selectByIds(List<Long> userIds) {
+	public List<T1usrBsc> selectByIds(List<Long> userIds){
 		if (CollectionUtils.isEmpty(userIds)) {
 			return Collections.EMPTY_LIST;
 		}
-
-		List<T1usrBsc> users = T1usrBsc.dao.find(String.format(
-				"select usrid,usr_tp, nm,crdt_tp, crdt_no,department,post, gnd,brth_dt,spt_prj, typelevel, province, city,institute, mblph_no, email,levelprovince,levelcity,levelinstitute from %s where usrid in %s ",
-				T1usrBsc.tableName, CommFun.sqlWhereIn(userIds)), userIds.toArray());
+		
+		List<T1usrBsc> users = T1usrBsc.dao.find(
+				String.format("select usrid,usr_tp, nm,crdt_tp, crdt_no,department,post, gnd,brth_dt,spt_prj, typelevel, province, city,institute, mblph_no, email,levelprovince,levelcity,levelinstitute from %s where usrid in %s "
+						, T1usrBsc.tableName, CommFun.sqlWhereIn(userIds)), userIds.toArray());
 		resolveTypeLeve(users);
-
+		
 		return users;
 	}
 
@@ -224,47 +207,74 @@ public class T1usrBscService extends BaseService {
 	 * @param paramMdl
 	 * @return
 	 */
+//	private static String sql_score = "select u.*, s.exam_nm as exam_nm, s.exam_grd as exam_grd, (CASE WHEN s.exam_grd >= 80 THEN '及格'  WHEN s.exam_grd is null THEN '未考试'  ELSE '不及格' END) as passed "
+//			+ " from t1_usr_bsc u  left join ("
+//			+ " select usrid, exam_nm, max(exam_grd) as exam_grd from t11_exam_stat where exam_st='1' group by usrid, exam_nm "
+//			+ " ) as s on u.usrid = s.usrid  where 1=1 %s  limit ?,?";
+	
+//	private static String sql_score_total = "select count(1) "
+//			+ " from t1_usr_bsc u  left join ("
+//			+ " select usrid, exam_nm, max(exam_grd) as exam_grd from t11_exam_stat where exam_st='1' group by usrid, exam_nm "
+//			+ " ) as s on u.usrid = s.usrid  where 1=1  %s ";
 
-	private static String sql_score = "select u.*, s.examid as examid, s.type as type, s.exam_nm as exam_nm, s.exam_grd as exam_grd, (CASE WHEN s.exam_grd >= 80 THEN '及格'  WHEN s.exam_grd is null THEN '未考试'  ELSE '不及格' END) as passed "
-			// + " (" +
-			// " CASE" +
-			// " WHEN u.typeLevel ='2' THEN" +
-			// " '国家级'" +
-			// " WHEN u.levelInstitute ='2' THEN" +
-			// " '中心协会级'" +
-			// " WHEN u.levelProvince ='2' THEN" +
-			// " '省级'" +
-			// " WHEN u.levelCity ='2' THEN" +
-			// " '市级'" +
-			// " ELSE" +
-			// " ''" +
-			// " END" +
-			// " ) AS typelevel2 "
-			+ " from t1_usr_bsc u  " + "left join %s s on u.usrid = s.usrid " + " %s where 1=1 %s  limit ?,?";
-
-	private static String sql_score_total = "select count(1) " + " from t1_usr_bsc u  "
-			+ "left join %s s on u.usrid = s.usrid " + " %s where 1=1 %s ";
-
+/*	private static String sql_score = "select u.*, s.exam_nm as exam_nm, s.exam_grd as exam_grd, (CASE WHEN s.exam_grd >= 80 THEN '及格'  WHEN s.exam_grd is null THEN '未考试'  ELSE '不及格' END) as passed "
+			+ " from t1_usr_bsc u  left join ("
+			+ " select usrid, exam_nm, exam_grd from t12_highest_score"
+			+ " ) as s on u.usrid = s.usrid  where 1=1 %s  limit ?,?";*/
+	
+	private static String sql_score = "select u.*, s.examid as examid, s.type as type, s.exam_nm as exam_nm, s.exam_grd as exam_grd, (CASE WHEN s.exam_grd >= 80 THEN '及格'  WHEN s.exam_grd is null THEN '未考试'  ELSE '不及格' END) as passed,"
+			+ " 	(" + 
+			"		CASE" + 
+			"		WHEN u.typeLevel ='2' THEN" + 
+			"			'国家级'" + 
+			"		WHEN u.levelInstitute ='2' THEN" + 
+			"			'中心协会级'" + 
+			"		WHEN u.levelProvince ='2' THEN" + 
+			"			'省级'" + 
+			"		WHEN u.levelCity ='2' THEN" + 
+			"			'市级'" + 
+			"		ELSE" + 
+			"			''" + 
+			"		END" + 
+			"	) AS typelevel2 "
+			+ " from t1_usr_bsc u  "
+			+ "left join %s s on u.usrid = s.usrid "
+			+ " %s where 1=1 %s  limit ?,?";
+	
+/*	private static String sql_score_total = "select count(1) "
+	+ " from t1_usr_bsc u  left join ("
+	+ " select usrid, exam_nm, exam_grd from t12_highest_score"
+	+ " ) as s on u.usrid = s.usrid  where 1=1  %s ";*/
+	
+//	private static String sql_score_total = "select count(1) "
+//	+ " from t1_usr_bsc u  left join ("
+//	+ " select usrid, exam_nm, exam_grd, exam_st from t11_exam_stat"
+//	+ " ) as s on u.usrid = s.usrid "
+//	+ "inner join r16_group_usr g on u.usrid = g.user_id where 1=1  %s ";
+	
+	private static String sql_score_total = "select count(1) "
+			+ " from t1_usr_bsc u  "
+			+ "left join %s s on u.usrid = s.usrid "
+			+ " %s where 1=1 %s ";
+			
 	public List<Record> selectScoreByPage(T6MgrSession mgrSession, ParamComm paramMdl) {
-
+		
 		List<Object> listArgs = new ArrayList<>();
 		Triple<String, String, String> cntSqlTuple = getSearchSql_Score(mgrSession, paramMdl, listArgs, true);
-		Long countTotal = ConfMain.db().queryLong(
-				String.format(sql_score_total, cntSqlTuple.getLeft(), cntSqlTuple.getMiddle(), cntSqlTuple.getRight()),
-				listArgs.toArray());
+		Long countTotal = ConfMain.db().queryLong(String.format(sql_score_total, cntSqlTuple.getLeft(), cntSqlTuple.getMiddle(), cntSqlTuple.getRight())
+				, listArgs.toArray());
 		paramMdl.setTotal(countTotal);
 		List<Record> userScoreRecords = null;
 		if (countTotal > 0) {
 			listArgs.add(paramMdl.getPageIndex());
 			listArgs.add(paramMdl.getPageSize());
-			userScoreRecords = ConfMain.db().find(
-					String.format(sql_score, cntSqlTuple.getLeft(), cntSqlTuple.getMiddle(), cntSqlTuple.getRight()),
-					listArgs.toArray());
+			userScoreRecords = ConfMain.db().find(String.format(sql_score, cntSqlTuple.getLeft(), cntSqlTuple.getMiddle(), cntSqlTuple.getRight())
+					, listArgs.toArray());
 		} else {
 			userScoreRecords = new ArrayList<>();
 		}
-
-		return resolveTypeLevelRecords(userScoreRecords);
+		
+		return userScoreRecords;
 	}
 
 	private final static String defSelect = "全部";
@@ -272,10 +282,9 @@ public class T1usrBscService extends BaseService {
 	private final static String getStringLikeLeft(String s) {
 		return s + "%";
 	}
-
-	public static Triple<String, String, String> getSearchSql_Score(T6MgrSession mgrSession, ParamComm paramMdl,
-			List<Object> listArgs, boolean isAddRoleWhere) {
-
+	
+	public static Triple<String, String, String> getSearchSql_Score(T6MgrSession mgrSession, ParamComm paramMdl, List<Object> listArgs, boolean isAddRoleWhere) {
+		
 		StringBuilder whereStr = new StringBuilder();
 		String table_exam = "t11_exam_stat";
 		String table_group = "";
@@ -312,7 +321,7 @@ public class T1usrBscService extends BaseService {
 			whereStr.append(" and gnd like ? ");
 			listArgs.add(getStringLikeLeft(paramMdl.getName11()));
 		}
-
+		
 		if (StringUtil.notEmptyOrLikeDefault(paramMdl.getName8(), defSelect)) {
 			whereStr.append(" and exam_nm like ? ");
 			listArgs.add(getStringLikeLeft(paramMdl.getName8()));
@@ -320,36 +329,36 @@ public class T1usrBscService extends BaseService {
 		if (StringUtil.notEmptyOrLikeDefault(paramMdl.getName10(), defSelect)) {
 			if (paramMdl.getName10().equals("合格")) {
 				whereStr.append(" and exam_grd >= 80 ");
-			} else if (paramMdl.getName10().equals("不合格")) {
+			}else if (paramMdl.getName10().equals("不合格")){
 				whereStr.append(" and exam_grd < 80 and exam_grd>=0 ");
 			} else {
 				whereStr.append(" and exam_grd is  null ");
 			}
 		}
-
+		
 		if (StringUtil.notEmptyOrDefault(paramMdl.getName12(), defSelect)) {
-			if ("9".equals(paramMdl.getName12())) {// 查询最高成绩
+			if("9".equals(paramMdl.getName12())){//查询最高成绩
 				table_exam = "t12_highest_score";
-			} else {// 查询所有成绩
+			} else {//查询所有成绩
 				whereStr.append(" and exam_st = ? ");
 				listArgs.add(paramMdl.getName12());
 			}
 		}
-
+		
 		if (StringUtil.notEmptyOrDefault(paramMdl.getName13(), defSelect)) {
 			whereStr.append(" and group_id = ? ");
 			listArgs.add(Integer.valueOf(paramMdl.getName13()));
-			table_group = "left join r16_group_usr g on u.usrid = g.user_id";
+			table_group =  "left join r16_group_usr g on u.usrid = g.user_id";
 		}
-
+		
 		if (isAddRoleWhere) {
-			whereStr.append(" and ").append(mgrSession.selectRoleStr_UserBasic());
+			whereStr.append(" and ")
+			.append(mgrSession.selectRoleStr_UserBasic());
 		}
 		return Triple.of(table_exam, table_group, whereStr.toString());
 	}
 
-	public static String getSearchWhereSta(T6MgrSession mgrSession, ParamComm paramMdl, List<Object> listArgs,
-			boolean isAddRoleWhere) {
+	public static String getSearchWhereSta(T6MgrSession mgrSession, ParamComm paramMdl, List<Object> listArgs, boolean isAddRoleWhere) {
 		StringBuilder whereStr = new StringBuilder();
 		if (StringUtil.notEmptyOrDefault(paramMdl.getName1(), defSelect)) {
 			whereStr.append(" and province like ? ");
@@ -383,7 +392,7 @@ public class T1usrBscService extends BaseService {
 			whereStr.append(" and gnd like ? ");
 			listArgs.add(getStringLikeLeft(paramMdl.getName11()));
 		}
-
+		
 		if (StringUtil.notEmptyOrLikeDefault(paramMdl.getName8(), defSelect)) {
 			whereStr.append(" and exam_nm like ? ");
 			listArgs.add(getStringLikeLeft(paramMdl.getName8()));
@@ -391,30 +400,31 @@ public class T1usrBscService extends BaseService {
 		if (StringUtil.notEmptyOrLikeDefault(paramMdl.getName10(), defSelect)) {
 			if (paramMdl.getName10().equals("合格")) {
 				whereStr.append(" and exam_grd >= 80 ");
-			} else if (paramMdl.getName10().equals("不合格")) {
+			}else if (paramMdl.getName10().equals("不合格")){
 				whereStr.append(" and exam_grd < 80 and exam_grd>=0 ");
 			} else {
 				whereStr.append(" and exam_grd is  null ");
 			}
 		}
-
+		
+		
 		if (StringUtil.notEmptyOrDefault(paramMdl.getName12(), defSelect)) {
-			if ("9".equals(paramMdl.getName12())) {// 查询最高成绩
-				whereStr.append(
-						" and s.exam_grd =(select max(b.exam_grd)  from t11_exam_stat as b  where s.usrid = b.usrid and s.type=b.type)");
-			} else {// 查询所有成绩
+			if("9".equals(paramMdl.getName12())){//查询最高成绩
+				whereStr.append(" and s.exam_grd =(select max(b.exam_grd)  from t11_exam_stat as b  where s.usrid = b.usrid and s.type=b.type)");
+			} else {//查询所有成绩
 				whereStr.append(" and exam_st = ? ");
 				listArgs.add(paramMdl.getName12());
 			}
 		}
-
+		
 		if (StringUtil.notEmptyOrDefault(paramMdl.getName13(), defSelect)) {
 			whereStr.append(" and group_id = ? ");
 			listArgs.add(Integer.valueOf(paramMdl.getName13()));
 		}
-
+		
 		if (isAddRoleWhere) {
-			whereStr.append(" and ").append(mgrSession.selectRoleStr_UserBasic());
+			whereStr.append(" and ")
+			.append(mgrSession.selectRoleStr_UserBasic());
 		}
 		return whereStr.toString();
 	}
@@ -439,11 +449,10 @@ public class T1usrBscService extends BaseService {
 		} else {
 			listArgs.add(paramMdl.getPageIndex());
 			listArgs.add(paramMdl.getPageSize());
-			records = ConfMain.db().find(String.format(sql_prj, whereSql), listArgs.toArray());
-		}
-
-		if (CollectionUtils.isEmpty(records))
-			return new ArrayList<>();
+			records = ConfMain.db().find(String.format(sql_prj, whereSql) , listArgs.toArray());
+		} 
+		
+		if (CollectionUtils.isEmpty(records)) return new ArrayList<>();
 
 		records.stream().forEach(e -> {
 			Long cntTotal = e.getLong("cnt_total");
@@ -497,11 +506,10 @@ public class T1usrBscService extends BaseService {
 		} else {
 			listArgs.add(paramMdl.getPageIndex());
 			listArgs.add(paramMdl.getPageSize());
-			records = ConfMain.db().find(String.format(sql_problem, whereSql), listArgs.toArray());
-		}
-
-		if (CollectionUtils.isEmpty(records))
-			return new ArrayList<>();
+			records = ConfMain.db().find(String.format(sql_problem, whereSql) , listArgs.toArray());
+		} 
+		
+		if (CollectionUtils.isEmpty(records)) return new ArrayList<>();
 
 		records.stream().forEach(e -> {
 			Long cntTotal = e.getBigInteger("cntall").longValue();
@@ -556,7 +564,7 @@ public class T1usrBscService extends BaseService {
 		return TupleUtil.tuple(resBool.get(), resStr.toString());
 	}
 
-	private Tuple3<Boolean, Integer, String> insertRowToDb(T6MgrSession mgrSession, MdlExcelRow excelRow) {
+	private Tuple3<Boolean,Integer, String> insertRowToDb(T6MgrSession mgrSession, MdlExcelRow excelRow) {
 		boolean res = false;
 		String resTips = "";
 		try {
@@ -574,7 +582,7 @@ public class T1usrBscService extends BaseService {
 			if (StringUtil.invalidateLength(excelRow.getByIndex(2), 8, 20)
 					|| !RegexUtils.checkDigitAlpha(excelRow.getByIndex(2))) {
 				log.error("insertRowToDb数据校验失败:" + excelRow);
-				return TupleUtil.tuple(false, 3, "证件号不符合要求");
+				return TupleUtil.tuple(false,3,  "证件号不符合要求");
 			}
 			if (StringUtil.invalidateLength(excelRow.getByIndex(3), 1, 4)) {
 				log.error("insertRowToDb数据校验失败:" + excelRow);
@@ -590,7 +598,7 @@ public class T1usrBscService extends BaseService {
 			}
 			if (StringUtil.invalidateLength(excelRow.getByIndex(6), 2, 128)) {
 				log.error("insertRowToDb数据校验失败:" + excelRow);
-				return TupleUtil.tuple(false, 7, "邮箱不符合要求");
+				return TupleUtil.tuple(false, 7,  "邮箱不符合要求");
 			}
 			// 根据手机号匹配，没有插入、已有更新
 			String crdt_number = excelRow.getByIndex(2);// 身份证号
@@ -601,7 +609,8 @@ public class T1usrBscService extends BaseService {
 			Record sporter = ConfMain.db().findById(tableName, T1usrBsc.column_crdt_no, crdt_number);
 			if (Objects.isNull(sporter)) {
 				// 不存在 则插入
-				dbRow = new Record().set(T1usrBsc.column_usr_nm, excelRow.getByIndex(0))// 用户账户名：手机号
+				dbRow = new Record()
+						.set(T1usrBsc.column_usr_nm, excelRow.getByIndex(0))// 用户账户名：手机号
 						.set(T1usrBsc.column_nm, excelRow.getByIndex(0))
 						.set(T1usrBsc.column_crdt_tp, excelRow.getByIndex(1)).set(T1usrBsc.column_crdt_no, crdt_number)
 						.set(T1usrBsc.column_gnd, excelRow.getByIndex(3))
@@ -614,7 +623,7 @@ public class T1usrBscService extends BaseService {
 
 						.set(T1usrBsc.column_province, mgrSession.ggProvince())
 						.set(T1usrBsc.column_city, mgrSession.ggCity());
-
+				
 				resolveLevelWithSession_Insert(dbRow, mgrSession);
 				res = ConfMain.db().save(tableName, tableKey, dbRow);
 				resTips = " 导入成功";
@@ -635,139 +644,155 @@ public class T1usrBscService extends BaseService {
 		}
 		return TupleUtil.tuple(res, 0, "");
 	}
-
+	
 	/**
-	 * level的处理逻辑 0：不可见 删除 1：可见 2：具有该级别
-	 * 
+	 * level的处理逻辑
+	 * 0：不可见 删除
+	 * 1：可见
+	 * 2：具有该级别
 	 * @param record
 	 * @param mgrSession
 	 */
-	private void resolveLevelWithSession_Insert(Record record, T6MgrSession mgrSession) {
+	private void resolveLevelWithSession_Insert(Record record,  T6MgrSession mgrSession){
 		String typeLevel = mgrSession.getTypeleve();
 		if (typeLevel.equals(EnumTypeLevel.Country.getName())) {
 			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelShow.getIdStr());
-
+			
 		} else if (typeLevel.equals(EnumTypeLevel.Province.getName())) {
 			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelView.getIdStr())
-					.set(T1usrBsc.column_levelprovince, EnumStatus.LevelShow.getId())
-					.set(T1usrBsc.column_province, mgrSession.ggProvince());
-
+			.set(T1usrBsc.column_levelprovince, EnumStatus.LevelShow.getId())
+			.set(T1usrBsc.column_province, mgrSession.ggProvince());
+			
 		} else if (typeLevel.equals(EnumTypeLevel.City.getName())) {
 			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelView.getIdStr())
-					.set(T1usrBsc.column_levelprovince, EnumStatus.LevelView.getId())
-					.set(T1usrBsc.column_levelcity, EnumStatus.LevelShow.getId())
-					.set(T1usrBsc.column_province, mgrSession.ggProvince())
-					.set(T1usrBsc.column_city, mgrSession.ggCity());
-		} else if (typeLevel.equals(EnumTypeLevel.CenterInstitute.getName())) {
-			// record.set(T1usrBsc.column_typelevel, "1")
+			.set(T1usrBsc.column_levelprovince, EnumStatus.LevelView.getId())
+			.set(T1usrBsc.column_levelcity, EnumStatus.LevelShow.getId())
+			.set(T1usrBsc.column_province, mgrSession.ggProvince())
+			.set(T1usrBsc.column_city, mgrSession.ggCity());
+		} else if(typeLevel.equals(EnumTypeLevel.CenterInstitute.getName()))
+		{
+			//record.set(T1usrBsc.column_typelevel, "1")
 			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelView.getIdStr())
-					.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelShow.getId())
-					.set(T1usrBsc.column_institute, mgrSession.getInstitute());
-		} else {
+			.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelShow.getId())
+			.set(T1usrBsc.column_institute, mgrSession.getInstitute());
+		}
+		else {
 			record.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelUnknown.getId());
 			record.set(T1usrBsc.column_remark, mgrSession);
 		}
 	}
-
-	private void resolveLevelWithSession_Update(Record record, T6MgrSession mgrSession) {
+	private void resolveLevelWithSession_Update(Record record,  T6MgrSession mgrSession){
 		String typeLevel = mgrSession.getTypeleve();
 		if (typeLevel.equals(EnumTypeLevel.Country.getName())) {
 			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelShow.getIdStr());
-
+			
 		} else if (typeLevel.equals(EnumTypeLevel.Province.getName())) {
-			record.set(T1usrBsc.column_levelprovince, EnumStatus.LevelShow.getId()).set(T1usrBsc.column_province,
-					mgrSession.ggProvince());
-
+			record.set(T1usrBsc.column_levelprovince, EnumStatus.LevelShow.getId())
+			.set(T1usrBsc.column_province, mgrSession.ggProvince());
+			
 		} else if (typeLevel.equals(EnumTypeLevel.City.getName())) {
 			record.set(T1usrBsc.column_levelcity, EnumStatus.LevelShow.getId())
-					.set(T1usrBsc.column_province, mgrSession.ggProvince())
-					.set(T1usrBsc.column_city, mgrSession.ggCity());
-		} else if (typeLevel.equals(EnumTypeLevel.CenterInstitute.getName())) {
-			record.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelShow.getId()).set(T1usrBsc.column_institute,
-					mgrSession.getInstitute());
-		} else {
+			.set(T1usrBsc.column_province, mgrSession.ggProvince())
+			.set(T1usrBsc.column_city, mgrSession.ggCity());
+		} else if(typeLevel.equals(EnumTypeLevel.CenterInstitute.getName()))
+		{
+			record.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelShow.getId())
+			.set(T1usrBsc.column_institute, mgrSession.getInstitute());
+		}
+		else {
 			record.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelUnknown.getId());
 			record.set(T1usrBsc.column_remark, mgrSession);
 		}
 	}
-
-	private void resolveLevel(Record record, String typeLevel, String spt_prj) {
+	
+	private void resolveLevel(Record record,  String typeLevel, String spt_prj){
 
 		if (StringUtils.isBlank(typeLevel)) {
 			return;
 		}
 		if (typeLevel.equals(EnumTypeLevel.Country.getName())) {
 			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelShow.getIdStr());
-
+			
 		} else if (typeLevel.equals(EnumTypeLevel.Province.getName())) {
-			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelView.getIdStr()).set(T1usrBsc.column_levelprovince,
-					EnumStatus.LevelShow.getId());
-
+			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelView.getIdStr())
+			.set(T1usrBsc.column_levelprovince, EnumStatus.LevelShow.getId());
+			
 		} else if (typeLevel.equals(EnumTypeLevel.City.getName())) {
 			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelView.getIdStr())
-					.set(T1usrBsc.column_levelprovince, EnumStatus.LevelView.getId())
-					.set(T1usrBsc.column_levelcity, EnumStatus.LevelShow.getId());
+			.set(T1usrBsc.column_levelprovince, EnumStatus.LevelView.getId())
+			.set(T1usrBsc.column_levelcity, EnumStatus.LevelShow.getId());
 
-		} else if (typeLevel.equals(EnumTypeLevel.CenterInstitute.getName())) {
+		} else if(typeLevel.equals(EnumTypeLevel.CenterInstitute.getName()))
+		{
 			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelView.getIdStr())
-					.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelShow.getId())
-					.set(T1usrBsc.column_institute, spt_prj);
+			.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelShow.getId())
+			.set(T1usrBsc.column_institute, spt_prj)
+			;
 		}
 	}
-
-	private void resolveLevel(T1usrBsc userBsc, String typeLevel) {
+	
+	private void resolveLevel(T1usrBsc userBsc,  String typeLevel){
 
 		if (StringUtils.isBlank(typeLevel)) {
 			return;
 		}
 		if (typeLevel.equals(EnumTypeLevel.Country.getName())) {
-			userBsc.setTypelevel(EnumStatus.LevelShow.getIdStr());
-
+			userBsc.setTypelevel(EnumStatus.LevelShow.getIdStr()); 
+			
 		} else if (typeLevel.equals(EnumTypeLevel.Province.getName())) {
 			userBsc.setTypelevel(EnumStatus.LevelView.getIdStr());
 			userBsc.setLevelprovince(EnumStatus.LevelShow.getId());
-
+			
 		} else if (typeLevel.equals(EnumTypeLevel.City.getName())) {
 			userBsc.setTypelevel(EnumStatus.LevelView.getIdStr());
 			userBsc.setLevelprovince(EnumStatus.LevelView.getId());
 			userBsc.setLevelcity(EnumStatus.LevelShow.getId());
 
-		} else if (typeLevel.equals(EnumTypeLevel.CenterInstitute.getName())) {
+		} else if(typeLevel.equals(EnumTypeLevel.CenterInstitute.getName()))
+		{
 			userBsc.setTypelevel(EnumStatus.LevelView.getIdStr());
 			userBsc.setLevelinstitute(EnumStatus.LevelShow.getId());
 		}
-
+		
 	}
-
+	
 	public boolean addUserBsc(T1userBscDTO dto) {
-
+		
 		if (Objects.isNull(dto)) {
 			return false;
 		}
 		Record dbRow;
 		try {
-			dbRow = new Record().set(T1usrBsc.column_usr_tp, dto.getUsr_tp())
-					.set(T1usrBsc.column_usr_nm, dto.getMblph_no()).set(T1usrBsc.column_nm, dto.getNm())
-					.set(T1usrBsc.column_nm_char, dto.getNm_char()).set(T1usrBsc.column_crdt_tp, "身份证")
-					.set(T1usrBsc.column_crdt_no, dto.getCrdt_no()).set(T1usrBsc.column_gnd, dto.getGnd()) // 性别
+			dbRow = new Record()
+					.set(T1usrBsc.column_usr_tp, dto.getUsr_tp())
+					.set(T1usrBsc.column_usr_nm, dto.getMblph_no())
+					.set(T1usrBsc.column_nm, dto.getNm())
+					.set(T1usrBsc.column_nm_char, dto.getNm_char())
+					.set(T1usrBsc.column_crdt_tp, "身份证")
+					.set(T1usrBsc.column_crdt_no, dto.getCrdt_no())
+					.set(T1usrBsc.column_gnd, dto.getGnd()) // 性别
 					.set(T1usrBsc.column_brth_dt, dto.getBrth_dt())
 					.set(T1usrBsc.column_pswd, DESUtil.encrypt(dto.getPasswd(), ConstantInitMy.SPKEY))// 密码默认身份证后6位
-					.set(T1usrBsc.column_mblph_no, dto.getMblph_no()).set(T1usrBsc.column_email, dto.getEmail())
-					.set(T1usrBsc.column_province, dto.getProvince()).set(T1usrBsc.column_city, dto.getCity())
-					.set(T1usrBsc.column_spt_prj, dto.getSpt_prj()).set(T1usrBsc.column_department, dto.getDepartment())
-					.set(T1usrBsc.column_post, dto.getPost());
-
-			// if ( dto.getEmailValCode()!= null) {
-			// dbRow.set(T1usrBsc.column_email_val, 1);
-			// }
-			if (dto.getMblphValCode() != null) {
+					.set(T1usrBsc.column_mblph_no, dto.getMblph_no())
+					.set(T1usrBsc.column_email, dto.getEmail())
+					.set(T1usrBsc.column_province, dto.getProvince())
+					.set(T1usrBsc.column_city, dto.getCity())
+					.set(T1usrBsc.column_spt_prj, dto.getSpt_prj())
+					.set(T1usrBsc.column_department, dto.getDepartment())
+					.set(T1usrBsc.column_post, dto.getPost())
+					;
+			
+//			if ( dto.getEmailValCode()!= null) {
+//				dbRow.set(T1usrBsc.column_email_val, 1);
+//			}
+			if ( dto.getMblphValCode()!= null) {
 				dbRow.set(T1usrBsc.column_mblph_val, 1);
 			}
-
+			
 			resolveLevel(dbRow, dto.getTypeleve(), dto.getSpt_prj());
-
+			
 			return ConfMain.db().save(tableName, tableKey, dbRow);
-
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -775,15 +800,15 @@ public class T1usrBscService extends BaseService {
 			return false;
 		}
 	}
-
+	
 	public boolean updateUserBsc(T1userBscDTO dto, T1usrBsc userBsc) {
-
+		
 		if (Objects.isNull(dto) || Objects.isNull(userBsc)) {
 			log.warn("updateUserBsc Objects.isNull(dto) || Objects.isNull(userBsc)");
 			return false;
 		}
 		boolean hasChange = false;
-
+		
 		if (!dto.getNm().equals(userBsc.nm)) {
 			userBsc.setNm(dto.getNm());
 			hasChange = true;
@@ -817,18 +842,19 @@ public class T1usrBscService extends BaseService {
 			userBsc.setMblph_no(dto.getMblph_no());
 			hasChange = true;
 		}
-
+		
 		userBsc.setUsr_tp(dto.getUsr_tp());
-
+		
 		userBsc.setSpt_prj(dto.getSpt_prj());
 		resolveLevel(userBsc, dto.getTypeleve());
 		if (EnumRoleType.Sporter.getName().equals(dto.getUsr_tp())) {
-
+			
 		} else {
 			userBsc.setDepartment(dto.getDepartment());
 			userBsc.setPost(dto.getPost());
 		}
-
+		
+		
 		return userBsc.update();
 
 	}
