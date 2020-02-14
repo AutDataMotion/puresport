@@ -1439,6 +1439,11 @@ public class T7CrclController extends BaseController {
 			t11Rlt.setCategory(category);
 			t11Rlt.update();
 		}
+		// t12表考试状态
+		// exam_stat  
+		// 积分制： 2:1门未考；3：已考完6门且及格；4：未考完6门；5：已考完6门，不及格
+		// 通用：3：及格   5：不及格
+		String examStat = "";
 		// 更新最高成绩
 		if ("东京奥运会".equals(which_competition)) {
 			totalScore = getTotalScore_05(usrid);
@@ -1453,7 +1458,16 @@ public class T7CrclController extends BaseController {
 			t12.setUsrid(usrid);// 用户id
 			t12.setExamid(Integer.parseInt(examid));// 考试id
 			t12.setExam_grd(totalScore);// 考试成绩
-			t12.setExam_st("1");// 考试状态
+			if ("东京奥运会".equals(which_competition)) {
+				t12.setExam_st(getExamStat_05(usrid));
+				examStat = getExamStat_05(usrid);
+			} else {
+				if(totalScore >= 80)
+					examStat = "3";
+				else
+					examStat = "5";
+			}
+				
 			t12.setExam_channel("01");// 考试渠道,01:互联网站
 			t12.setExam_num(Integer.parseInt(examid));// 考试次数
 			t12.setTms(new Timestamp(System.currentTimeMillis()));// 维护时间
@@ -1466,13 +1480,23 @@ public class T7CrclController extends BaseController {
 			 * t11.setId(Long.parseLong(t11Rlt.getId()));
 			 */
 			// t11Rlt.setUsrid(usrid);// 用户id
-			// 如果本次成绩高于已有最高成绩，则更新最高成绩
-			if (totalScore > Integer.parseInt(t12.getExam_grd())) {
-				// 转入操作
-				ConfMain.db().update(
-						"update t12_highest_score t set t.exam_grd = ? , t.tms = ?, t.type=? where usrid = ? and t.exam_nm = ?",
-						totalScore, new Timestamp(System.currentTimeMillis()), type,t10.getUsrid(), which_competition);
-			}
+			// 如果本次成绩高于已有最高成绩，则更新最高成绩		
+				if (totalScore > Integer.parseInt(t12.getExam_grd())) {
+					if ("东京奥运会".equals(which_competition)) {
+						examStat = getExamStat_05(usrid);
+						ConfMain.db().update(
+								"update t12_highest_score t set t.exam_grd = ? , t.tms = ?, t.type=?, t.exam_st=? where usrid = ? and t.exam_nm = ?",
+								totalScore, new Timestamp(System.currentTimeMillis()), type,getExamStat_05(usrid),t10.getUsrid(), which_competition);
+					} else
+						if(totalScore >= 80)
+							examStat = "3";
+						else
+							examStat = "5";
+						// 转入操作
+						ConfMain.db().update(
+							"update t12_highest_score t set t.exam_grd = ? , t.tms = ?, t.type=? where usrid = ? and t.exam_nm = ?",
+							totalScore, new Timestamp(System.currentTimeMillis()), type,t10.getUsrid(), which_competition);
+				}
 		}
 
 		LOG.debug("totalScore=" + totalScore);
@@ -1520,6 +1544,45 @@ public class T7CrclController extends BaseController {
 			}
 		}
 		return totalScore;
+	}
+	
+	
+	// 获取积分制考试状态
+	// exam_stat  
+	// 积分制： 2:1门未考；3：已考完6门且及格；4：未考完6门；5：已考完6门，不及格
+	// 通用：3：及格   5：不及格
+	public String getExamStat_05(Integer usrid) {
+		// 计算东京奥运会最高成绩
+		String sql2 = "select * from t11_exam_stat t where t.usrid='" + usrid
+				+ "' and t.type='4' and t.exam_st='9' order by category asc";
+		List<T11ExamStat> t11List = T11ExamStat.dao.find(sql2);
+		Integer totalScore = 0;
+		String examStat = "";
+		if (null != t11List && t11List.size() > 0) {
+			if(t11List.size() == 6)
+				examStat = "5";
+			else
+				examStat = "4";
+			for (int i = 0; i < t11List.size(); i ++) {
+				if(null != t11List.get(i))
+					totalScore += (Integer.parseInt(t11List.get(i).getExam_grd()));
+			}
+		} else			
+			examStat = "2";
+		//查询附加题分数
+		String sql3 = "select * from t18_extras_points t where t.usrid='" + usrid
+				+ "' and t.type='4'";
+		List<T18ExtrasPoints> t18List = T18ExtrasPoints.dao.find(sql3);
+		if (null != t11List && t11List.size() > 0) {
+			for (T18ExtrasPoints t18Ele : t18List) {
+				if(StringUtils.isNotBlank(t18Ele.getScor()))
+					if(null != t18Ele.getScor())
+						totalScore += (Integer.parseInt(t18Ele.getScor()));
+			}
+		}
+		if(totalScore >= 80 && "5s".equals(examStat))
+			examStat = "3";
+		return examStat;
 	}
 	
 
@@ -2339,12 +2402,13 @@ public class T7CrclController extends BaseController {
 					+ "' and type='4'";
 			T12HighestScore t12 = T12HighestScore.dao.findFirst(sql_highest_score);
 			Integer totalScore = getTotalScore_05(userid);
+			String examStat = getExamStat_05(userid);
 			if (null == t12) {
 				t12 = new T12HighestScore();
 				t12.setUsrid(userid);// 用户id
-			//t12.setExamid(Integer.parseInt(examid));// 考试id
+				t12.setExamid(0);// 考试id
 				t12.setExam_grd(totalScore);// 考试成绩
-				t12.setExam_st("1");// 考试状态
+				t12.setExam_st(examStat);// 考试状态
 				t12.setExam_channel("01");// 考试渠道,01:互联网站
 				t12.setExam_num(0);// 考试次数
 				t12.setTms(new Timestamp(System.currentTimeMillis()));// 维护时间
@@ -2361,8 +2425,8 @@ public class T7CrclController extends BaseController {
 				if (totalScore > Integer.parseInt(t12.getExam_grd())) {
 					// 转入操作
 					ConfMain.db().update(
-							"update t12_highest_score t set t.exam_grd = ? , t.tms = ?, t.type=? where usrid = ? and t.exam_nm = ?",
-							totalScore, new Timestamp(System.currentTimeMillis()), "4",userid, "东京奥运会");
+							"update t12_highest_score t set t.exam_grd = ? , t.tms = ?, t.type=?, t.exam_st=? where usrid = ? and t.exam_nm = ?",
+							totalScore, new Timestamp(System.currentTimeMillis()), "4",examStat, userid, "东京奥运会");
 				}
 			}
 			json.put("score", 1);
