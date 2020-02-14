@@ -111,7 +111,8 @@ public class T11ExamStatController extends BaseController {
 		JSONArray jsonArray = new JSONArray();
 		String userID = getPara("userID");// 获取表单数据，这里的参数就是页面表单中的name属性值
 		List<T11ExamStat> itemlist = T11ExamStat.dao.find(
-				"select t.*,s.id as file_path, date_FORMAT(t.tms, '%Y-%m-%d %H:%i:%s') as tms from t11_exam_stat t left join t17_credit_inf s ON t.usrid=s.usrid and t.type = s.type where t.usrid=? and t.exam_st = '1' and t.type != '4' order by t.tms desc",
+				"select t.*,s.id as file_path, date_FORMAT(t.tms, '%Y-%m-%d %H:%i:%s') as tms,"
+				+ "case t.exam_grd when t.exam_grd >= 80 then '3' else '5' end as exam_st from t11_exam_stat t left join t17_credit_inf s ON t.usrid=s.usrid and t.type = s.type where t.usrid=? and t.exam_st = '1' and t.type != '4' order by t.tms desc",
 				userID);
 		if (itemlist != null) {
 			for (T11ExamStat item : itemlist) {
@@ -123,6 +124,7 @@ public class T11ExamStatController extends BaseController {
 				json.put("usrid", item.getUsrid());
 				json.put("type", item.getType());
 				json.put("file_path", item.getFile_path());
+				json.put("exam_st", item.getExam_st());
 				jsonArray.add(json);
 			}
 		}
@@ -140,6 +142,7 @@ public class T11ExamStatController extends BaseController {
 				json.put("usrid", item.getUsrid());
 				json.put("type", item.getType());
 				json.put("file_path", item.getFile_path());
+				json.put("exam_st", item.getExam_st());
 				jsonArray.add(json);
 			}
 		}
