@@ -433,7 +433,7 @@ function createCertificate(row){
 		isHasCreditFlag = 0;
 	if(row.type==null || row.type=="")
 		isHasCreditFlag = 1;
-	if(isHasCreditFlag==0 && parseInt(row.exam_grd) >= 80){
+	if(isHasCreditFlag==0 && parseInt(row.exam_grd) >= 80 && row.exam_st=="3"){
 		return '<a href="/jf/puresport/t7Crcl/generateCredit?totalScore=' + row.exam_grd
 		+ '&which_competition_cd=' + row.type
 		+ '&examid=' + row.examid
