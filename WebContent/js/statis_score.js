@@ -268,7 +268,7 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 					"exam_grd": "95",
 					"exam_name": "十四冬会",
 					"type": "4",
-					category:'科目1'
+					category:'测试科目1'
 				}, {
 					"file_path": "20",
 					"examid": "2",
@@ -277,7 +277,7 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 					"exam_grd": "95",
 					"exam_name": "冬青奥会",
 					"type": "6",
-					category:'科目2'
+					category:'测试科目2'
 				}]
 			});
 			funAppendToChild(tableStr);

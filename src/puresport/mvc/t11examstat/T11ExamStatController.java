@@ -201,7 +201,10 @@ public class T11ExamStatController extends BaseController {
 		JSONArray jsonArray = new JSONArray();		
 		
 		try {
-			String useridStr = getSession().getAttribute("usrid") + "";
+			String useridStr = getPara("usrid");
+			if(StringUtils.isBlank(useridStr)) {
+				useridStr = getSession().getAttribute("usrid") + "";
+			}
 			if(StringUtils.isBlank(useridStr)) {
 				jsonRlt.put("code", "0002");
 				jsonRlt.put("desc", "获取用户ID失败!");
