@@ -557,9 +557,7 @@ function initScoreTable(userID) {
 						        	integralFormat(rowData, function(tableStr){
 						        		row.child(tableStr).show();
 						        		tr.addClass('shown');
-						        	});
-						        	
-						            
+						        	});  
 						        }
 						    } );
 						    

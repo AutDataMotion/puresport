@@ -237,6 +237,7 @@ var studyStatusMap = {
 			cssAble:'disable',
 			target:'',
 			funUrl: function(id){
+				// tipsAlert('完成上节科目才能解锁');
 				return 'javascript:;';
 			},
 		},
@@ -245,6 +246,8 @@ var studyStatusMap = {
 			cssAble:'disable',
 			target:'',
 			funUrl: function(id){
+				// return 'javascript:;';
+				// tipsAlert('完成上节科目才能解锁');
 				return 'javascript:;';
 			},
 		},

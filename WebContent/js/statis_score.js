@@ -1,5 +1,7 @@
 $(document).ready(function() {
 	
+	statisScoreTest = true;
+	
 	// 获取省
 	function initProvince() {
 		// 发送查询请求
@@ -68,7 +70,28 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 	initSporterGroup();
 	
 	// =================================
-	// 查询参数
+
+	// 获取市
+	$("#sta_t1usrBsc_exam_nm").change(function () {
+        var sportName=$("#sta_t1usrBsc_exam_nm option:selected").val();
+        $("#sta_t1usrBsc_passOrnot option:not(:first)").remove();
+        var optionDiv = $("#sta_t1usrBsc_passOrnot");
+        if('东京奥运会'==sportName){
+        	optionDiv.append('<option value="合格">合格</option>');
+        	optionDiv.append('<option value="不合格">不合格</option>');
+        	optionDiv.append('<option value="未完成">未完成</option>');
+        	console.log('未考试');
+        	optionDiv.append('<option value="未考试">未考试</option>');
+        	// 最高成绩不可选
+        	$('#sta_t1usrBsc_examSt').attr("disabled","disabled");
+        } else {
+        	optionDiv.append('<option value="合格">合格</option>');
+        	optionDiv.append('<option value="不合格">不合格</option>');
+        	optionDiv.append('<option value="未考试">未考试</option>');
+        	$('#sta_t1usrBsc_examSt').removeAttr("disabled");
+        }
+    });
+	
 	var datasrch = {
 		id : '',
 		name1 : '',
@@ -102,6 +125,7 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 		datasrch.name12 = $("#sta_t1usrBsc_examSt option:selected").val();
 		datasrch.name13 = $("#src_sport_group option:selected").val();
 	};
+	
 	var myTable = $('#example3').DataTable({
 		dom: 'Bfrtip',
 		select : false,
@@ -205,6 +229,10 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 			render : function(
 					data, type,
 					row) {
+				if(row.type == '4'){
+					// 积分制 
+					return '<span class="badge btn-jifen-details">查看</span>';
+				}
 				
 				return '<a href="/jf/puresport/t7Crcl/queryTestPaper?usrid='
 						+ row.usrid
@@ -215,7 +243,6 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 						+ '&exam_grd='
 						+ row.exam_grd
 						+ '&userFlag=1" target="_blank"  role="button">'
-						/*+ '<code class="text-success bg-success">答题情况</code>'*/
 						+ '<span class="badge">查看</span>'
 						+ '</a>';
 			}
@@ -228,7 +255,106 @@ $("#citySelect_score").append("<option value='"+obj[index].id+"'>"+obj[index].na
 			}
 		} ]*/
 	});
+	
 
+	function fetchIntegralData(rowData, funAppendToChild, funTableStrGenerator){
+		if(statisScoreTest){
+			var tableStr = funTableStrGenerator({
+				"exam_grd_category_list": [{
+					"file_path": "",
+					"examid": "6",
+					"usrid": "204896",
+					"tms": "2019-12-16 13:20:20.0",
+					"exam_grd": "95",
+					"exam_name": "十四冬会",
+					"type": "4",
+					category:'科目1'
+				}, {
+					"file_path": "20",
+					"examid": "2",
+					"usrid": "204896",
+					"tms": "2019-12-16 13:20:20.0",
+					"exam_grd": "95",
+					"exam_name": "冬青奥会",
+					"type": "6",
+					category:'科目2'
+				}]
+			});
+			funAppendToChild(tableStr);
+			return ;
+		}
+		
+		$.ajax({
+	        url:encodeURI(encodeURI(cxt + "/jf/puresport/T11ExamStat/get_exam_grd_category")),
+	        data:{type:'4', usrid:rowData.usrid},
+	        dataType:"json",
+	        type:"get",
+	        timeout:5000,   
+	        async : false,
+	        cache : false,
+	        success:function(data){
+	        	var tableStr = funTableStrGenerator(data);
+	        	funAppendToChild(tableStr);
+	        },
+	        error:function(){
+	        	layer.msg("获取信息失败");
+	        }
+	    })
+	}
+
+	// 查看试卷
+	function createPaperLink(rowData){
+		return '<a href="/jf/puresport/t7Crcl/queryTestPaper?exam_grd=' + rowData.exam_grd
+				+ '&tms=' + rowData.tms + '&usrid=' + rowData.usrid + '&type=' + rowData.type + '&examid=' + rowData.examid
+				+ '" target="_blank"  role="button"> <code class="text-success bg-success">答题情况</code></a>';
+	}
+	
+	function integralFormat(rowData, funAppendToChild){
+		console.log('integralFormat', rowData);
+		if(rowData.type!='4'){
+			funAppendToChild('"该课程没有子科目"');
+			return ;
+		}
+		fetchIntegralData(rowData, funAppendToChild, function(integralData){
+			var strTable = '<table class="innerTable" cellpadding="5" cellspacing="0" border="1" style="padding-left:50px;width: 100%;">';
+			var list = integralData.exam_grd_category_list;
+			if(list && list.length > 0){
+				strTable += '<tr style="background-color: #f3f3f3;"><td>成绩</td><td>科目</td><td>考试时间</td><td>答题情况</td></tr>';
+				for(var i = 0; i< list.length; i++){
+					var strRow = '<tr><td>'+list[i].exam_grd +'</td><td>'
+											+list[i].category+'</td><td>'
+											+list[i].tms + '</td><td>' 
+											+createPaperLink(list[i])+'</td></tr>';
+					strTable += strRow;
+				}
+			}else {
+				strTable += '<tr style="background-color: #f3f3f3;"><td>没有数据</td></tr>';
+			}
+			strTable += '</table>';
+			
+			return strTable;
+		});
+		
+	}
+
+	$('#example3 tbody').on('click', '.btn-jifen-details', function () {
+        var tr = $(this).closest('tr');
+        var row = myTable.row( tr );
+        var rowData = row.data();
+        
+        if ( row.child.isShown() ) {
+            // This row is already open - close it
+            row.child.hide();
+            tr.removeClass('shown');
+        }
+        else {
+        	integralFormat(rowData, function(tableStr){
+        		row.child(tableStr).show();
+        		tr.addClass('shown');
+        	});  
+        }
+      });
+	
 	// 查询按钮
 	$("#selectBtn_score").click(function() {
 		// 重新加载table数据

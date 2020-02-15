@@ -1,6 +1,7 @@
 package puresport.mvc.t1usrbsc;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -224,13 +225,26 @@ public class T1usrBscService extends BaseService {
 	 * @param paramMdl
 	 * @return
 	 */
-
+	private final static List<String> JiFenSportNames = Arrays.asList("东京奥运会");
+	
+	private final static boolean isJiFenSport(String sportName) {
+		return JiFenSportNames.contains(sportName);
+	}
+	
 	private static String sql_score = "select u.*, s.examid as examid, s.type as type, s.exam_nm as exam_nm, s.exam_grd as exam_grd,"
-			+ " (CASE WHEN s.exam_grd >= 80 THEN '及格'  WHEN s.exam_grd is null THEN '未考试'  ELSE '不及格' END) as passed "
+			+ " (CASE WHEN s.exam_grd >= 80 THEN '合格'  WHEN s.exam_grd is null THEN '未考试'  ELSE '不合格' END) as passed "
+			+ " from t1_usr_bsc u  " + "left join %s s on u.usrid = s.usrid " + " %s where 1=1 %s  limit ?,?";
+	
+	private static String sql_score_jifen = "select u.*, s.examid as examid, s.type as type, s.exam_nm as exam_nm, s.exam_grd as exam_grd,"
+			+ " (CASE WHEN s.exam_st = 3 THEN '合格'  WHEN s.exam_st = 5 THEN '不合格'  WHEN s.exam_st = 4 THEN '未完成'  WHEN s.exam_st = 2 THEN '未考试'  ELSE '未知' END) as passed "
 			+ " from t1_usr_bsc u  " + "left join %s s on u.usrid = s.usrid " + " %s where 1=1 %s  limit ?,?";
 
 	private static String sql_score_total = "select count(1) " + " from t1_usr_bsc u  "
 			+ "left join %s s on u.usrid = s.usrid " + " %s where 1=1 %s ";
+	
+	private final static String chooseSqlScore(ParamComm paramMdl) {
+		return isJiFenSport(paramMdl.getName8()) ? sql_score_jifen : sql_score;
+	}
 
 	public List<Record> selectScoreByPage(T6MgrSession mgrSession, ParamComm paramMdl) {
 
@@ -245,7 +259,7 @@ public class T1usrBscService extends BaseService {
 			listArgs.add(paramMdl.getPageIndex());
 			listArgs.add(paramMdl.getPageSize());
 			userScoreRecords = ConfMain.db().find(
-					String.format(sql_score, cntSqlTuple.getLeft(), cntSqlTuple.getMiddle(), cntSqlTuple.getRight()),
+					String.format(chooseSqlScore(paramMdl), cntSqlTuple.getLeft(), cntSqlTuple.getMiddle(), cntSqlTuple.getRight()),
 					listArgs.toArray());
 		} else {
 			userScoreRecords = new ArrayList<>();
@@ -305,7 +319,7 @@ public class T1usrBscService extends BaseService {
 			listArgs.add(getStringLikeLeft(paramMdl.getName8()));
 		}
 		
-		if("东京奥运会".contentEquals(paramMdl.getName8())) {
+		if(isJiFenSport(paramMdl.getName8())) {
 			// 积分制 都可以从t12中查
 			table_exam = "t12_highest_score";
 			//  t12 里的 exam_stat  2:一门未考；3：已考完6门且及格；4：未考完6门；5：已考完6门，不及格 
