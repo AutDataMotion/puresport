@@ -225,21 +225,8 @@ public class T1usrBscService extends BaseService {
 	 * @return
 	 */
 
-	private static String sql_score = "select u.*, s.examid as examid, s.type as type, s.exam_nm as exam_nm, s.exam_grd as exam_grd, (CASE WHEN s.exam_grd >= 80 THEN '及格'  WHEN s.exam_grd is null THEN '未考试'  ELSE '不及格' END) as passed "
-			// + " (" +
-			// " CASE" +
-			// " WHEN u.typeLevel ='2' THEN" +
-			// " '国家级'" +
-			// " WHEN u.levelInstitute ='2' THEN" +
-			// " '中心协会级'" +
-			// " WHEN u.levelProvince ='2' THEN" +
-			// " '省级'" +
-			// " WHEN u.levelCity ='2' THEN" +
-			// " '市级'" +
-			// " ELSE" +
-			// " ''" +
-			// " END" +
-			// " ) AS typelevel2 "
+	private static String sql_score = "select u.*, s.examid as examid, s.type as type, s.exam_nm as exam_nm, s.exam_grd as exam_grd,"
+			+ " (CASE WHEN s.exam_grd >= 80 THEN '及格'  WHEN s.exam_grd is null THEN '未考试'  ELSE '不及格' END) as passed "
 			+ " from t1_usr_bsc u  " + "left join %s s on u.usrid = s.usrid " + " %s where 1=1 %s  limit ?,?";
 
 	private static String sql_score_total = "select count(1) " + " from t1_usr_bsc u  "
@@ -279,7 +266,7 @@ public class T1usrBscService extends BaseService {
 		StringBuilder whereStr = new StringBuilder();
 		String table_exam = "t11_exam_stat";
 		String table_group = "";
-
+		
 		if (StringUtil.notEmptyOrDefault(paramMdl.getName1(), defSelect)) {
 			whereStr.append(" and province like ? ");
 			listArgs.add(getStringLikeLeft(paramMdl.getName1()));
@@ -317,24 +304,46 @@ public class T1usrBscService extends BaseService {
 			whereStr.append(" and exam_nm like ? ");
 			listArgs.add(getStringLikeLeft(paramMdl.getName8()));
 		}
-		if (StringUtil.notEmptyOrLikeDefault(paramMdl.getName10(), defSelect)) {
-			if (paramMdl.getName10().equals("合格")) {
-				whereStr.append(" and exam_grd >= 80 ");
-			} else if (paramMdl.getName10().equals("不合格")) {
-				whereStr.append(" and exam_grd < 80 and exam_grd>=0 ");
-			} else {
-				whereStr.append(" and exam_grd is  null ");
+		
+		if("东京奥运会".contentEquals(paramMdl.getName8())) {
+			// 积分制 都可以从t12中查
+			table_exam = "t12_highest_score";
+			//  t12 里的 exam_stat  2:一门未考；3：已考完6门且及格；4：未考完6门；5：已考完6门，不及格 
+			if (StringUtil.notEmptyOrLikeDefault(paramMdl.getName10(), defSelect)) {
+				String pState = paramMdl.getName10();
+				if (pState.equals("合格")) {
+					whereStr.append(" and exam_st=3 ");
+				} else if (pState.equals("不合格")) {
+					whereStr.append(" and exam_st=5 ");
+				} else if(pState.contentEquals("未完成")){
+					whereStr.append(" and exam_st=4 ");
+				} else if(pState.contentEquals("未考试")){
+					whereStr.append(" and exam_st=2 ");
+				}
 			}
-		}
+			
+		} else {
+			// 非积分制 走老逻辑
+			if (StringUtil.notEmptyOrLikeDefault(paramMdl.getName10(), defSelect)) {
+				if (paramMdl.getName10().equals("合格")) {
+					whereStr.append(" and exam_grd >= 80 ");
+				} else if (paramMdl.getName10().equals("不合格")) {
+					whereStr.append(" and exam_grd < 80 and exam_grd>=0 ");
+				} else {
+					whereStr.append(" and exam_grd is  null ");
+				}
+			}
 
-		if (StringUtil.notEmptyOrDefault(paramMdl.getName12(), defSelect)) {
-			if ("9".equals(paramMdl.getName12())) {// 查询最高成绩
-				table_exam = "t12_highest_score";
-			} else {// 查询所有成绩
-				whereStr.append(" and exam_st = ? ");
-				listArgs.add(paramMdl.getName12());
+			if (StringUtil.notEmptyOrDefault(paramMdl.getName12(), defSelect)) {
+				if ("9".equals(paramMdl.getName12())) {// 查询最高成绩
+					table_exam = "t12_highest_score";
+				} else {// 查询所有成绩
+					whereStr.append(" and exam_st = ? ");
+					listArgs.add(paramMdl.getName12());
+				}
 			}
 		}
+		
 
 		if (StringUtil.notEmptyOrDefault(paramMdl.getName13(), defSelect)) {
 			whereStr.append(" and group_id = ? ");
