@@ -26,6 +26,8 @@ public enum EnumStatus {
 	Null_Account(20, "20", "帐号不存在"),
 	
 	Error_Exception(-1, "-1", "系统异常,请联系管理员"),
+	
+	Entrance_Forbidden(99, "99", "对不起，反兴奋剂教育准入平台因系统维护暂停使用，给您造成的不便请您谅解。我们将尽快开放，请稍后再试。"),
 	;
 	private int id;
 	private String idStr;

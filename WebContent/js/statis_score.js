@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	
-	statisScoreTest = true;
+	statisScoreTest = false;
 	
 	// 获取省
 	function initProvince() {

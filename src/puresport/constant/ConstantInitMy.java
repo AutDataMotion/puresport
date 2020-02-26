@@ -24,4 +24,7 @@ public interface ConstantInitMy extends ConstantInit{
 	public static final Integer AuthCode_TimeOut_Send = 61; // 单位秒 即1分钟
 	public static final Integer AuthCode_TimeOut = 61*10; // 单位秒 即10分钟
 	
+	public static final Boolean ENTRANCE_WHITE_LIST_SWITCH = true; // 系统登录白名单开关
+	public static final String ENTRANCE_WHITE_LIST = "410423198307274911,340881199103221237,420602199110050514,130727198707082438"; // 系统登录账号白名单列表，半角逗号分隔
+	
 }

@@ -234,6 +234,29 @@ public class T1usrBscController extends BaseController {
 		}*/
 		String crdt_no = getPara("account");// 获取表单数据，这里的参数就是页面表单中的name属性值
 		String password = getPara("pwd");
+		
+		// added by zhuchaobin, 2020-02-25, 系统登录白名单校验
+		if(ConstantInitMy.ENTRANCE_WHITE_LIST_SWITCH && StringUtils.isNotBlank(ConstantInitMy.ENTRANCE_WHITE_LIST)) {
+			log.info("系统登录白名单开启，账号白名单列表:" + ConstantInitMy.ENTRANCE_WHITE_LIST);
+			String[] entranceWhiteList = ConstantInitMy.ENTRANCE_WHITE_LIST.split(","); 
+			boolean isInWhiteList = false;
+			for(String acct : entranceWhiteList){ 
+				if(crdt_no.equals(acct)) {
+					isInWhiteList = true;
+					log.info("账号" + crdt_no + "在白名单中。");
+					break;
+				}
+			}
+			if(!isInWhiteList) {
+				log.info("账号" + crdt_no + "不在白名单中， 禁止登录。");
+				renderJson(CommFun.resJsonFail(EnumStatus.Entrance_Forbidden));
+				return;
+			} else {
+				log.info("账号" + crdt_no + "在白名单中，允许进行验证登录。");
+			}
+		} else {
+			log.info("系统登录白名单关闭.");
+		}
 
 		if (ComUtil.haveEmpty(crdt_no, password)) {
 			renderIllegal();
