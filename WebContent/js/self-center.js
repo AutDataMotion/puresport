@@ -51,7 +51,7 @@ $(function() {
                 	console.log('selfCenterInfo ajax', res);
                 	
                 	// 初始化市
-                	setCityAjax(res.province);
+                	setCityAjax(res.province, res.city);
                 	
                     // 表单赋值
                 	form.val('athleteForm', {
@@ -315,7 +315,7 @@ $(function() {
             })
 	    }
 
-	    function setCityAjax(provinceName) {
+	    function setCityAjax(provinceName, defSelectValue) {
 	    	$.ajax({
                 url:encodeURI(encodeURI(cxt + "/jf/puresport/area/fetchCities")),
                 data:{provinceName:provinceName},
@@ -337,6 +337,9 @@ $(function() {
         	            modelVal = cityList[i];
         	            option = "<option value='" + modelVal.name + "'>" + modelVal.name + "</option>";
         	            $city.append(option);
+        	        }
+        	        if(defSelectValue){
+        	        	$city.val(defSelectValue);
         	        }
         	        form.render('select');
                 },
