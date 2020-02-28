@@ -57,7 +57,10 @@ public class JfinalConfig extends JFinalConfig {
 		 puresport.config.ConfMain.getInstance().setPropertyes(new
 		 PropertiesInitMy(loadPropertyFile("init_sport.properties"), false));
 		 puresport.config.ConfMain.getInstance().initProperties();
-
+		 
+		 // 测试获取值
+		 System.out.println("-- phone id:" + puresport.config.ConfMain.getSecId());
+		 System.out.println("-- phone key:" + puresport.config.ConfMain.getSecKey());
 
 		log.info("configConstant 设置字符集");
 		constants.setEncoding(ToolString.encoding);

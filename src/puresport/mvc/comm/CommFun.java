@@ -14,13 +14,26 @@ import com.aliyuncs.exceptions.ClientException;
 import com.aliyuncs.exceptions.ServerException;
 import com.aliyuncs.http.MethodType;
 import com.aliyuncs.profile.DefaultProfile;
+import com.jfinal.kit.PropKit;
 
 import puresport.constant.EnumStatus;
 
 public final class CommFun {
 	
-	private static DefaultProfile profile = DefaultProfile.getProfile("cn-hangzhou", "LTAI4FkPtdiBdvC9PgXQNw13", "1KbOC9zobwrt1QzaWBDsfRuxJSGvQ2");
+	private static DefaultProfile profile = getProfile();
     private static IAcsClient client = new DefaultAcsClient(profile);
+    
+    public final static DefaultProfile getProfile() {
+    	
+    	String secId =  puresport.config.ConfMain.getSecId();
+    	String secKey = puresport.config.ConfMain.getSecKey();
+    	
+    	if(StringUtils.isBlank(secId) || StringUtils.isBlank(secKey)) {
+    		return null;
+    	}
+    	return profile = DefaultProfile.getProfile("cn-hangzhou", secId, secKey);
+    	
+    }
     
     public static boolean sendPhoneMsg(String phone, String code) {
     	
@@ -39,8 +52,10 @@ public final class CommFun {
             System.out.println(response.getData());
         } catch (ServerException e) {
             e.printStackTrace();
+            return false;
         } catch (ClientException e) {
             e.printStackTrace();
+            return false;
         }
 
     	return true;

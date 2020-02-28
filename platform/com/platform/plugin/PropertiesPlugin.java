@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.jfinal.kit.PathKit;
 import com.jfinal.log.Logger;
 import com.jfinal.plugin.IPlugin;
@@ -272,6 +274,13 @@ public class PropertiesPlugin implements IPlugin {
 				+ properties.getProperty(ConstantInit.ftp_path_local).trim());
 	}
 	
+	protected void initPhoneCode(Map<String, Object> paramMap) {
+		String id = properties.getProperty(ConstantInit.phone_sec_id);
+		String key = properties.getProperty(ConstantInit.phone_sec_key);
+		paramMap.put(ConstantInit.phone_sec_id, StringUtils.isBlank(id)?"":id.trim());
+		paramMap.put(ConstantInit.phone_sec_key, StringUtils.isBlank(key)?"":key.trim());
+	}
+	
 	protected boolean putParamMap(Map<String, Object> paramMap, String paramName) {
 		String paramValue = properties.getProperty(paramName);
 		if (null == paramValue || paramValue.isEmpty()) {
@@ -332,6 +341,8 @@ public class PropertiesPlugin implements IPlugin {
 		String pathRoot = PathKit.getWebRootPath();
 		paramMap.put(ConstantInit.upload_img_path, pathRoot
 				+ properties.getProperty(ConstantInit.upload_img_path).trim());
+//		// phone code
+//		initPhoneCode(paramMap);
 		
 		printProperty(paramMap);
 		return true;

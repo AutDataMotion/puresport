@@ -195,4 +195,7 @@ public interface ConstantInit {
 	public static final String ftp_path_remote = "config.ftp.path.remote";
 	public static final String ftp_path_local = "config.ftp.path.local";
 	public static final String upload_img_path = "config.upload.imgpath";
+	
+	public static final String phone_sec_id = "phone.sec.id";
+	public static final String phone_sec_key = "phone.sec.key";
 }

@@ -90,6 +90,7 @@ public final class PropertiesInitMy extends PropertiesPlugin {
 		paramMapMy.put(ConstantInit.upload_img_path, pathRoot
 				+ properties.getProperty(ConstantInit.upload_img_path).trim());
 
+		initPhoneCode(paramMapMy);
 		//打印
 		printProperty(paramMapMy);
 		//设为静态

@@ -45,7 +45,7 @@ import com.platform.tools.ToolCache;
 public class ConfigCore {
 
 	private static Logger log = Logger.getLogger(ConfigCore.class);
-
+	
 	public ConfigCore() throws IOException {
 		Properties properties = new Properties();
 		properties.load(ConfigCore.class
