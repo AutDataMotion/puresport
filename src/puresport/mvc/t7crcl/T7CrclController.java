@@ -2164,9 +2164,9 @@ public class T7CrclController extends BaseController {
 		// 考试名称，科目
 		String t11sql = "";
 		if(StringUtils.isBlank(exam_grd) || exam_grd.equals("null"))
-			t11sql = "select * from t11_exam_stat t where t.examid ='" + examid + "' and t.usrid='" + usrid + "' and t.type='" + type +"'" ;
+			t11sql = "select t.*, s.crcl_nm as category from t11_exam_stat t left JOIN t7_crcl s ON t.category=s.category and s.type='4' where t.examid ='" + examid + "' and t.usrid='" + usrid + "' and t.type='" + type +"'" ;
 		else
-			t11sql = "select * from t11_exam_stat t where t.examid ='" + examid + "' and t.usrid='" + usrid + "' and t.type='" + type+ "' and t.exam_grd='" + exam_grd +"'" ;
+			t11sql = "select t.*, s.crcl_nm as category from t11_exam_stat t left JOIN t7_crcl s ON t.category=s.category and s.type='4' where t.examid ='" + examid + "' and t.usrid='" + usrid + "' and t.type='" + type+ "' and t.exam_grd='" + exam_grd +"'" ;
 		T11ExamStat t11 = T11ExamStat.dao.findFirst(t11sql);
 		if (null != t11) {
 			setAttr("exam_name", t11.getExam_nm());

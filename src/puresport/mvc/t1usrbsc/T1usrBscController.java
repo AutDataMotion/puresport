@@ -232,8 +232,8 @@ public class T1usrBscController extends BaseController {
 			renderJson(CommFun.resJsonFail(EnumStatus.Illegal_AuthCode));
 			return;
 		}*/
-		String crdt_no = getPara("account");// 获取表单数据，这里的参数就是页面表单中的name属性值
-		String password = getPara("pwd");
+		String crdt_no = getPara("account").trim();// 获取表单数据，这里的参数就是页面表单中的name属性值
+		String password = getPara("pwd").trim();
 		
 		// added by zhuchaobin, 2020-02-25, 系统登录白名单校验
 		if(ConstantInitMy.ENTRANCE_WHITE_LIST_SWITCH && StringUtils.isNotBlank(ConstantInitMy.ENTRANCE_WHITE_LIST)) {

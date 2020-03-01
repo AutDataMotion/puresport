@@ -216,7 +216,12 @@ public class T11ExamStatController extends BaseController {
 				jsonRlt.put("desc", "获取赛事类别失败!");
 				renderJson(jsonRlt);
 			}
-			String sql = "select t.*, date_FORMAT(t.tms, '%Y-%m-%d %H:%i:%s') as tms from t11_exam_stat t where t.type = '"+ type +"' and usrid = '" + useridStr + "' and t.exam_st = '1'";
+			String sql = "select t.*, date_FORMAT(t.tms, '%Y-%m-%d %H:%i:%s') as tms, s.crcl_nm as category  from t11_exam_stat t left JOIN " + 
+					"t7_crcl s " + 
+					"ON " + 
+					"t.category=s.category " + 
+					"and s.type='4' "
+					+ "where t.type = '"+ type +"' and usrid = '" + useridStr + "' and t.exam_st = '1'";
 			List<T11ExamStat> tll_list = T11ExamStat.dao.find(sql);
 			if (null != tll_list && tll_list.size() > 0) {
 				for(T11ExamStat t11 : tll_list) {
@@ -235,7 +240,7 @@ public class T11ExamStatController extends BaseController {
 				renderJson(jsonRlt);
 			} else {
 				jsonRlt.put("code", "0002");
-				jsonRlt.put("desc", "没有查询到附加题信息.");
+				jsonRlt.put("desc", "没有查询到考试信息.");
 				renderJson(jsonRlt);
 			}
 		} catch (Exception e) {
