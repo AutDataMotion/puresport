@@ -720,11 +720,14 @@ public class T1usrBscService extends BaseService {
 			return;
 		}
 		if (typeLevel.equals(EnumTypeLevel.Country.getName())) {
-			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelShow.getIdStr());
+//			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelShow.getIdStr());
+			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelShow.getIdStr())
+				.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelShow.getId())
+				.set(T1usrBsc.column_institute, spt_prj);
 
 		} else if (typeLevel.equals(EnumTypeLevel.Province.getName())) {
-			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelView.getIdStr()).set(T1usrBsc.column_levelprovince,
-					EnumStatus.LevelShow.getId());
+			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelView.getIdStr())
+				.set(T1usrBsc.column_levelprovince, EnumStatus.LevelShow.getId());
 
 		} else if (typeLevel.equals(EnumTypeLevel.City.getName())) {
 			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelView.getIdStr())

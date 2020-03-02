@@ -227,11 +227,11 @@ public class T1usrBscController extends BaseController {
 		String msg = "";
 		String userType = "";
 		JSONObject json = new JSONObject();
-/*		boolean authCode = authCode();
+		boolean authCode = authCode();
 		if (!authCode) {
 			renderJson(CommFun.resJsonFail(EnumStatus.Illegal_AuthCode));
 			return;
-		}*/
+		}
 		String crdt_no = getPara("account");// 获取表单数据，这里的参数就是页面表单中的name属性值
 		String password = getPara("pwd");
 		

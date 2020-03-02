@@ -75,7 +75,7 @@ function user_login() {
 
 	// if(!validatePhone(account) && !validateEmail(account) &&
 	// !validateID(account)){
-	if (!validateID(account)) {
+	if (!validateID(account, 4)) {
 		loginAlert('账号格式不正确，请检查！');
 		return;
 	}
@@ -155,7 +155,7 @@ function admin_login() {
 	}
 
 	// if(!validatePhone(account) && !validateEmail(account) && !validateID(account)){
-	if (!validateID(account)) {
+	if (!validateID(account, 4)) {
 		loginAlert('账号格式不正确，请检查！');
 		return;
 	}

@@ -326,12 +326,14 @@ var bonusStatusMap = {
 		},
 		'0':{
 			name:'未学习', 
-			cssAble:'',
-			target:'',
+//			cssAble:'',
+			cssAble:'disable',
+//			target:'',
 			funClick:function(id){
-				tipsAlert(getYunHtmlUrl(id), '附加题', '确定', function(){
-					ajaxBonusClick(id);
-				},'500px');
+//				tipsAlert(getYunHtmlUrl(id), '附加题', '确定', function(){
+//					ajaxBonusClick(id);
+//				},'500px');
+				tipsAlert('此项目未上线');
 			}
 		},
 		'1':{

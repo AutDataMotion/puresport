@@ -38,9 +38,21 @@ function validateEmail(v) {
 	var reg = /^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$/;
 	return validateComm(reg, v, 5, 50);
 };
-function validateID(v) {
-	var idcardReg = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
-	return validateComm(idcardReg, v, 18, 18);
+function validateID(v, type) {
+	// 缺省 身份证 1 军官证 2 护照 3都可以
+	if(!type){
+		var reg = /^[1-9]\d{7}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0\d)|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/;
+		return validateComm(reg, v, 18, 18);
+	} else if(type == 1){
+		var reg = /^[a-zA-Z0-9]{7,21}$/;
+		return validateComm(reg, v, 7, 21);
+	} else if(type == 2){
+		var reg =  /^[a-zA-Z0-9]{3,21}$/; //护照
+		return validateComm(reg, v, 3, 21);
+	} else {
+		var reg =  /^[a-zA-Z0-9]{3,21}$/; 
+		return validateComm(reg, v, 3, 21);
+	}
 };
 
 // ------------set Obj
