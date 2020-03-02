@@ -337,7 +337,10 @@ public class T7CrclController extends BaseController {
 		String certificatePath = getPara("certificatePath");
 		String sql = "select * from t17_credit_inf t where t.id = '" + certificatePath + "' and t.flag ='02'";
 		T17CreditInf t17 = T17CreditInf.dao.findFirst(sql);
-		setAttr("certificatePath", t17.getFile_path());
+		String filePath = t17.getFile_path();
+		if(StringUtils.isNotBlank(filePath))
+			filePath = filePath.replace("\\", "/"); 
+		setAttr("certificatePath", filePath);
 		setAttr("shareDisplay", "inline");
 		renderWithPath("/f/accession/certificate_new.html");
 	}
@@ -446,11 +449,19 @@ public class T7CrclController extends BaseController {
 			// } else {
 			// setAttr("startDisplay", "inline");
 			// }
-			setAttr("certificatePath", T17List.get(0).getFile_path());
+			String filePath = T17List.get(0).getFile_path();
+			if(StringUtils.isNotBlank(filePath))
+				filePath = filePath.replace("\\", "/"); 
+			setAttr("certificatePath", filePath);
+			System.out.println("filePath="+filePath);
 			setAttr("shareDisplay", "inline");
 			renderWithPath("/f/accession/certificate_new.html");
 		} else if (T17List.size() > 1) {
-			setAttr("certificatePath", T17List.get(0).getFile_path());
+			String filePath = T17List.get(0).getFile_path();
+			if(StringUtils.isNotBlank(filePath))
+				filePath = filePath.replace("\\", "/");
+			setAttr("certificatePath", filePath);
+			System.out.println("filePath="+filePath);
 			renderWithPath("/f/accession/certificate_list.html");
 		} else {
 			setAttr("startDisplay", "inline");
@@ -2164,9 +2175,9 @@ public class T7CrclController extends BaseController {
 		// 考试名称，科目
 		String t11sql = "";
 		if(StringUtils.isBlank(exam_grd) || exam_grd.equals("null"))
-			t11sql = "select * from t11_exam_stat t where t.examid ='" + examid + "' and t.usrid='" + usrid + "' and t.type='" + type +"'" ;
+			t11sql = "select t.*, s.crcl_nm as category from t11_exam_stat t left JOIN t7_crcl s ON t.category=s.category and s.type='4' where t.examid ='" + examid + "' and t.usrid='" + usrid + "' and t.type='" + type +"'" ;
 		else
-			t11sql = "select * from t11_exam_stat t where t.examid ='" + examid + "' and t.usrid='" + usrid + "' and t.type='" + type+ "' and t.exam_grd='" + exam_grd +"'" ;
+			t11sql = "select t.*, s.crcl_nm as category from t11_exam_stat t left JOIN t7_crcl s ON t.category=s.category and s.type='4' where t.examid ='" + examid + "' and t.usrid='" + usrid + "' and t.type='" + type+ "' and t.exam_grd='" + exam_grd +"'" ;
 		T11ExamStat t11 = T11ExamStat.dao.findFirst(t11sql);
 		if (null != t11) {
 			setAttr("exam_name", t11.getExam_nm());

@@ -112,7 +112,7 @@ public class T11ExamStatController extends BaseController {
 		String userID = getPara("userID");// 获取表单数据，这里的参数就是页面表单中的name属性值
 		List<T11ExamStat> itemlist = T11ExamStat.dao.find(
 				"select t.*,s.id as file_path, date_FORMAT(t.tms, '%Y-%m-%d %H:%i:%s') as tms,"
-				+ "case t.exam_grd when t.exam_grd >= 80 then '3' else '5' end as exam_st from t11_exam_stat t left join t17_credit_inf s ON t.usrid=s.usrid and t.type = s.type where t.usrid=? and t.exam_st = '1' and t.type != '4' order by t.tms desc",
+				+ "case t.exam_grd when t.exam_grd >= 80 then '5' else '3' end as exam_st from t11_exam_stat t left join t17_credit_inf s ON t.usrid=s.usrid and t.type = s.type where t.usrid=? and t.exam_st = '1' and t.type != '4' order by t.tms desc",
 				userID);
 		if (itemlist != null) {
 			for (T11ExamStat item : itemlist) {
@@ -216,7 +216,12 @@ public class T11ExamStatController extends BaseController {
 				jsonRlt.put("desc", "获取赛事类别失败!");
 				renderJson(jsonRlt);
 			}
-			String sql = "select t.*, date_FORMAT(t.tms, '%Y-%m-%d %H:%i:%s') as tms from t11_exam_stat t where t.type = '"+ type +"' and usrid = '" + useridStr + "' and t.exam_st = '1'";
+			String sql = "select t.*, date_FORMAT(t.tms, '%Y-%m-%d %H:%i:%s') as tms, s.crcl_nm as category  from t11_exam_stat t left JOIN " + 
+					"t7_crcl s " + 
+					"ON " + 
+					"t.category=s.category " + 
+					"and s.type='4' "
+					+ "where t.type = '"+ type +"' and usrid = '" + useridStr + "' and t.exam_st = '1'";
 			List<T11ExamStat> tll_list = T11ExamStat.dao.find(sql);
 			if (null != tll_list && tll_list.size() > 0) {
 				for(T11ExamStat t11 : tll_list) {
@@ -235,7 +240,7 @@ public class T11ExamStatController extends BaseController {
 				renderJson(jsonRlt);
 			} else {
 				jsonRlt.put("code", "0002");
-				jsonRlt.put("desc", "没有查询到附加题信息.");
+				jsonRlt.put("desc", "没有查询到考试信息.");
 				renderJson(jsonRlt);
 			}
 		} catch (Exception e) {
