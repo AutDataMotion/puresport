@@ -326,20 +326,24 @@ var bonusStatusMap = {
 		},
 		'0':{
 			name:'未学习', 
-			cssAble:'',
+//			cssAble:'',
+			cssAble:'disable',
 			target:'',
 			funClick:function(id){
-				tipsAlert(getYunHtmlUrl(id), '附加题', '确定', function(){
-					ajaxBonusClick(id);
-				},'500px');
+//				tipsAlert(getYunHtmlUrl(id), '附加题', '确定', function(){
+//					ajaxBonusClick(id);
+//				},'500px');
+				tipsAlert('此项目未上线');
 			}
 		},
 		'1':{
 			name:'已学习',
-			cssAble:'',
+//			cssAble:'',
+			cssAble:'disable',
 			target:'',
 			funClick:function(id){
-				tipsAlert('此项目您已学习');
+//				tipsAlert('此项目您已学习');
+				tipsAlert('此项目未上线');
 			}
 		},
 };
