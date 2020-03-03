@@ -594,7 +594,7 @@ public class T1usrBscService extends BaseService {
 				log.error("insertRowToDb数据校验失败:" + excelRow);
 				return TupleUtil.tuple(false, 2, "证件类型不符合要求");
 			}
-			if (StringUtil.invalidateLength(excelRow.getByIndex(2), 8, 20)
+			if (StringUtil.invalidateLength(excelRow.getByIndex(2), 3, 21)
 					|| !RegexUtils.checkDigitAlpha(excelRow.getByIndex(2))) {
 				log.error("insertRowToDb数据校验失败:" + excelRow);
 				return TupleUtil.tuple(false, 3, "证件号不符合要求");
@@ -626,7 +626,8 @@ public class T1usrBscService extends BaseService {
 				// 不存在 则插入
 				dbRow = new Record().set(T1usrBsc.column_usr_nm, excelRow.getByIndex(0))// 用户账户名：手机号
 						.set(T1usrBsc.column_nm, excelRow.getByIndex(0))
-						.set(T1usrBsc.column_crdt_tp, excelRow.getByIndex(1)).set(T1usrBsc.column_crdt_no, crdt_number)
+						.set(T1usrBsc.column_crdt_tp, excelRow.getByIndex(1))
+						.set(T1usrBsc.column_crdt_no, crdt_number)
 						.set(T1usrBsc.column_gnd, excelRow.getByIndex(3))
 						.set(T1usrBsc.column_brth_dt, excelRow.getByIndex(4))
 						.set(T1usrBsc.column_pswd,
@@ -660,7 +661,7 @@ public class T1usrBscService extends BaseService {
 	}
 
 	/**
-	 * level的处理逻辑 0：不可见 删除 1：可见 2：具有该级别
+	 * level的处理逻辑 1: 不可见  1:可见    2:具有该级别
 	 * 
 	 * @param record
 	 * @param mgrSession
@@ -668,7 +669,11 @@ public class T1usrBscService extends BaseService {
 	private void resolveLevelWithSession_Insert(Record record, T6MgrSession mgrSession) {
 		String typeLevel = mgrSession.getTypeleve();
 		if (typeLevel.equals(EnumTypeLevel.Country.getName())) {
-			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelShow.getIdStr());
+			// record.set(T1usrBsc.column_typelevel, EnumStatus.LevelShow.getIdStr());
+			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelShow.getIdStr())
+			.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelShow.getId())
+			.set(T1usrBsc.column_spt_prj, mgrSession.getInstitute())
+			.set(T1usrBsc.column_institute, mgrSession.getInstitute());
 
 		} else if (typeLevel.equals(EnumTypeLevel.Province.getName())) {
 			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelView.getIdStr())
@@ -685,6 +690,7 @@ public class T1usrBscService extends BaseService {
 			// record.set(T1usrBsc.column_typelevel, "1")
 			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelView.getIdStr())
 					.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelShow.getId())
+					.set(T1usrBsc.column_spt_prj, mgrSession.getInstitute())
 					.set(T1usrBsc.column_institute, mgrSession.getInstitute());
 		} else {
 			record.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelUnknown.getId());
@@ -695,7 +701,11 @@ public class T1usrBscService extends BaseService {
 	private void resolveLevelWithSession_Update(Record record, T6MgrSession mgrSession) {
 		String typeLevel = mgrSession.getTypeleve();
 		if (typeLevel.equals(EnumTypeLevel.Country.getName())) {
-			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelShow.getIdStr());
+			// record.set(T1usrBsc.column_typelevel, EnumStatus.LevelShow.getIdStr());
+			record.set(T1usrBsc.column_typelevel, EnumStatus.LevelShow.getIdStr())
+			.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelShow.getId())
+			.set(T1usrBsc.column_spt_prj, mgrSession.getInstitute())
+			.set(T1usrBsc.column_institute, mgrSession.getInstitute());
 
 		} else if (typeLevel.equals(EnumTypeLevel.Province.getName())) {
 			record.set(T1usrBsc.column_levelprovince, EnumStatus.LevelShow.getId()).set(T1usrBsc.column_province,
@@ -706,8 +716,9 @@ public class T1usrBscService extends BaseService {
 					.set(T1usrBsc.column_province, mgrSession.ggProvince())
 					.set(T1usrBsc.column_city, mgrSession.ggCity());
 		} else if (typeLevel.equals(EnumTypeLevel.CenterInstitute.getName())) {
-			record.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelShow.getId()).set(T1usrBsc.column_institute,
-					mgrSession.getInstitute());
+			record.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelShow.getId())
+				.set(T1usrBsc.column_spt_prj, mgrSession.getInstitute())
+				.set(T1usrBsc.column_institute, mgrSession.getInstitute());
 		} else {
 			record.set(T1usrBsc.column_levelinstitute, EnumStatus.LevelUnknown.getId());
 			record.set(T1usrBsc.column_remark, mgrSession);
@@ -741,13 +752,15 @@ public class T1usrBscService extends BaseService {
 		}
 	}
 
-	private void resolveLevel(T1usrBsc userBsc, String typeLevel) {
+	private void resolveLevel_Update(T1usrBsc userBsc, String typeLevel, String spt_prj) {
 
 		if (StringUtils.isBlank(typeLevel)) {
 			return;
 		}
 		if (typeLevel.equals(EnumTypeLevel.Country.getName())) {
 			userBsc.setTypelevel(EnumStatus.LevelShow.getIdStr());
+			userBsc.setLevelinstitute(EnumStatus.LevelShow.getId());
+			userBsc.setInstitute(spt_prj);
 
 		} else if (typeLevel.equals(EnumTypeLevel.Province.getName())) {
 			userBsc.setTypelevel(EnumStatus.LevelView.getIdStr());
@@ -847,7 +860,7 @@ public class T1usrBscService extends BaseService {
 		userBsc.setUsr_tp(dto.getUsr_tp());
 
 		userBsc.setSpt_prj(dto.getSpt_prj());
-		resolveLevel(userBsc, dto.getTypeleve());
+		resolveLevel_Update(userBsc, dto.getTypeleve(), dto.getSpt_prj());
 		if (EnumRoleType.Sporter.getName().equals(dto.getUsr_tp())) {
 
 		} else {
