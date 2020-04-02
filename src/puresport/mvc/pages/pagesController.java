@@ -300,6 +300,9 @@ public class pagesController extends BaseController {
 		return json;
 	}
 
+	/**
+	 * 获取验证码
+	 */
 	@Clear
 	public void ForgetPwd_getConfirmcodeByEmail() {
 
@@ -350,7 +353,7 @@ public class pagesController extends BaseController {
 				isSuc = CommFun.sendPhoneMsg(account, authCodeMdl.getCode());
 			} else if (2 == accountType) {
 				// email
-				String confirmCode = EmailUtils.getRadSix();
+				String confirmCode = authCodeMdl.getCode();
 				String subject = "反兴奋剂在线教育平台";
 				String confirmMsg = "尊敬的用户您好，您找回密码的验证码是:" + confirmCode;
 				isSuc = EmailUtils.sendTextMail(account, subject, confirmMsg);
@@ -372,7 +375,10 @@ public class pagesController extends BaseController {
 
 		renderJson(json);
 	}
-
+	
+	/**
+	 * 发送密码到手机或邮箱
+	 */
 	@Clear
 	public void ForgetPwd_setPwdByEmail() {
 		boolean flag = false;
@@ -414,7 +420,7 @@ public class pagesController extends BaseController {
 		try {
 			String encryptpassword = DESUtil.encrypt(newPwd, ConstantInitMy.SPKEY);
 			int res = -1;
-			if (userOradmin.equals("01"))// 运动员及辅助人员
+			if (userOradmin.equals("01"))// 运动员及辅助人员  TODO 此处可能预留手机和邮箱需要更新，但有恶意替换风险
 			{
 				res = ConfMain.db().update(String.format("update t1_usr_bsc set pswd=?, %s=? where crdt_no=?", accountColumnStr),
 						encryptpassword, account, id);
@@ -428,7 +434,7 @@ public class pagesController extends BaseController {
 				removeSessionAttr(ConstantInitMy.validateKeyCode_Account);
 			} else {
 				flag = false;
-				msg = "修改失败，请稍后重试";
+				msg = "修改失败，请确认手机或邮箱正确性后重试";
 			}
 
 			json.put("flag", flag);

@@ -232,6 +232,19 @@ public class Record implements Serializable {
 		return (java.math.BigInteger)getColumns().get(column);
 	}
 	
+	public java.math.BigInteger getBigIntegerAdapt(String column) {
+		Object obj = getColumns().get(column);
+		if(null == obj) {
+			return java.math.BigInteger.ZERO;
+		}
+		if(obj instanceof java.math.BigDecimal) {
+			java.math.BigDecimal bigDecimal = (java.math.BigDecimal)obj;
+			return bigDecimal.toBigInteger();
+		}
+		
+		return (java.math.BigInteger)obj;
+	}
+	
 	/**
 	 * Get column of mysql type: date, year
 	 */
