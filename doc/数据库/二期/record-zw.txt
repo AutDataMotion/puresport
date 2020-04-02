@@ -58,8 +58,14 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`zw`@`localhost` SQL SECURITY DEFINER VIEW `p
 -- View structure for problemstatis
 -- ----------------------------
 DROP VIEW IF EXISTS `problemstatis`;
-CREATE ALGORITHM=UNDEFINED DEFINER=`zw`@`localhost` SQL SECURITY DEFINER VIEW `problemstatis` AS select `b`.`prblmid` AS `prblmid`,`b`.`prblm_ppl` AS `prblm_ppl`,`b`.`prblm_tp` AS `prblm_tp`,`b`.`opt` AS `opt`,`b`.`ttl` AS `ttl`,`b`.`prblm_aswr` AS `prblm_aswr`,`b`.`scor` AS `scor`,`b`.`tms` AS `tms`,(`ca`.`right_num` + `ca`.`wrong_num`) AS `cntall`,`ca`.`wrong_num` AS `cntwrong` from (`t9_tstlib` `b` left join `t13_tst_stat` `ca` on((`b`.`prblmid` = `ca`.`prblmid`))) order by `ca`.`wrong_num` desc ;
-
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `problemstatis` AS 
+	select `b`.`prblmid` AS `prblmid`,`b`.`prblm_ppl` AS `prblm_ppl`,
+	`b`.`prblm_tp` AS `prblm_tp`,`b`.`opt` AS `opt`,`b`.`ttl` AS `ttl`,`b`.`prblm_aswr` AS `prblm_aswr`,
+    `b`.`scor` AS `scor`,`b`.`tms` AS `tms`,( case when (`ca`.`right_num` + `ca`.`wrong_num`) is null then 0 else (`ca`.`right_num` + `ca`.`wrong_num`) end) AS `cntall`,
+    (case when `ca`.`wrong_num` is null then 0 else `ca`.`wrong_num` end ) AS `cntwrong` 
+    from (`t9_tstlib` `b` left join `t13_tst_stat` `ca` on((`b`.`prblmid` = `ca`.`prblmid`)))
+    order by `ca`.`wrong_num` desc;
+    
 -- ----------------------------
 -- View structure for problemwrongcnt
 -- ----------------------------
