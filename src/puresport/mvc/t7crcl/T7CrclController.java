@@ -2798,7 +2798,7 @@ public class T7CrclController extends BaseController {
 		renderWithPath("/f/accession/course_tokyo_2.html");
 		// renderWithPath("/f/accession/tokyo/course/scormcontent/index.html");
 	}
-	@Clear
+/*	@Clear
 	public void video_play2() {
 		// 插入
 		T5CrclStdy t5 = new T5CrclStdy();
@@ -2809,6 +2809,6 @@ public class T7CrclController extends BaseController {
 		t5.saveGenIntId();		
 		renderWithPath("/f/video/yi/yi.html");
 
-	}
+	}*/
 
 }
