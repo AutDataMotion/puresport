@@ -5,6 +5,7 @@
 querydata/*
 *.xls
 *.xlsx
+*.pdf
 
 # Log file
 *.log
@@ -37,7 +38,10 @@ hs_err_pid*
 /bin/
 /gen/
 /out/
-.mp4
+*.mp4
 */images_zcb/certificates/*
 count.txt
 WebContent/images_zcb/certificates/*.jpg
+WebContent/files/
+WebContent/materials/
+
