@@ -9,7 +9,7 @@ public enum EnumCompetition {
 	//zhuchaobin, 2019-12-04
 	DongQingAoHui(6,"6","冬青奥会"),
 	ShiSiDongHui(7,"7","十四冬会"),
-	TongYong(8,"8","通用准入"),
+	TongYong(8,"8","通用准入") ,
 	;
 	
 	private int index;
