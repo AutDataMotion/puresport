@@ -11,6 +11,7 @@ public enum EnumCompetition {
 	ShiSiDongHui(7,"7","十四冬会"),
 	TongYong(8,"8","通用准入"),
 	;
+	
 	private int index;
 	private String index_str;
 	private String competitionName;
